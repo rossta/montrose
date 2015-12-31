@@ -76,9 +76,9 @@ module Montrose
     #
     def self.default_starts_time
       case @default_starts_time
-        when Proc
+      when Proc
         @default_starts_time.call
-        else
+      else
         Time.now
       end
     end
@@ -214,9 +214,9 @@ module Montrose
 
   def Recurrence(obj)
     case obj
-      when Recurrence
+    when Recurrence
       obj
-      else
+    else
       Recurrence.new(obj)
     end
   end

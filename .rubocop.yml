@@ -30,6 +30,30 @@ Metrics/CyclomaticComplexity:
 Metrics/PerceivedComplexity:
   Enabled: false
 
+Documentation:
+  Enabled: false # TODO: Enable again once we have more docs
+
+Lint/EndAlignment:
+  AlignWith: variable
+
+Lint/DefEndAlignment:
+  Enabled: false
+
+Lint/HandleExceptions:
+  Enabled: false
+
+Style/SpecialGlobalVars:
+  Enabled: false
+
+Style/TrivialAccessors:
+  Enabled: false
+
+Style/HashSyntax:
+  Enabled: true
+
+Style/MethodName:
+  Enabled: false
+
 Style/AlignParameters:
   EnforcedStyle: with_fixed_indentation
 
@@ -54,15 +78,12 @@ Style/AndOr:
 Style/Not:
   Enabled: false
 
-Documentation:
-  Enabled: false # TODO: Enable again once we have more docs
-
 Style/CaseIndentation:
   IndentWhenRelativeTo: case
   SupportedStyles:
     - case
     - end
-  IndentOneStep: true
+  IndentOneStep: false
 
 Style/PercentLiteralDelimiters:
   PreferredDelimiters:
@@ -81,26 +102,8 @@ Style/IndentationWidth:
 Style/TrivialAccessors:
   ExactNameMatch: true
 
-Lint/EndAlignment:
-  AlignWith: variable
-
-Lint/DefEndAlignment:
-  Enabled: false
-
-Lint/HandleExceptions:
-  Enabled: false
-
-Style/SpecialGlobalVars:
-  Enabled: false
-
-Style/TrivialAccessors:
-  Enabled: false
-
-Style/HashSyntax:
-  Enabled: true
-
-Style/MethodName:
-  Enabled: false
-
 Style/RegexpLiteral:
   EnforcedStyle: percent_r
+
+Style/DotPosition:
+  EnforcedStyle: trailing
