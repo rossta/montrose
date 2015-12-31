@@ -6,6 +6,8 @@ module Montrose
 
     def <<(rule)
       @rules << Montrose::Recurrence(rule)
+
+      self
     end
 
     def include?(time)

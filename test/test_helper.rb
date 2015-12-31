@@ -31,12 +31,12 @@ module Minitest
       Time.zone.parse(obj)
     end
 
-    def consecutive_days(count, starts: Time.now)
+    def consecutive_days(count, starts: Time.now, interval: 1)
       [].tap do |e|
         date = starts.to_time
         count.times do
           e << date
-          date += 1.day
+          date += interval.day
         end
       end
     end

@@ -122,7 +122,7 @@ module Montrose
 
       options = opts.dup
       options[:starts] ||= self.class.default_starts_time
-      options[:until] ||= self.class.default_until_time
+      options[:interval] ||= 1
 
       @options = normalize_options(options)
 
@@ -199,7 +199,6 @@ module Montrose
 
     def normalize_options(opts = {})
       options = opts.dup
-      options[:interval] ||= 1
 
       [:starts, :until, :through, :except].
         select { |k| options.key?(k) }.
@@ -239,7 +238,6 @@ module Montrose
 
     def initialize(opts = {})
       @options = opts.dup
-      opts.fetch(:starts)
       reset(@options)
     end
 
@@ -251,13 +249,12 @@ module Montrose
 
     def next
       return nil if finished?
-      return @time = @starts if @time.nil?
 
       time = peek
 
       @finished = true if @options[:through] && time >= @options[:through]
 
-      if time > @options[:until]
+      if @options[:until] && time > @options[:until]
         @finished = true
         return nil
       end
@@ -266,7 +263,11 @@ module Montrose
     end
 
     def peek
-      @time + step
+      if @time.nil?
+        @time = @starts
+      else
+        @time + step
+      end
     end
 
     def step
