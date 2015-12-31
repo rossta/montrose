@@ -1,3 +1,7 @@
+AllCops:
+  Exclude:
+    - 'bin/**/*'
+
 Lint/HandleExceptions:
   Exclude:
     - 'test/test_helper.rb'
@@ -97,3 +101,6 @@ Style/HashSyntax:
 
 Style/MethodName:
   Enabled: false
+
+Style/RegexpLiteral:
+  EnforcedStyle: percent_r
