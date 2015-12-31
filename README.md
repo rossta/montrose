@@ -2,6 +2,9 @@
 
 Recurring events in Ruby.
 
+This library is currently under development. Most of the functionality does not
+exist yet.
+
 ## Installation
 
 Add this line to your application's Gemfile:
