@@ -1,0 +1,99 @@
+Lint/HandleExceptions:
+  Exclude:
+    - 'test/test_helper.rb'
+
+Metrics/LineLength:
+  Max: 120
+
+Metrics/ClassLength:
+  Max: 300
+
+Metrics/ModuleLength:
+  Max: 300
+
+Metrics/MethodLength:
+  Max: 100
+
+Metrics/ParameterLists:
+  Max: 8
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+Style/AlignParameters:
+  EnforcedStyle: with_fixed_indentation
+
+Style/AccessModifierIndentation:
+  Enabled: true
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/StringLiteralsInInterpolation:
+  EnforcedStyle: double_quotes
+
+Style/ClosingParenthesisIndentation:
+  Enabled: false
+
+Style/OneLineConditional:
+  Enabled: false
+
+Style/AndOr:
+  Enabled: false
+
+Style/Not:
+  Enabled: false
+
+Documentation:
+  Enabled: false # TODO: Enable again once we have more docs
+
+Style/CaseIndentation:
+  IndentWhenRelativeTo: case
+  SupportedStyles:
+    - case
+    - end
+  IndentOneStep: true
+
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    '%w': "[]"
+    '%W': "[]"
+
+Style/AccessModifierIndentation:
+  EnforcedStyle: outdent
+
+Style/SignalException:
+  Enabled: false
+
+Style/IndentationWidth:
+  Enabled: false
+
+Style/TrivialAccessors:
+  ExactNameMatch: true
+
+Lint/EndAlignment:
+  AlignWith: variable
+
+Lint/DefEndAlignment:
+  Enabled: false
+
+Lint/HandleExceptions:
+  Enabled: false
+
+Style/SpecialGlobalVars:
+  Enabled: false
+
+Style/TrivialAccessors:
+  Enabled: false
+
+Style/HashSyntax:
+  Enabled: true
+
+Style/MethodName:
+  Enabled: false
