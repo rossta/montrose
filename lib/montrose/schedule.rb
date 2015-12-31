@@ -13,15 +13,10 @@ module Montrose
     end
 
     def events(opts = {})
-      event_enumerators = @rules.map { |r| r.events(opts) }
+      event_enums = @rules.map { |r| r.events(opts) }
       Enumerator.new do |y|
         loop do
-          time = event_enumerators.min_by(&:peek).next
-          if time
-            y << time
-          else
-            break
-          end
+          y << event_enums.min_by(&:peek).next or break
         end
       end
     end

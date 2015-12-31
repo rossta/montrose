@@ -1,20 +1,21 @@
 require "test_helper"
 
 describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
-  it "is daily for 10 occurrences" do
+  it "supports daily for 10 occurrences" do
     schedule = new_schedule
 
-    schedule << { every: :day, repeat: 10 }
+    count = 10
+    schedule << { every: :day, repeat: count }
 
-    starts = Time.parse("September 20, 2015 9:00 AM EDT")
+    starts_at = Time.parse("September 20, 2015 9:00 AM EDT")
 
-    dates = schedule.events(starts: starts).to_a
+    dates = schedule.events(starts: starts_at).to_a
 
-    expected_date = starts
     expected_dates = [].tap do |e|
-      10.times do
-        e << expected_date
-        expected_date += 1.day
+      date = starts_at
+      count.times do
+        e << date
+        date += 1.day
       end
     end
 
@@ -22,6 +23,32 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
       date.must_equal expected
     end
 
-    dates.size.must_equal 10
+    dates.size.must_equal count
+  end
+
+  it "supports daily until December 24, 2015" do
+    schedule = new_schedule
+
+    until_on = Date.parse("December 24, 2015")
+    starts_on = Date.parse("December 20, 2015")
+    count = 5
+
+    schedule << { every: :day, until: until_on }
+
+    expected_dates = [].tap do |e|
+      date = starts_on.to_time
+      count.times do
+        e << date
+        date += 1.day
+      end
+    end
+
+    dates = schedule.events(starts: starts_on).to_a
+
+    expected_dates.zip(dates).each do |expected, date|
+      date.must_equal expected
+    end
+
+    dates.size.must_equal count
   end
 end

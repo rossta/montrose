@@ -117,21 +117,19 @@ module Montrose
 
     attr_reader :given_options, :options, :event
 
-    def initialize(options = {})
-      @given_options = options
-      @options = options.dup
+    def initialize(opts = {})
+      @given_options = opts
 
-      @options[:interval] ||= 1
-      @options[:starts]   = as_time(@options.fetch(:starts) { self.class.default_starts_time })
-      @options[:until]    = as_time(@options.fetch(:until) { self.class.default_until_time })
-      @options[:through]  = as_time(options[:through])
-      @options[:except]   = [options[:except]].compact.flat_map { |d| as_time(d) }
+      options = opts.dup
+      options[:starts] ||= self.class.default_starts_time
+      options[:until] ||= self.class.default_until_time
 
-      @event = initialize_event(@options)
+      @options = normalize_options(options)
+
+      @event = initialize_event
     end
 
     def events(opts = {})
-      @event.reset(opts)
       event_enum(opts)
     end
 
@@ -158,6 +156,7 @@ module Montrose
   private
 
     def event_enum(opts = {})
+      @event = initialize_event(opts)
       local_opts = @options.merge(opts)
 
       local_opts[:starts]  = as_time(local_opts[:starts])
@@ -167,9 +166,7 @@ module Montrose
       Enumerator.new do |yielder|
         size = 0
         loop do
-          time = self.next
-
-          break unless time
+          time = self.next or break
 
           valid_start = local_opts[:starts].nil? || time >= local_opts[:starts]
           valid_until = local_opts[:until].nil? || time <= local_opts[:until]
@@ -189,7 +186,7 @@ module Montrose
       end
     end
 
-    def initialize_event(options)
+    def initialize_event(opts = {})
       # {
       #   day: Daily,
       #   week: Weekly,
@@ -197,16 +194,29 @@ module Montrose
       #   year: Yearly
       # }.fetch(options[:every].to_sym).new(options)
 
-      Daily.new(options)
+      Daily.new(@options.merge(normalize_options(opts)))
+    end
+
+    def normalize_options(opts = {})
+      options = opts.dup
+      options[:interval] ||= 1
+
+      [:starts, :until, :through, :except].
+        select { |k| options.key?(k) }.
+        each { |k| options[k] = as_time(options[k]) }
+
+      options
     end
 
     def as_time(time) # :nodoc:
       case
-        when time.respond_to?(:to_time)
+      when time.respond_to?(:to_time)
         time.to_time
-        when time.is_a?(String)
+      when time.is_a?(String)
         Time.parse(time)
-        else
+      when time.is_a?(Array)
+        [time].compact.flat_map { |d| as_time(d) }
+      else
         time
       end
     end
@@ -224,7 +234,8 @@ module Montrose
   module_function :Recurrence
 
   class Daily
-    attr_reader :time, :starts
+    attr_reader :time, :starts, :finished
+    alias_method :finished?, :finished
 
     def initialize(opts = {})
       @options = opts.dup
@@ -246,7 +257,7 @@ module Montrose
 
       @finished = true if @options[:through] && time >= @options[:through]
 
-      if @time > @options[:until]
+      if time > @options[:until]
         @finished = true
         return nil
       end
@@ -260,10 +271,6 @@ module Montrose
 
     def step
       @interval.days
-    end
-
-    def finished?
-      @finished
     end
   end
 end
