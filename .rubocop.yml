@@ -91,7 +91,7 @@ Style/PercentLiteralDelimiters:
     '%W': "[]"
 
 Style/AccessModifierIndentation:
-  EnforcedStyle: outdent
+  EnforcedStyle: indent
 
 Style/SignalException:
   Enabled: false

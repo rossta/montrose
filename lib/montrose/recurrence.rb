@@ -153,7 +153,7 @@ module Montrose
       @events = nil
     end
 
-  private
+    private
 
     def event_enum(opts = {})
       @event = initialize_event(opts)
