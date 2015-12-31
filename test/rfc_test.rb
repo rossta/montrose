@@ -1,6 +1,10 @@
 require "test_helper"
 
 describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
+  before do
+    Timecop.freeze(Time.now)
+  end
+
   it "supports daily for 10 occurrences" do
     schedule = new_schedule
 
@@ -11,17 +15,7 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
 
     dates = schedule.events(starts: starts_at).to_a
 
-    expected_dates = [].tap do |e|
-      date = starts_at
-      count.times do
-        e << date
-        date += 1.day
-      end
-    end
-
-    expected_dates.zip(dates).each do |expected, date|
-      date.must_equal expected
-    end
+    assert_pairs_with consecutive_days(count, starts: starts_at), dates
 
     dates.size.must_equal count
   end
@@ -35,19 +29,10 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
 
     schedule << { every: :day, until: until_on }
 
-    expected_dates = [].tap do |e|
-      date = starts_on.to_time
-      count.times do
-        e << date
-        date += 1.day
-      end
-    end
-
+    expected_dates = consecutive_days(count, starts: starts_on)
     dates = schedule.events(starts: starts_on).to_a
 
-    expected_dates.zip(dates).each do |expected, date|
-      date.must_equal expected
-    end
+    assert_pairs_with expected_dates, dates
 
     dates.size.must_equal count
   end
@@ -55,23 +40,11 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
   it "supports every other day - forever" do
     schedule = new_schedule
 
-    starts_on = Date.parse("December 31, 2015")
-    count = 5
-
     schedule << { every: :day, interval: 2 }
 
-    expected_dates = [].tap do |e|
-      date = starts_on.to_time
-      count.times do
-        e << date
-        date += 1.day
-      end
-    end
+    expected_dates = consecutive_days(5)
+    dates = schedule.events.take(5)
 
-    dates = schedule.events(starts: starts_on).take(5).to_a
-
-    expected_dates.zip(dates).each do |expected, date|
-      date.must_equal expected
-    end
+    assert_pairs_with expected_dates, dates
   end
 end
