@@ -72,5 +72,16 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
       dates.size.must_equal 31 * 3
     end
 
-  it "supports everyday in January for 3 years (every: :year)"
+    # DTSTART;TZID=US-Eastern:19980101T090000
+    # RRULE:FREQ=YEARLY;UNTIL=20000131T090000Z;
+    #  BYMONTH=1;BYDAY=SU,MO,TU,WE,TH,FR,SA
+    it "yearly" do
+      schedule = new_schedule(every: :year, month: :january, until: ends_at)
+
+      dates = schedule.events.to_a
+
+      dates.must_pair_with expected_dates
+      dates.size.must_equal 31 * 3
+    end
+  end
 end

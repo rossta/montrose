@@ -47,8 +47,9 @@ module Minitest
   module Assertions
     def assert_pairs_with(expected_enum, actual_enum)
       expected_enum.zip(actual_enum).each_with_index do |(expected, actual), i|
+        assert !actual.nil?, "Expected #{expected} but got nil at position #{i}"
         assert_equal expected.change(usec: 0), actual.change(usec: 0),
-          "Expected #{expected} to equal #{actual} at position #{i}"
+          "Expected #{expected} but got #{actual} at position #{i}"
       end
     end
   end

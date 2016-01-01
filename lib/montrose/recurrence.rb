@@ -139,62 +139,44 @@ module Montrose
       dates(opts).each(&block)
     end
 
-    # Return the next time in recurrence, and changes the internal time object.
-    #
-    #   r = Recurrence.weekly(on: :sunday, starts: "2010-11-15")
-    #   r.next #=> Sun, 21 Nov 2010
-    #   r.next #=> Sun, 28 Nov 2010
-    #
-    def next
-      @event.next
-    end
-
-    # Reset the recurrence cache, returning to the first available time.
-    def reset!
-      @event.reset!
-      @events = nil
-    end
-
     private
 
     def event_enum(opts = {})
       @event = initialize_event(opts)
+
       local_opts = @options.merge(opts)
 
-      local_opts[:starts]  = as_time(local_opts[:starts])
-      local_opts[:until]   = as_time(local_opts[:until])
+      @expr = []
+      @expr << After.new(as_time(local_opts[:starts])) if local_opts[:starts]
+      @expr << Before.new(as_time(local_opts[:until])) if local_opts[:until]
+      @expr << MonthOfYear.new(local_opts[:month]) if local_opts[:month]
+      @expr << Count.new(local_opts[:repeat]) if local_opts[:repeat]
 
       Enumerator.new do |yielder|
-        size = 0
         loop do
-          time = self.next or break
+          time = @event.next
 
-          valid_start = local_opts[:starts].nil? || time >= local_opts[:starts]
-          valid_until = local_opts[:until].nil? || time <= local_opts[:until]
-          valid_except = local_opts[:except].nil? || !local_opts[:except].include?(time)
-
-          if valid_start && valid_until && valid_except
+          if @expr.all? { |e| e.advance!(time) }
             yielder << time
-            size += 1
           end
-
-          stop_repeat = local_opts[:repeat] && size == local_opts[:repeat]
-          stop_until = local_opts[:until] && local_opts[:until] <= time
-
-          break if stop_until || stop_repeat
         end
       end
     end
 
-    def initialize_event(opts = {})
-      # {
-      #   day: Daily,
-      #   week: Weekly,
-      #   month: Monthly,
-      #   year: Yearly
-      # }.fetch(options[:every].to_sym).new(options)
+    def temporal_expressions_include?(time, opts = {})
+      (opts[:starts].nil? || time >= opts[:starts]) &&
+        (opts[:until].nil? || time <= opts[:until]) &&
+        (opts[:except].nil? || !opts[:except].include?(time))
+    end
 
-      Daily.new(@options.merge(normalize_options(opts)))
+    def initialize_event(opts = {})
+      opts = @options.merge(normalize_options(opts))
+      case opts[:every]
+      when :day
+        Daily.new(opts)
+      else
+        raise "Don't know how to enumerate every: #{opts[:every]}"
+      end
     end
 
     def normalize_options(opts = {})
@@ -221,6 +203,77 @@ module Montrose
     end
   end
 
+  class Before
+    def initialize(end_time)
+      @end_time = end_time
+    end
+
+    def include?(time)
+      time <= @end_time
+    end
+
+    def advance!(time)
+      include?(time) or raise StopIteration
+    end
+  end
+
+  class After
+    def initialize(start_time)
+      @start_time = start_time
+    end
+
+    def include?(time)
+      time >= @start_time
+    end
+
+    def advance!(time)
+      include?(time) or raise StopIteration
+    end
+  end
+
+  class Count
+    def initialize(max)
+      @max = max
+      @current = 0
+    end
+
+    def include?(_)
+      @current <= @max
+    end
+
+    def advance!(_)
+      @current += 1
+      include?(_) or raise StopIteration
+    end
+  end
+
+  class MonthOfYear
+    def initialize(months)
+      @months = [months].compact.map { |m| month_number(m) }
+    end
+
+    def include?(time)
+      @months.include?(time.month)
+    end
+
+    def advance!(time)
+      include?(time)
+    end
+
+    private
+
+    def month_number(name)
+      case name
+      when Fixnum
+        name
+      when Symbol, String
+        Recurrence::MONTHS.index(name.to_s.titleize)
+      else
+        raise "Did not recognize month #{name}"
+      end
+    end
+  end
+
   def Recurrence(obj)
     case obj
     when Recurrence
@@ -233,80 +286,23 @@ module Montrose
   module_function :Recurrence
 
   class Daily
-    attr_reader :time, :starts, :finished
-    alias_method :finished?, :finished
+    attr_reader :time, :starts
 
     def initialize(opts = {})
       @options = opts.dup
-      reset(@options)
-    end
-
-    def reset(opts = {})
       @time = nil
       @starts = opts.fetch(:starts, @starts)
       @interval = opts.fetch(:interval, 1)
     end
 
     def next
-      return nil if finished?
-
-      time = peek
-
-      if @options[:until] && time > @options[:until]
-        @finished = true
-        return nil
-      end
-
-      @time = time
+      @time = peek
     end
 
     def peek
-      return @time = current if @time.nil?
+      return @time = @starts if @time.nil?
 
-      time = @time.advance(days: @interval)
-
-      logical_step(time)
-    end
-
-    def current
-      @time || logical_step(starts)
-    end
-
-    private
-
-    def logical_step(time)
-      if advance_month?(time)
-        time.advance(months: month_diff(time)).change(day: 1)
-      else
-        time
-      end
-    end
-
-    def advance_month?(time = current)
-      months.any? && !months.include?(time.month)
-    end
-
-    def month_diff(from_time)
-      pivot_calendar(from_time).index { |m| months.include? m }
-    end
-
-    def pivot_calendar(pivot_time)
-      1.upto(12).to_a.rotate(pivot_time.month - 1)
-    end
-
-    def months
-      @months ||= [@options[:month]].compact.map { |m| month_number(m) }
-    end
-
-    def month_number(name)
-      case name
-      when Fixnum
-        name
-      when Symbol, String
-        Recurrence::MONTHS.index(name.to_s.titleize)
-      else
-        raise "Did not recognize month #{name}"
-      end
+      @time.advance(days: @interval)
     end
   end
 end
