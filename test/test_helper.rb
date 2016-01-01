@@ -15,8 +15,10 @@ Dir[File.expand_path("../../test/support/**/*.rb", __FILE__)].each { |f| require
 
 module Minitest
   class Spec
-    def new_schedule
-      Montrose::Schedule.new
+    def new_schedule(options = {})
+      schedule = Montrose::Schedule.new
+      schedule << options if options.any?
+      schedule
     end
 
     def new_recurrence(options = {})
@@ -45,7 +47,8 @@ module Minitest
   module Assertions
     def assert_pairs_with(expected_enum, actual_enum)
       expected_enum.zip(actual_enum).each_with_index do |(expected, actual), i|
-        assert_equal expected, actual, "Expected #{expected} to equal #{actual} at position #{i}"
+        assert_equal expected.change(usec: 0), actual.change(usec: 0),
+          "Expected #{expected} to equal #{actual} at position #{i}"
       end
     end
   end

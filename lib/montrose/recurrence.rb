@@ -1,5 +1,7 @@
 module Montrose
   class Recurrence
+    MONTHS = Date::MONTHNAMES
+
     FREQUENCY = %w[day week month year].freeze
     # Create a daily recurrence.
     #
@@ -263,15 +265,52 @@ module Montrose
     end
 
     def peek
-      if @time.nil?
-        @time = @starts
+      return @time = current if @time.nil?
+
+      time = @time.advance(days: @interval)
+
+      logical_step(time)
+    end
+
+    def current
+      @time || logical_step(starts)
+    end
+
+    private
+
+    def logical_step(time)
+      if advance_month?(time)
+        time.advance(months: month_diff(time)).change(day: 1)
       else
-        @time + step
+        time
       end
     end
 
-    def step
-      @interval.days
+    def advance_month?(time = current)
+      months.any? && !months.include?(time.month)
+    end
+
+    def month_diff(from_time)
+      pivot_calendar(from_time).index { |m| months.include? m }
+    end
+
+    def pivot_calendar(pivot_time)
+      1.upto(12).to_a.rotate(pivot_time.month - 1)
+    end
+
+    def months
+      @months ||= [@options[:month]].compact.map { |m| month_number(m) }
+    end
+
+    def month_number(name)
+      case name
+      when Fixnum
+        name
+      when Symbol, String
+        Recurrence::MONTHS.index(name.to_s.titleize)
+      else
+        raise "Did not recognize month #{name}"
+      end
     end
   end
 end
