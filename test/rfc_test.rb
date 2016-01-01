@@ -17,11 +17,11 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
   end
 
   it "supports daily until December 24, 2015" do
-    until_on = Date.parse("December 24, 2015")
+    ends_on = Date.parse("December 24, 2015")
     starts_on = Date.parse("December 20, 2015")
-    days = starts_on.upto(until_on).count
+    days = starts_on.upto(ends_on).count
 
-    schedule = new_schedule every: :day, until: until_on
+    schedule = new_schedule every: :day, until: ends_on
 
     expected_dates = consecutive_days(days, starts: starts_on)
     dates = schedule.events(starts: starts_on).to_a
@@ -49,21 +49,28 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
     dates.size.must_equal 5
   end
 
-  it "supports everyday in January for 3 years by (every: :day)" do
-    Timecop.travel(Time.local(2015, 12, 31)) do
-      starts_at = Time.local(2016, 1, 1)
-      until_at = starts_at + 3.years
-      schedule = new_schedule(every: :day, month: :january, until: until_at)
+  describe "supports everyday in January for 3 years" do
+    let(:starts_at) { Time.local(2016, 1, 1) }
+    let(:ends_at) { (starts_at + 2.years).end_of_month }
 
-      expected_dates = consecutive_days(31, starts: starts_at)
-      expected_dates += consecutive_days(31, starts: starts_at + 1.year)
-      expected_dates += consecutive_days(31, starts: starts_at + 2.years)
+    let(:expected_dates) do
+      consecutive_days(31, starts: starts_at) +
+        consecutive_days(31, starts: starts_at + 1.year) +
+        consecutive_days(31, starts: starts_at + 2.years)
+    end
+
+    before do
+      Timecop.freeze(starts_at - 1.day)
+    end
+
+    it "daily" do
+      schedule = new_schedule(every: :day, month: :january, until: ends_at)
+
       dates = schedule.events.to_a
 
       dates.must_pair_with expected_dates
       dates.size.must_equal 31 * 3
     end
-  end
 
   it "supports everyday in January for 3 years (every: :year)"
 end
