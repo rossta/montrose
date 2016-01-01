@@ -163,7 +163,6 @@ module Montrose
 
       local_opts[:starts]  = as_time(local_opts[:starts])
       local_opts[:until]   = as_time(local_opts[:until])
-      local_opts[:through] = as_time(local_opts[:through])
 
       Enumerator.new do |yielder|
         size = 0
@@ -181,9 +180,8 @@ module Montrose
 
           stop_repeat = local_opts[:repeat] && size == local_opts[:repeat]
           stop_until = local_opts[:until] && local_opts[:until] <= time
-          stop_through = local_opts[:through] && local_opts[:through] <= time
 
-          break if stop_until || stop_repeat || stop_through
+          break if stop_until || stop_repeat
         end
       end
     end
@@ -202,7 +200,7 @@ module Montrose
     def normalize_options(opts = {})
       options = opts.dup
 
-      [:starts, :until, :through, :except].
+      [:starts, :until, :except].
         select { |k| options.key?(k) }.
         each { |k| options[k] = as_time(options[k]) }
 
@@ -253,8 +251,6 @@ module Montrose
       return nil if finished?
 
       time = peek
-
-      @finished = true if @options[:through] && time >= @options[:through]
 
       if @options[:until] && time > @options[:until]
         @finished = true
