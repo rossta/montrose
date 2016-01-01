@@ -127,8 +127,6 @@ module Montrose
       options[:interval] ||= 1
 
       @options = normalize_options(options)
-
-      @event = initialize_event
     end
 
     def events(opts = {})
@@ -142,32 +140,26 @@ module Montrose
     private
 
     def event_enum(opts = {})
-      @event = initialize_event(opts)
-
-      local_opts = @options.merge(opts)
+      local_opts = @options.merge(normalize_options(opts))
 
       @expr = []
-      @expr << After.new(as_time(local_opts[:starts])) if local_opts[:starts]
-      @expr << Before.new(as_time(local_opts[:until])) if local_opts[:until]
+      @expr << initialize_interval(local_opts)
+      @expr << After.new(local_opts[:starts]) if local_opts[:starts]
+      @expr << Before.new(local_opts[:until]) if local_opts[:until]
       @expr << MonthOfYear.new(local_opts[:month]) if local_opts[:month]
-      @expr << Count.new(local_opts[:repeat]) if local_opts[:repeat]
+
+      time_enum = TimeEnumerator.new(local_opts)
 
       Enumerator.new do |yielder|
         loop do
-          time = @event.next
+          time = time_enum.next
 
           yielder << time if @expr.all? { |e| e.advance!(time) }
         end
       end
     end
 
-    def temporal_expressions_include?(time, opts = {})
-      (opts[:starts].nil? || time >= opts[:starts]) &&
-        (opts[:until].nil? || time <= opts[:until]) &&
-        (opts[:except].nil? || !opts[:except].include?(time))
-    end
-
-    def initialize_event(opts = {})
+    def initialize_interval(opts = {})
       opts = @options.merge(normalize_options(opts))
       case opts[:every]
       when :year
@@ -231,22 +223,6 @@ module Montrose
     end
   end
 
-  class Count
-    def initialize(max)
-      @max = max
-      @current = 0
-    end
-
-    def include?(*)
-      @current <= @max
-    end
-
-    def advance!(time)
-      @current += 1
-      include?(time) or raise StopIteration
-    end
-  end
-
   class MonthOfYear
     def initialize(months)
       @months = [months].compact.map { |m| month_number(m) }
@@ -285,30 +261,7 @@ module Montrose
 
   module_function :Recurrence
 
-  class Daily
-    attr_reader :time, :starts
-
-    def initialize(opts = {})
-      @options = opts.dup
-      @time = nil
-      @starts = opts.fetch(:starts, @starts)
-      @interval = opts.fetch(:interval, 1)
-    end
-
-    def next
-      @time = peek
-    end
-
-    def peek
-      return @time = @starts if @time.nil?
-
-      @time.advance(days: @interval)
-    end
-  end
-
-  class Yearly
-    attr_reader :time, :starts
-
+  class TimeEnumerator
     def initialize(opts = {})
       @options = opts.dup
       @time = nil
@@ -327,13 +280,71 @@ module Montrose
     end
 
     def step
+      @step ||= day_step || month_step || year_step
+    end
+
+    def day_step
       if @options[:day]
         { days: 1 }
-      elsif @options[:month]
+      elsif @options[:every] == :day
+        { days: @interval }
+      end
+    end
+
+    def month_step
+      if @options[:month]
         { months: 1 }
-      else
+      elsif @options[:every] == :month
+        { months: @interval }
+      end
+    end
+
+    def year_step
+      if @options[:year]
+        { years: 1 }
+      elsif @options[:every] == :year
         { years: @interval }
       end
+    end
+  end
+
+  class Interval
+    attr_reader :time, :starts
+
+    def initialize(opts = {})
+      @options = opts.dup
+      @time = nil
+      @starts = opts.fetch(:starts, @starts)
+      @interval = opts.fetch(:interval, 1)
+      @repeat = opts[:repeat]
+    end
+
+    def include?(_time)
+      raise "Subclass should implement"
+    end
+
+    def advance!(time)
+      include?(time) && continue?
+    end
+
+    def continue?
+      return true unless @repeat
+
+      @count ||= 0
+      @count += 1
+      @count <= @repeat or raise StopIteration
+    end
+  end
+
+  class Daily < Interval
+    def include?(time)
+      (time.to_date - @starts.to_date).to_i % @interval == 0
+    end
+  end
+
+  class Yearly < Interval
+    def include?(time)
+      (time.year - @starts.year) % @interval == 0
     end
   end
 end
