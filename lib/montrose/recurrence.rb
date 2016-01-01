@@ -156,9 +156,7 @@ module Montrose
         loop do
           time = @event.next
 
-          if @expr.all? { |e| e.advance!(time) }
-            yielder << time
-          end
+          yielder << time if @expr.all? { |e| e.advance!(time) }
         end
       end
     end
@@ -172,6 +170,8 @@ module Montrose
     def initialize_event(opts = {})
       opts = @options.merge(normalize_options(opts))
       case opts[:every]
+      when :year
+        Yearly.new(opts)
       when :day
         Daily.new(opts)
       else
@@ -237,13 +237,13 @@ module Montrose
       @current = 0
     end
 
-    def include?(_)
+    def include?(*)
       @current <= @max
     end
 
-    def advance!(_)
+    def advance!(time)
       @current += 1
-      include?(_) or raise StopIteration
+      include?(time) or raise StopIteration
     end
   end
 
@@ -303,6 +303,37 @@ module Montrose
       return @time = @starts if @time.nil?
 
       @time.advance(days: @interval)
+    end
+  end
+
+  class Yearly
+    attr_reader :time, :starts
+
+    def initialize(opts = {})
+      @options = opts.dup
+      @time = nil
+      @starts = opts.fetch(:starts, @starts)
+      @interval = opts.fetch(:interval, 1)
+    end
+
+    def next
+      @time = peek
+    end
+
+    def peek
+      return @time = @starts if @time.nil?
+
+      @time.advance(step)
+    end
+
+    def step
+      if @options[:day]
+        { days: 1 }
+      elsif @options[:month]
+        { months: 1 }
+      else
+        { years: @interval }
+      end
     end
   end
 end
