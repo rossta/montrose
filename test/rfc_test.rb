@@ -186,7 +186,7 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
     dates.size.must_equal expected_dates.size
   end
 
-  it "support monthly on the 1st Friday for ten occurrences" do
+  it "supports monthly on the 1st Friday for ten occurrences" do
     schedule = new_schedule(
       every: :month,
       day: { friday: [1] },
@@ -195,6 +195,22 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
     expected_dates = cherry_pick(
       2015 => { 9 => [4], 10 => [2], 11 => [6], 12 => [4] },
       2016 => { 1 => [1], 2 => [5], 3 => [4], 4 => [1], 5 => [6], 6 => [3] }
+    ).map { |t| t + 12.hours }
+
+    dates = schedule.events.to_a
+
+    dates.must_pair_with expected_dates
+    dates.size.must_equal expected_dates.size
+  end
+
+  it "supports monthly on the 1st Friday until December 23, 2015" do
+    schedule = new_schedule(
+      every: :month,
+      day: { friday: [1] },
+      until: Date.parse("December 23, 2015"))
+
+    expected_dates = cherry_pick(
+      2015 => { 9 => [4], 10 => [2], 11 => [6], 12 => [4] }
     ).map { |t| t + 12.hours }
 
     dates = schedule.events.to_a
