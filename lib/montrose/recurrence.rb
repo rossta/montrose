@@ -147,6 +147,7 @@ module Montrose
       @expr << initialize_interval(local_opts)
       @expr << After.new(local_opts[:starts]) if local_opts[:starts]
       @expr << Before.new(local_opts[:until]) if local_opts[:until]
+      @expr << Total.new(local_opts[:total]) if local_opts[:total]
       @expr << DayOfWeek.new(local_opts[:day]) if local_opts[:day]
       @expr << MonthOfYear.new(local_opts[:month]) if local_opts[:month]
 
@@ -242,6 +243,30 @@ module Montrose
 
     def break?
       raise StopIteration
+    end
+  end
+
+  class Total
+    def initialize(max)
+      @max = max
+      @count = 0
+    end
+
+    def include?(_time)
+      @count <= @max
+    end
+
+    def advance!(_time)
+      @count += 1
+      break?
+    end
+
+    def continue?
+      @count <= @max
+    end
+
+    def break?
+      continue? or raise StopIteration
     end
   end
 

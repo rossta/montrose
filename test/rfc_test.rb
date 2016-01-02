@@ -168,4 +168,21 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
       dates.must_pair_with expected_dates
       dates.size.must_equal expected_dates.size
   end
+
+  it "supports every other week on Tuesday and Thursday, for 8 occurrences" do
+      schedule = new_schedule(
+        every: :week,
+        day: [:tuesday, :thursday],
+        starts: Date.parse("September 1, 2015"),
+        until: Date.parse("December 23, 2015"),
+        total: 8,
+        interval: 2)
+
+      expected_dates = cherry_pick 2015 => { 9 => [1, 3, 15, 17, 29], 10 => [1, 13, 15] }
+
+      dates = schedule.events.to_a
+
+      dates.must_pair_with expected_dates
+      dates.size.must_equal expected_dates.size
+  end
 end
