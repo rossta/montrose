@@ -86,11 +86,33 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
     end
   end
 
-  it "weekly for 10 occurrences" do
+  it "supports weekly for 10 occurrences" do
     schedule = new_schedule(every: :week, repeat: 10)
 
     expected_dates = consecutive(:weeks, 10)
     dates = schedule.events.take(10)
+
+    dates.must_pair_with expected_dates
+  end
+
+  it "supports weekly until December 24, 2015" do
+    ends_on = Date.parse("December 24, 2015")
+    starts_on = ends_on - 15.weeks
+
+    schedule = new_schedule every: :week, until: ends_on
+
+    expected_dates = consecutive(:weeks, 16, starts: starts_on)
+    dates = schedule.events(starts: starts_on).to_a
+
+    dates.must_pair_with expected_dates
+    dates.size.must_equal 16
+  end
+
+  it "supports every other week forever" do
+    schedule = new_schedule every: :week, interval: 2
+
+    expected_dates = consecutive(:weeks, 5, interval: 2)
+    dates = schedule.events.take(5)
 
     dates.must_pair_with expected_dates
   end

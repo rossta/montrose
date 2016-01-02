@@ -360,7 +360,11 @@ module Montrose
 
   class Weekly < Interval
     def include?(time)
-      (time.to_date.cweek - @starts.to_date.cweek) % @interval == 0
+      ((time.to_date - base_date) / 1.week).round % @interval == 0
+    end
+
+    def base_date
+      @starts.beginning_of_week.to_date
     end
   end
 end
