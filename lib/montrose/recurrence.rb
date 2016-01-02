@@ -342,11 +342,11 @@ module Montrose
 
   class DayOfMonth
     def initialize(days)
-      @days = days_in_month(days)
+      @days = day_occurrences_in_month(days)
     end
 
     def include?(time)
-      @days.key?(time.wday) && (@days[time.wday] == :all || @days[time.wday].include?(week_of_month(time)))
+      @days.key?(time.wday) && matches_day_occurrence?(time)
     end
 
     def advance!(time)
@@ -357,17 +357,37 @@ module Montrose
 
     private
 
-    def week_of_year(time, mondays = false)
-      # Use %U for weeks starting on Sunday
-      # Use %W for weeks starting on Monday
-      time.strftime(mondays ? "%W" : "%U").to_i + 1
+    def matches_day_occurrence?(time)
+      expected_occurrences = @days[time.wday]
+      return true if expected_occurrences == :all
+
+      this_occ, total_occ = which_occurrence_in_month(time)
+
+      expected_occurrences.any? { |nth_occ| matches_nth_occurrence?(nth_occ, this_occ, total_occ) }
     end
 
-    def week_of_month(time, mondays = false)
-      week_of_year(time, mondays) - week_of_year(time.beginning_of_month, mondays) + 1
+    def matches_nth_occurrence?(nth_occ, this_occ, total_occ)
+      return true if nth_occ == this_occ
+
+      nth_occ < 0 && (total_occ + nth_occ + 1) == this_occ
     end
 
-    def days_in_month(obj)
+    # Return the count of the number of times wday appears in the month,
+    # and which of those time falls on
+    def which_occurrence_in_month(time)
+      first_occurrence = ((7 - Time.utc(time.year, time.month, 1).wday) + time.wday) % 7 + 1
+      this_weekday_in_month_count = ((days_in_month(time) - first_occurrence + 1) / 7.0).ceil
+      nth_occurrence_of_weekday = (time.mday - first_occurrence) / 7 + 1
+      [nth_occurrence_of_weekday, this_weekday_in_month_count]
+    end
+
+    # Get the days in the month for +time
+    def days_in_month(time)
+      date = Date.new(time.year, time.month, 1)
+      ((date >> 1) - date).to_i
+    end
+
+    def day_occurrences_in_month(obj)
       case obj
       when Array
         days_in_month(Hash[obj.zip([:all].cycle)])
