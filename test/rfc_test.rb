@@ -218,4 +218,22 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
     dates.must_pair_with expected_dates
     dates.size.must_equal expected_dates.size
   end
+
+  it "supports every other month on the 1st and last Sunday of the month for 10 occurrences" do
+    schedule = new_schedule(
+      every: :month,
+      day: { sunday: [1, -1] },
+      interval: 2,
+      total: 10)
+
+    expected_dates = cherry_pick(
+      2015 => { 9 => [6, 27], 11 => [1, 29] },
+      2016 => { 1 => [3, 24], 3 => [6, 27], 5 => [1, 29] }
+    ).map { |t| t + 12.hours }
+
+    dates = schedule.events.to_a
+
+    dates.must_pair_with expected_dates
+    dates.size.must_equal expected_dates.size
+  end
 end
