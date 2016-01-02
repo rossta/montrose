@@ -221,10 +221,11 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
 
   it "supports every other month on the 1st and last Sunday of the month for 10 occurrences" do
     starts = Date.parse("Tuesday, September 1, 2015")
-    Timecop.travel(starts)
+    Timecop.travel(starts) # Make it easier to set up expected dates for this test
+
     schedule = new_schedule(
-      start: starts,
       every: :month,
+      start: starts,
       day: { sunday: [1, -1] },
       interval: 2,
       total: 10)
@@ -233,6 +234,22 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
       2015 => { 9 => [6, 27], 11 => [1, 29] },
       2016 => { 1 => [3, 31], 3 => [6, 27], 5 => [1, 29] }
     )
+
+    dates = schedule.events.to_a
+
+    dates.must_pair_with expected_dates
+    dates.size.must_equal expected_dates.size
+  end
+
+  it "monthly on the second to last Monday of the month for 6 months" do
+    schedule = new_schedule(
+      every: :month,
+      day: { monday: [-2] },
+      repeat: 6)
+
+    expected_dates = cherry_pick(
+      2015 => { 9 => [21], 10 => [19], 11 => [23], 12 => [21] },
+      2016 => { 1 => [18], 2 => [22] }).map { |t| t + 12.hours }
 
     dates = schedule.events.to_a
 
