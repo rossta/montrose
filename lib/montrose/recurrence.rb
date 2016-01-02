@@ -153,21 +153,22 @@ module Montrose
       time_enum = TimeEnumerator.new(local_opts)
 
       Enumerator.new do |yielder|
-        size = 0
+        # size = 0
         loop do
           time = time_enum.next
 
           yes, no = @expr.partition { |e| e.include?(time) }
+          puts time if ENV["DEBUG"]
 
           if no.empty?
             yes.map { |e| e.advance!(time) }
             yielder << time
           else
-            no.map(&:break)
+            no.map(&:break?)
           end
 
-          size += 1
-          raise "Too many repeats!" if size > 1_000
+          # size += 1
+          # raise "Too many repeats!" if size > 1_000
         end
       end
     end
@@ -216,13 +217,13 @@ module Montrose
     end
 
     def include?(time)
-      time <= @end_time
+      time < @end_time
     end
 
     def advance!(time)
     end
 
-    def break
+    def break?
       raise StopIteration
     end
   end
@@ -239,7 +240,7 @@ module Montrose
     def advance!(time)
     end
 
-    def break
+    def break?
       raise StopIteration
     end
   end
@@ -256,7 +257,7 @@ module Montrose
     def advance!(time)
     end
 
-    def break
+    def break?
     end
 
     private
@@ -285,7 +286,7 @@ module Montrose
     def advance!(time)
     end
 
-    def break
+    def break?
     end
 
     private
@@ -312,6 +313,75 @@ module Montrose
   end
 
   module_function :Recurrence
+
+  class Interval
+    attr_reader :time, :starts
+
+    def initialize(opts = {})
+      @options = opts.dup
+      @time = nil
+      @count = 0
+      @starts = opts.fetch(:starts, @starts)
+      @interval = opts.fetch(:interval, 1)
+      @repeat = opts.fetch(:repeat, nil)
+    end
+
+    def include?(_time)
+      raise "Subclass must implement"
+    end
+
+    def advance!(time)
+      increment!(time)
+      self.break?
+    end
+
+    def break?
+      continue?(time) or raise StopIteration
+    end
+
+    def continue?(_time)
+      return true unless @repeat
+      @count <= @repeat
+    end
+
+    def increment!(_time)
+      @count += 1
+    end
+  end
+
+  class Daily < Interval
+    def include?(time)
+      (time.to_date - @starts.to_date).to_i % @interval == 0
+    end
+  end
+
+  class Yearly < Interval
+    def include?(time)
+      (time.year - @starts.year) % @interval == 0
+    end
+  end
+
+  class Weekly < Interval
+    def include?(time)
+      weeks_since_start(time) % @interval == 0
+    end
+
+    def increment!(time)
+      @weeks ||= Set.new
+      @weeks << weeks_since_start(time)
+      @count = @weeks.count
+    end
+
+    private
+
+    def weeks_since_start(time)
+      ((time.beginning_of_week - base_date) / 1.week).round
+    end
+
+    def base_date
+      @starts.beginning_of_week
+    end
+  end
 
   class TimeEnumerator
     def initialize(opts = {})
@@ -365,75 +435,6 @@ module Montrose
       elsif @options[:every] == :year
         { years: @interval }
       end
-    end
-  end
-
-  class Interval
-    attr_reader :time, :starts
-
-    def initialize(opts = {})
-      @options = opts.dup
-      @time = nil
-      @starts = opts.fetch(:starts, @starts)
-      @interval = opts.fetch(:interval, 1)
-      @repeat = opts[:repeat]
-      @count = 0
-    end
-
-    def include?(_time)
-      raise "Subclass should implement"
-    end
-
-    def advance!(time)
-      increment!(time)
-      continue?(time) or self.break
-    end
-
-    def break
-      raise StopIteration
-    end
-
-    def continue?(_time)
-      return true unless @repeat
-      @count <= @repeat
-    end
-
-    def increment!(_time)
-      @count += 1
-    end
-  end
-
-  class Daily < Interval
-    def include?(time)
-      (time.to_date - @starts.to_date).to_i % @interval == 0
-    end
-  end
-
-  class Yearly < Interval
-    def include?(time)
-      (time.year - @starts.year) % @interval == 0
-    end
-  end
-
-  class Weekly < Interval
-    def include?(time)
-      weeks_since_start(time) % @interval == 0
-    end
-
-    def increment!(time)
-      @weeks ||= Set.new
-      @weeks << weeks_since_start(time)
-      @count = @weeks.count
-    end
-
-    private
-
-    def weeks_since_start(time)
-      ((time.beginning_of_week - base_date) / 1.week).round
-    end
-
-    def base_date
-      @starts.beginning_of_week
     end
   end
 end
