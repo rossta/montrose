@@ -256,4 +256,17 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
     dates.must_pair_with expected_dates
     dates.size.must_equal expected_dates.size
   end
+
+  it "monthly on the third to the last day of the month, forever" do
+    schedule = new_schedule(every: :month, day: [-3])
+
+    expected_dates = cherry_pick(
+      2015 => { 9 => [28], 10 => [29], 11 => [28], 12 => [29] },
+      2016 => { 1 => [29], 2 => [27] }).map { |t| t + 12.hours }
+
+    dates = schedule.events.take(6)
+
+    dates.must_pair_with expected_dates
+    dates.size.must_equal expected_dates.size
+  end
 end
