@@ -148,7 +148,7 @@ module Montrose
       @expr << After.new(local_opts[:starts]) if local_opts[:starts]
       @expr << Before.new(local_opts[:until]) if local_opts[:until]
       @expr << Total.new(local_opts[:total]) if local_opts[:total]
-      @expr << DayOfWeek.new(local_opts[:day]) if local_opts[:day]
+      @expr << initialize_day_expr(local_opts) if local_opts[:day]
       @expr << MonthOfYear.new(local_opts[:month]) if local_opts[:month]
 
       time_enum = TimeEnumerator.new(local_opts)
@@ -159,10 +159,10 @@ module Montrose
           time = time_enum.next
 
           yes, no = @expr.partition { |e| e.include?(time) }
-          puts time if ENV["DEBUG"]
 
           if no.empty?
             yes.map { |e| e.advance!(time) }
+            puts time if ENV["DEBUG"]
             yielder << time
           else
             no.map(&:break?)
@@ -175,16 +175,26 @@ module Montrose
     end
 
     def initialize_interval(opts = {})
-      opts = @options.merge(normalize_options(opts))
       case opts[:every]
       when :year
         Yearly.new(opts)
       when :week
         Weekly.new(opts)
+      when :month
+        Monthly.new(opts)
       when :day
         Daily.new(opts)
       else
         raise "Don't know how to enumerate every: #{opts[:every]}"
+      end
+    end
+
+    def initialize_day_expr(opts = {})
+      case opts[:every]
+      when :month
+        DayOfMonth.new(opts[:day])
+      else
+        DayOfWeek.new(opts[:day])
       end
     end
 
@@ -322,6 +332,60 @@ module Montrose
         name
       when Symbol, String
         Recurrence::DAYS.index(name.to_s.titleize)
+      when Array
+        day_number name.first
+      else
+        raise "Did not recognize day #{name}"
+      end
+    end
+  end
+
+  class DayOfMonth
+    def initialize(days)
+      @days = days_in_month(days)
+    end
+
+    def include?(time)
+      @days.key?(time.wday) && (@days[time.wday] == :all || @days[time.wday].include?(week_of_month(time)))
+    end
+
+    def advance!(time)
+    end
+
+    def break?
+    end
+
+    private
+
+    def week_of_year(time, mondays = false)
+      # Use %U for weeks starting on Sunday
+      # Use %W for weeks starting on Monday
+      time.strftime(mondays ? "%W" : "%U").to_i + 1
+    end
+
+    def week_of_month(time, mondays = false)
+      week_of_year(time, mondays) - week_of_year(time.beginning_of_month, mondays) + 1
+    end
+
+    def days_in_month(obj)
+      case obj
+      when Array
+        days_in_month(Hash[obj.zip([:all].cycle)])
+      when Hash
+        obj.each_with_object({}) do |(name, occ), hash|
+          hash[day_number(name)] = occ
+        end
+      end
+    end
+
+    def day_number(name)
+      case name
+      when Fixnum
+        name
+      when Symbol, String
+        Recurrence::DAYS.index(name.to_s.titleize)
+      when Array
+        day_number name.first
       else
         raise "Did not recognize day #{name}"
       end
@@ -372,17 +436,15 @@ module Montrose
     def increment!(_time)
       @count += 1
     end
+
+    def matches_interval?(time_diff)
+      time_diff.to_i % @interval == 0
+    end
   end
 
   class Daily < Interval
     def include?(time)
-      (time.to_date - @starts.to_date).to_i % @interval == 0
-    end
-  end
-
-  class Yearly < Interval
-    def include?(time)
-      (time.year - @starts.year) % @interval == 0
+      matches_interval? time.to_date - @starts.to_date
     end
   end
 
@@ -405,6 +467,18 @@ module Montrose
 
     def base_date
       @starts.beginning_of_week
+    end
+  end
+
+  class Monthly < Interval
+    def include?(time)
+      matches_interval? time.month - @starts.month
+    end
+  end
+
+  class Yearly < Interval
+    def include?(time)
+      matches_interval? time.year - @starts.year
     end
   end
 

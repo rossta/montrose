@@ -149,40 +149,57 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
 
   it "supports every other week on Monday, Wednesday and Friday until December 23 2015,
     but starting on Tuesday, September 1, 2015" do
-      schedule = new_schedule(
-        every: :week,
-        day: [:monday, :wednesday, :friday],
-        starts: Date.parse("September 1, 2015"),
-        until: Date.parse("December 23, 2015"),
-        interval: 2)
+    schedule = new_schedule(
+      every: :week,
+      day: [:monday, :wednesday, :friday],
+      starts: Date.parse("September 1, 2015"),
+      until: Date.parse("December 23, 2015"),
+      interval: 2)
 
-      # September 1 is omitted for now: need to implement OR interval grouping
-      expected_dates = cherry_pick 2015 => {
-        9 => [2, 4, 14, 16, 18, 28, 30],
-        10 => [2, 12, 14, 16, 26, 28, 30],
-        11 => [9, 11, 13, 23, 25, 27],
-        12 => [7, 9, 11, 21]
-      }
-      dates = schedule.events.to_a
+    # September 1 is omitted for now: need to implement OR interval grouping
+    expected_dates = cherry_pick 2015 => {
+      9 => [2, 4, 14, 16, 18, 28, 30],
+      10 => [2, 12, 14, 16, 26, 28, 30],
+      11 => [9, 11, 13, 23, 25, 27],
+      12 => [7, 9, 11, 21]
+    }
+    dates = schedule.events.to_a
 
-      dates.must_pair_with expected_dates
-      dates.size.must_equal expected_dates.size
+    dates.must_pair_with expected_dates
+    dates.size.must_equal expected_dates.size
   end
 
   it "supports every other week on Tuesday and Thursday, for 8 occurrences" do
-      schedule = new_schedule(
-        every: :week,
-        day: [:tuesday, :thursday],
-        starts: Date.parse("September 1, 2015"),
-        until: Date.parse("December 23, 2015"),
-        total: 8,
-        interval: 2)
+    schedule = new_schedule(
+      every: :week,
+      day: [:tuesday, :thursday],
+      starts: Date.parse("September 1, 2015"),
+      until: Date.parse("December 23, 2015"),
+      total: 8,
+      interval: 2)
 
-      expected_dates = cherry_pick 2015 => { 9 => [1, 3, 15, 17, 29], 10 => [1, 13, 15] }
+    expected_dates = cherry_pick 2015 => { 9 => [1, 3, 15, 17, 29], 10 => [1, 13, 15] }
 
-      dates = schedule.events.to_a
+    dates = schedule.events.to_a
 
-      dates.must_pair_with expected_dates
-      dates.size.must_equal expected_dates.size
+    dates.must_pair_with expected_dates
+    dates.size.must_equal expected_dates.size
+  end
+
+  it "support monthly on the 1st Friday for ten occurrences" do
+    schedule = new_schedule(
+      every: :month,
+      day: { friday: [1] },
+      total: 10)
+
+    expected_dates = cherry_pick(
+      2015 => { 9 => [4], 10 => [2], 11 => [6], 12 => [4] },
+      2016 => { 1 => [1], 2 => [5], 3 => [4], 4 => [1], 5 => [6], 6 => [3] }
+    ).map { |t| t + 12.hours }
+
+    dates = schedule.events.to_a
+
+    dates.must_pair_with expected_dates
+    dates.size.must_equal expected_dates.size
   end
 end
