@@ -116,4 +116,34 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
 
     dates.must_pair_with expected_dates
   end
+
+  describe "supports Tues/Thurs for 5 weeks" do
+    it "until end date" do
+      schedule = new_schedule(
+        every: :week,
+        day: [:tuesday, :thursday],
+        starts: Date.parse("Nov 22, 2015"),
+        until: Date.parse("Dec 24, 2015"))
+
+      expected_dates = cherry_pick 2015 => { 11 => [24, 26], 12 => [1, 3, 8, 10, 15, 17, 22, 24] }
+      dates = schedule.events.to_a
+
+      dates.must_pair_with expected_dates
+      dates.size.must_equal 10
+    end
+
+    it "by count" do
+      schedule = new_schedule(
+        every: :week,
+        day: [:tuesday, :thursday],
+        starts: Date.parse("Nov 22, 2015"),
+        repeat: 5)
+
+      expected_dates = cherry_pick 2015 => { 11 => [24, 26], 12 => [1, 3, 8, 10, 15, 17, 22, 24] }
+      dates = schedule.events.to_a
+
+      dates.must_pair_with expected_dates
+      dates.size.must_equal 10
+    end
+  end
 end

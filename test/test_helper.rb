@@ -46,6 +46,16 @@ module Minitest
         end
       end
     end
+
+    def cherry_pick(date_hash)
+      date_hash.flat_map do |year, months|
+        months.flat_map do |month, days|
+          days.flat_map do |day|
+            Time.new(year, month, day)
+          end
+        end
+      end
+    end
   end
 
   module Assertions

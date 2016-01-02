@@ -1,6 +1,7 @@
 module Montrose
   class Recurrence
     MONTHS = Date::MONTHNAMES
+    DAYS = Date::DAYNAMES
 
     FREQUENCY = %w[day week month year].freeze
     # Create a daily recurrence.
@@ -146,15 +147,27 @@ module Montrose
       @expr << initialize_interval(local_opts)
       @expr << After.new(local_opts[:starts]) if local_opts[:starts]
       @expr << Before.new(local_opts[:until]) if local_opts[:until]
+      @expr << DayOfWeek.new(local_opts[:day]) if local_opts[:day]
       @expr << MonthOfYear.new(local_opts[:month]) if local_opts[:month]
 
       time_enum = TimeEnumerator.new(local_opts)
 
       Enumerator.new do |yielder|
+        size = 0
         loop do
           time = time_enum.next
 
-          yielder << time if @expr.all? { |e| e.advance!(time) }
+          yes, no = @expr.partition { |e| e.include?(time) }
+
+          if no.empty?
+            yes.map { |e| e.advance!(time) }
+            yielder << time
+          else
+            no.map(&:break)
+          end
+
+          size += 1
+          raise "Too many repeats!" if size > 1_000
         end
       end
     end
@@ -207,7 +220,10 @@ module Montrose
     end
 
     def advance!(time)
-      include?(time) or raise StopIteration
+    end
+
+    def break
+      raise StopIteration
     end
   end
 
@@ -221,13 +237,16 @@ module Montrose
     end
 
     def advance!(time)
-      include?(time) or raise StopIteration
+    end
+
+    def break
+      raise StopIteration
     end
   end
 
   class MonthOfYear
     def initialize(months)
-      @months = [months].compact.map { |m| month_number(m) }
+      @months = [*months].compact.map { |m| month_number(m) }
     end
 
     def include?(time)
@@ -235,7 +254,9 @@ module Montrose
     end
 
     def advance!(time)
-      include?(time)
+    end
+
+    def break
     end
 
     private
@@ -248,6 +269,35 @@ module Montrose
         Recurrence::MONTHS.index(name.to_s.titleize)
       else
         raise "Did not recognize month #{name}"
+      end
+    end
+  end
+
+  class DayOfWeek
+    def initialize(days)
+      @days = [*days].compact.map { |d| day_number(d) }
+    end
+
+    def include?(time)
+      @days.include?(time.wday)
+    end
+
+    def advance!(time)
+    end
+
+    def break
+    end
+
+    private
+
+    def day_number(name)
+      case name
+      when Fixnum
+        name
+      when Symbol, String
+        Recurrence::DAYS.index(name.to_s.titleize)
+      else
+        raise "Did not recognize day #{name}"
       end
     end
   end
@@ -327,6 +377,7 @@ module Montrose
       @starts = opts.fetch(:starts, @starts)
       @interval = opts.fetch(:interval, 1)
       @repeat = opts[:repeat]
+      @count = 0
     end
 
     def include?(_time)
@@ -334,15 +385,21 @@ module Montrose
     end
 
     def advance!(time)
-      include?(time) && continue?
+      increment!(time)
+      continue?(time) or self.break
     end
 
-    def continue?
-      return true unless @repeat
+    def break
+      raise StopIteration
+    end
 
-      @count ||= 0
+    def continue?(_time)
+      return true unless @repeat
+      @count <= @repeat
+    end
+
+    def increment!(_time)
       @count += 1
-      @count <= @repeat or raise StopIteration
     end
   end
 
@@ -360,11 +417,23 @@ module Montrose
 
   class Weekly < Interval
     def include?(time)
-      ((time.to_date - base_date) / 1.week).round % @interval == 0
+      weeks_since_start(time) % @interval == 0
+    end
+
+    def increment!(time)
+      @weeks ||= Set.new
+      @weeks << weeks_since_start(time)
+      @count = @weeks.count
+    end
+
+    private
+
+    def weeks_since_start(time)
+      ((time.beginning_of_week - base_date) / 1.week).round
     end
 
     def base_date
-      @starts.beginning_of_week.to_date
+      @starts.beginning_of_week
     end
   end
 end
