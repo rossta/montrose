@@ -164,6 +164,8 @@ module Montrose
       case opts[:every]
       when :year
         Yearly.new(opts)
+      when :week
+        Weekly.new(opts)
       when :day
         Daily.new(opts)
       else
@@ -280,7 +282,7 @@ module Montrose
     end
 
     def step
-      @step ||= day_step || month_step || year_step
+      @step ||= day_step || week_step || month_step || year_step
     end
 
     def day_step
@@ -288,6 +290,14 @@ module Montrose
         { days: 1 }
       elsif @options[:every] == :day
         { days: @interval }
+      end
+    end
+
+    def week_step
+      if @options[:week]
+        { weeks: 1 }
+      elsif @options[:every] == :week
+        { weeks: @interval }
       end
     end
 
@@ -345,6 +355,12 @@ module Montrose
   class Yearly < Interval
     def include?(time)
       (time.year - @starts.year) % @interval == 0
+    end
+  end
+
+  class Weekly < Interval
+    def include?(time)
+      (time.to_date.cweek - @starts.to_date.cweek) % @interval == 0
     end
   end
 end

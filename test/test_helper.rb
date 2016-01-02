@@ -34,11 +34,15 @@ module Minitest
     end
 
     def consecutive_days(count, starts: Time.now, interval: 1)
+      consecutive(:days, count, starts: starts, interval: interval)
+    end
+
+    def consecutive(duration, count, starts: Time.now, interval: 1)
       [].tap do |e|
         date = starts.to_time
         count.times do
           e << date
-          date += interval.day
+          date += interval.send(duration)
         end
       end
     end

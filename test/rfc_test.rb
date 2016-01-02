@@ -85,4 +85,13 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
       dates.size.must_equal 31 * 3
     end
   end
+
+  it "weekly for 10 occurrences" do
+    schedule = new_schedule(every: :week, repeat: 10)
+
+    expected_dates = consecutive(:weeks, 10)
+    dates = schedule.events.take(10)
+
+    dates.must_pair_with expected_dates
+  end
 end
