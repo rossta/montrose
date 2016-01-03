@@ -158,7 +158,6 @@ module Montrose
       time_enum = TimeEnumerator.new(local_opts)
 
       Enumerator.new do |yielder|
-        # size = 0
         loop do
           time = time_enum.next
 
@@ -171,9 +170,6 @@ module Montrose
           else
             no.map(&:break?)
           end
-
-          # size += 1
-          # raise "Too many repeats!" if size > 1_000
         end
       end
     end

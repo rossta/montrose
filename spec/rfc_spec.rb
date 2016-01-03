@@ -1,6 +1,11 @@
 require "spec_helper"
 
-describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
+describe "RFC Recurrence Rules" do
+  #
+  # Literature:
+  #   - spec https://tools.ietf.org/html/rfc5545#section-3.3.10
+  #   - examples: https://tools.ietf.org/html/rfc5545#section-3.8.5.3
+  #
   let(:time_now) { Time.parse("Tuesday, September 1, 2015, 12:00 PM") }
 
   before do
@@ -117,7 +122,7 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
     dates.must_pair_with expected_dates
   end
 
-  describe "Tues/Thurs for 5 weeks" do
+  describe "weekly on Tuesday and Thursday for five weeks" do
     it "until end date" do
       schedule = new_schedule(
         every: :week,
@@ -156,6 +161,7 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
       until: Date.parse("December 23, 2015"),
       interval: 2)
 
+    # TODO: Non-interval start date not supported
     # September 1 is omitted for now: need to implement OR interval grouping
     expected_dates = cherry_pick 2015 => {
       9 => [2, 4, 14, 16, 18, 28, 30],
@@ -186,7 +192,7 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
     dates.size.must_equal expected_dates.size
   end
 
-  it "monthly on the 1st Friday for ten occurrences" do
+  it "monthly on the first Friday for ten occurrences" do
     schedule = new_schedule(
       every: :month,
       day: { friday: [1] },
@@ -203,7 +209,7 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
     dates.size.must_equal expected_dates.size
   end
 
-  it "monthly on the 1st Friday until December 23, 2015" do
+  it "monthly on the first Friday until December 23, 2015" do
     schedule = new_schedule(
       every: :month,
       day: { friday: [1] },
@@ -219,7 +225,7 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
     dates.size.must_equal expected_dates.size
   end
 
-  it "every other month on the 1st and last Sunday of the month for 10 occurrences" do
+  it "every other month on the first and last Sunday of the month for 10 occurrences" do
     starts = Date.parse("Tuesday, September 1, 2015")
     Timecop.travel(starts) # Make it easier to set up expected dates for this test
 
@@ -241,7 +247,7 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
     dates.size.must_equal expected_dates.size
   end
 
-  it "monthly on the second to last Monday of the month for 6 months" do
+  it "monthly on the second-to-last Monday of the month for 6 months" do
     schedule = new_schedule(
       every: :month,
       day: { monday: [-2] },
@@ -257,7 +263,7 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
     dates.size.must_equal expected_dates.size
   end
 
-  it "monthly on the third to the last day of the month, forever" do
+  it "monthly on the third-to-the-last day of the month, forever" do
     schedule = new_schedule(every: :month, mday: [-3])
 
     expected_dates = cherry_pick(
@@ -360,7 +366,7 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
     dates.size.must_equal 10
   end
 
-  it "every 3rd year on the 1st, 100th and 200th day for 10 occurrences" do
+  it "every third year on the 1st, 100th and 200th day for 10 occurrences" do
     schedule = new_schedule(
       every: :year,
       yday: [1, 100, 200],
@@ -429,7 +435,7 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
     dates.must_pair_with expected_dates
   end
 
-  it "every Friday 13th forever" do
+  it "every Friday 13th, forever" do
     schedule = new_schedule(every: :month, mday: 13, day: :friday)
 
     expected_dates = cherry_pick(
@@ -470,9 +476,28 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
     dates.must_pair_with expected_dates
   end
 
-  # TODO: - Support set position
-  # "3rd instance into the month of one of Tuesday, Wednesday or Thursday, for the next 3 months" do
+  # TODO: Support set position
   # i.e., every: :month, repeat: 3, day: [:tuesday, :wednesday, :thursday], pos: 3
+  #
+  # The 3rd instance into the month of one of Tuesday, Wednesday or
+  # Thursday, for the next 3 months:
+  #
+  #   DTSTART;TZID=US-Eastern:19970904T090000
+  #   RRULE:FREQ=MONTHLY;COUNT=3;BYDAY=TU,WE,TH;BYSETPOS=3
+  #
+  #   ==> (1997 9:00 AM EDT)September 4;October 7
+  #       (1997 9:00 AM EST)November 6
+
+  # TODO: Support set position
+  # i.e., every: :month, repeat: 3, day: [:tuesday, :wednesday, :thursday], pos: 3
+  # The 2nd to last weekday of the month:
+  #
+  #   DTSTART;TZID=US-Eastern:19970929T090000
+  #   RRULE:FREQ=MONTHLY;BYDAY=MO,TU,WE,TH,FR;BYSETPOS=-2
+  #
+  #   ==> (1997 9:00 AM EDT)September 29
+  #       (1997 9:00 AM EST)October 30;November 27;December 30
+  #       (1998 9:00 AM EST)January 29;February 26;March 30
   # "2nd to last weekday of the month"
   # i.e., every: :month, repeat: 3, day: [:monday, tuesday, :wednesday, :thursday, :friday], pos: -2
 
@@ -521,4 +546,19 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
 
     dates.must_pair_with expected_dates
   end
+
+  # TODO: Support week start on Monday
+  # An example where the days generated makes a difference because of
+  # WKST:
+  #
+  #   DTSTART;TZID=US-Eastern:19970805T090000
+  #   RRULE:FREQ=WEEKLY;INTERVAL=2;COUNT=4;BYDAY=TU,SU;WKST=MO
+  #
+  #   ==> (1997 EDT)Aug 5,10,19,24
+  #
+  #   changing only WKST from MO to SU, yields different results...
+  #
+  #   DTSTART;TZID=US-Eastern:19970805T090000
+  #   RRULE:FREQ=WEEKLY;INTERVAL=2;COUNT=4;BYDAY=TU,SU;WKST=SU
+  #   ==> (1997 EDT)August 5,17,19,31
 end
