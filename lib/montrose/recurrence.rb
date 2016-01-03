@@ -148,7 +148,7 @@ module Montrose
       @expr << After.new(local_opts[:starts]) if local_opts[:starts]
       @expr << Before.new(local_opts[:until]) if local_opts[:until]
       @expr << Total.new(local_opts[:total]) if local_opts[:total]
-      @expr << initialize_day_expr(local_opts) if local_opts[:day]
+      @expr += initialize_day_expr(local_opts) if local_opts[:day]
       @expr << WeekOfYear.new(local_opts[:week]) if local_opts[:week]
       @expr << MonthOfYear.new(local_opts[:month]) if local_opts[:month]
 
@@ -194,22 +194,29 @@ module Montrose
       case opts[:every]
       when :month
         if opts[:day].is_a?(Hash)
-          DayOccurrenceOfMonth.new(opts[:day])
+          opts[:day].each_with_object([]) do |(key, _val), expr|
+            case key
+            when Symbol, String
+              expr << DayOccurrenceOfMonth.new(opts[:day])
+            when Fixnum
+              expr << DayOfWeekOfMonth.new(opts[:day])
+            end
+          end
         elsif [*opts[:day]].any? { |d| d.to_s =~ %r{#{DAYS.join('|')}}i }
-          DayOfWeek.new(opts[:day])
+          [DayOfWeek.new(opts[:day])]
         else
-          DayOfMonth.new(opts[:day])
+          [DayOfMonth.new(opts[:day])]
         end
       when :year
         if opts[:day].is_a?(Hash)
-          DayOccurrenceOfYear.new(opts[:day])
+          [DayOccurrenceOfYear.new(opts[:day])]
         elsif [*opts[:day]].any? { |d| d.to_s =~ %r{#{DAYS.join('|')}}i }
-          DayOfWeek.new(opts[:day])
+          [DayOfWeek.new(opts[:day])]
         else
-          DayOfYear.new(opts[:day])
+          [DayOfYear.new(opts[:day])]
         end
       else
-        DayOfWeek.new(opts[:day])
+        [DayOfWeek.new(opts[:day])]
       end
     end
 
@@ -498,6 +505,65 @@ module Montrose
         obj.each_with_object({}) do |(name, occ), hash|
           hash[day_number(name)] = occ
         end
+      end
+    end
+
+    def day_number(name)
+      case name
+      when Fixnum
+        name
+      when Symbol, String
+        Recurrence::DAYS.index(name.to_s.titleize)
+      when Array
+        day_number name.first
+      else
+        raise "Did not recognize day #{name}"
+      end
+    end
+  end
+
+  class DayOfWeekOfMonth
+    def initialize(days)
+      @days = month_days_week_days(days)
+    end
+
+    def include?(time)
+      @days.key?(time.mday) && matches_day_of_month?(time)
+    end
+
+    def advance!(time)
+    end
+
+    def break?
+    end
+
+    private
+
+    def matches_day_of_month?(time)
+      day = @days[time.mday]
+      day == :any || day == time.wday || matches_from_end_of_month?(time)
+    end
+
+    def matches_from_end_of_month?(time)
+      mday = time.mday
+      month_days = days_in_month(time)
+      @days.keys.select { |k, _v| k < 0 }.any? { |d| month_days + d + 1 == mday }
+    end
+
+    # Get the days in the month for +time
+    def days_in_month(time)
+      date = Date.new(time.year, time.month, 1)
+      ((date >> 1) - date).to_i
+    end
+
+    def month_days_week_days(obj)
+      case obj
+      when Hash
+        obj.each_with_object({}) do |(num, name), hash|
+          hash[num] = day_number(name)
+        end
+      else
+        Hash[[*obj].zip([:any].cycle)]
       end
     end
 

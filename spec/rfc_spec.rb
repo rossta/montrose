@@ -428,4 +428,18 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
 
     dates.must_pair_with expected_dates
   end
+
+  it "every Friday 13th forever" do
+    schedule = new_schedule(every: :month, day: { 13 => :friday })
+
+    expected_dates = cherry_pick(
+      2015 => { 11 => [13] },
+      2016 => { 5 => [13] },
+      2017 => { 1 => [13], 10 => [13] },
+      2018 => { 4 => [13], 7 => [13] }).map { |i| i + 12.hours }
+
+    dates = schedule.events.take(expected_dates.size)
+
+    dates.must_pair_with expected_dates
+  end
 end
