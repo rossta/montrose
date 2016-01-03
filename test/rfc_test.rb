@@ -323,4 +323,20 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
 
     dates.must_pair_with expected_dates
   end
+
+  it "yearly in June and July for 10 occurrences" do
+    schedule = new_schedule(every: :year, month: [:june, :july], total: 10)
+
+    expected_dates = cherry_pick(
+      2016 => { 6 => [1], 7 => [1] },
+      2017 => { 6 => [1], 7 => [1] },
+      2018 => { 6 => [1], 7 => [1] },
+      2019 => { 6 => [1], 7 => [1] },
+      2020 => { 6 => [1], 7 => [1] }).map { |i| i + 12.hours }
+
+    dates = schedule.events.to_a
+
+    dates.must_pair_with expected_dates
+    dates.size.must_equal 10
+  end
 end
