@@ -7,7 +7,7 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
     Timecop.freeze(time_now)
   end
 
-  it "supports daily for 10 occurrences" do
+  it "daily for 10 occurrences" do
     schedule = new_schedule every: :day, repeat: 10
 
     dates = schedule.events(starts: time_now).to_a
@@ -16,7 +16,7 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
     dates.size.must_equal 10
   end
 
-  it "supports daily until December 23, 2015" do
+  it "daily until December 23, 2015" do
     starts_on = time_now.to_date
     ends_on = Date.parse("December 23, 2015")
     days = starts_on.upto(ends_on).count - 1
@@ -30,7 +30,7 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
     dates.size.must_equal days
   end
 
-  it "supports every other day forever" do
+  it "every other day forever" do
     schedule = new_schedule every: :day, interval: 2
 
     expected_dates = consecutive_days(5, interval: 2)
@@ -39,7 +39,7 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
     dates.must_pair_with expected_dates
   end
 
-  it "supports every 10 days 5 occurrences" do
+  it "every 10 days 5 occurrences" do
     schedule = new_schedule every: :day, interval: 10, repeat: 5
 
     expected_dates = consecutive_days(5, interval: 10)
@@ -49,7 +49,7 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
     dates.size.must_equal 5
   end
 
-  describe "supports everyday in January for 3 years" do
+  describe "everyday in January for 3 years" do
     let(:starts_at) { Time.parse("January 1, 2016, 9:00 AM") }
     let(:ends_at) { (starts_at + 2.years).end_of_month }
 
@@ -86,7 +86,7 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
     end
   end
 
-  it "supports weekly for 10 occurrences" do
+  it "weekly for 10 occurrences" do
     schedule = new_schedule(every: :week, repeat: 10)
 
     expected_dates = consecutive(:weeks, 10)
@@ -95,7 +95,7 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
     dates.must_pair_with expected_dates
   end
 
-  it "supports weekly until December 23, 2015" do
+  it "weekly until December 23, 2015" do
     ends_on = Date.parse("December 23, 2015")
     starts_on = ends_on - 15.weeks
 
@@ -108,7 +108,7 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
     dates.size.must_equal 15
   end
 
-  it "supports every other week forever" do
+  it "every other week forever" do
     schedule = new_schedule every: :week, interval: 2
 
     expected_dates = consecutive(:weeks, 5, interval: 2)
@@ -117,7 +117,7 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
     dates.must_pair_with expected_dates
   end
 
-  describe "supports Tues/Thurs for 5 weeks" do
+  describe "Tues/Thurs for 5 weeks" do
     it "until end date" do
       schedule = new_schedule(
         every: :week,
@@ -147,7 +147,7 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
     end
   end
 
-  it "supports every other week on Monday, Wednesday and Friday until December 23 2015,
+  it "every other week on Monday, Wednesday and Friday until December 23 2015,
     but starting on Tuesday, September 1, 2015" do
     schedule = new_schedule(
       every: :week,
@@ -169,7 +169,7 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
     dates.size.must_equal expected_dates.size
   end
 
-  it "supports every other week on Tuesday and Thursday, for 8 occurrences" do
+  it "every other week on Tuesday and Thursday, for 8 occurrences" do
     schedule = new_schedule(
       every: :week,
       day: [:tuesday, :thursday],
@@ -186,7 +186,7 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
     dates.size.must_equal expected_dates.size
   end
 
-  it "supports monthly on the 1st Friday for ten occurrences" do
+  it "monthly on the 1st Friday for ten occurrences" do
     schedule = new_schedule(
       every: :month,
       day: { friday: [1] },
@@ -203,7 +203,7 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
     dates.size.must_equal expected_dates.size
   end
 
-  it "supports monthly on the 1st Friday until December 23, 2015" do
+  it "monthly on the 1st Friday until December 23, 2015" do
     schedule = new_schedule(
       every: :month,
       day: { friday: [1] },
@@ -219,7 +219,7 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
     dates.size.must_equal expected_dates.size
   end
 
-  it "supports every other month on the 1st and last Sunday of the month for 10 occurrences" do
+  it "every other month on the 1st and last Sunday of the month for 10 occurrences" do
     starts = Date.parse("Tuesday, September 1, 2015")
     Timecop.travel(starts) # Make it easier to set up expected dates for this test
 
@@ -309,5 +309,18 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
 
     dates.must_pair_with expected_dates
     dates.size.must_equal expected_dates.size
+  end
+
+  it "every Tuesday, every other month" do
+    starts = Date.parse("September 1, 2015")
+    schedule = new_schedule(every: :month, interval: 2, day: :tuesday)
+
+    expected_dates = cherry_pick(
+      2015 => { 9 => [1, 8, 15, 22, 29], 11 => [3, 10, 17, 24] },
+      2016 => { 1 => [5, 12, 19, 26], 3 => [1, 8, 15, 22, 29] })
+
+    dates = schedule.events(starts: starts).take(expected_dates.size)
+
+    dates.must_pair_with expected_dates
   end
 end

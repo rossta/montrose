@@ -194,6 +194,8 @@ module Montrose
       when :month
         if opts[:day].is_a?(Hash)
           WeekDayOfMonth.new(opts[:day])
+        elsif [*opts[:day]].any? { |d| d.to_s =~ %r{#{DAYS.join('|')}}i }
+          DayOfWeek.new(opts[:day])
         else
           DayOfMonth.new(opts[:day])
         end
