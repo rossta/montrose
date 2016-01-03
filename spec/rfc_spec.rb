@@ -498,4 +498,27 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
 
     dates.must_pair_with expected_dates
   end
+
+  it "every hour and a half for four occurrences" do
+    schedule = new_schedule(every: :minute, interval: 90, total: 4)
+
+    expected_dates = consecutive(:minutes, 4, interval: 90)
+
+    dates = schedule.events.to_a
+
+    dates.must_pair_with expected_dates
+  end
+
+  it "every 20 minutes from 9:00 AM to 4:40 PM every day" do
+    Timecop.freeze(time_now.beginning_of_day)
+    schedule = new_schedule(every: :minute, interval: 20, hour: 9..16)
+
+    expected_dates = consecutive(:minute, 24, starts: Time.parse("September 1, 2015 9:00 AM"), interval: 20)
+    expected_dates += consecutive(:minute, 24, starts: Time.parse("September 2, 2015 9:00 AM"), interval: 20)
+    expected_dates += consecutive(:minute, 24, starts: Time.parse("September 3, 2015 9:00 AM"), interval: 20)
+
+    dates = schedule.events.take(72)
+
+    dates.must_pair_with expected_dates
+  end
 end

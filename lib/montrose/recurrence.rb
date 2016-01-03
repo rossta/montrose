@@ -153,6 +153,7 @@ module Montrose
       @expr << DayOfYear.new(local_opts[:yday]) if local_opts[:yday]
       @expr << WeekOfYear.new(local_opts[:week]) if local_opts[:week]
       @expr << MonthOfYear.new(local_opts[:month]) if local_opts[:month]
+      @expr << HourOfDay.new(local_opts[:hour]) if local_opts[:hour]
 
       time_enum = TimeEnumerator.new(local_opts)
 
@@ -617,16 +618,21 @@ module Montrose
     end
   end
 
-  def Recurrence(obj)
-    case obj
-    when Recurrence
-      obj
-    else
-      Recurrence.new(obj)
+  class HourOfDay
+    def initialize(hours)
+      @hours = [*hours].compact
+    end
+
+    def include?(time)
+      @hours.include?(time.hour)
+    end
+
+    def advance!(time)
+    end
+
+    def break?
     end
   end
-
-  module_function :Recurrence
 
   class Interval
     attr_reader :time, :starts
@@ -793,4 +799,15 @@ module Montrose
       end
     end
   end
+
+  def Recurrence(obj)
+    case obj
+    when Recurrence
+      obj
+    else
+      Recurrence.new(obj)
+    end
+  end
+
+  module_function :Recurrence
 end
