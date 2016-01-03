@@ -8,6 +8,9 @@ require "active_support/core_ext/date_time"
 module Montrose
 end
 
-require "montrose/schedule"
+require "montrose/rule"
+require "montrose/clock"
 require "montrose/recurrence"
+require "montrose/frequency"
+require "montrose/schedule"
 require "montrose/version"
