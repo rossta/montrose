@@ -149,6 +149,8 @@ module Montrose
       @expr << Before.new(local_opts[:until]) if local_opts[:until]
       @expr << Total.new(local_opts[:total]) if local_opts[:total]
       @expr += initialize_day_expr(local_opts) if local_opts[:day]
+      @expr << DayOfMonth.new(local_opts[:mday]) if local_opts[:mday]
+      @expr << DayOfYear.new(local_opts[:yday]) if local_opts[:yday]
       @expr << WeekOfYear.new(local_opts[:week]) if local_opts[:week]
       @expr << MonthOfYear.new(local_opts[:month]) if local_opts[:month]
 
@@ -194,29 +196,15 @@ module Montrose
       case opts[:every]
       when :month
         if opts[:day].is_a?(Hash)
-          opts[:day].each_with_object([]) do |(key, val), expr|
-            case key
-            when Symbol, String
-              expr << DayOccurrenceOfMonth.new(opts[:day])
-            when Fixnum
-              expr << DayOfWeekOfMonth.new(opts[:day])
-            when Range
-              days = key.each_with_object({}) { |n, obj| obj[n] = val }
-              expr << DayOfWeekOfMonth.new(days)
-            end
-          end
-        elsif [*opts[:day]].any? { |d| d.to_s =~ %r{#{DAYS.join('|')}}i }
-          [DayOfWeek.new(opts[:day])]
+          [DayOccurrenceOfMonth.new(opts[:day])]
         else
-          [DayOfMonth.new(opts[:day])]
+          [DayOfWeek.new(opts[:day])]
         end
       when :year
         if opts[:day].is_a?(Hash)
           [DayOccurrenceOfYear.new(opts[:day])]
-        elsif [*opts[:day]].any? { |d| d.to_s =~ %r{#{DAYS.join('|')}}i }
-          [DayOfWeek.new(opts[:day])]
         else
-          [DayOfYear.new(opts[:day])]
+          [DayOfWeek.new(opts[:day])]
         end
       else
         [DayOfWeek.new(opts[:day])]
@@ -738,7 +726,7 @@ module Montrose
     end
 
     def day_step
-      if @options[:day]
+      if @options.key?(:day) || @options.key?(:mday) || @options.key?(:yday)
         { days: 1 }
       elsif @options[:every] == :day
         { days: @interval }
@@ -746,7 +734,7 @@ module Montrose
     end
 
     def week_step
-      if @options[:week]
+      if @options.key?(:week)
         { weeks: 1 }
       elsif @options[:every] == :week
         { weeks: @interval }
@@ -754,7 +742,7 @@ module Montrose
     end
 
     def month_step
-      if @options[:month]
+      if @options.key?(:month)
         { months: 1 }
       elsif @options[:every] == :month
         { months: @interval }
@@ -762,7 +750,7 @@ module Montrose
     end
 
     def year_step
-      if @options[:year]
+      if @options.key?(:year)
         { years: 1 }
       elsif @options[:every] == :year
         { years: @interval }

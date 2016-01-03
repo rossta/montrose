@@ -258,7 +258,7 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
   end
 
   it "monthly on the third to the last day of the month, forever" do
-    schedule = new_schedule(every: :month, day: [-3])
+    schedule = new_schedule(every: :month, mday: [-3])
 
     expected_dates = cherry_pick(
       2015 => { 9 => [28], 10 => [29], 11 => [28], 12 => [29] },
@@ -271,7 +271,7 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
   end
 
   it "monthly on the 2nd and 15th of the month for 10 occurrences" do
-    schedule = new_schedule(every: :month, day: [2, 15], total: 10)
+    schedule = new_schedule(every: :month, mday: [2, 15], total: 10)
 
     expected_dates = cherry_pick(
       2015 => { 9 => [2, 15], 10 => [2, 15], 11 => [2, 15], 12 => [2, 15] },
@@ -285,7 +285,7 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
 
   it "monthly on the first and last day of the month for 10 occurrences" do
     starts = Date.parse("Tuesday, September 2, 2015")
-    schedule = new_schedule(starts: starts, every: :month, day: [1, -1], total: 10)
+    schedule = new_schedule(starts: starts, every: :month, mday: [1, -1], total: 10)
 
     expected_dates = cherry_pick(
       2015 => { 9 => [30], 10 => [1, 31], 11 => [1, 30], 12 => [1, 31] },
@@ -299,7 +299,7 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
 
   it "every 18 months on the 10th thru 15th of the month for 10 occurrences" do
     starts = Date.parse("September 1, 2015")
-    schedule = new_schedule(starts: starts, every: :month, interval: 18, total: 10, day: 10..15)
+    schedule = new_schedule(starts: starts, every: :month, interval: 18, total: 10, mday: 10..15)
 
     expected_dates = cherry_pick(
       2015 => { 9 => [10, 11, 12, 13, 14, 15] },
@@ -363,7 +363,7 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
   it "every 3rd year on the 1st, 100th and 200th day for 10 occurrences" do
     schedule = new_schedule(
       every: :year,
-      day: [1, 100, 200],
+      yday: [1, 100, 200],
       total: 10)
 
     expected_dates = cherry_pick(
@@ -430,7 +430,7 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
   end
 
   it "every Friday 13th forever" do
-    schedule = new_schedule(every: :month, day: { 13 => :friday })
+    schedule = new_schedule(every: :month, mday: 13, day: :friday)
 
     expected_dates = cherry_pick(
       2015 => { 11 => [13] },
@@ -444,7 +444,7 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
   end
 
   it "first Saturday that follows the first Sunday of the month, forever" do
-    schedule = new_schedule(every: :month, day: { 7..13 => :saturday })
+    schedule = new_schedule(every: :month, mday: 7..13, day: :saturday)
 
     expected_dates = cherry_pick(
       2015 => { 9 => [12], 10 => [10], 11 => [7], 12 => [12] },
