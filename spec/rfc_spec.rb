@@ -455,4 +455,18 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
 
     dates.must_pair_with expected_dates
   end
+
+  it "every four years, the first Tuesday after a Monday in November, forever (U.S. Presidential Election day)" do
+    Timecop.travel(Date.parse("January 1, 2016"))
+    schedule = new_schedule(every: :year, interval: 4, month: :november, day: :tuesday, mday: 2..8)
+
+    expected_dates = cherry_pick(
+      2016 => { 11 => [8] },
+      2020 => { 11 => [3] },
+      2024 => { 11 => [5] })
+
+    dates = schedule.events.take(expected_dates.size)
+
+    dates.must_pair_with expected_dates
+  end
 end
