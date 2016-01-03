@@ -387,6 +387,19 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
       2018 => { 5 => [14] }).map { |i| i + 12.hours }
 
     dates = schedule.events.take(3)
+    dates.must_pair_with expected_dates
+    dates.size.must_equal 3
+  end
+
+  it "Monday of week number 20 forever" do
+    schedule = new_schedule(every: :year, week: [20], day: [:monday])
+
+    expected_dates = cherry_pick(
+      2016 => { 5 => [16] },
+      2017 => { 5 => [15] },
+      2018 => { 5 => [14] }).map { |i| i + 12.hours }
+
+    dates = schedule.events.take(3)
 
     dates.must_pair_with expected_dates
     dates.size.must_equal 3

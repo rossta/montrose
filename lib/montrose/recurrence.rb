@@ -149,6 +149,7 @@ module Montrose
       @expr << Before.new(local_opts[:until]) if local_opts[:until]
       @expr << Total.new(local_opts[:total]) if local_opts[:total]
       @expr << initialize_day_expr(local_opts) if local_opts[:day]
+      @expr << WeekOfYear.new(local_opts[:week]) if local_opts[:week]
       @expr << MonthOfYear.new(local_opts[:month]) if local_opts[:month]
 
       time_enum = TimeEnumerator.new(local_opts)
@@ -351,6 +352,22 @@ module Montrose
       else
         raise "Did not recognize day #{name}"
       end
+    end
+  end
+
+  class WeekOfYear
+    def initialize(weeks)
+      @weeks = [*weeks].compact
+    end
+
+    def include?(time)
+      @weeks.include?(time.to_date.cweek)
+    end
+
+    def advance!(time)
+    end
+
+    def break?
     end
   end
 
