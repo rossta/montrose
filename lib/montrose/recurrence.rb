@@ -189,6 +189,8 @@ module Montrose
         Daily.new(opts)
       when :hour
         Hourly.new(opts)
+      when :minute
+        Minutely.new(opts)
       else
         raise "Don't know how to enumerate every: #{opts[:every]}"
       end
@@ -665,9 +667,15 @@ module Montrose
     end
   end
 
+  class Minutely < Interval
+    def include?(time)
+      matches_interval?((time - @starts) / 1.minute)
+    end
+  end
+
   class Hourly < Interval
     def include?(time)
-      matches_interval?(((time - @starts) / 1.hour).round)
+      matches_interval?((time - @starts) / 1.hour)
     end
   end
 
@@ -730,7 +738,19 @@ module Montrose
     end
 
     def step
-      @step ||= day_step || hour_step || week_step || month_step || year_step or raise "No step for #{@options.inspect}"
+      @step ||= smallest_step or raise "No step for #{@options.inspect}"
+    end
+
+    def smallest_step
+      minute_step || hour_step || day_step || week_step || month_step || year_step
+    end
+
+    def minute_step
+      if @options.key?(:minute)
+        { minutes: 1 }
+      elsif @options[:every] == :minute
+        { minutes: @interval }
+      end
     end
 
     def hour_step

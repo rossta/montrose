@@ -486,5 +486,16 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
     dates = schedule.events.to_a
 
     dates.must_pair_with expected_dates
+    dates.size.must_equal expected_dates.size
+  end
+
+  it "every 15 minutes for 6 occurrences" do
+    schedule = new_schedule(every: :minute, interval: 15, total: 6)
+
+    expected_dates = consecutive(:minutes, 6, interval: 15)
+
+    dates = schedule.events.to_a
+
+    dates.must_pair_with expected_dates
   end
 end
