@@ -470,9 +470,21 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
     dates.must_pair_with expected_dates
   end
 
-  # TODO - Support set position
+  # TODO: - Support set position
   # "3rd instance into the month of one of Tuesday, Wednesday or Thursday, for the next 3 months" do
   # i.e., every: :month, repeat: 3, day: [:tuesday, :wednesday, :thursday], pos: 3
   # "2nd to last weekday of the month"
   # i.e., every: :month, repeat: 3, day: [:monday, tuesday, :wednesday, :thursday, :friday], pos: -2
+
+  it "every 3 hours from 9:00 AM to 5:00 PM on a specific day" do
+    starts = Time.parse("September 1, 2015 9:00 AM")
+    ends = Time.parse("September 1, 2015 5:00 PM")
+    schedule = new_schedule(every: :hour, interval: 3, starts: starts, until: ends)
+
+    expected_dates = consecutive(:hours, 3, starts: starts, interval: 3)
+
+    dates = schedule.events.to_a
+
+    dates.must_pair_with expected_dates
+  end
 end
