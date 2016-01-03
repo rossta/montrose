@@ -442,4 +442,17 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
 
     dates.must_pair_with expected_dates
   end
+
+  it "first Saturday that follows the first Sunday of the month, forever" do
+    schedule = new_schedule(every: :month, day: { 7..13 => :saturday })
+
+    expected_dates = cherry_pick(
+      2015 => { 9 => [12], 10 => [10], 11 => [7], 12 => [12] },
+      2016 => { 1 => [9], 2 => [13], 3 => [12], 4 => [9], 5 => [7], 6 => [11] }
+    ).map { |i| i + 12.hours }
+
+    dates = schedule.events.take(expected_dates.size)
+
+    dates.must_pair_with expected_dates
+  end
 end

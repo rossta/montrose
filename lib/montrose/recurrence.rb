@@ -194,12 +194,15 @@ module Montrose
       case opts[:every]
       when :month
         if opts[:day].is_a?(Hash)
-          opts[:day].each_with_object([]) do |(key, _val), expr|
+          opts[:day].each_with_object([]) do |(key, val), expr|
             case key
             when Symbol, String
               expr << DayOccurrenceOfMonth.new(opts[:day])
             when Fixnum
               expr << DayOfWeekOfMonth.new(opts[:day])
+            when Range
+              days = key.each_with_object({}) { |n, obj| obj[n] = val }
+              expr << DayOfWeekOfMonth.new(days)
             end
           end
         elsif [*opts[:day]].any? { |d| d.to_s =~ %r{#{DAYS.join('|')}}i }
