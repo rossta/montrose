@@ -469,4 +469,10 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
 
     dates.must_pair_with expected_dates
   end
+
+  # TODO - Support set position
+  # "3rd instance into the month of one of Tuesday, Wednesday or Thursday, for the next 3 months" do
+  # i.e., every: :month, repeat: 3, day: [:tuesday, :wednesday, :thursday], pos: 3
+  # "2nd to last weekday of the month"
+  # i.e., every: :month, repeat: 3, day: [:monday, tuesday, :wednesday, :thursday, :friday], pos: -2
 end
