@@ -199,6 +199,12 @@ module Montrose
         else
           DayOfMonth.new(opts[:day])
         end
+      when :year
+        if [*opts[:day]].any? { |d| d.to_s =~ %r{#{DAYS.join('|')}}i }
+          DayOfWeek.new(opts[:day])
+        else
+          DayOfYear.new(opts[:day])
+        end
       else
         DayOfWeek.new(opts[:day])
       end
@@ -440,6 +446,22 @@ module Montrose
     def days_in_month(time)
       date = Date.new(time.year, time.month, 1)
       ((date >> 1) - date).to_i
+    end
+  end
+
+  class DayOfYear
+    def initialize(days)
+      @days = [*days].compact
+    end
+
+    def include?(time)
+      @days.include?(time.yday)
+    end
+
+    def advance!(time)
+    end
+
+    def break?
     end
   end
 

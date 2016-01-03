@@ -341,7 +341,7 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
   end
 
   it "every other year on January, February, and March for 10 occurrences" do
-    starts = Date.parse("March 10, 2015")
+    starts = Time.parse("March 10, 2015")
     schedule = new_schedule(
       every: :year,
       month: [:january, :february, :march],
@@ -355,6 +355,24 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
       2021 => { 1 => [10], 2 => [10], 3 => [10] })
 
     dates = schedule.events(starts: starts).to_a
+
+    dates.must_pair_with expected_dates
+    dates.size.must_equal 10
+  end
+
+  it "every 3rd year on the 1st, 100th and 200th day for 10 occurrences" do
+    schedule = new_schedule(
+      every: :year,
+      day: [1, 100, 200],
+      total: 10)
+
+    expected_dates = cherry_pick(
+      2016 => { 1 => [1], 4 => [9], 7 => [18] },
+      2017 => { 1 => [1], 4 => [10], 7 => [19] },
+      2018 => { 1 => [1], 4 => [10], 7 => [19] },
+      2019 => { 1 => [1] }).map { |i| i + 12.hours }
+
+    dates = schedule.events.to_a
 
     dates.must_pair_with expected_dates
     dates.size.must_equal 10
