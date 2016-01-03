@@ -1,4 +1,4 @@
-require "test_helper"
+require "spec_helper"
 
 describe Montrose do
   def test_that_it_has_a_version_number

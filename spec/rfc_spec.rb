@@ -1,4 +1,4 @@
-require "test_helper"
+require "spec_helper"
 
 describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
   let(:time_now) { Time.parse("Tuesday, September 1, 2015, 12:00 PM") }
