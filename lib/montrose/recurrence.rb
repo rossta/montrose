@@ -487,7 +487,7 @@ module Montrose
     end
 
     def matches_interval?(time_diff)
-      time_diff.to_i % @interval == 0
+      (time_diff.to_i % @interval).zero?
     end
   end
 
@@ -521,7 +521,7 @@ module Montrose
 
   class Monthly < Interval
     def include?(time)
-      matches_interval? time.month - @starts.month
+      matches_interval?((time.month - @starts.month) + (time.year - @starts.year) * 12)
     end
   end
 

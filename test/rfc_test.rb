@@ -296,4 +296,18 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
     dates.must_pair_with expected_dates
     dates.size.must_equal expected_dates.size
   end
+
+  it "every 18 months on the 10th thru 15th of the month for 10 occurrences" do
+    starts = Date.parse("September 1, 2015")
+    schedule = new_schedule(starts: starts, every: :month, interval: 18, total: 10, day: 10..15)
+
+    expected_dates = cherry_pick(
+      2015 => { 9 => [10, 11, 12, 13, 14, 15] },
+      2017 => { 3 => [10, 11, 12, 13] })
+
+    dates = schedule.events.to_a
+
+    dates.must_pair_with expected_dates
+    dates.size.must_equal expected_dates.size
+  end
 end
