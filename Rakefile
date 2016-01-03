@@ -8,12 +8,12 @@ YARD::Rake::YardocTask.new do |t|
   t.files = ["README.md", "lib/**/*.rb"]
 end
 
-Rake::TestTask.new(:test) do |t|
-  t.libs << "test"
+Rake::TestTask.new(:spec) do |t|
+  t.libs << "spec"
   t.libs << "lib"
-  t.test_files = FileList["test/**/*_test.rb"]
+  t.test_files = FileList["spec/**/*_spec.rb"]
 end
 
 RuboCop::RakeTask.new
 
-task default: [:test, :rubocop]
+task default: [:spec, :rubocop]
