@@ -14,6 +14,8 @@ Rake::TestTask.new(:spec) do |t|
   t.test_files = FileList["spec/**/*_spec.rb"]
 end
 
+task test: :spec
+
 RuboCop::RakeTask.new
 
 task default: [:spec, :rubocop]
