@@ -415,4 +415,17 @@ describe "RFC Recurrence Rules" do # http://www.kanzaki.com/docs/ical/rrule.html
     dates = schedule.events(starts: starts).take(expected_dates.size)
     dates.must_pair_with expected_dates
   end
+
+  it "every Thursday, but only during June, July, and August, forever" do
+    schedule = new_schedule(every: :year, month: 6..8, day: :thursday)
+
+    expected_dates = cherry_pick(
+      2016 => { 6 => [2, 9, 16, 23, 30], 7 => [7, 14, 21, 28], 8 => [4, 11, 18, 25] },
+      2017 => { 6 => [1, 8, 15, 22, 29], 7 => [6, 13, 20, 27], 8 => [3, 10, 17, 24, 31] },
+      2018 => { 6 => [7, 14, 21, 28], 7 => [5, 12, 19, 26], 8 => [2, 9, 16, 23, 30] }).map { |i| i + 12.hours }
+
+    dates = schedule.events.take(expected_dates.size)
+
+    dates.must_pair_with expected_dates
+  end
 end
