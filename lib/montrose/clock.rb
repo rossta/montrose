@@ -3,10 +3,14 @@ module Montrose
     def initialize(opts = {})
       @options = opts.dup
       @time = nil
+      @every = @options.fetch(:every, nil)
       @starts = @options.fetch(:starts, @starts)
       @interval = @options.fetch(:interval, 1)
     end
 
+    # Advances time to new unit by increment and sets
+    # new time as "current" time for next tick
+    #
     def tick
       @time = peek
     end
@@ -24,55 +28,48 @@ module Montrose
     end
 
     def smallest_step
-      minute_step || hour_step || day_step || week_step || month_step || year_step
+      unit_step(:minute) ||
+        unit_step(:hour) ||
+        unit_step(:day, :mday, :yday) ||
+        unit_step(:week) ||
+        unit_step(:month) ||
+        unit_step(:year)
     end
 
-    def minute_step
-      if @options.key?(:minute)
-        { minutes: 1 }
-      elsif @options[:every] == :minute
-        { minutes: @interval }
+    # @private
+    #
+    # Returns hash representing unit and amount to advance time
+    # when options contain given unit as a key or as a value of
+    # the key :every in options
+    #
+    # @options = { every: :day, hour: 8.12 }
+    # unit_step(:minute)
+    # => nil
+    # unit_step(:hour)
+    # => { hour: 1 }
+    #
+    # @options = { every: :hour, interval: 6 }
+    # unit_step(:minute)
+    # => nil
+    # unit_step(:hour)
+    # => { hour: 6 }
+    #
+    def unit_step(unit, *alternates)
+      is_frequency = @every == unit
+      if ([unit] + alternates).any? { |u| @options.key?(u) } && !is_frequency
+        # smallest unit, increment by 1
+        { step_key(unit) => 1 }
+      elsif is_frequency
+        { step_key(unit) => @interval }
       end
     end
 
-    def hour_step
-      if @options.key?(:hour)
-        { hours: 1 }
-      elsif @options[:every] == :hour
-        { hours: @interval }
-      end
-    end
-
-    def day_step
-      if @options.key?(:day) || @options.key?(:mday) || @options.key?(:yday)
-        { days: 1 }
-      elsif @options[:every] == :day
-        { days: @interval }
-      end
-    end
-
-    def week_step
-      if @options.key?(:week)
-        { weeks: 1 }
-      elsif @options[:every] == :week
-        { weeks: @interval }
-      end
-    end
-
-    def month_step
-      if @options.key?(:month)
-        { months: 1 }
-      elsif @options[:every] == :month
-        { months: @interval }
-      end
-    end
-
-    def year_step
-      if @options.key?(:year)
-        { years: 1 }
-      elsif @options[:every] == :year
-        { years: @interval }
-      end
+    # @private
+    #
+    # Change 'unit' to :units
+    #
+    def step_key(unit)
+      "#{unit}s".to_sym
     end
   end
 end
