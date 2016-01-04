@@ -13,7 +13,7 @@ module Montrose
     #   Recurrence.hourly(interval: 2) #=> every 2 hours
     #   Recurrence.hourly(starts: 3.days.from_now)
     #   Recurrence.hourly(until: 10.days.from_now)
-    #   Recurrence.hourly(repeat: 5)
+    #   Recurrence.hourly(total: 5)
     #   Recurrence.hourly(except: Date.tomorrow)
     #
     def self.hourly(options = {})
@@ -28,7 +28,7 @@ module Montrose
     #   Recurrence.daily(interval: 2) #=> every 2 days
     #   Recurrence.daily(starts: 3.days.from_now)
     #   Recurrence.daily(until: 10.days.from_now)
-    #   Recurrence.daily(repeat: 5)
+    #   Recurrence.daily(total: 5)
     #   Recurrence.daily(except: Date.tomorrow)
     #
     def self.daily(options = {})
@@ -42,7 +42,7 @@ module Montrose
     #   Recurrence.weekly(on: :saturday)
     #   Recurrence.weekly(on: [sunday, :saturday])
     #   Recurrence.weekly(on: :saturday, interval: 2)
-    #   Recurrence.weekly(on: :saturday, repeat: 5)
+    #   Recurrence.weekly(on: :saturday, total: 5)
     #
     def self.weekly(options = {})
       new(options.merge(every: :week))
@@ -63,7 +63,7 @@ module Montrose
     #   Recurrence.monthly(on: 15, interval: :bimonthly)
     #   Recurrence.monthly(on: 15, interval: :quarterly)
     #   Recurrence.monthly(on: 15, interval: :semesterly)
-    #   Recurrence.monthly(on: 15, repeat: 5)
+    #   Recurrence.monthly(on: 15, total: 5)
     #
     # The <tt>:on</tt> option can be one of the following:
     #
@@ -83,7 +83,7 @@ module Montrose
     #   Recurrence.yearly(on: [7, 14], interval: 2) #=> every 2 years on Jul 14
     #   Recurrence.yearly(on: [:jan, 14], interval: 2)
     #   Recurrence.yearly(on: [:january, 14], interval: 2)
-    #   Recurrence.yearly(on: [:january, 14], repeat: 5)
+    #   Recurrence.yearly(on: [:january, 14], total: 5)
     #
     def self.yearly(options = {})
       new(options.merge(every: :year))

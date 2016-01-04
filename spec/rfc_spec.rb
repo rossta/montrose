@@ -13,7 +13,7 @@ describe "RFC Recurrence Rules" do
   end
 
   it "daily for 10 occurrences" do
-    schedule = new_schedule every: :day, repeat: 10
+    schedule = new_schedule every: :day, total: 10
 
     dates = schedule.events(starts: time_now).to_a
 
@@ -45,7 +45,7 @@ describe "RFC Recurrence Rules" do
   end
 
   it "every 10 days 5 occurrences" do
-    schedule = new_schedule every: :day, interval: 10, repeat: 5
+    schedule = new_schedule every: :day, interval: 10, total: 5
 
     expected_dates = consecutive_days(5, interval: 10)
     dates = schedule.events.to_a
@@ -92,7 +92,7 @@ describe "RFC Recurrence Rules" do
   end
 
   it "weekly for 10 occurrences" do
-    schedule = new_schedule(every: :week, repeat: 10)
+    schedule = new_schedule(every: :week, total: 10)
 
     expected_dates = consecutive(:weeks, 10)
     dates = schedule.events.take(10)
@@ -142,7 +142,7 @@ describe "RFC Recurrence Rules" do
         every: :week,
         day: [:tuesday, :thursday],
         starts: Date.parse("Nov 22, 2015"),
-        repeat: 5)
+        total: 10)
 
       expected_dates = cherry_pick 2015 => { 11 => [24, 26], 12 => [1, 3, 8, 10, 15, 17, 22, 24] }
       dates = schedule.events.to_a
@@ -251,7 +251,7 @@ describe "RFC Recurrence Rules" do
     schedule = new_schedule(
       every: :month,
       day: { monday: [-2] },
-      repeat: 6)
+      total: 6)
 
     expected_dates = cherry_pick(
       2015 => { 9 => [21], 10 => [19], 11 => [23], 12 => [21] },
