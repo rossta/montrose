@@ -29,6 +29,10 @@ module Minitest
       Montrose::Clock.new({ starts: Time.now }.merge(options))
     end
 
+    def new_frequency(options = {})
+      Montrose::Frequency.from_options(options)
+    end
+
     def now
       Time.zone.now
     end

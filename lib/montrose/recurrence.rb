@@ -5,8 +5,6 @@ module Montrose
     MONTHS = Date::MONTHNAMES
     DAYS = Date::DAYNAMES
 
-    FREQUENCY = %w[hour day week month year].freeze
-
     # Create a hourly recurrence.
     #
     # @example
