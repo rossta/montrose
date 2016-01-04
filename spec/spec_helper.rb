@@ -66,8 +66,15 @@ module Minitest
           "Expected #{expected} but got #{actual} at position #{i}"
       end
     end
+
+    def assert_interval(actual_duration, given_enum)
+      first = given_enum.next
+      second = given_enum.next
+      assert_equal actual_duration.to_i, (second - first).to_i
+    end
   end
 end
 
 Array.infect_an_assertion :assert_pairs_with, :must_pair_with
 Enumerator.infect_an_assertion :assert_pairs_with, :must_pair_with
+Enumerator.infect_an_assertion :assert_interval, :must_have_interval

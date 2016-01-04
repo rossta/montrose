@@ -5,7 +5,23 @@ module Montrose
     MONTHS = Date::MONTHNAMES
     DAYS = Date::DAYNAMES
 
-    FREQUENCY = %w[day week month year].freeze
+    FREQUENCY = %w[hour day week month year].freeze
+
+    # Create a hourly recurrence.
+    #
+    # @example
+    #
+    #   Recurrence.hourly
+    #   Recurrence.hourly(interval: 2) #=> every 2 hours
+    #   Recurrence.hourly(starts: 3.days.from_now)
+    #   Recurrence.hourly(until: 10.days.from_now)
+    #   Recurrence.hourly(repeat: 5)
+    #   Recurrence.hourly(except: Date.tomorrow)
+    #
+    def self.hourly(options = {})
+      new(options.merge(every: :hour))
+    end
+
     # Create a daily recurrence.
     #
     # @example
@@ -119,7 +135,15 @@ module Montrose
     end
 
     def each(opts = {}, &block)
-      dates(opts).each(&block)
+      events(opts).each(&block)
+    end
+
+    def starts
+      options[:starts]
+    end
+
+    def next
+      events.next
     end
 
     private
