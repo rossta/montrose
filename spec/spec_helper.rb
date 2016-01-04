@@ -25,6 +25,10 @@ module Minitest
       Montrose::Recurrence.new(options)
     end
 
+    def new_clock(options = {})
+      Montrose::Clock.new({ starts: Time.now }.merge(options))
+    end
+
     def now
       Time.zone.now
     end
@@ -72,9 +76,16 @@ module Minitest
       second = given_enum.next
       assert_equal actual_duration.to_i, (second - first).to_i
     end
+
+    def assert_tick(actual_duration, clock)
+      first = clock.tick
+      second = clock.tick
+      assert_equal second, first + actual_duration
+    end
   end
 end
 
 Array.infect_an_assertion :assert_pairs_with, :must_pair_with
 Enumerator.infect_an_assertion :assert_pairs_with, :must_pair_with
 Enumerator.infect_an_assertion :assert_interval, :must_have_interval
+Montrose::Clock.infect_an_assertion :assert_tick, :must_have_tick

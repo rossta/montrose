@@ -3,8 +3,8 @@ module Montrose
     def initialize(opts = {})
       @options = opts.dup
       @time = nil
-      @starts = opts.fetch(:starts, @starts)
-      @interval = opts.fetch(:interval, 1)
+      @starts = @options.fetch(:starts, @starts)
+      @interval = @options.fetch(:interval, 1)
     end
 
     def tick
@@ -16,6 +16,8 @@ module Montrose
 
       @time.advance(step)
     end
+
+    private
 
     def step
       @step ||= smallest_step or raise "No step for #{@options.inspect}"
