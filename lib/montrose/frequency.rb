@@ -52,7 +52,7 @@ module Montrose
     end
 
     def matches_interval?(time_diff)
-      (time_diff.to_i % @interval).zero?
+      (time_diff % @interval).zero?
     end
 
     class Minutely < Frequency

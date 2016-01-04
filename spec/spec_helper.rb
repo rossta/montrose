@@ -30,7 +30,7 @@ module Minitest
     end
 
     def new_frequency(options = {})
-      Montrose::Frequency.from_options(options)
+      Montrose::Frequency.from_options({ starts: Time.now }.merge(options))
     end
 
     def now
