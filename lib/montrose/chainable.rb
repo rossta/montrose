@@ -1,3 +1,5 @@
+require "montrose/options"
+
 module Montrose
   module Chainable
     # Create a hourly recurrence.

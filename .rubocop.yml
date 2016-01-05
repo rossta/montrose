@@ -34,7 +34,7 @@ Documentation:
   Enabled: false # TODO: Enable again once we have more docs
 
 Lint/EndAlignment:
-  AlignWith: variable
+  Enabled: false
 
 Lint/DefEndAlignment:
   Enabled: false

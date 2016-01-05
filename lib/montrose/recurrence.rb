@@ -8,40 +8,13 @@ module Montrose
     MONTHS = Date::MONTHNAMES
     DAYS = Date::DAYNAMES
 
-    # Return the default starting time.
-    #
-    # @example Recurrence.default_starts_time #=> <Date>
-    #
-    def self.default_starts_time
-      case @default_starts_time
-      when Proc
-        @default_starts_time.call
-      else
-        Time.now
-      end
-    end
-
-    # Set the default starting time globally.
-    #
-    # @example Can be a proc or a string.
-    #
-    #   Recurrence.default_starts_time = proc { Date.today }
-    #
-    def self.default_starts_time=(time)
-      unless time.respond_to?(:call) || Time.respond_to?(time.to_s) || time.nil?
-        fail ArgumentError, 'default_starts_time must be a proc or an evaluatable string such as "Date.current"'
-      end
-
-      @default_starts_time = time
-    end
-
     attr_reader :default_options, :options, :event
 
     def initialize(opts = {})
-      @default_options = opts
+      @default_options = opts.to_hash
 
       options = opts.dup
-      options[:starts] ||= self.class.default_starts_time
+      options[:starts] ||= Montrose::Options.default_starts_time
       options[:interval] ||= 1
 
       @options = normalize_options(options)
