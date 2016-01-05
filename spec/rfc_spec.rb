@@ -255,7 +255,8 @@ describe "RFC Recurrence Rules" do
 
     expected_dates = cherry_pick(
       2015 => { 9 => [21], 10 => [19], 11 => [23], 12 => [21] },
-      2016 => { 1 => [18], 2 => [22] }).map { |t| t + 12.hours }
+      2016 => { 1 => [18], 2 => [22] }
+    ).map { |t| t + 12.hours }
 
     dates = schedule.events.to_a
 

@@ -8,16 +8,15 @@ module Montrose
       end
 
       def include?(time)
-        @days.include?(time.mday) || begin
-        month_days = days_in_month(time)
-        @days.any? { |d| month_days + d + 1 == time.mday }
-        end
+        @days.include?(time.mday) || included_from_end_of_month?(time)
       end
 
-      # Get the days in the month for +time
-      def days_in_month(time)
-        date = Date.new(time.year, time.month, 1)
-        ((date >> 1) - date).to_i
+      private
+
+      # matches days specified at negative numbers
+      def included_from_end_of_month?(time)
+        month_days = Time.days_in_month(time.month, time.year) # given by activesupport
+        @days.any? { |d| month_days + d + 1 == time.mday }
       end
     end
   end

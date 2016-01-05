@@ -1,18 +1,14 @@
 module Montrose
   module Rule
     class HourOfDay
+      include Montrose::Rule
+
       def initialize(hours)
-        @hours = [*hours].compact
+        @hours = hours.to_a.compact
       end
 
       def include?(time)
         @hours.include?(time.hour)
-      end
-
-      def advance!(time)
-      end
-
-      def break?
       end
     end
   end
