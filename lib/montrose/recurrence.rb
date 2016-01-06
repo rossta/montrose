@@ -11,7 +11,7 @@ module Montrose
     attr_reader :default_options, :options, :event
 
     def initialize(opts = {})
-      @default_options = opts.to_hash
+      @default_options = Montrose::Options.new(opts)
 
       options = opts.dup
       options[:starts] ||= Montrose::Options.default_starts
@@ -63,7 +63,7 @@ module Montrose
     def normalize_options(opts = {})
       options = opts.dup
 
-      [:starts, :until, :except].
+      [:starts, :until].
         select { |k| options.key?(k) }.
         each { |k| options[k] = as_time(options[k]) }
 
