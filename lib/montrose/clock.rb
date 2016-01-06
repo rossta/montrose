@@ -1,11 +1,11 @@
 module Montrose
   class Clock
     def initialize(opts = {})
-      @options = opts.dup
+      @options = Montrose::Options.new(opts)
       @time = nil
-      @every = @options.fetch(:every, nil)
-      @starts = @options.fetch(:starts, @starts)
-      @interval = @options.fetch(:interval, 1)
+      @every = @options.fetch(:every) { raise "Required option :every not provided" }
+      @starts = @options.fetch(:starts)
+      @interval = @options.fetch(:interval)
     end
 
     # Advances time to new unit by increment and sets

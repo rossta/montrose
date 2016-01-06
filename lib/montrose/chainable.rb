@@ -1,3 +1,5 @@
+require "montrose/options"
+
 module Montrose
   module Chainable
     # Create a hourly recurrence.
@@ -158,7 +160,7 @@ module Montrose
 
     # @private
     def default_options
-      @default_options ||= {}
+      @default_options ||= Montrose::Options.new
     end
 
     # @private

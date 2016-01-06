@@ -8,43 +8,19 @@ module Montrose
     MONTHS = Date::MONTHNAMES
     DAYS = Date::DAYNAMES
 
-    # Return the default starting time.
-    #
-    # @example Recurrence.default_starts_time #=> <Date>
-    #
-    def self.default_starts_time
-      case @default_starts_time
-      when Proc
-        @default_starts_time.call
-      else
-        Time.now
-      end
-    end
-
-    # Set the default starting time globally.
-    #
-    # @example Can be a proc or a string.
-    #
-    #   Recurrence.default_starts_time = proc { Date.today }
-    #
-    def self.default_starts_time=(time)
-      unless time.respond_to?(:call) || Time.respond_to?(time.to_s) || time.nil?
-        fail ArgumentError, 'default_starts_time must be a proc or an evaluatable string such as "Date.current"'
-      end
-
-      @default_starts_time = time
-    end
-
     attr_reader :default_options, :options, :event
 
+    class << self
+      def new(options = {})
+        return options if options.is_a?(self)
+        super
+      end
+    end
+
     def initialize(opts = {})
-      @default_options = opts
+      @default_options = Montrose::Options.new(opts)
 
-      options = opts.dup
-      options[:starts] ||= self.class.default_starts_time
-      options[:interval] ||= 1
-
-      @options = normalize_options(options)
+      @options = @default_options
     end
 
     def events(opts = {})
@@ -66,7 +42,7 @@ module Montrose
     private
 
     def event_enum(opts = {})
-      local_opts = @options.merge(normalize_options(opts))
+      local_opts = @options.merge(opts)
       stack = Rule::Stack.build(local_opts)
       clock = Clock.new(local_opts)
 
@@ -86,39 +62,5 @@ module Montrose
         end
       end
     end
-
-    def normalize_options(opts = {})
-      options = opts.dup
-
-      [:starts, :until, :except].
-        select { |k| options.key?(k) }.
-        each { |k| options[k] = as_time(options[k]) }
-
-      options
-    end
-
-    def as_time(time) # :nodoc:
-      case
-      when time.respond_to?(:to_time)
-        time.to_time
-      when time.is_a?(String)
-        Time.parse(time)
-      when time.is_a?(Array)
-        [time].compact.flat_map { |d| as_time(d) }
-      else
-        time
-      end
-    end
   end
-
-  def Recurrence(obj)
-    case obj
-    when Recurrence
-      obj
-    else
-      Recurrence.new(obj)
-    end
-  end
-
-  module_function :Recurrence
 end

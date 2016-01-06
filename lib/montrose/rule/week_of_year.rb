@@ -3,6 +3,10 @@ module Montrose
     class WeekOfYear
       include Montrose::Rule
 
+      # Initializes rule
+      #
+      # @param [Array[Fixnum]] weeks - valid weeks of year
+      #
       def initialize(weeks)
         @weeks = [*weeks].compact
       end

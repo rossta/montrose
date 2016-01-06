@@ -5,7 +5,7 @@ module Montrose
     end
 
     def <<(rule)
-      @rules << Montrose::Recurrence(rule)
+      @rules << Montrose::Recurrence.new(rule)
 
       self
     end

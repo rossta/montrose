@@ -231,7 +231,7 @@ describe "RFC Recurrence Rules" do
 
     schedule = new_schedule(
       every: :month,
-      start: starts,
+      starts: starts,
       day: { sunday: [1, -1] },
       interval: 2,
       total: 10)

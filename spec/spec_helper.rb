@@ -33,6 +33,10 @@ module Minitest
       Montrose::Frequency.from_options({ starts: Time.now }.merge(options))
     end
 
+    def new_options(options = {})
+      Montrose::Options.new(options)
+    end
+
     def now
       Time.zone.now
     end

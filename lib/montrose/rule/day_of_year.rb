@@ -4,7 +4,7 @@ module Montrose
       include Montrose::Rule
 
       def initialize(days)
-        @days = [*days].compact
+        @days = days
       end
 
       def include?(time)

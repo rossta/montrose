@@ -3,8 +3,12 @@ module Montrose
     class HourOfDay
       include Montrose::Rule
 
+      # Initializes rule
+      #
+      # @param [Array<Fixnum>] hour - valid hours of days
+      #
       def initialize(hours)
-        @hours = hours.to_a.compact
+        @hours = hours
       end
 
       def include?(time)

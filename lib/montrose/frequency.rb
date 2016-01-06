@@ -17,18 +17,28 @@ module Montrose
 
     def self.from_options(opts)
       frequency = opts.fetch(:every) { raise "Please specify the :every option" }
-      term = FREQUENCY_TERMS.fetch(frequency.to_s) do
-        raise "Don't know how to enumerate every: #{opts[:every]}"
-      end
 
-      Montrose::Frequency.const_get(term).new(opts)
+      Montrose::Frequency.const_get(fetch(frequency)).new(opts)
+    end
+
+    def self.fetch(frequency)
+      FREQUENCY_TERMS.fetch(frequency.to_s) do
+        raise "Don't know how to enumerate every: #{frequency}"
+      end
+    end
+
+    def self.assert(frequency)
+      FREQUENCY_TERMS.key?(frequency.to_s) or
+        raise "Don't know how to enumerate every: #{frequency}"
+
+      frequency
     end
 
     def initialize(opts = {})
-      @options = opts.dup
+      opts = Montrose::Options.new(opts)
       @time = nil
-      @starts = opts.fetch(:starts, @starts)
-      @interval = opts.fetch(:interval, 1)
+      @starts = opts.fetch(:starts)
+      @interval = opts.fetch(:interval)
     end
 
     def matches_interval?(time_diff)
