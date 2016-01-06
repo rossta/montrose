@@ -59,6 +59,28 @@ describe Montrose::Options do
       options.starts.must_equal 3.days.from_now
       options[:starts].must_equal 3.days.from_now
     end
+
+    it "can't be nil" do
+      options[:starts] = nil
+
+      options.starts.must_equal Time.now
+      options[:starts].must_equal Time.now
+    end
+
+    it "parses string" do
+      options[:starts] = "2015-09-01"
+
+      options.starts.must_equal Time.parse("2015-09-01")
+      options[:starts].must_equal Time.parse("2015-09-01")
+    end
+
+    it "converts Date to Time" do
+      date = Date.parse("2015-09-01")
+      options[:starts] = date
+
+      options.starts.must_equal date.to_time
+      options[:starts].must_equal date.to_time
+    end
   end
 
   describe "#until" do
@@ -87,6 +109,21 @@ describe Montrose::Options do
 
       options.until.must_equal 3.days.from_now
       options[:until].must_equal 3.days.from_now
+    end
+
+    it "parses string" do
+      options[:until] = "2015-09-01"
+
+      options.until.must_equal Time.parse("2015-09-01")
+      options[:until].must_equal Time.parse("2015-09-01")
+    end
+
+    it "converts Date to Time" do
+      date = Date.parse("2015-09-01")
+      options[:until] = date
+
+      options.until.must_equal date.to_time
+      options[:until].must_equal date.to_time
     end
   end
 
@@ -145,11 +182,20 @@ describe Montrose::Options do
       options[:day].must_equal [1]
     end
 
-    it "sets" do
-      options[:day] = 1
+    describe "nested hash" do
+      it "converts day name keys" do
+        options[:day] = { friday: [1] }
 
-      options.day.must_equal [1]
-      options[:day].must_equal [1]
+        options.day.must_equal(5 => [1])
+        options[:day].must_equal(5 => [1])
+      end
+
+      it "casts day number values to arrays" do
+        options[:day] = { 5 => 1 }
+
+        options.day.must_equal(5 => [1])
+        options[:day].must_equal(5 => [1])
+      end
     end
   end
 

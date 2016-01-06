@@ -116,12 +116,20 @@ module Montrose
       @every = Frequency.assert(frequency)
     end
 
+    def starts=(time)
+      @starts = as_time(time) || self.class.default_starts
+    end
+
+    def until=(time)
+      @until = as_time(time) || self.class.default_ends
+    end
+
     def hour=(hours)
       @hour = map_arg(hours) { |d| assert_range_includes(1..MAX_HOURS_IN_DAY, d) }
     end
 
     def day=(days)
-      @day = map_arg(days) { |d| Montrose::Utils.day_number(d) }
+      @day = nested_map_arg(days) { |d| Montrose::Utils.day_number(d) }
     end
 
     def mday=(mdays)
@@ -146,6 +154,17 @@ module Montrose
 
     private
 
+    def nested_map_arg(arg, &block)
+      case arg
+      when Hash
+        arg.each_with_object({}) do |(k, v), hash|
+          hash[block.call(k)] = [*v]
+        end
+      else
+        map_arg(arg, &block)
+      end
+    end
+
     def map_arg(arg, &block)
       return nil unless arg
 
@@ -164,6 +183,19 @@ module Montrose
       raise "Out of range" unless range.include?(test)
 
       item
+    end
+
+    def as_time(time)
+      case
+      when time.respond_to?(:to_time)
+        time.to_time
+      when time.is_a?(String)
+        Time.parse(time)
+      when time.is_a?(Array)
+        [time].compact.flat_map { |d| as_time(d) }
+      else
+        time
+      end
     end
   end
 end
