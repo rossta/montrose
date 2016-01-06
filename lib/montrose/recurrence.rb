@@ -5,9 +5,6 @@ module Montrose
   class Recurrence
     include Chainable
 
-    MONTHS = Date::MONTHNAMES
-    DAYS = Date::DAYNAMES
-
     attr_reader :default_options
 
     class << self
