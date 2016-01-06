@@ -1,11 +1,23 @@
 require "spec_helper"
 
 describe Montrose::Options do
-  let(:options) { new_options(every: :day) }
+  let(:options) { new_options }
 
   describe "#every" do
-    it "must be set" do
-      -> { new_options(every: nil) }.must_raise
+    after do
+      Montrose::Options.default_every = nil
+    end
+
+    it "defaults to nil" do
+      options.every.must_be_nil
+      options[:every].must_be_nil
+    end
+
+    it "defaults to default_frequency time" do
+      Montrose::Options.default_every = :month
+
+      options.every.must_equal :month
+      options[:every].must_equal :month
     end
 
     it "can be set" do
@@ -26,7 +38,7 @@ describe Montrose::Options do
     end
 
     after do
-      Montrose::Options.default_starts_time = nil
+      Montrose::Options.default_starts = nil
     end
 
     it "defaults to current time" do
@@ -35,7 +47,7 @@ describe Montrose::Options do
     end
 
     it "defaults to default_ends_at time" do
-      Montrose::Options.default_starts_time = 3.days.from_now
+      Montrose::Options.default_starts = 3.days.from_now
 
       options.starts.must_equal 3.days.from_now
       options[:starts].must_equal 3.days.from_now
@@ -55,7 +67,7 @@ describe Montrose::Options do
     end
 
     after do
-      Montrose::Options.default_ends_time = nil
+      Montrose::Options.default_ends = nil
     end
 
     it "defaults to nil" do
@@ -63,8 +75,8 @@ describe Montrose::Options do
       options[:until].must_be_nil
     end
 
-    it "defaults to default_ends_time time" do
-      Montrose::Options.default_ends_time = 3.days.from_now
+    it "defaults to default_ends time" do
+      Montrose::Options.default_ends = 3.days.from_now
 
       options.until.must_equal 3.days.from_now
       options[:until].must_equal 3.days.from_now
@@ -148,10 +160,10 @@ describe Montrose::Options do
     end
 
     it "can be set" do
-      options[:mday] = [1, 2, 3]
+      options[:mday] = [1, 20, 31]
 
-      options.mday.must_equal [1, 2, 3]
-      options[:mday].must_equal [1, 2, 3]
+      options.mday.must_equal [1, 20, 31]
+      options[:mday].must_equal [1, 20, 31]
     end
 
     it "casts to element to array" do
@@ -187,14 +199,21 @@ describe Montrose::Options do
     end
 
     it "can be set" do
-      options[:yday] = [1, 2, 3]
+      options[:yday] = [1, 200, 366]
 
-      options.yday.must_equal [1, 2, 3]
-      options[:yday].must_equal [1, 2, 3]
+      options.yday.must_equal [1, 200, 366]
+      options[:yday].must_equal [1, 200, 366]
     end
 
     it "casts to element to array" do
-      options[:yday] = -1
+      options[:yday] = 1
+
+      options.yday.must_equal [1]
+      options[:yday].must_equal [1]
+    end
+
+    it "allows negative numbers" do
+      options[:yday] = [-1]
 
       options.yday.must_equal [-1]
       options[:yday].must_equal [-1]
@@ -207,7 +226,7 @@ describe Montrose::Options do
       options[:yday].must_equal [6, 7, 8]
     end
 
-    it "casts nil to empty array" do
+    it "can be set to nil" do
       options[:yday] = nil
 
       options.day.must_be_nil
@@ -218,6 +237,121 @@ describe Montrose::Options do
       -> { options[:yday] = [1, 400] }.must_raise
     end
   end
+
+  describe "#week" do
+    it "defaults to nil" do
+      options.week.must_be_nil
+      options[:week].must_be_nil
+    end
+
+    it "can be set" do
+      options[:week] = [1, 10, 53]
+
+      options.week.must_equal [1, 10, 53]
+      options[:week].must_equal [1, 10, 53]
+    end
+
+    it "casts element to array" do
+      options[:week] = 1
+
+      options.week.must_equal [1]
+      options[:week].must_equal [1]
+    end
+
+    it "allows negative numbers" do
+      options[:week] = [-1]
+
+      options.week.must_equal [-1]
+      options[:week].must_equal [-1]
+    end
+
+    it "casts range to array" do
+      options[:week] = 6..8
+
+      options.week.must_equal [6, 7, 8]
+      options[:week].must_equal [6, 7, 8]
+    end
+
+    it "can be set to nil" do
+      options[:week] = nil
+
+      options.week.must_be_nil
+      options[:week].must_be_nil
+    end
+
+    it "raises exception for out of range" do
+      -> { options[:week] = [1, 56] }.must_raise
+    end
+  end
+
+  describe "#month" do
+    it "defaults to nil" do
+      options.month.must_be_nil
+      options[:month].must_be_nil
+    end
+
+    it "can be set by month number" do
+      options[:month] = [1, 12]
+
+      options.month.must_equal [1, 12]
+      options[:month].must_equal [1, 12]
+    end
+
+    it "casts month names to month numbers" do
+      options[:month] = [:january, :december]
+
+      options.month.must_equal [1, 12]
+      options[:month].must_equal [1, 12]
+
+      options[:month] = %w[january december]
+
+      options.month.must_equal [1, 12]
+      options[:month].must_equal [1, 12]
+
+      options[:month] = %w[January December]
+
+      options.month.must_equal [1, 12]
+      options[:month].must_equal [1, 12]
+    end
+
+    it "casts element to array" do
+      options[:month] = 1
+
+      options.month.must_equal [1]
+      options[:month].must_equal [1]
+    end
+
+    it "casts range to array" do
+      options[:month] = 6..8
+
+      options.month.must_equal [6, 7, 8]
+      options[:month].must_equal [6, 7, 8]
+    end
+
+    it "can be set to nil" do
+      options[:month] = nil
+
+      options.month.must_be_nil
+      options[:month].must_be_nil
+    end
+
+    it "raises exception for out of range" do
+      -> { options[:month] = [1, 13] }.must_raise
+    end
+  end
+
+  describe "#to_hash" do
+    let(:options) { new_options(every: :day) }
+
+    before do
+      Timecop.freeze(Time.now)
+    end
+
+    it "returns Hash with non-nil key-value pairs" do
+      options.to_hash.must_equal(
+        every: :day,
+        starts: Time.now,
+        interval: 1)
+    end
+  end
 end
-# def_option :week
-# def_option :month

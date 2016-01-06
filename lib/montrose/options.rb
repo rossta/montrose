@@ -1,7 +1,12 @@
 module Montrose
   class Options
-    @default_starts_time = nil
-    @default_ends_time = nil
+    @default_starts = nil
+    @default_ends = nil
+    @default_every = nil
+
+    MAX_DAYS_IN_YEAR = 366
+    MAX_WEEKS_IN_YEAR = 53
+    MAX_DAYS_IN_MONTH = 31
 
     class << self
       def new(options = {})
@@ -19,33 +24,33 @@ module Montrose
         protected :"#{name}="
       end
 
-      attr_writer :default_starts_time, :default_ends_time
+      attr_accessor :default_starts, :default_ends, :default_every
 
       # Return the default ending time.
       #
-      # @example Recurrence.default_ends_time #=> <Date>
+      # @example Recurrence.default_ends #=> <Date>
       #
-      def default_ends_time
-        case @default_ends_time
+      def default_ends
+        case @default_ends
         when Proc
-          @default_ends_time.call
+          @default_ends.call
         else
-          @default_ends_time
+          @default_ends
         end
       end
 
       # Return the default starting time.
       #
-      # @example Recurrence.default_starts_time #=> <Date>
+      # @example Recurrence.default_starts #=> <Date>
       #
-      def default_starts_time
-        case @default_starts_time
+      def default_starts
+        case @default_starts
         when Proc
-          @default_starts_time.call
+          @default_starts.call
         when nil
           Time.now
         else
-          @default_starts_time
+          @default_starts
         end
       end
     end
@@ -63,9 +68,9 @@ module Montrose
 
     def initialize(opts = {})
       defaults = {
-        every: nil,
-        starts: self.class.default_starts_time,
-        until: self.class.default_ends_time,
+        every: self.class.default_every,
+        starts: self.class.default_starts,
+        until: self.class.default_ends,
         day: nil,
         mday: nil,
         yday: nil,
@@ -76,14 +81,14 @@ module Montrose
       }
 
       options = defaults.merge(opts)
-      options.each { |(k, v)| self[k] = v }
+      options.each { |(k, v)| self[k] = v unless v.nil? }
     end
 
     def to_hash
       hash_pairs = self.class.defined_options.flat_map do |opt_name|
         [opt_name, send(opt_name)]
       end
-      Hash[*hash_pairs]
+      Hash[*hash_pairs].reject { |_k, v| v.nil? }
     end
 
     def []=(option, val)
@@ -106,28 +111,32 @@ module Montrose
     end
 
     def every=(frequency)
-      raise "Please specify the :every option" unless frequency
-
       @every = Frequency.assert(frequency)
     end
 
     def day=(days)
-      @day = map(days) { |d| Montrose::Utils.day_number(d) }
+      @day = map_arg(days) { |d| Montrose::Utils.day_number(d) }
     end
 
     def mday=(mdays)
-      @mday = map(mdays) { |d| assert_range_includes(1..31, d) }
+      @mday = map_arg(mdays) { |d| assert_range_includes(1..MAX_DAYS_IN_MONTH, d) }
     end
 
     def yday=(ydays)
-      @yday = map(ydays) { |d| assert_range_includes(1..366, d) }
+      @yday = map_arg(ydays) { |d| assert_range_includes(1..MAX_DAYS_IN_YEAR, d) }
+    end
+
+    def week=(weeks)
+      @week = map_arg(weeks) { |d| assert_range_includes(1..MAX_WEEKS_IN_YEAR, d) }
     end
 
     def month=(months)
-      @month = map(months) { |d| Montrose::Utils.month_number(d) }
+      @month = map_arg(months) { |d| Montrose::Utils.month_number(d) }
     end
 
-    def map(arg, &block)
+    private
+
+    def map_arg(arg, &block)
       return nil unless arg
 
       array = case arg

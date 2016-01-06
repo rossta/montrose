@@ -14,7 +14,7 @@ module Montrose
       @default_options = opts.to_hash
 
       options = opts.dup
-      options[:starts] ||= Montrose::Options.default_starts_time
+      options[:starts] ||= Montrose::Options.default_starts
       options[:interval] ||= 1
 
       @options = normalize_options(options)
