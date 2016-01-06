@@ -167,10 +167,17 @@ describe Montrose::Options do
     end
 
     it "casts to element to array" do
-      options[:mday] = -1
+      options[:mday] = 1
 
-      options.mday.must_equal [-1]
-      options[:mday].must_equal [-1]
+      options.mday.must_equal [1]
+      options[:mday].must_equal [1]
+    end
+
+    it "allows negative numbers" do
+      options[:yday] = [-1]
+
+      options.yday.must_equal [-1]
+      options[:yday].must_equal [-1]
     end
 
     it "casts range to array" do
@@ -187,7 +194,7 @@ describe Montrose::Options do
       options[:day].must_be_nil
     end
 
-    it "raises exception for out of range" do
+    it "raises for out of range" do
       -> { options[:mday] = [1, 100] }.must_raise
     end
   end
@@ -233,7 +240,7 @@ describe Montrose::Options do
       options[:day].must_be_nil
     end
 
-    it "raises exception for out of range" do
+    it "raises for out of range" do
       -> { options[:yday] = [1, 400] }.must_raise
     end
   end
@@ -279,8 +286,12 @@ describe Montrose::Options do
       options[:week].must_be_nil
     end
 
-    it "raises exception for out of range" do
+    it "raises for out of range" do
       -> { options[:week] = [1, 56] }.must_raise
+    end
+
+    it "raises for negative out of range" do
+      -> { options[:hour] = -1 }.must_raise
     end
   end
 
@@ -335,8 +346,55 @@ describe Montrose::Options do
       options[:month].must_be_nil
     end
 
-    it "raises exception for out of range" do
+    it "raises for out of range" do
       -> { options[:month] = [1, 13] }.must_raise
+    end
+
+    it "raises for negative out of range" do
+      -> { options[:month] = -1 }.must_raise
+    end
+  end
+
+  describe "#hour" do
+    it "defaults to nil" do
+      options.hour.must_be_nil
+      options[:hour].must_be_nil
+    end
+
+    it "can be set by hour number" do
+      options[:hour] = [1, 24]
+
+      options.hour.must_equal [1, 24]
+      options[:hour].must_equal [1, 24]
+    end
+
+    it "casts element to array" do
+      options[:hour] = 1
+
+      options.hour.must_equal [1]
+      options[:hour].must_equal [1]
+    end
+
+    it "casts range to array" do
+      options[:hour] = 6..8
+
+      options.hour.must_equal [6, 7, 8]
+      options[:hour].must_equal [6, 7, 8]
+    end
+
+    it "can be set to nil" do
+      options[:hour] = nil
+
+      options.hour.must_be_nil
+      options[:hour].must_be_nil
+    end
+
+    it "raises for out of range" do
+      -> { options[:hour] = [1, 25] }.must_raise
+    end
+
+    it "raises for negative out of range" do
+      -> { options[:hour] = -1 }.must_raise
     end
   end
 

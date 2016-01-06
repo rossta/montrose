@@ -4,6 +4,7 @@ module Montrose
     @default_ends = nil
     @default_every = nil
 
+    MAX_HOURS_IN_DAY = 24
     MAX_DAYS_IN_YEAR = 366
     MAX_WEEKS_IN_YEAR = 53
     MAX_DAYS_IN_MONTH = 31
@@ -58,6 +59,7 @@ module Montrose
     def_option :every
     def_option :starts
     def_option :until
+    def_option :hour
     def_option :day
     def_option :mday
     def_option :yday
@@ -114,24 +116,32 @@ module Montrose
       @every = Frequency.assert(frequency)
     end
 
+    def hour=(hours)
+      @hour = map_arg(hours) { |d| assert_range_includes(1..MAX_HOURS_IN_DAY, d) }
+    end
+
     def day=(days)
       @day = map_arg(days) { |d| Montrose::Utils.day_number(d) }
     end
 
     def mday=(mdays)
-      @mday = map_arg(mdays) { |d| assert_range_includes(1..MAX_DAYS_IN_MONTH, d) }
+      @mday = map_arg(mdays) { |d| assert_range_includes(1..MAX_DAYS_IN_MONTH, d, :absolute) }
     end
 
     def yday=(ydays)
-      @yday = map_arg(ydays) { |d| assert_range_includes(1..MAX_DAYS_IN_YEAR, d) }
+      @yday = map_arg(ydays) { |d| assert_range_includes(1..MAX_DAYS_IN_YEAR, d, :absolute) }
     end
 
     def week=(weeks)
-      @week = map_arg(weeks) { |d| assert_range_includes(1..MAX_WEEKS_IN_YEAR, d) }
+      @week = map_arg(weeks) { |d| assert_range_includes(1..MAX_WEEKS_IN_YEAR, d, :absolute) }
     end
 
     def month=(months)
       @month = map_arg(months) { |d| Montrose::Utils.month_number(d) }
+    end
+
+    def key?(key)
+      respond_to?(key) && !send(key).nil?
     end
 
     private
@@ -149,8 +159,9 @@ module Montrose
       array.map(&block)
     end
 
-    def assert_range_includes(range, item)
-      raise "Out of range" unless range.include?(item.abs)
+    def assert_range_includes(range, item, absolute = false)
+      test = absolute ? item.abs : item
+      raise "Out of range" unless range.include?(test)
 
       item
     end
