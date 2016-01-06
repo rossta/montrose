@@ -178,14 +178,7 @@ module Montrose
     def map_arg(arg, &block)
       return nil unless arg
 
-      array = case arg
-              when Range
-                arg.to_a
-              else
-                [*arg]
-              end
-
-      array.map(&block)
+      Array(arg).map(&block)
     end
 
     def assert_range_includes(range, item, absolute = false)
@@ -196,15 +189,15 @@ module Montrose
     end
 
     def as_time(time)
+      return nil unless time
+
       case
       when time.respond_to?(:to_time)
         time.to_time
       when time.is_a?(String)
         Time.parse(time)
-      when time.is_a?(Array)
-        [time].compact.flat_map { |d| as_time(d) }
       else
-        time
+        Array(time).compact.flat_map { |d| as_time(d) }
       end
     end
 
