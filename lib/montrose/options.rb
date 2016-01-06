@@ -19,19 +19,7 @@ module Montrose
         protected :"#{name}="
       end
 
-      # Set the default starting time globally.
-      #
-      # @example Can be a proc or a string.
-      #
-      #   Recurrence.default_starts_time = proc { Date.today }
-      #
-      def default_ends_time=(time)
-        unless time.respond_to?(:call) || Time.respond_to?(time.to_s) || time.nil?
-          fail ArgumentError, 'default_ends_time must be a proc or an evaluatable string such as "Date.current"'
-        end
-
-        @default_ends_time = time
-      end
+      attr_writer :default_starts_time, :default_ends_time
 
       # Return the default ending time.
       #
@@ -42,7 +30,7 @@ module Montrose
         when Proc
           @default_ends_time.call
         else
-          Time.now
+          @default_ends_time
         end
       end
 
@@ -54,23 +42,11 @@ module Montrose
         case @default_starts_time
         when Proc
           @default_starts_time.call
-        else
+        when nil
           Time.now
+        else
+          @default_starts_time
         end
-      end
-
-      # Set the default starting time globally.
-      #
-      # @example Can be a proc or a string.
-      #
-      #   Recurrence.default_starts_time = proc { Date.today }
-      #
-      def default_starts_time=(time)
-        unless time.respond_to?(:call) || Time.respond_to?(time.to_s) || time.nil?
-          fail ArgumentError, 'default_starts_time must be a proc or an evaluatable string such as "Date.current"'
-        end
-
-        @default_starts_time = time
       end
     end
 

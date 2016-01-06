@@ -25,9 +25,20 @@ describe Montrose::Options do
       Timecop.freeze(Time.now)
     end
 
+    after do
+      Montrose::Options.default_starts_time = nil
+    end
+
     it "defaults to current time" do
       options.starts.must_equal Time.now
       options[:starts].must_equal Time.now
+    end
+
+    it "defaults to default_ends_at time" do
+      Montrose::Options.default_starts_time = 3.days.from_now
+
+      options.starts.must_equal 3.days.from_now
+      options[:starts].must_equal 3.days.from_now
     end
 
     it "can be set" do
@@ -35,6 +46,35 @@ describe Montrose::Options do
 
       options.starts.must_equal 3.days.from_now
       options[:starts].must_equal 3.days.from_now
+    end
+  end
+
+  describe "#until" do
+    before do
+      Timecop.freeze(Time.now)
+    end
+
+    after do
+      Montrose::Options.default_ends_time = nil
+    end
+
+    it "defaults to nil" do
+      options.until.must_be_nil
+      options[:until].must_be_nil
+    end
+
+    it "defaults to default_ends_time time" do
+      Montrose::Options.default_ends_time = 3.days.from_now
+
+      options.until.must_equal 3.days.from_now
+      options[:until].must_equal 3.days.from_now
+    end
+
+    it "can be set" do
+      options[:until] = 3.days.from_now
+
+      options.until.must_equal 3.days.from_now
+      options[:until].must_equal 3.days.from_now
     end
   end
 
@@ -49,6 +89,20 @@ describe Montrose::Options do
 
       options.interval.must_equal 2
       options[:interval].must_equal 2
+    end
+  end
+
+  describe "#total" do
+    it "defaults to nil" do
+      options.total.must_be_nil
+      options[:total].must_be_nil
+    end
+
+    it "can be set" do
+      options[:total] = 2
+
+      options.total.must_equal 2
+      options[:total].must_equal 2
     end
   end
 
@@ -165,11 +219,5 @@ describe Montrose::Options do
     end
   end
 end
-# def_option :every
-# def_option :starts
-# def_option :until
-# def_option :yday
 # def_option :week
 # def_option :month
-# def_option :interval
-# def_option :total
