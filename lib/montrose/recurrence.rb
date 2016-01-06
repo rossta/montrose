@@ -8,7 +8,7 @@ module Montrose
     MONTHS = Date::MONTHNAMES
     DAYS = Date::DAYNAMES
 
-    attr_reader :default_options, :options, :event
+    attr_reader :default_options
 
     class << self
       def new(options = {})
@@ -19,8 +19,6 @@ module Montrose
 
     def initialize(opts = {})
       @default_options = Montrose::Options.new(opts)
-
-      @options = @default_options
     end
 
     def events(opts = {})
@@ -42,7 +40,7 @@ module Montrose
     private
 
     def event_enum(opts = {})
-      local_opts = @options.merge(opts)
+      local_opts = @default_options.merge(opts)
       stack = Rule::Stack.build(local_opts)
       clock = Clock.new(local_opts)
 
