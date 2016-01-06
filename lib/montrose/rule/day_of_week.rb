@@ -3,8 +3,12 @@ module Montrose
     class DayOfWeek
       include Montrose::Rule
 
+      # Initializes rule
+      #
+      # @param [Array<Fixnum>] days - valid days of week
+      #
       def initialize(days)
-        @days = [*days].compact.map { |d| Montrose::Utils.day_number(d) }
+        @days = days
       end
 
       def include?(time)

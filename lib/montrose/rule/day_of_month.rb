@@ -3,8 +3,12 @@ module Montrose
     class DayOfMonth
       include Montrose::Rule
 
+      # Initializes rule
+      #
+      # @param [Array<Fixnum>] days - valid days of month
+      #
       def initialize(days)
-        @days = [*days].compact
+        @days = days
       end
 
       def include?(time)

@@ -25,5 +25,17 @@ module Montrose
         raise "Did not recognize day #{name}"
       end
     end
+
+    # Get the days in the month for +time
+    def days_in_month(time)
+      date = Date.new(time.year, time.month, 1)
+      ((date >> 1) - date).to_i
+    end
+
+    # Get the days in the month for +time
+    def days_in_year(time)
+      date = time.to_date
+      ((date + 1.year) - date).to_i
+    end
   end
 end
