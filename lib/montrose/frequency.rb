@@ -34,6 +34,13 @@ module Montrose
       frequency
     end
 
+    def self.parse(frequency)
+      FREQUENCY_TERMS.key?(frequency.to_s) or
+        raise "Don't know how to enumerate every: #{frequency}"
+
+      frequency.to_sym
+    end
+
     def initialize(opts = {})
       opts = Montrose::Options.new(opts)
       @time = nil

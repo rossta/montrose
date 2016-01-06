@@ -121,7 +121,9 @@ module Montrose
     end
 
     def every=(frequency)
-      @every = Frequency.assert(frequency)
+      opts = parse_frequency(frequency)
+      self.interval = opts[:interval] if opts[:interval]
+      @every = opts[:every]
     end
 
     def starts=(time)
@@ -204,6 +206,38 @@ module Montrose
       else
         time
       end
+    end
+
+    def parse_frequency(frequency)
+      if frequency.is_a?(Fixnum)
+        opts = {}
+        div, mod = frequency.divmod(60)
+
+        opts[:interval] = div
+
+        if frequency < freque
+          if mod.zero?
+            opts[:every] = :hour
+          else
+            opts[:every] = :minute
+          end
+          if div < 24 * 60
+            opts[:every] = :day
+          elsif div < 24 * 60 * 7
+            opts[:every] = :week
+          elsif div < 24 * 60 * 7
+            opts[:every] = :week
+          elsif div < 24 * 60 * 31
+            opts[:every] = :month
+          else
+            opts[:every] = :year
+          end
+        end
+
+        return opts
+      end
+
+     { every: Frequency.parse(frequency) }
     end
   end
 end

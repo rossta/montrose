@@ -30,6 +30,32 @@ describe Montrose::Options do
     it "must be a valid frequency" do
       -> { options[:every] = :nonsense }.must_raise
     end
+
+    describe "from integer" do
+      it "parses as every: :minute with interval" do
+        options[:every] = 30.minutes
+
+        options[:every].must_equal :minute
+        options[:interval].must_equal 30
+
+        options[:every] = 90.minutes
+
+        options[:every].must_equal :minute
+        options[:interval].must_equal 90
+      end
+
+      it "parses as every: :hour, with interval" do
+        options[:every] = 1.hour
+
+        options[:every].must_equal :hour
+        options[:interval].must_equal 1
+
+        options[:every] = 5.hours
+
+        options[:every].must_equal :hour
+        options[:interval].must_equal 5
+      end
+    end
   end
 
   describe "#starts" do
