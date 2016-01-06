@@ -10,6 +10,13 @@ module Montrose
 
     attr_reader :default_options, :options, :event
 
+    class << self
+      def new(options = {})
+        return options if options.is_a?(self)
+        super
+      end
+    end
+
     def initialize(opts = {})
       @default_options = Montrose::Options.new(opts)
 
@@ -56,15 +63,4 @@ module Montrose
       end
     end
   end
-
-  def Recurrence(obj)
-    case obj
-    when Recurrence
-      obj
-    else
-      Recurrence.new(obj)
-    end
-  end
-
-  module_function :Recurrence
 end
