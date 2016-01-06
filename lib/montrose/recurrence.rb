@@ -13,11 +13,7 @@ module Montrose
     def initialize(opts = {})
       @default_options = Montrose::Options.new(opts)
 
-      options = opts.dup
-      options[:starts] ||= Montrose::Options.default_starts
-      options[:interval] ||= 1
-
-      @options = normalize_options(options)
+      @options = @default_options
     end
 
     def events(opts = {})
