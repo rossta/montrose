@@ -1,18 +1,14 @@
 module Montrose
   module Rule
     class NthDayOfMonth
+      include Montrose::Rule
+
       def initialize(days)
         @days = day_occurrences_in_month(days)
       end
 
       def include?(time)
         @days.key?(time.wday) && matches_day_occurrence?(time)
-      end
-
-      def advance!(time)
-      end
-
-      def break?
       end
 
       private
