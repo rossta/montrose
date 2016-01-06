@@ -9,18 +9,12 @@ describe Montrose::Clock do
 
   describe "#tick" do
     it "must start with given starts time" do
-      clock = new_clock(starts: time_now)
+      clock = new_clock(every: :minute, starts: time_now)
       clock.tick.must_equal time_now
     end
 
     it "emits 1 minute increments" do
       clock = new_clock(every: :minute)
-
-      clock.must_have_tick 1.minute
-    end
-
-    it "emits 1 minute increments when smallest part is minute" do
-      clock = new_clock(every: :hour, minute: 20)
 
       clock.must_have_tick 1.minute
     end

@@ -108,8 +108,16 @@ module Montrose
       self.class.new(h1.merge(h2))
     end
 
-    def fetch(key, default_val = nil, &block)
-      instance_variable_get("@#{key}") || default_val || block.call
+    def fetch(key, *args, &block)
+      raise ArgumentError, "wrong number of arguments (#{args.length} for 1..2)" if args.length > 1
+      found = instance_variable_get("@#{key}")
+      return found if found
+      return args.first if args.length == 1
+      if block_given?
+        block.call
+      else
+        raise "Key #{key.inspect} not found"
+      end
     end
 
     def every=(frequency)

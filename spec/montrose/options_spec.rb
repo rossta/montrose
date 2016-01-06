@@ -458,4 +458,32 @@ describe Montrose::Options do
         interval: 1)
     end
   end
+
+  describe "#fetch" do
+    it "returns key if present" do
+      options[:every] = :month
+
+      options.fetch(:every).must_equal :month
+    end
+
+    it "returns default if given" do
+      options.fetch(:every, :foo).must_equal :foo
+    end
+
+    it "return nil if given as default" do
+      options.fetch(:every, nil).must_be_nil
+    end
+
+    it "calls block if not found" do
+      options.fetch(:every) { :foo }.must_equal :foo
+    end
+
+    it "raises for no block given and value not found" do
+      -> { options.fetch(:every) }.must_raise
+    end
+
+    it "raises for more than two args" do
+      -> { options.fetch(:every, nil, nil) }.must_raise
+    end
+  end
 end

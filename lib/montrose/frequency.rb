@@ -35,10 +35,10 @@ module Montrose
     end
 
     def initialize(opts = {})
-      @options = opts.dup
+      opts = Montrose::Options.new(opts)
       @time = nil
-      @starts = opts[:starts]
-      @interval = opts.fetch(:interval, 1)
+      @starts = opts.fetch(:starts)
+      @interval = opts.fetch(:interval)
     end
 
     def matches_interval?(time_diff)
