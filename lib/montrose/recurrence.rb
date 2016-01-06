@@ -35,7 +35,7 @@ module Montrose
     private
 
     def event_enum(opts = {})
-      local_opts = @options.merge(normalize_options(opts))
+      local_opts = @options.merge(opts)
       stack = Rule::Stack.build(local_opts)
       clock = Clock.new(local_opts)
 
@@ -53,29 +53,6 @@ module Montrose
             no.map(&:break?)
           end
         end
-      end
-    end
-
-    def normalize_options(opts = {})
-      options = opts.dup
-
-      [:starts, :until].
-        select { |k| options.key?(k) }.
-        each { |k| options[k] = as_time(options[k]) }
-
-      options
-    end
-
-    def as_time(time) # :nodoc:
-      case
-      when time.respond_to?(:to_time)
-        time.to_time
-      when time.is_a?(String)
-        Time.parse(time)
-      when time.is_a?(Array)
-        [time].compact.flat_map { |d| as_time(d) }
-      else
-        time
       end
     end
   end
