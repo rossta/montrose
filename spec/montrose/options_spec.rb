@@ -30,6 +30,68 @@ describe Montrose::Options do
     it "must be a valid frequency" do
       -> { options[:every] = :nonsense }.must_raise
     end
+
+    describe "from integer" do
+      it "parses as every: :minute with interval" do
+        options[:every] = 30.minutes
+
+        options[:every].must_equal :minute
+        options[:interval].must_equal 30
+
+        options[:every] = 90.minutes
+
+        options[:every].must_equal :minute
+        options[:interval].must_equal 90
+      end
+
+      it "parses as every: :hour, with interval" do
+        options[:every] = 1.hour
+
+        options[:every].must_equal :hour
+        options[:interval].must_equal 1
+
+        options[:every] = 5.hours
+
+        options[:every].must_equal :hour
+        options[:interval].must_equal 5
+      end
+
+      it "parses as every: :week, with interval" do
+        options[:every] = 1.week
+
+        options[:every].must_equal :week
+        options[:interval].must_equal 1
+
+        options[:every] = 12.weeks
+
+        options[:every].must_equal :week
+        options[:interval].must_equal 12
+      end
+
+      it "parses as every: :month, with interval" do
+        options[:every] = 1.month
+
+        options[:every].must_equal :month
+        options[:interval].must_equal 1
+
+        options[:every] = 12.months
+
+        options[:every].must_equal :month
+        options[:interval].must_equal 12
+      end
+
+      it "parses as every: :year, with interval" do
+        options[:every] = 1.year
+
+        options[:every].must_equal :year
+        options[:interval].must_equal 1
+
+        options[:every] = 12.years
+
+        options[:every].must_equal :year
+        options[:interval].must_equal 12
+      end
+    end
   end
 
   describe "#starts" do

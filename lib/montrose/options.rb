@@ -110,7 +110,7 @@ module Montrose
 
     def fetch(key, *args, &block)
       raise ArgumentError, "wrong number of arguments (#{args.length} for 1..2)" if args.length > 1
-      found = instance_variable_get("@#{key}")
+      found = send(key)
       return found if found
       return args.first if args.length == 1
       if block_given?
@@ -120,8 +120,10 @@ module Montrose
       end
     end
 
-    def every=(frequency)
-      @every = Frequency.assert(frequency)
+    def every=(arg)
+      parsed = Frequency.parse(arg)
+      self.interval = parsed[:interval] if parsed[:interval]
+      @every = parsed[:every]
     end
 
     def starts=(time)
@@ -176,14 +178,7 @@ module Montrose
     def map_arg(arg, &block)
       return nil unless arg
 
-      array = case arg
-              when Range
-                arg.to_a
-              else
-                [*arg]
-              end
-
-      array.map(&block)
+      Array(arg).map(&block)
     end
 
     def assert_range_includes(range, item, absolute = false)
@@ -194,15 +189,15 @@ module Montrose
     end
 
     def as_time(time)
+      return nil unless time
+
       case
       when time.respond_to?(:to_time)
         time.to_time
       when time.is_a?(String)
         Time.parse(time)
-      when time.is_a?(Array)
-        [time].compact.flat_map { |d| as_time(d) }
       else
-        time
+        Array(time).flat_map { |d| as_time(d) }
       end
     end
   end
