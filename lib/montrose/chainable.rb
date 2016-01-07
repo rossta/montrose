@@ -2,16 +2,43 @@ require "montrose/options"
 
 module Montrose
   module Chainable
+    # Create a recurrence from the given frequency
+    # @example
+    #
+    #   Montrose.every(:hour)
+    #   Montrose.every(:hour, interval: 2) #=> every 2 hours
+    #   Montrose.every(3.days, starts: 2.days.from_now) #=> every 3 days
+    #   Montrose.every(1.year, until: 10.days.from_now)
+    #
+    def every(frequency, options = {})
+      branch options.merge(every: frequency)
+    end
+
+    # Create a minutely recurrence.
+    #
+    # @example
+    #
+    #   Montrose.minutely
+    #   Montrose.minutely(interval: 2) #=> every 2 minutes
+    #   Montrose.minutely(starts: 3.days.from_now)
+    #   Montrose.minutely(until: 10.days.from_now)
+    #   Montrose.minutely(total: 5)
+    #   Montrose.minutely(except: Date.tomorrow)
+    #
+    def minutely(options = {})
+      branch options.merge(every: :minute)
+    end
+
     # Create a hourly recurrence.
     #
     # @example
     #
-    #   Recurrence.hourly
-    #   Recurrence.hourly(interval: 2) #=> every 2 hours
-    #   Recurrence.hourly(starts: 3.days.from_now)
-    #   Recurrence.hourly(until: 10.days.from_now)
-    #   Recurrence.hourly(total: 5)
-    #   Recurrence.hourly(except: Date.tomorrow)
+    #   Montrose.hourly
+    #   Montrose.hourly(interval: 2) #=> every 2 hours
+    #   Montrose.hourly(starts: 3.days.from_now)
+    #   Montrose.hourly(until: 10.days.from_now)
+    #   Montrose.hourly(total: 5)
+    #   Montrose.hourly(except: Date.tomorrow)
     #
     def hourly(options = {})
       branch options.merge(every: :hour)

@@ -91,6 +91,13 @@ describe Montrose::Options do
         options[:every].must_equal :year
         options[:interval].must_equal 12
       end
+
+      it "parses on initialize, ignores given interval" do
+        options = new_options(every: 5.years, interval: 2)
+
+        options[:every].must_equal :year
+        options[:interval].must_equal 5
+      end
     end
   end
 

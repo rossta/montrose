@@ -7,6 +7,38 @@ describe Montrose::Chainable do
     Timecop.freeze(time_now)
   end
 
+  describe "#every" do
+    it "returns recurrence" do
+      recurrence = Montrose.every(:minute)
+      recurrence.must_be_kind_of Montrose::Recurrence
+    end
+
+    it "emits given frequencey by default" do
+      recurrence = Montrose.every(:minute)
+      recurrence.events.must_have_interval 1.minute
+
+      recurrence = Montrose.every(2.hours)
+      recurrence.events.must_have_interval 2.hours
+    end
+
+    it "accepts options" do
+      recurrence = Montrose.every(:minute, total: 2)
+      recurrence.events.to_a.size.must_equal 2
+    end
+  end
+
+  describe "#minutely" do
+    it "returns recurrence" do
+      recurrence = Montrose.minutely
+      recurrence.must_be_kind_of Montrose::Recurrence
+    end
+
+    it "emits per hour by default" do
+      recurrence = Montrose.minutely
+      recurrence.events.must_have_interval 1.minute
+    end
+  end
+
   describe "#hourly" do
     it "returns recurrence" do
       recurrence = Montrose.hourly

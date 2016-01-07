@@ -73,12 +73,12 @@ module Montrose
         every: self.class.default_every,
         starts: self.class.default_starts,
         until: self.class.default_ends,
+        interval: 1,
         day: nil,
         mday: nil,
         yday: nil,
         week: nil,
         month: nil,
-        interval: 1,
         total: nil
       }
 
@@ -120,10 +120,22 @@ module Montrose
       end
     end
 
+    def key?(key)
+      respond_to?(key) && !send(key).nil?
+    end
+
     def every=(arg)
-      parsed = Frequency.parse(arg)
-      self.interval = parsed[:interval] if parsed[:interval]
-      @every = parsed[:every]
+      parsed = parse_frequency(arg)
+
+      @parsed_interval = nil
+      @parsed_interval = self.interval = parsed[:interval] if parsed[:interval]
+
+      @every = parsed.fetch(:every)
+    end
+
+    def interval=(int)
+      return false if @parsed_interval
+      @interval = int
     end
 
     def starts=(time)
@@ -156,10 +168,6 @@ module Montrose
 
     def month=(months)
       @month = map_arg(months) { |d| Montrose::Utils.month_number(d) }
-    end
-
-    def key?(key)
-      respond_to?(key) && !send(key).nil?
     end
 
     private
@@ -199,6 +207,25 @@ module Montrose
       else
         Array(time).flat_map { |d| as_time(d) }
       end
+    end
+
+    def parse_frequency(input)
+      if input.is_a?(Numeric)
+        frequency, interval = duration_to_frequency_parts(input)
+        { every: frequency, interval: interval }
+      else
+        { every: Frequency.assert(input) }
+      end
+    end
+
+    def duration_to_frequency_parts(duration)
+      parts = nil
+      [:year, :month, :week, :day, :hour, :minute].each do |freq|
+        div, mod = duration.divmod(1.send(freq))
+        parts = [freq, div]
+        return parts if mod.zero?
+      end
+      parts
     end
   end
 end

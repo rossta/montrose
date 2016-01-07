@@ -4,6 +4,7 @@ require "montrose/chainable"
 module Montrose
   class Recurrence
     include Chainable
+    include Enumerable
 
     attr_reader :default_options
 
@@ -22,16 +23,12 @@ module Montrose
       event_enum(opts)
     end
 
-    def each(opts = {}, &block)
-      events(opts).each(&block)
+    def each(opts = {})
+      events(opts).each(&Proc.new)
     end
 
     def starts
-      options[:starts]
-    end
-
-    def next
-      events.next
+      default_options[:starts]
     end
 
     private
@@ -48,11 +45,11 @@ module Montrose
           yes, no = stack.partition { |rule| rule.include?(time) }
 
           if no.empty?
-            yes.map { |rule| rule.advance!(time) }
+            yes.each { |rule| rule.advance!(time) }
             puts time if ENV["DEBUG"]
             yielder << time
           else
-            no.map(&:break?)
+            no.each(&:break?)
           end
         end
       end

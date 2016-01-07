@@ -27,33 +27,12 @@ module Montrose
       end
     end
 
-    # Convert input to frequency hash
-    def self.parse(input)
-      if input.is_a?(Numeric)
-        frequency, interval = duration_to_frequency_parts(input)
-        { every: frequency, interval: interval }
-      else
-        { every: Frequency.assert(input) }
-      end
-    end
-
     # @private
     def self.assert(frequency)
       FREQUENCY_TERMS.key?(frequency.to_s) or
         raise "Don't know how to enumerate every: #{frequency}"
 
       frequency.to_sym
-    end
-
-    # @private
-    def self.duration_to_frequency_parts(duration)
-      parts = nil
-      [:year, :month, :week, :day, :hour, :minute].each do |freq|
-        div, mod = duration.divmod(1.send(freq))
-        parts = [freq, div]
-        return parts if mod.zero?
-      end
-      parts
     end
 
     def initialize(opts = {})
