@@ -137,6 +137,12 @@ What `Montrose` isn't:
 
 * support all calendaring use cases under the sun
 
+## TODO
+
+- [ ] Support `:at` option and chainable method for time of day string, e.g. `at: '7:00 pm'`
+- [ ] Support `:between` option and chainable method for date range, e.g.
+  `between: (today..tomorrow)`
+
 ## Related Projects
 
 Check out following related projects, all of which have provided inspiration for `Montrose`.
@@ -158,4 +164,3 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/rossta
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
