@@ -55,6 +55,42 @@ describe Montrose::Options do
         options[:every].must_equal :hour
         options[:interval].must_equal 5
       end
+
+      it "parses as every: :week, with interval" do
+        options[:every] = 1.week
+
+        options[:every].must_equal :week
+        options[:interval].must_equal 1
+
+        options[:every] = 12.weeks
+
+        options[:every].must_equal :week
+        options[:interval].must_equal 12
+      end
+
+      it "parses as every: :month, with interval" do
+        options[:every] = 1.month
+
+        options[:every].must_equal :month
+        options[:interval].must_equal 1
+
+        options[:every] = 12.months
+
+        options[:every].must_equal :month
+        options[:interval].must_equal 12
+      end
+
+      it "parses as every: :year, with interval" do
+        options[:every] = 1.year
+
+        options[:every].must_equal :year
+        options[:interval].must_equal 1
+
+        options[:every] = 12.years
+
+        options[:every].must_equal :year
+        options[:interval].must_equal 12
+      end
     end
   end
 

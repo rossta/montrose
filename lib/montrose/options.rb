@@ -201,36 +201,22 @@ module Montrose
       end
     end
 
-    def parse_frequency(frequency)
-      if frequency.is_a?(Fixnum)
-        opts = {}
-        div, mod = frequency.divmod(60)
-
-        opts[:interval] = div
-
-        if frequency < freque
-          if mod.zero?
-            opts[:every] = :hour
-          else
-            opts[:every] = :minute
-          end
-          if div < 24 * 60
-            opts[:every] = :day
-          elsif div < 24 * 60 * 7
-            opts[:every] = :week
-          elsif div < 24 * 60 * 7
-            opts[:every] = :week
-          elsif div < 24 * 60 * 31
-            opts[:every] = :month
-          else
-            opts[:every] = :year
-          end
-        end
-
-        return opts
+    def parse_frequency(input)
+      if input.is_a?(Numeric)
+        convert_time_to_frequency(input)
+      else
+        { every: Frequency.parse(input) }
       end
+    end
 
-     { every: Frequency.parse(frequency) }
+    def convert_time_to_frequency(time)
+      parts = nil
+      [:year, :month, :week, :day, :hour, :minute].each do |duration|
+        div, mod = time.divmod(1.send(duration))
+        parts = { every: duration, interval: div }
+        return parts if mod.zero?
+      end
+      parts
     end
   end
 end
