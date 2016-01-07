@@ -197,7 +197,7 @@ module Montrose
       when time.is_a?(String)
         Time.parse(time)
       else
-        Array(time).compact.flat_map { |d| as_time(d) }
+        Array(time).flat_map { |d| as_time(d) }
       end
     end
   end
