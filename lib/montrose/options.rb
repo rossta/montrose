@@ -110,7 +110,7 @@ module Montrose
 
     def fetch(key, *args, &block)
       raise ArgumentError, "wrong number of arguments (#{args.length} for 1..2)" if args.length > 1
-      found = instance_variable_get("@#{key}")
+      found = send(key)
       return found if found
       return args.first if args.length == 1
       if block_given?
@@ -120,10 +120,10 @@ module Montrose
       end
     end
 
-    def every=(frequency)
-      opts = parse_frequency(frequency)
-      self.interval = opts[:interval] if opts[:interval]
-      @every = opts[:every]
+    def every=(arg)
+      parsed = Frequency.parse(arg)
+      self.interval = parsed[:interval] if parsed[:interval]
+      @every = parsed[:every]
     end
 
     def starts=(time)
@@ -199,24 +199,6 @@ module Montrose
       else
         Array(time).compact.flat_map { |d| as_time(d) }
       end
-    end
-
-    def parse_frequency(input)
-      if input.is_a?(Numeric)
-        convert_time_to_frequency(input)
-      else
-        { every: Frequency.parse(input) }
-      end
-    end
-
-    def convert_time_to_frequency(time)
-      parts = nil
-      [:year, :month, :week, :day, :hour, :minute].each do |duration|
-        div, mod = time.divmod(1.send(duration))
-        parts = { every: duration, interval: div }
-        return parts if mod.zero?
-      end
-      parts
     end
   end
 end
