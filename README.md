@@ -102,24 +102,14 @@ s = Montrose::Recurrence.new(every: :month, on: 1, handler: Proc.new { |day, mon
 r = Montrose::Recurrence.new(every: :month, on: 31, shift: true)
 
 # Getting an array with all events
-r.events.each {|date| puts date.to_s }  # => Memoized array
-r.events!.each {|date| puts date.to_s } # => reset items cache and re-execute it
-r.events(starts: '2009-01-01').each {|date| puts date.to_s }
-r.events(until: '2009-01-10').each {|date| puts date.to_s }
-r.events(through: '2009-01-10').each {|date| puts date.to_s }
+r.events.each { |date| puts date.to_s }  # => Memoized array
+r.events(starts: '2009-01-01').each { |date| puts date.to_s }
+r.events(until: '2009-01-10').each { |date| puts date.to_s }
+r.events(through: '2009-01-10').each { |date| puts date.to_s }
 r.events(starts: '2009-01-05', until: '2009-01-10').each {|date| puts date.to_s }
 
 # Iterating events
-r.each { |date| puts date.to_s } # => Use items method
-r.each! { |date| puts date.to_s } # => Use items! method
-
-# Check if a date is included
-r.include?(Date.today) # => true or false
-r.include?('2008-09-21')
-
-# Get next available date
-r.next  # => Keep the original date object
-r.next! # => Change the internal date object to the next available date
+r.each { |time| puts time.to_s } # => Use items method
 ```
 
 ## Goals
