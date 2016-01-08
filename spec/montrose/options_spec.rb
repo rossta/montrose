@@ -196,6 +196,23 @@ describe Montrose::Options do
     end
   end
 
+  describe "#between" do
+    before do
+      Timecop.freeze(Time.now)
+    end
+
+    after do
+      Montrose::Options.default_starts = nil
+    end
+
+    it "sets starts and until times" do
+      options[:between] = Date.today..1.month.from_now.to_date
+
+      options.starts.must_equal Date.today.to_time
+      options.until.must_equal 1.month.from_now.beginning_of_day
+    end
+  end
+
   describe "#interval" do
     it "defaults to 1" do
       options.interval.must_equal 1

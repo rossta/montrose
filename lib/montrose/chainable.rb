@@ -128,6 +128,10 @@ module Montrose
       branch default_options.merge(until: ends_at)
     end
 
+    def between(date_range)
+      branch default_options.merge(between: date_range)
+    end
+
     # Create a recurrence for given days of month
     #
     # @param [Fixnum] days (1, 2, -1, ...)

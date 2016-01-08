@@ -67,6 +67,7 @@ module Montrose
     def_option :month
     def_option :interval
     def_option :total
+    def_option :between
 
     def initialize(opts = {})
       defaults = {
@@ -83,7 +84,7 @@ module Montrose
       }
 
       options = defaults.merge(opts)
-      options.each { |(k, v)| self[k] = v unless v.nil? }
+      options.each { |(k, v)| self[k] ||= v unless v.nil? }
     end
 
     def to_hash
@@ -127,15 +128,9 @@ module Montrose
     def every=(arg)
       parsed = parse_frequency(arg)
 
-      @parsed_interval = nil
-      @parsed_interval = self.interval = parsed[:interval] if parsed[:interval]
+      self[:interval] = parsed[:interval] if parsed[:interval]
 
       @every = parsed.fetch(:every)
-    end
-
-    def interval=(int)
-      return false if @parsed_interval
-      @interval = int
     end
 
     def starts=(time)
@@ -168,6 +163,17 @@ module Montrose
 
     def month=(months)
       @month = map_arg(months) { |d| Montrose::Utils.month_number(d) }
+    end
+
+    def between=(range)
+      self[:starts] = range.first
+      self[:until] = range.last
+    end
+
+    def between
+      return nil unless self[:starts] && self[:until]
+
+      (self[:starts]..self[:until])
     end
 
     private
