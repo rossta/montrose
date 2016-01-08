@@ -68,6 +68,7 @@ module Montrose
     def_option :interval
     def_option :total
     def_option :between
+    def_option :at
 
     def initialize(opts = {})
       defaults = {
@@ -174,6 +175,14 @@ module Montrose
       return nil unless self[:starts] && self[:until]
 
       (self[:starts]..self[:until])
+    end
+
+    def at=(time)
+      times = map_arg(time) { |t| as_time(t) }
+      now = Time.now
+      first = times.map { |t| t < now ? t + 24.hours : t }.min
+      self[:starts] = first if first
+      @at = times
     end
 
     private

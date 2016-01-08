@@ -28,7 +28,7 @@ module Montrose
     end
 
     def starts
-      default_options[:starts]
+      events.peek
     end
 
     private

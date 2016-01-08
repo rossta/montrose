@@ -530,6 +530,20 @@ describe Montrose::Options do
     end
   end
 
+  describe "#at" do
+    it "defaults to nil" do
+      options.at.must_be_nil
+      options[:at].must_be_nil
+    end
+
+    it "sets a recurrence time" do
+      options[:at] = "3:30 PM"
+
+      options.at = [Time.parse("3:30 PM")]
+      options[:at] = [Time.parse("3:30 PM")]
+    end
+  end
+
   describe "#to_hash" do
     let(:options) { new_options(every: :day) }
 
