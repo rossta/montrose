@@ -49,51 +49,12 @@ module Montrose
     def matches_interval?(time_diff)
       (time_diff % @interval).zero?
     end
-
-    class Minutely < Frequency
-      def include?(time)
-        matches_interval?((time - @starts) / 1.minute)
-      end
-    end
-
-    class Hourly < Frequency
-      def include?(time)
-        matches_interval?((time - @starts) / 1.hour)
-      end
-    end
-
-    class Daily < Frequency
-      def include?(time)
-        matches_interval? time.to_date - @starts.to_date
-      end
-    end
-
-    class Weekly < Frequency
-      def include?(time)
-        weeks_since_start(time) % @interval == 0
-      end
-
-      private
-
-      def weeks_since_start(time)
-        ((time.beginning_of_week - base_date) / 1.week).round
-      end
-
-      def base_date
-        @starts.beginning_of_week
-      end
-    end
-
-    class Monthly < Frequency
-      def include?(time)
-        matches_interval?((time.month - @starts.month) + (time.year - @starts.year) * 12)
-      end
-    end
-
-    class Yearly < Frequency
-      def include?(time)
-        matches_interval? time.year - @starts.year
-      end
-    end
   end
 end
+
+require "montrose/frequency/daily"
+require "montrose/frequency/hourly"
+require "montrose/frequency/minutely"
+require "montrose/frequency/monthly"
+require "montrose/frequency/weekly"
+require "montrose/frequency/yearly"
