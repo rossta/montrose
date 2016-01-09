@@ -3,6 +3,10 @@ module Montrose
     class DayOfWeek
       include Montrose::Rule
 
+      def self.apply_options(opts)
+        opts[:day]
+      end
+
       # Initializes rule
       #
       # @param [Array<Fixnum>] days - valid days of week

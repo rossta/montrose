@@ -3,6 +3,10 @@ module Montrose
     class MonthOfYear
       include Montrose::Rule
 
+      def self.apply_options(opts)
+        opts[:month]
+      end
+
       # Initializes rule
       #
       # @param [Array] months - valid month numbers

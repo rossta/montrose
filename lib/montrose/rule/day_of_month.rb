@@ -3,6 +3,10 @@ module Montrose
     class DayOfMonth
       include Montrose::Rule
 
+      def self.apply_options(opts)
+        opts[:mday]
+      end
+
       # Initializes rule
       #
       # @param [Array<Fixnum>] days - valid days of month

@@ -3,6 +3,10 @@ module Montrose
     class Total
       include Montrose::Rule
 
+      def self.apply_options(opts)
+        opts[:total]
+      end
+
       def initialize(max)
         @max = max
         @count = 0

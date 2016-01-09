@@ -15,6 +15,10 @@ module Montrose
 
     attr_reader :time, :starts
 
+    def self.apply?(*)
+      true
+    end
+
     def self.from_options(opts)
       frequency = opts.fetch(:every) { raise "Please specify the :every option" }
 

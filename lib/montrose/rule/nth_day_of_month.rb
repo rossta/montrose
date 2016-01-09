@@ -3,6 +3,14 @@ module Montrose
     class NthDayOfMonth
       include Montrose::Rule
 
+      def self.apply_options?(opts)
+        opts[:every] == :month && opts[:day].is_a?(Hash)
+      end
+
+      def self.apply_options(opts)
+        opts[:day]
+      end
+
       # Initializes rule
       #
       # @param [Hash] days - valid days of week to month occurrence pairs

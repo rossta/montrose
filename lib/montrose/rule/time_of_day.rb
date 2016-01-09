@@ -3,6 +3,10 @@ module Montrose
     class TimeOfDay
       include Montrose::Rule
 
+      def self.apply_options(opts)
+        opts[:at]
+      end
+
       # Initializes rule
       #
       # @param [Array<Time>] times - valid hours of days

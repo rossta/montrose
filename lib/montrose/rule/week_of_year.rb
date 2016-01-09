@@ -3,6 +3,10 @@ module Montrose
     class WeekOfYear
       include Montrose::Rule
 
+      def self.apply_options(opts)
+        opts[:week]
+      end
+
       # Initializes rule
       #
       # @param [Array[Fixnum]] weeks - valid weeks of year

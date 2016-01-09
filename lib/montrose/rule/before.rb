@@ -3,6 +3,10 @@ module Montrose
     class Before
       include Montrose::Rule
 
+      def self.apply_options(opts)
+        opts[:until]
+      end
+
       def initialize(end_time)
         @end_time = end_time
       end

@@ -3,6 +3,10 @@ module Montrose
     class DayOfYear
       include Montrose::Rule
 
+      def self.apply_options(opts)
+        opts[:yday]
+      end
+
       def initialize(days)
         @days = days
       end

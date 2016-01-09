@@ -1,5 +1,9 @@
 module Montrose
   module Rule
+    def self.included(base)
+      base.extend ClassMethods
+    end
+
     def include?(_time)
       raise "Class must implement #{__method__}"
     end
@@ -10,6 +14,20 @@ module Montrose
 
     def break?
       # default: no op
+    end
+
+    module ClassMethods
+      def apply_option(_opts)
+        nil
+      end
+
+      def apply_options?(opts)
+        apply_options(opts)
+      end
+
+      def from_options(opts)
+        new(apply_options(opts)) if apply_options?(opts)
+      end
     end
   end
 end

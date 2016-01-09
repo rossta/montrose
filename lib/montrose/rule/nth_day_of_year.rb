@@ -3,6 +3,14 @@ module Montrose
     class NthDayOfYear
       include Montrose::Rule
 
+      def self.apply_options?(opts)
+        opts[:every] == :year && opts[:day].is_a?(Hash)
+      end
+
+      def self.apply_options(opts)
+        opts[:day]
+      end
+
       # Initializes rule
       #
       # @param [Hash] days - valid days of week to year occurrence pairs
