@@ -61,4 +61,22 @@ describe Montrose::Recurrence do
       recurrence_tomorrow.starts.must_equal Date.tomorrow + 11.hours
     end
   end
+
+  describe "additional recurrence examples" do
+    let(:time_now) { Time.local(2015, 9, 1, 12) } # Tuesday
+
+    before do
+      Timecop.freeze(time_now)
+    end
+
+    it "every day at 3:30pm" do
+      recurrence = new_recurrence(every: :day, at: "3:30 PM")
+
+      recurrence.events.take(3).must_pair_with [
+        Time.local(2015, 9, 1, 15, 30),
+        Time.local(2015, 9, 2, 15, 30),
+        Time.local(2015, 9, 3, 15, 30)
+      ]
+    end
+  end
 end

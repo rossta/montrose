@@ -6,7 +6,7 @@ describe "RFC Recurrence Rules" do
   #   - spec https://tools.ietf.org/html/rfc5545#section-3.3.10
   #   - examples: https://tools.ietf.org/html/rfc5545#section-3.8.5.3
   #
-  let(:time_now) { Time.parse("Tuesday, September 1, 2015, 12:00 PM") }
+  let(:time_now) { Time.local(2015, 9, 1, 12) } # Tuesday
 
   before do
     Timecop.freeze(time_now)
