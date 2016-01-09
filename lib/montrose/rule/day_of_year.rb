@@ -7,6 +7,10 @@ module Montrose
         opts[:yday]
       end
 
+      # Initializes rule
+      #
+      # @param [Array<Fixnum>] days - valid days of year, e.g. [1, 2, 366]
+      #
       def initialize(days)
         @days = days
       end

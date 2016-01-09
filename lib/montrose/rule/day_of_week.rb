@@ -9,7 +9,7 @@ module Montrose
 
       # Initializes rule
       #
-      # @param [Array<Fixnum>] days - valid days of week
+      # @param [Array<Fixnum>] days - valid days of week, e.g. [1, 2, 7]
       #
       def initialize(days)
         @days = days
