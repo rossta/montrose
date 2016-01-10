@@ -1,5 +1,6 @@
-require "montrose/rule"
 require "montrose/chainable"
+require "montrose/stack"
+require "montrose/clock"
 
 module Montrose
   class Recurrence
@@ -35,21 +36,13 @@ module Montrose
 
     def event_enum(opts = {})
       local_opts = @default_options.merge(opts)
-      stack = Rule::Stack.build(local_opts)
+      stack = Stack.new(local_opts)
       clock = Clock.new(local_opts)
 
       Enumerator.new do |yielder|
         loop do
-          time = clock.tick
-
-          yes, no = stack.partition { |rule| rule.include?(time) }
-
-          if no.empty?
-            yes.each { |rule| rule.advance!(time) }
-            puts time if ENV["DEBUG"]
+          stack.advance(clock.tick) do |time|
             yielder << time
-          else
-            no.each(&:break?)
           end
         end
       end
