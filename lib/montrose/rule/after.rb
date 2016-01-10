@@ -7,6 +7,10 @@ module Montrose
         opts[:starts]
       end
 
+      # Initializes rule
+      #
+      # @param [Array<Fixnum>] days - valid days of month, i.e. [1, 2, -1]
+      #
       def initialize(start_time)
         @start_time = start_time
       end
