@@ -11,7 +11,10 @@ begin
 rescue LoadError
 end
 
-Dir[File.expand_path("../../test/support/**/*.rb", __FILE__)].each { |f| require f }
+require "coveralls"
+Coveralls.wear!
+
+Dir[File.expand_path("../../spec/support/**/*.rb", __FILE__)].each { |f| require f }
 
 module Minitest
   class Spec

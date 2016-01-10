@@ -9,4 +9,5 @@ group :development do
   gem "guard-minitest"
   gem "guard-rubocop"
   gem "yard"
+  gem "coveralls"
 end
