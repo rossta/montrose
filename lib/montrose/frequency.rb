@@ -21,22 +21,18 @@ module Montrose
 
     def self.from_options(opts)
       frequency = opts.fetch(:every) { raise "Please specify the :every option" }
-
-      Montrose::Frequency.const_get(fetch(frequency)).new(opts)
-    end
-
-    def self.fetch(frequency)
-      FREQUENCY_TERMS.fetch(frequency.to_s) do
-        raise "Don't know how to enumerate every: #{frequency}"
+      class_name = FREQUENCY_TERMS.fetch(frequency.to_s) do
+        fail "Don't know how to enumerate every: #{frequency}"
       end
+
+      Montrose::Frequency.const_get(class_name).new(opts)
     end
 
     # @private
     def self.assert(frequency)
-      FREQUENCY_TERMS.key?(frequency.to_s) or
-        raise "Don't know how to enumerate every: #{frequency}"
+      FREQUENCY_TERMS.key?(frequency.to_s) or fail "Don't know how to enumerate every: #{frequency}"
 
-      frequency.to_sym
+      frequency
     end
 
     def initialize(opts = {})
