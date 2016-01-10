@@ -1,4 +1,8 @@
 module Montrose
+  # Abstract class for special recurrence rule required
+  # in all instances of Recurrence. Frequency describes
+  # the base recurrence interval.
+  #
   class Frequency
     include Montrose::Rule
 
@@ -15,10 +19,9 @@ module Montrose
 
     attr_reader :time, :starts
 
-    def self.apply?(*)
-      true
-    end
-
+    # Factory method for instantiating the appropriate Frequency
+    # subclass.
+    #
     def self.from_options(opts)
       frequency = opts.fetch(:every) { raise "Please specify the :every option" }
       class_name = FREQUENCY_TERMS.fetch(frequency.to_s) do
