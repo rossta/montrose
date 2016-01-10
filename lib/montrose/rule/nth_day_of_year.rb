@@ -1,3 +1,5 @@
+require "montrose/rule/nth_day_matcher"
+
 module Montrose
   module Rule
     class NthDayOfYear
@@ -20,33 +22,41 @@ module Montrose
       end
 
       def include?(time)
-        @days.key?(time.wday) && matches_day_occurrence?(time)
+        @days.key?(time.wday) && nth_day?(time)
       end
 
       private
 
-      def matches_day_occurrence?(time)
+      def nth_day?(time)
         expected_occurrences = @days[time.wday]
-        return true if expected_occurrences == :all
-
-        this_occ, total_occ = which_occurrence_in_year(time)
-
-        expected_occurrences.any? { |nth_occ| matches_nth_occurrence?(nth_occ, this_occ, total_occ) }
+        nth_day = NthDayMatcher.new(time.wday, YearDay.new(time))
+        expected_occurrences.any? { |n| nth_day.matches?(n) }
       end
 
-      def matches_nth_occurrence?(nth_occ, this_occ, total_occ)
-        return true if nth_occ == this_occ
+      class YearDay
+        def initialize(time)
+          @time = time
+        end
 
-        nth_occ < 0 && (total_occ + nth_occ + 1) == this_occ
-      end
+        def nth_day
+          @time.yday
+        end
 
-      # Return the count of the number of times wday appears in the year,
-      # and which of those time falls on
-      def which_occurrence_in_year(time)
-        first_occurrence = ((7 - time.beginning_of_year.wday) + time.wday) % 7 + 1
-        this_weekday_in_year_count = ((Montrose::Utils.days_in_year(time) - first_occurrence + 1) / 7.0).ceil
-        nth_occurrence_of_weekday = (time.yday - first_occurrence) / 7 + 1
-        [nth_occurrence_of_weekday, this_weekday_in_year_count]
+        def first_wday
+          @time.beginning_of_year.wday
+        end
+
+        def total_days
+          days_in_year(@time)
+        end
+
+        private
+
+        # Get the days in the month for +time
+        def days_in_year(time)
+          date = time.to_date
+          ((date + 1.year) - date).to_i
+        end
       end
     end
   end

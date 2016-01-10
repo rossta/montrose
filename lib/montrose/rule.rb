@@ -1,4 +1,5 @@
 module Montrose
+  # Defines the Rule duck type for recurrence rules
   module Rule
     def self.included(base)
       base.extend ClassMethods
