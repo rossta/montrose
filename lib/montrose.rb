@@ -12,6 +12,7 @@ require "montrose/chainable"
 require "montrose/recurrence"
 require "montrose/frequency"
 require "montrose/schedule"
+require "montrose/stack"
 require "montrose/version"
 
 module Montrose

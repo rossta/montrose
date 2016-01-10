@@ -92,7 +92,6 @@ module Montrose
     # The <tt>:on</tt> option can be one of the following:
     #
     #   * :sunday, :monday, :tuesday, :wednesday, :thursday, :friday, :saturday
-    #   * :sun, :mon, :tue, :wed, :thu, :fri, :sat
     #
     def monthly(options = {})
       branch options.merge(every: :month)
@@ -112,7 +111,7 @@ module Montrose
       branch options.merge(every: :year)
     end
 
-    # Create a recurrence starting at given timestamp
+    # Create a recurrence starting at given timestamp.
     #
     # @param [Time, Date] starts_at
     #
@@ -120,7 +119,7 @@ module Montrose
       branch default_options.merge(starts: starts_at)
     end
 
-    # Create a recurrence ending at given timestamp
+    # Create a recurrence ending at given timestamp.
     #
     # @param [Time, Date] ends_at
     #

@@ -1,4 +1,5 @@
 module Montrose
+  # Defines the Rule duck type for recurrence rules
   module Rule
     def self.included(base)
       base.extend ClassMethods
@@ -41,7 +42,6 @@ require "montrose/rule/hour_of_day"
 require "montrose/rule/month_of_year"
 require "montrose/rule/nth_day_of_month"
 require "montrose/rule/nth_day_of_year"
-require "montrose/rule/stack"
 require "montrose/rule/time_of_day"
 require "montrose/rule/total"
 require "montrose/rule/week_of_year"
