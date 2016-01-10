@@ -1,16 +1,16 @@
 require "spec_helper"
 
 describe Montrose::Clock do
-  let(:time_now) { Time.now }
+  let(:now) { time_now }
 
   before do
-    Timecop.freeze(time_now)
+    Timecop.freeze(now)
   end
 
   describe "#tick" do
     it "must start with given starts time" do
-      clock = new_clock(every: :minute, starts: time_now)
-      clock.tick.must_equal time_now
+      clock = new_clock(every: :minute, starts: now)
+      clock.tick.must_equal now
     end
 
     it "emits 1 minute increments" do

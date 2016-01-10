@@ -1,10 +1,10 @@
 require "spec_helper"
 
 describe Montrose::Frequency do
-  let(:time_now) { Time.now }
+  let(:now) { time_now }
 
   before do
-    Timecop.freeze(time_now)
+    Timecop.freeze(now)
   end
 
   describe "self.from_options" do

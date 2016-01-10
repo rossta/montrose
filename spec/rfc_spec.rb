@@ -1,28 +1,27 @@
 require "spec_helper"
 
 describe "RFC Recurrence Rules" do
-  #
   # Literature:
   #   - spec https://tools.ietf.org/html/rfc5545#section-3.3.10
   #   - examples: https://tools.ietf.org/html/rfc5545#section-3.8.5.3
   #
-  let(:time_now) { Time.local(2015, 9, 1, 12) } # Tuesday
+  let(:now) { Time.local(2015, 9, 1, 12) } # Tuesday
 
   before do
-    Timecop.freeze(time_now)
+    Timecop.freeze(now)
   end
 
   it "daily for 10 occurrences" do
     schedule = new_schedule every: :day, total: 10
 
-    dates = schedule.events(starts: time_now).to_a
+    dates = schedule.events(starts: now).to_a
 
-    dates.must_pair_with consecutive_days(10, starts: time_now)
+    dates.must_pair_with consecutive_days(10, starts: now)
     dates.size.must_equal 10
   end
 
   it "daily until December 23, 2015" do
-    starts_on = time_now.to_date
+    starts_on = now.to_date
     ends_on = Date.parse("December 23, 2015")
     days = starts_on.upto(ends_on).count - 1
 
@@ -536,7 +535,7 @@ describe "RFC Recurrence Rules" do
   end
 
   it "every 20 minutes from 9:00 AM to 4:40 PM every day" do
-    Timecop.freeze(time_now.beginning_of_day)
+    Timecop.freeze(now.beginning_of_day)
     schedule = new_schedule(every: :minute, interval: 20, hour: 9..16)
 
     expected_dates = consecutive(:minute, 24, starts: Time.parse("September 1, 2015 9:00 AM"), interval: 20)

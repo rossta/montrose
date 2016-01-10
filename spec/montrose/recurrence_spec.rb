@@ -1,8 +1,10 @@
 require "spec_helper"
 
 describe Montrose::Recurrence do
+  let(:now) { time_now }
+
   before do
-    Timecop.freeze(Time.now)
+    Timecop.freeze(now)
   end
 
   describe "#events" do
@@ -21,7 +23,7 @@ describe Montrose::Recurrence do
         times << time
       end
 
-      times.must_pair_with([Time.now, 1.hour.from_now, 2.hours.from_now])
+      times.must_pair_with([now, 1.hour.from_now, 2.hours.from_now])
       times.size.must_equal 3
     end
 
@@ -33,7 +35,7 @@ describe Montrose::Recurrence do
         times << time
       end
 
-      times.must_pair_with([Time.now, 1.week.from_now, 2.weeks.from_now])
+      times.must_pair_with([now, 1.week.from_now, 2.weeks.from_now])
       times.size.must_equal 3
     end
 
@@ -46,12 +48,12 @@ describe Montrose::Recurrence do
 
   describe "#starts" do
     it "returns given starts time" do
-      new_recurrence(every: :minute).starts.must_equal Time.now
+      new_recurrence(every: :minute).starts.must_equal now
       new_recurrence(every: :hour, starts: 1.hour.from_now).starts.must_equal 1.hour.from_now
     end
 
     it "returns logical starts time" do
-      noon_today = Time.now.beginning_of_day + 12.hours
+      noon_today = now.beginning_of_day + 12.hours
       Timecop.freeze(noon_today)
 
       recurrence_today = new_recurrence(every: :day, at: "3:00 PM")
@@ -63,10 +65,10 @@ describe Montrose::Recurrence do
   end
 
   describe "additional recurrence examples" do
-    let(:time_now) { Time.local(2015, 9, 1, 12) } # Tuesday
+    let(:now) { Time.local(2015, 9, 1, 12) } # Tuesday
 
     before do
-      Timecop.freeze(time_now)
+      Timecop.freeze(now)
     end
 
     it "every day at 3:30pm" do

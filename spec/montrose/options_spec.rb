@@ -103,7 +103,7 @@ describe Montrose::Options do
 
   describe "#starts" do
     before do
-      Timecop.freeze(Time.now)
+      Timecop.freeze(time_now)
     end
 
     after do
@@ -111,8 +111,8 @@ describe Montrose::Options do
     end
 
     it "defaults to current time" do
-      options.starts.must_equal Time.now
-      options[:starts].must_equal Time.now
+      options.starts.must_equal time_now
+      options[:starts].must_equal time_now
     end
 
     it "defaults to default_ends_at time" do
@@ -132,8 +132,8 @@ describe Montrose::Options do
     it "can't be nil" do
       options[:starts] = nil
 
-      options.starts.must_equal Time.now
-      options[:starts].must_equal Time.now
+      options.starts.must_equal time_now
+      options[:starts].must_equal time_now
     end
 
     it "parses string" do
@@ -154,7 +154,7 @@ describe Montrose::Options do
 
   describe "#until" do
     before do
-      Timecop.freeze(Time.now)
+      Timecop.freeze(time_now)
     end
 
     after do
@@ -198,7 +198,7 @@ describe Montrose::Options do
 
   describe "#between" do
     before do
-      Timecop.freeze(Time.now)
+      Timecop.freeze(time_now)
     end
 
     after do
@@ -548,13 +548,13 @@ describe Montrose::Options do
     let(:options) { new_options(every: :day) }
 
     before do
-      Timecop.freeze(Time.now)
+      Timecop.freeze(time_now)
     end
 
     it "returns Hash with non-nil key-value pairs" do
       options.to_hash.must_equal(
         every: :day,
-        starts: Time.now,
+        starts: time_now,
         interval: 1)
     end
   end

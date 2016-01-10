@@ -1,10 +1,10 @@
 require "spec_helper"
 
 describe Montrose::Chainable do
-  let(:time_now) { Time.parse("Tuesday, September 1, 2015, 12:00 PM") }
+  let(:now) { Time.local(2015, 9, 1, 12) } # Tuesday
 
   before do
-    Timecop.freeze(time_now)
+    Timecop.freeze(now)
   end
 
   describe "#every" do
@@ -95,7 +95,7 @@ describe Montrose::Chainable do
 
     it "emits per year by default" do
       recurrence = Montrose.yearly
-      recurrence.events.must_have_interval((time_now + 1.year) - time_now)
+      recurrence.events.must_have_interval((now + 1.year) - now)
     end
   end
 

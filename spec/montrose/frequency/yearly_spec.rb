@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe Montrose::Frequency::Yearly do
-  let(:now) { Time.now }
+  let(:now) { time_now }
 
   before do
     Timecop.freeze(now)

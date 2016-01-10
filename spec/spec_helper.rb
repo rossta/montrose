@@ -29,11 +29,11 @@ module Minitest
     end
 
     def new_clock(options = {})
-      Montrose::Clock.new({ starts: Time.now }.merge(options))
+      Montrose::Clock.new({ starts: time_now }.merge(options))
     end
 
     def new_frequency(options = {})
-      Montrose::Frequency.from_options({ starts: Time.now }.merge(options))
+      Montrose::Frequency.from_options({ starts: time_now }.merge(options))
     end
 
     def new_options(options = {})
@@ -44,11 +44,15 @@ module Minitest
       Time.zone.parse(obj)
     end
 
-    def consecutive_days(count, starts: Time.now, interval: 1)
+    def time_now
+      Time.now
+    end
+
+    def consecutive_days(count, starts: time_now, interval: 1)
       consecutive(:days, count, starts: starts, interval: interval)
     end
 
-    def consecutive(duration, count, starts: Time.now, interval: 1)
+    def consecutive(duration, count, starts: time_now, interval: 1)
       [].tap do |e|
         date = starts.to_time
         count.times do
