@@ -1,5 +1,7 @@
 # Montrose
 
+[![Coverage Status](https://coveralls.io/repos/rossta/montrose/badge.svg?branch=master&service=github)](https://coveralls.io/github/rossta/montrose?branch=master)
+
 Recurring events in Ruby.
 
 This library is currently under development. Most of the functionality does not
