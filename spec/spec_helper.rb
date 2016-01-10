@@ -40,10 +40,6 @@ module Minitest
       Montrose::Options.new(options)
     end
 
-    def now
-      Time.zone.now
-    end
-
     def to_time(obj)
       Time.zone.parse(obj)
     end
