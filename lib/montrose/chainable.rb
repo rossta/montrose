@@ -116,7 +116,7 @@ module Montrose
     # @param [Time, Date] starts_at
     #
     def starting(starts_at)
-      branch default_options.merge(starts: starts_at)
+      merge(starts: starts_at)
     end
 
     # Create a recurrence ending at given timestamp.
@@ -124,11 +124,11 @@ module Montrose
     # @param [Time, Date] ends_at
     #
     def ending(ends_at)
-      branch default_options.merge(until: ends_at)
+      merge(until: ends_at)
     end
 
     def between(date_range)
-      branch default_options.merge(between: date_range)
+      merge(between: date_range)
     end
 
     # Create a recurrence for given days of month
@@ -136,7 +136,7 @@ module Montrose
     # @param [Fixnum] days (1, 2, -1, ...)
     #
     def day_of_month(*days)
-      branch default_options.merge(mday: days)
+      merge(mday: days)
     end
 
     # Create a recurrence for given days of week
@@ -144,7 +144,7 @@ module Montrose
     # @param [Symbol] weekdays (:sunday, :monday, ...)
     #
     def day_of_week(*weekdays)
-      branch default_options.merge(day: weekdays)
+      merge(day: weekdays)
     end
 
     # Create a recurrence for given days of year
@@ -152,7 +152,7 @@ module Montrose
     # @param [Fixnum] days (1, 10, 100, ...)
     #
     def day_of_year(*days)
-      branch default_options.merge(yday: days)
+      merge(yday: days)
     end
 
     # Create a recurrence for given hours of day
@@ -160,7 +160,7 @@ module Montrose
     # @param [Fixnum, Range] days (1, 10, 100, ...)
     #
     def hour_of_day(*hours)
-      branch default_options.merge(hour: hours)
+      merge(hour: hours)
     end
 
     # Create a recurrence for given months of year
@@ -168,7 +168,7 @@ module Montrose
     # @param [Fixnum, Symbol] months (:january, :april, ...)
     #
     def month_of_year(*months)
-      branch default_options.merge(month: months)
+      merge(month: months)
     end
 
     # Create a recurrence that ends after given number
@@ -177,7 +177,7 @@ module Montrose
     # @param [Fixnum] total
     #
     def total(total)
-      branch default_options.merge(total: total)
+      merge(total: total)
     end
 
     # Create a recurrence for given weeks of year
@@ -185,7 +185,11 @@ module Montrose
     # @param [Fixnum] weeks (1, 20, 50)
     #
     def week_of_year(*weeks)
-      branch default_options.merge(week: weeks)
+      merge(week: weeks)
+    end
+
+    def merge(opts = {})
+      branch default_options.merge(opts)
     end
 
     # @private
