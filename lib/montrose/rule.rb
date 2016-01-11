@@ -6,7 +6,7 @@ module Montrose
     end
 
     def include?(_time)
-      raise "Class must implement #{__method__}"
+      fail "Class must implement #{__method__}"
     end
 
     def advance!(_time)
