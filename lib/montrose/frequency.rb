@@ -1,3 +1,6 @@
+require "montrose/errors"
+require "montrose/options"
+
 module Montrose
   # Abstract class for special recurrence rule required
   # in all instances of Recurrence. Frequency describes
@@ -23,7 +26,7 @@ module Montrose
     # subclass.
     #
     def self.from_options(opts)
-      frequency = opts.fetch(:every) { raise "Please specify the :every option" }
+      frequency = opts.fetch(:every) { fail ConfigurationError, "Please specify the :every option" }
       class_name = FREQUENCY_TERMS.fetch(frequency.to_s) do
         fail "Don't know how to enumerate every: #{frequency}"
       end
