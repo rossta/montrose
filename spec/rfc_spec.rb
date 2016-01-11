@@ -12,9 +12,9 @@ describe "RFC Recurrence Rules" do
   end
 
   it "daily for 10 occurrences" do
-    schedule = new_schedule every: :day, total: 10
+    schedule = new_schedule every: :day, total: 10, starts: now
 
-    dates = schedule.events(starts: now).to_a
+    dates = schedule.events.to_a
 
     dates.must_pair_with consecutive_days(10, starts: now)
     dates.size.must_equal 10
@@ -25,10 +25,10 @@ describe "RFC Recurrence Rules" do
     ends_on = Date.parse("December 23, 2015")
     days = starts_on.upto(ends_on).count - 1
 
-    schedule = new_schedule every: :day, until: ends_on
+    schedule = new_schedule every: :day, until: ends_on, starts: starts_on
 
     expected_dates = consecutive_days(days, starts: starts_on)
-    dates = schedule.events(starts: starts_on).to_a
+    dates = schedule.events.to_a
 
     dates.must_pair_with expected_dates
     dates.size.must_equal days
@@ -103,10 +103,10 @@ describe "RFC Recurrence Rules" do
     ends_on = Date.parse("December 23, 2015")
     starts_on = ends_on - 15.weeks
 
-    schedule = new_schedule every: :week, until: ends_on
+    schedule = new_schedule every: :week, until: ends_on, starts: starts_on
 
     expected_dates = consecutive(:weeks, 15, starts: starts_on)
-    dates = schedule.events(starts: starts_on).to_a
+    dates = schedule.events.to_a
 
     dates.must_pair_with expected_dates
     dates.size.must_equal 15
@@ -297,7 +297,7 @@ describe "RFC Recurrence Rules" do
       2015 => { 9 => [30], 10 => [1, 31], 11 => [1, 30], 12 => [1, 31] },
       2016 => { 1 => [1, 31], 2 => [1] })
 
-    dates = schedule.events(starts: starts).to_a
+    dates = schedule.events.to_a
 
     dates.must_pair_with expected_dates
     dates.size.must_equal expected_dates.size
@@ -319,13 +319,13 @@ describe "RFC Recurrence Rules" do
 
   it "every Tuesday, every other month" do
     starts = Date.parse("September 1, 2015")
-    schedule = new_schedule(every: :month, interval: 2, day: :tuesday)
+    schedule = new_schedule(every: :month, interval: 2, day: :tuesday, starts: starts)
 
     expected_dates = cherry_pick(
       2015 => { 9 => [1, 8, 15, 22, 29], 11 => [3, 10, 17, 24] },
       2016 => { 1 => [5, 12, 19, 26], 3 => [1, 8, 15, 22, 29] })
 
-    dates = schedule.events(starts: starts).take(expected_dates.size)
+    dates = schedule.events.take(expected_dates.size)
 
     dates.must_pair_with expected_dates
   end
@@ -350,6 +350,7 @@ describe "RFC Recurrence Rules" do
     starts = Time.parse("March 10, 2015")
     schedule = new_schedule(
       every: :year,
+      starts: starts,
       month: [:january, :february, :march],
       interval: 2,
       total: 10)
@@ -360,7 +361,7 @@ describe "RFC Recurrence Rules" do
       2019 => { 1 => [10], 2 => [10], 3 => [10] },
       2021 => { 1 => [10], 2 => [10], 3 => [10] })
 
-    dates = schedule.events(starts: starts).to_a
+    dates = schedule.events.to_a
 
     dates.must_pair_with expected_dates
     dates.size.must_equal 10
@@ -411,14 +412,14 @@ describe "RFC Recurrence Rules" do
 
   it "every Thursday in March, forever" do
     starts = Time.parse("March 10, 2016 12:00 PM")
-    schedule = new_schedule(every: :year, month: :march, day: :thursday)
+    schedule = new_schedule(every: :year, month: :march, day: :thursday, starts: starts)
 
     expected_dates = cherry_pick(
       2016 => { 3 => [10, 17, 24, 31] },
       2017 => { 3 => [2, 9, 16, 23, 30] },
       2018 => { 3 => [1, 8, 15, 22, 29] }).map { |i| i + 12.hours }
 
-    dates = schedule.events(starts: starts).take(expected_dates.size)
+    dates = schedule.events.take(expected_dates.size)
     dates.must_pair_with expected_dates
   end
 
