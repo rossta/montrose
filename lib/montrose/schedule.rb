@@ -1,5 +1,7 @@
 module Montrose
   class Schedule
+    attr_accessor :rules
+
     def initialize
       @rules = []
     end
@@ -9,6 +11,7 @@ module Montrose
 
       self
     end
+    alias_method :add, :<<
 
     def include?(time)
       @rules.any? { |r| r.include?(time) }
