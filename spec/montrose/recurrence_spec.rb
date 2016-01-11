@@ -27,18 +27,6 @@ describe Montrose::Recurrence do
       times.size.must_equal 3
     end
 
-    it "accepts options to modify defaults" do
-      recurrence = new_recurrence(every: :hour, total: 1)
-
-      times = []
-      recurrence.each(every: :week, total: 3) do |time|
-        times << time
-      end
-
-      times.must_pair_with([now, 1.week.from_now, 2.weeks.from_now])
-      times.size.must_equal 3
-    end
-
     it "is enumerable" do
       recurrence = new_recurrence(every: :day, total: 3)
 

@@ -20,12 +20,12 @@ module Montrose
       @default_options = Montrose::Options.new(opts)
     end
 
-    def events(opts = {})
-      event_enum(opts)
+    def events
+      @event_enum ||= event_enum
     end
 
-    def each(opts = {})
-      events(opts).each(&Proc.new)
+    def each
+      events.each(&Proc.new)
     end
 
     def starts
@@ -34,10 +34,10 @@ module Montrose
 
     private
 
-    def event_enum(opts = {})
-      local_opts = @default_options.merge(opts)
-      stack = Stack.new(local_opts)
-      clock = Clock.new(local_opts)
+    def event_enum
+      opts = @default_options
+      stack = Stack.new(opts)
+      clock = Clock.new(opts)
 
       Enumerator.new do |yielder|
         loop do

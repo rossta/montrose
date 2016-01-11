@@ -18,7 +18,7 @@ module Montrose
     end
 
     def events(opts = {})
-      event_enums = @rules.map { |r| r.events(opts) }
+      event_enums = @rules.map { |r| r.merge(opts).events }
       Enumerator.new do |y|
         loop do
           y << event_enums.min_by(&:peek).next or break
