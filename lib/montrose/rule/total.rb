@@ -13,20 +13,16 @@ module Montrose
       end
 
       def include?(_time)
-        @count <= @max
+        continue?
       end
 
       def advance!(_time)
         @count += 1
-        break?
+        continue?
       end
 
       def continue?
         @count <= @max
-      end
-
-      def break?
-        continue? or raise StopIteration
       end
     end
   end

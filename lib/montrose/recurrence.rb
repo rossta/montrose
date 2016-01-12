@@ -43,7 +43,7 @@ module Montrose
         loop do
           stack.advance(clock.tick) do |time|
             yielder << time
-          end
+          end or break
         end
       end
     end

@@ -10,11 +10,11 @@ module Montrose
     end
 
     def advance!(_time)
-      # default: no op
+      true
     end
 
-    def break?
-      # default: no op
+    def continue?
+      true
     end
 
     module ClassMethods
