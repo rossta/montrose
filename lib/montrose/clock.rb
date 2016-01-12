@@ -1,9 +1,11 @@
+require "montrose/errors"
+
 module Montrose
   class Clock
     def initialize(opts = {})
       @options = Montrose::Options.new(opts)
       @time = nil
-      @every = @options.fetch(:every) { raise "Required option :every not provided" }
+      @every = @options.fetch(:every) { fail ConfigurationError, "Required option :every not provided" }
       @starts = @options.fetch(:starts)
       @interval = @options.fetch(:interval)
     end
@@ -24,7 +26,7 @@ module Montrose
     private
 
     def step
-      @step ||= smallest_step or raise "No step for #{@options.inspect}"
+      @step ||= smallest_step or fail ConfigurationError, "No step for #{@options.inspect}"
     end
 
     def smallest_step

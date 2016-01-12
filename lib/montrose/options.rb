@@ -111,14 +111,14 @@ module Montrose
     end
 
     def fetch(key, *args, &block)
-      raise ArgumentError, "wrong number of arguments (#{args.length} for 1..2)" if args.length > 1
+      fail ArgumentError, "wrong number of arguments (#{args.length} for 1..2)" if args.length > 1
       found = send(key)
       return found if found
       return args.first if args.length == 1
       if block_given?
         block.call
       else
-        raise "Key #{key.inspect} not found"
+        fail "Key #{key.inspect} not found"
       end
     end
 
@@ -206,7 +206,7 @@ module Montrose
 
     def assert_range_includes(range, item, absolute = false)
       test = absolute ? item.abs : item
-      raise "Out of range" unless range.include?(test)
+      fail ConfigurationError, "Out of range" unless range.include?(test)
 
       item
     end

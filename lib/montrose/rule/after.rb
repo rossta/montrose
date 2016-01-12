@@ -19,8 +19,8 @@ module Montrose
         time >= @start_time
       end
 
-      def break?
-        raise StopIteration
+      def continue?
+        false
       end
     end
   end

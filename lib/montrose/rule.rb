@@ -6,15 +6,15 @@ module Montrose
     end
 
     def include?(_time)
-      raise "Class must implement #{__method__}"
+      fail "Class must implement #{__method__}"
     end
 
     def advance!(_time)
-      # default: no op
+      true
     end
 
-    def break?
-      # default: no op
+    def continue?
+      true
     end
 
     module ClassMethods
