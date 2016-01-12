@@ -1,3 +1,4 @@
+require "json"
 require "montrose/chainable"
 require "montrose/stack"
 require "montrose/clock"
@@ -13,6 +14,14 @@ module Montrose
       def new(options = {})
         return options if options.is_a?(self)
         super
+      end
+
+      def dump(obj)
+        JSON.dump(obj.to_hash)
+      end
+
+      def load(json)
+        new JSON.load(json)
       end
     end
 
@@ -30,6 +39,10 @@ module Montrose
 
     def starts
       events.peek
+    end
+
+    def to_hash
+      default_options.to_hash
     end
 
     private

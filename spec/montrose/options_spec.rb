@@ -20,8 +20,15 @@ describe Montrose::Options do
       options[:every].must_equal :month
     end
 
-    it "can be set" do
+    it "can be set with valid symbol name" do
       options[:every] = :month
+
+      options.every.must_equal :month
+      options[:every].must_equal :month
+    end
+
+    it "can be set with valid string name" do
+      options[:every] = "month"
 
       options.every.must_equal :month
       options[:every].must_equal :month
