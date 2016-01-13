@@ -7,4 +7,5 @@
 /pkg/
 /spec/reports/
 /tmp/
-trace.txt
+/profile.log
+/trace.txt

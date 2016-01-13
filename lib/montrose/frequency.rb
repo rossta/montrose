@@ -36,9 +36,10 @@ module Montrose
 
     # @private
     def self.assert(frequency)
-      FREQUENCY_TERMS.key?(frequency.to_s) or fail "Don't know how to enumerate every: #{frequency}"
+      FREQUENCY_TERMS.key?(frequency.to_s) or fail ConfigurationError,
+        "Don't know how to enumerate every: #{frequency}"
 
-      frequency
+      frequency.to_sym
     end
 
     def initialize(opts = {})
