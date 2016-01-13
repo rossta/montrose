@@ -42,6 +42,10 @@ Lint/DefEndAlignment:
 Lint/HandleExceptions:
   Enabled: false
 
+Style/GlobalVars:
+  Exclude:
+  - spec/support/trace.rb
+
 Style/SpecialGlobalVars:
   Enabled: false
 

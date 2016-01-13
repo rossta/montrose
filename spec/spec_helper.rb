@@ -1,3 +1,6 @@
+require "coveralls"
+Coveralls.wear!
+
 $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
 require "montrose"
 
@@ -10,9 +13,6 @@ begin
   require "pry"
 rescue LoadError
 end
-
-require "coveralls"
-Coveralls.wear!
 
 Dir[File.expand_path("../../spec/support/**/*.rb", __FILE__)].each { |f| require f }
 
