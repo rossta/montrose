@@ -1,5 +1,6 @@
 require "json"
 require "montrose/chainable"
+require "montrose/errors"
 require "montrose/stack"
 require "montrose/clock"
 
@@ -17,6 +18,12 @@ module Montrose
       end
 
       def dump(obj)
+        return nil if obj.nil?
+        unless obj.is_a?(self)
+          fail SerializationError,
+            "Object was supposed to be a #{self}, but was a #{obj.class}. -- #{obj.inspect}"
+        end
+
         JSON.dump(obj.to_hash)
       end
 

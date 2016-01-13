@@ -76,8 +76,10 @@ describe Montrose::Recurrence do
     end
 
     it "raises error if not a self" do
-      -> { Montrose::Recurrence.dump(Object.new) }.must_raise
+      -> { Montrose::Recurrence.dump(Object.new) }.must_raise Montrose::SerializationError
     end
+
+    it { Montrose::Recurrence.dump(nil).must_be_nil }
   end
 
   describe ".load" do
