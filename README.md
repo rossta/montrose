@@ -31,23 +31,39 @@ Or install it yourself as:
 ```ruby
 require "montrose"
 
-# Seconds
-Montrose::Recurrence.new(every: :second)
-Montrose::Recurrence.new(every: :second, interval: 30)
-Montrose::Recurrence.new(every: 30.seconds)
-
 # Minutely
-Montrose::Recurrence.new(every: :minute, interval: 10)
+Montrose.minutely
+Montrose::Recurrence.new(every: :minute)
+
+Montrose.every(10.minutes)
 Montrose::Recurrence.new(every: 10.minutes)
+Montrose::Recurrence.new(every: :minute, interval: 10) # every 10 minutes
+
+Montrose.minutely(until: "9:00 PM")
+Montrose::Recurrence.new(every: :minute, until: "9:00 PM")
 
 # Daily
+Montrose.daily
 Montrose::Recurrence.new(every: :day)
+
+Montrose.every(9.days)
+Montrose::Recurrence.new(every: 9.days)
 Montrose::Recurrence.new(every: :day, interval: 9)
-Montrose::Recurrence.new(every: :day, repeat: 7)
+
+Montrose.daily(at: "9:00 AM")
+Montrose.every(:day, at: "9:00 AM")
 Montrose::Recurrence.new(every: :day, at: "9:00 AM")
-Montrose::Recurrence.daily(options = {})
+
+Montrose.daily(total: 7)
+Montrose.every(:day, total: 7)
+Montrose::Recurrence.new(every: :day, total: 7)
 
 # Weekly
+Montrose.weekly
+Montrose.every(:week)
+Montrose::Recurrence.new(every: :week)
+
+# TODO: :on option not yet supported
 Montrose::Recurrence.new(every: :week, on: 5)
 Montrose::Recurrence.new(every: :week, on: :monday)
 Montrose::Recurrence.new(every: :week, on: [:monday, :wednesday, :friday])
@@ -58,6 +74,15 @@ Montrose::Recurrence.new(every: :week, on: [:monday, :wednesday, :friday], at: "
 Montrose::Recurrence.weekly(on: :thursday)
 
 # Monthly by month day
+Montrose.monthly(mday: 1) # first of the month
+Montrose.every(:month, mday: 1)
+Montrose::Recurrence.new(every: :month, mday: 1)
+
+Montrose.monthly(mday: [2, 15]) # 2nd and 15th of the month
+Montrose.monthly(mday: -3) # third-to-last day of the month
+Montrose.monthly(mday: 10..15) # 10th through the 15th day of the month
+
+# TODO: :on option not yet supported
 Montrose::Recurrence.new(every: :month, on: 15)
 Montrose::Recurrence.new(every: :month, on: 31)
 Montrose::Recurrence.new(every: :month, on: 7, interval: 2)
@@ -67,6 +92,17 @@ Montrose::Recurrence.new(every: :month, on: 7, repeat: 6)
 Montrose::Recurrence.monthly(on: 31)
 
 # Monthly by week day
+Montrose.monthly(day: :friday, interval: 2) # every Friday every other month
+Montrose.every(:month, day: :friday, interval: 2)
+Montrose::Recurrence.new(every: :month, day: :friday, interval: 2)
+
+Montrose.monthly(day: { friday: [1] }) # 1st Friday of the month
+Montrose.monthly(day: { Sunday: [1, =1] }) # first and last Sunday of the month
+
+Montrose.monthly(mday: 7..13, day: :saturday) # first Saturday that follow the
+first Sunday of the month
+
+# TODO: :on option not yet supported
 Montrose::Recurrence.new(every: :month, on: :first, weekday: :sunday)
 Montrose::Recurrence.new(every: :month, on: :third, weekday: :monday)
 Montrose::Recurrence.new(every: :month, on: :last,  weekday: :friday)
@@ -76,6 +112,18 @@ Montrose::Recurrence.new(every: :month, on: :last,  weekday: :friday, interval: 
 Montrose::Recurrence.new(every: :month, on: :last,  weekday: :friday, repeat: 3)
 
 # Yearly
+Montrose.yearly
+Montrose.every(:year)
+Montrose::Recurrence.new(every: :year)
+
+Montrose.yearly(month: [:june, :july]) # yearly in June and July
+Montrose.yearly(month: 6..8, day: :thursday) # yearly in June, July, August on
+Thursday
+Montrose.yearly(yday: [1, 100]) # yearly on the 1st and 100th day of year
+Montrose.yearly(month: :november, day: :tuesday, mday: 2..8) # every four years,
+the first Tuesday after a Monday in November, i.e., Election Day
+
+# TODO: :on option not yet supported
 Montrose::Recurrence.new(every: :year, on: [7, 4]) # => [month, day]
 Montrose::Recurrence.new(every: :year, on: [10, 31], interval: 3)
 Montrose::Recurrence.new(every: :year, on: [:jan, 31])
@@ -119,24 +167,18 @@ r.each { |time| puts time.to_s } # => Use items method
 
 ## Goals
 
-What `Montrose` intends to be:
+`Montrose` intends to:
 
-* embraces Ruby idioms
-* simple to use interface
-* reasonably performant
-* serializable to yaml, hash, and [ical](http://www.kanzaki.com/docs/ical/rrule.html#basic) formats
-* suitable for integration with persistence libraries
-* supports Ruby 2.1+
+* embrace Ruby idioms
+* support Ruby 2.1+
+* provide a simple-to-use interface
+* be reasonably performant
+* serialize to yaml, hash, and [ical](http://www.kanzaki.com/docs/ical/rrule.html#basic) formats
+* be suitable for integration with persistence libraries
 
 What `Montrose` isn't:
 
 * support all calendaring use cases under the sun
-
-## TODO
-
-- [ ] Support `:at` option and chainable method for time of day string, e.g. `at: '7:00 pm'`
-- [ ] Support `:between` option and chainable method for date range, e.g.
-  `between: (today..tomorrow)`
 
 ## Related Projects
 
