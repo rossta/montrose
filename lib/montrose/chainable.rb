@@ -48,12 +48,12 @@ module Montrose
     #
     # @example
     #
-    #   Recurrence.daily
-    #   Recurrence.daily(interval: 2) #=> every 2 days
-    #   Recurrence.daily(starts: 3.days.from_now)
-    #   Recurrence.daily(until: 10.days.from_now)
-    #   Recurrence.daily(total: 5)
-    #   Recurrence.daily(except: Date.tomorrow)
+    #   Montrose.daily
+    #   Montrose.daily(interval: 2) #=> every 2 days
+    #   Montrose.daily(starts: 3.days.from_now)
+    #   Montrose.daily(until: 10.days.from_now)
+    #   Montrose.daily(total: 5)
+    #   Montrose.daily(except: Date.tomorrow)
     #
     def daily(options = {})
       branch options.merge(every: :day)
@@ -62,11 +62,11 @@ module Montrose
     # Create a weekly recurrence.
     #
     # @example
-    #   Recurrence.weekly(on: 5) #=> 0 = sunday, 1 = monday, ...
-    #   Recurrence.weekly(on: :saturday)
-    #   Recurrence.weekly(on: [sunday, :saturday])
-    #   Recurrence.weekly(on: :saturday, interval: 2)
-    #   Recurrence.weekly(on: :saturday, total: 5)
+    #   Montrose.weekly(on: 5) #=> 0 = sunday, 1 = monday, ...
+    #   Montrose.weekly(on: :saturday)
+    #   Montrose.weekly(on: [sunday, :saturday])
+    #   Montrose.weekly(on: :saturday, interval: 2)
+    #   Montrose.weekly(on: :saturday, total: 5)
     #
     def weekly(options = {})
       branch options.merge(every: :week)
@@ -75,19 +75,19 @@ module Montrose
     # Create a monthly recurrence.
     #
     # @example
-    #   Recurrence.monthly(on: 15) #=> every 15th day
-    #   Recurrence.monthly(on: :first, weekday: :sunday)
-    #   Recurrence.monthly(on: :second, weekday: :sunday)
-    #   Recurrence.monthly(on: :third, weekday: :sunday)
-    #   Recurrence.monthly(on: :fourth, weekday: :sunday)
-    #   Recurrence.monthly(on: :fifth, weekday: :sunday)
-    #   Recurrence.monthly(on: :last, weekday: :sunday)
-    #   Recurrence.monthly(on: 15, interval: 2)
-    #   Recurrence.monthly(on: 15, interval: :monthly)
-    #   Recurrence.monthly(on: 15, interval: :bimonthly)
-    #   Recurrence.monthly(on: 15, interval: :quarterly)
-    #   Recurrence.monthly(on: 15, interval: :semesterly)
-    #   Recurrence.monthly(on: 15, total: 5)
+    #   Montrose.monthly(on: 15) #=> every 15th day
+    #   Montrose.monthly(on: :first, weekday: :sunday)
+    #   Montrose.monthly(on: :second, weekday: :sunday)
+    #   Montrose.monthly(on: :third, weekday: :sunday)
+    #   Montrose.monthly(on: :fourth, weekday: :sunday)
+    #   Montrose.monthly(on: :fifth, weekday: :sunday)
+    #   Montrose.monthly(on: :last, weekday: :sunday)
+    #   Montrose.monthly(on: 15, interval: 2)
+    #   Montrose.monthly(on: 15, interval: :monthly)
+    #   Montrose.monthly(on: 15, interval: :bimonthly)
+    #   Montrose.monthly(on: 15, interval: :quarterly)
+    #   Montrose.monthly(on: 15, interval: :semesterly)
+    #   Montrose.monthly(on: 15, total: 5)
     #
     # The <tt>:on</tt> option can be one of the following:
     #
@@ -101,11 +101,11 @@ module Montrose
     #
     # @example
     #
-    #   Recurrence.yearly(on: [7, 14]) #=> every Jul 14
-    #   Recurrence.yearly(on: [7, 14], interval: 2) #=> every 2 years on Jul 14
-    #   Recurrence.yearly(on: [:jan, 14], interval: 2)
-    #   Recurrence.yearly(on: [:january, 14], interval: 2)
-    #   Recurrence.yearly(on: [:january, 14], total: 5)
+    #   Montrose.yearly(on: [7, 14]) #=> every Jul 14
+    #   Montrose.yearly(on: [7, 14], interval: 2) #=> every 2 years on Jul 14
+    #   Montrose.yearly(on: [:jan, 14], interval: 2)
+    #   Montrose.yearly(on: [:january, 14], interval: 2)
+    #   Montrose.yearly(on: [:january, 14], total: 5)
     #
     def yearly(options = {})
       branch options.merge(every: :year)
@@ -127,6 +127,10 @@ module Montrose
       merge(until: ends_at)
     end
 
+    # Create a recurrence occurring during date range.
+    #
+    # @param [Range<Date>] date_range
+    #
     def between(date_range)
       merge(between: date_range)
     end
@@ -188,6 +192,7 @@ module Montrose
       merge(week: weeks)
     end
 
+    # @private
     def merge(opts = {})
       branch default_options.merge(opts)
     end
