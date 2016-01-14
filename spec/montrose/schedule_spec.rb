@@ -20,12 +20,10 @@ describe Montrose::Schedule do
     it "combines events of given rules in order" do
       today = Date.today.to_time
 
-      skip("Schedule does not support multiple recurrence rules yet")
+      schedule.add(every: 2.days, total: 2, starts: today)
+      schedule.add(every: 2.days, total: 2, starts: today + 1.day)
 
-      schedule.add(every: :day, total: 2, starts: today)
-      schedule.add(every: :day, total: 2, starts: today + 1.day)
-
-      events = schedule.events
+      events = schedule.events.to_a
       events.must_pair_with [
         today,
         today + 1.day,
