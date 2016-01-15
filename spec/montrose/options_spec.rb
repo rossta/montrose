@@ -266,6 +266,12 @@ describe Montrose::Options do
       options.starts.must_equal Date.today.to_time
       options.until.must_equal 1.month.from_now.beginning_of_day
     end
+
+    it "returns given date range" do
+      options[:between] = Date.today..1.month.from_now.to_date
+
+      options.between.must_equal(Date.today.to_time..1.month.from_now.beginning_of_day)
+    end
   end
 
   describe "#interval" do
