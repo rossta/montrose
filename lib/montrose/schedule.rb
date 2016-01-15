@@ -11,7 +11,7 @@ module Montrose
 
       self
     end
-    alias_method :add, :<<
+    alias add <<
 
     def include?(time)
       @rules.any? { |r| r.include?(time) }
