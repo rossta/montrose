@@ -1,7 +1,7 @@
 module Montrose
   class Options
     @default_starts = nil
-    @default_ends = nil
+    @default_until = nil
     @default_every = nil
 
     MAX_HOURS_IN_DAY = 24
@@ -25,18 +25,20 @@ module Montrose
         protected :"#{name}="
       end
 
-      attr_accessor :default_starts, :default_ends, :default_every
+      attr_accessor :default_starts, :default_until, :default_every
 
       # Return the default ending time.
       #
-      # @example Recurrence.default_ends #=> <Date>
+      # @example Recurrence.default_until #=> <Date>
       #
-      def default_ends
-        case @default_ends
+      def default_until
+        case @default_until
+        when String
+          Time.parse(@default_until)
         when Proc
-          @default_ends.call
+          @default_until.call
         else
-          @default_ends
+          @default_until
         end
       end
 
@@ -46,6 +48,8 @@ module Montrose
       #
       def default_starts
         case @default_starts
+        when String
+          Time.parse(@default_starts)
         when Proc
           @default_starts.call
         when nil
@@ -74,7 +78,7 @@ module Montrose
       defaults = {
         every: self.class.default_every,
         starts: self.class.default_starts,
-        until: self.class.default_ends,
+        until: self.class.default_until,
         interval: 1,
         day: nil,
         mday: nil,
@@ -137,7 +141,7 @@ module Montrose
     end
 
     def until=(time)
-      @until = as_time(time) || self.class.default_ends
+      @until = as_time(time) || self.class.default_until
     end
 
     def hour=(hours)

@@ -3,6 +3,54 @@ require "spec_helper"
 describe Montrose::Options do
   let(:options) { new_options }
 
+  describe ".default_starts" do
+    after do
+      Montrose::Options.default_starts = nil
+    end
+
+    it "accepts time" do
+      Montrose::Options.default_starts = Time.local(2016, 9, 2, 12)
+
+      Montrose::Options.default_starts.must_equal Time.local(2016, 9, 2, 12)
+    end
+
+    it "accepts string" do
+      Montrose::Options.default_starts = "September 2, 2016 at 12 PM"
+
+      Montrose::Options.default_starts.must_equal Time.local(2016, 9, 2, 12)
+    end
+
+    it "accepts proc" do
+      Montrose::Options.default_starts = -> { Time.local(2016, 9, 2, 12) }
+
+      Montrose::Options.default_starts.must_equal Time.local(2016, 9, 2, 12)
+    end
+  end
+
+  describe ".default_until" do
+    after do
+      Montrose::Options.default_until = nil
+    end
+
+    it "accepts time" do
+      Montrose::Options.default_until = Time.local(2016, 9, 2, 12)
+
+      Montrose::Options.default_until.must_equal Time.local(2016, 9, 2, 12)
+    end
+
+    it "accepts string" do
+      Montrose::Options.default_until = "September 2, 2016 at 12 PM"
+
+      Montrose::Options.default_until.must_equal Time.local(2016, 9, 2, 12)
+    end
+
+    it "accepts proc" do
+      Montrose::Options.default_until = -> { Time.local(2016, 9, 2, 12) }
+
+      Montrose::Options.default_until.must_equal Time.local(2016, 9, 2, 12)
+    end
+  end
+
   describe "#every" do
     after do
       Montrose::Options.default_every = nil
@@ -122,7 +170,7 @@ describe Montrose::Options do
       options[:starts].must_equal time_now
     end
 
-    it "defaults to default_ends_at time" do
+    it "defaults to default_until time" do
       Montrose::Options.default_starts = 3.days.from_now
 
       options.starts.must_equal 3.days.from_now
@@ -165,7 +213,7 @@ describe Montrose::Options do
     end
 
     after do
-      Montrose::Options.default_ends = nil
+      Montrose::Options.default_until = nil
     end
 
     it "defaults to nil" do
@@ -173,8 +221,8 @@ describe Montrose::Options do
       options[:until].must_be_nil
     end
 
-    it "defaults to default_ends time" do
-      Montrose::Options.default_ends = 3.days.from_now
+    it "defaults to default_until time" do
+      Montrose::Options.default_until = 3.days.from_now
 
       options.until.must_equal 3.days.from_now
       options[:until].must_equal 3.days.from_now
