@@ -217,10 +217,10 @@ module Montrose
       return nil unless time
 
       case
-      when time.respond_to?(:to_time)
-        time.to_time
       when time.is_a?(String)
         Time.parse(time)
+      when time.respond_to?(:to_time)
+        time.to_time
       else
         Array(time).flat_map { |d| as_time(d) }
       end
