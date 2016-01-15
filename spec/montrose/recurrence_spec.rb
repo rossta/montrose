@@ -32,6 +32,13 @@ describe Montrose::Recurrence do
 
       recurrence.map(&:to_date).must_equal [Date.today, Date.tomorrow, 2.days.from_now.to_date]
     end
+
+    it "enumerates anew each time" do
+      recurrence = new_recurrence(every: :day, total: 3)
+
+      recurrence.map(&:to_date).must_equal [Date.today, Date.tomorrow, 2.days.from_now.to_date]
+      recurrence.map(&:to_date).must_equal [Date.today, Date.tomorrow, 2.days.from_now.to_date]
+    end
   end
 
   describe "#to_hash" do

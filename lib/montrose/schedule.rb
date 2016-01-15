@@ -18,11 +18,23 @@ module Montrose
     end
 
     def events(opts = {})
-      rules = @rules.map { |r| r.merge(opts) }
+      enums = @rules.map { |r| r.merge(opts).events }
       Enumerator.new do |y|
         loop do
-          rule = rules.select(&:active?).min_by(&:peek) or break
-          y << rule.next
+          enums = active_enums(enums)
+          enum = enums.min_by(&:peek) or break
+          y << enum.next
+        end
+      end
+    end
+
+    private
+
+    def active_enums(enums)
+      enums.each_with_object([]) do |enum, actives|
+        begin
+          actives << enum if enum.peek
+        rescue StopIteration
         end
       end
     end

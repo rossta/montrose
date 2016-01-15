@@ -37,29 +37,11 @@ module Montrose
     end
 
     def events
-      @event_enum ||= event_enum
+      event_enum
     end
 
     def each
       events.each(&Proc.new)
-    end
-
-    def active?
-      !finished?
-    end
-
-    def finished?
-      @finished or !peek
-    rescue StopIteration
-      @finished = true
-    end
-
-    def peek
-      events.peek
-    end
-
-    def next
-      events.next
     end
 
     def to_hash

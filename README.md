@@ -15,7 +15,7 @@ exist yet.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'montrose'
+gem "montrose"
 ```
 
 And then execute:
@@ -135,34 +135,34 @@ Montrose::Recurrence.yearly(on: [:january, 31])
 # :starts defaults to Date.today
 # :until defaults to 2037-12-31
 Montrose::Recurrence.new(every: :day, starts: Date.today)
-Montrose::Recurrence.new(every: :day, until: '2010-01-31')
-Montrose::Recurrence.new(every: :day, starts: Date.today, until: '2010-01-31')
+Montrose::Recurrence.new(every: :day, until: "2017-01-31")
+Montrose::Recurrence.new(every: :day, starts: Date.today, until: "2017-01-31")
 
 # Generate a collection of events which always includes a final event with the given through date
 # :through defaults to being unset
-Montrose::Recurrence.new(every: :day, through: '2010-01-31')
-Montrose::Recurrence.new(every: :day, starts: Date.today, through: '2010-01-31')
+Montrose::Recurrence.new(every: :day, through: "2017-01-31")
+Montrose::Recurrence.new(every: :day, starts: Date.today, through: "2017-01-31")
 
 # Remove a date in the series on the given except date(s)
 # :except defaults to being unset
-Montrose::Recurrence.new(every: :day, except: '2010-01-31')
-Montrose::Recurrence.new(every: :day, except: [Date.today, '2010-01-31'])
+Montrose::Recurrence.new(every: :day, except: "2017-01-31")
+Montrose::Recurrence.new(every: :day, except: [Date.today, "2017-01-31"])
 
-# Override the next date handler
-s = Montrose::Recurrence.new(every: :month, on: 1, handler: Proc.new { |day, month, year| raise("Date not allowed!") if year == 2011 && month == 12 && day == 31 })
+# Enumerating events
+r = Montrose::Recurrence.new(every: :month, mday: 31, until: "January 1, 2017")
+r.each { |time| puts time.to_s }
 
-# Shift the recurrences to maintain dates around boundaries (Jan 31 -> Feb 28 -> Mar 28)
-r = Montrose::Recurrence.new(every: :month, on: 31, shift: true)
+# Merging rules and enumerating
+r.merge(starts: "2017-01-01").each { |time| puts time.to_s }
+r.merge(starts: "2017-01-01").each { |date| puts date.to_s }
+r.merge(until: "2017-01-10").each { |date| puts date.to_s }
+r.merge(through: "2017-01-10").each { |date| puts date.to_s }
+r.merge(starts: "2017-01-05", until: "2017-01-10").each {|date| puts date.to_s }
 
-# Getting an array with all events
-r.events.each { |date| puts date.to_s }  # => Memoized array
-r.events(starts: '2009-01-01').each { |date| puts date.to_s }
-r.events(until: '2009-01-10').each { |date| puts date.to_s }
-r.events(through: '2009-01-10').each { |date| puts date.to_s }
-r.events(starts: '2009-01-05', until: '2009-01-10').each {|date| puts date.to_s }
-
-# Iterating events
-r.each { |time| puts time.to_s } # => Use items method
+# Using #events Enumerator
+r.events # => #<Enumerator: ...>
+r.events.take(10).each { |date| puts date.to_s }
+r.events.lazy.select { |time| time > 1.month.from_now }.take(3).each { |date| puts date.to_s }
 ```
 
 ## Goals
