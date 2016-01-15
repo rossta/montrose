@@ -110,16 +110,14 @@ module Montrose
       self.class.new(h1.merge(h2))
     end
 
-    def fetch(key, *args, &block)
+    def fetch(key, *args, &_block)
       fail ArgumentError, "wrong number of arguments (#{args.length} for 1..2)" if args.length > 1
       found = send(key)
       return found if found
       return args.first if args.length == 1
-      if block_given?
-        block.call
-      else
-        fail "Key #{key.inspect} not found"
-      end
+      fail "Key #{key.inspect} not found" unless block_given?
+
+      yield
     end
 
     def key?(key)
@@ -191,7 +189,7 @@ module Montrose
       case arg
       when Hash
         arg.each_with_object({}) do |(k, v), hash|
-          hash[block.call(k)] = [*v]
+          hash[yield k] = [*v]
         end
       else
         map_arg(arg, &block)

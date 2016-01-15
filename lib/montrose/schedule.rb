@@ -11,17 +11,18 @@ module Montrose
 
       self
     end
-    alias_method :add, :<<
+    alias add <<
 
     def include?(time)
       @rules.any? { |r| r.include?(time) }
     end
 
     def events(opts = {})
-      event_enums = @rules.map { |r| r.merge(opts).events }
+      rules = @rules.map { |r| r.merge(opts) }
       Enumerator.new do |y|
         loop do
-          y << event_enums.min_by(&:peek).next or break
+          rule = rules.select(&:active?).min_by(&:peek) or break
+          y << rule.next
         end
       end
     end
