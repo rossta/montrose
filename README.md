@@ -131,19 +131,7 @@ Montrose::Recurrence.new(every: :year, on: [:january, 31])
 Montrose::Recurrence.new(every: :year, on: [10, 31], repeat: 3)
 Montrose::Recurrence.yearly(on: [:january, 31])
 
-# Limit recurrence
-# :starts defaults to Date.today
-# :until defaults to 2037-12-31
-Montrose::Recurrence.new(every: :day, starts: Date.today)
-Montrose::Recurrence.new(every: :day, until: "2017-01-31")
-Montrose::Recurrence.new(every: :day, starts: Date.today, until: "2017-01-31")
-
-# Generate a collection of events which always includes a final event with the given through date
-# :through defaults to being unset
-Montrose::Recurrence.new(every: :day, through: "2017-01-31")
-Montrose::Recurrence.new(every: :day, starts: Date.today, through: "2017-01-31")
-
-# Remove a date in the series on the given except date(s)
+# TODO: Remove a date in the series on the given except date(s)
 # :except defaults to being unset
 Montrose::Recurrence.new(every: :day, except: "2017-01-31")
 Montrose::Recurrence.new(every: :day, except: [Date.today, "2017-01-31"])
