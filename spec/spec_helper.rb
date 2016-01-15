@@ -1,6 +1,6 @@
 require "coveralls"
 Coveralls.wear! do
-  add_filter 'spec/support'
+  add_filter "spec/support"
 end
 
 $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
