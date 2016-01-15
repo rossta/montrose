@@ -34,24 +34,6 @@ describe Montrose::Recurrence do
     end
   end
 
-  describe "#starts" do
-    it "returns given starts time" do
-      new_recurrence(every: :minute).starts.must_equal now
-      new_recurrence(every: :hour, starts: 1.hour.from_now).starts.must_equal 1.hour.from_now
-    end
-
-    it "returns logical starts time" do
-      noon_today = now.beginning_of_day + 12.hours
-      Timecop.freeze(noon_today)
-
-      recurrence_today = new_recurrence(every: :day, at: "3:00 PM")
-      recurrence_today.starts.must_equal noon_today + 3.hours
-
-      recurrence_tomorrow = new_recurrence(every: :day, at: "11:00 AM")
-      recurrence_tomorrow.starts.must_equal Date.tomorrow + 11.hours
-    end
-  end
-
   describe "#to_hash" do
     it "returns default options as hash" do
       now = time_now

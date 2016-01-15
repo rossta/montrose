@@ -44,10 +44,6 @@ module Montrose
       events.each(&Proc.new)
     end
 
-    def starts
-      events.peek
-    end
-
     def active?
       !finished?
     end
