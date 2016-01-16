@@ -592,6 +592,10 @@ describe Montrose::Options do
   end
 
   describe "#at" do
+    before do
+      Timecop.freeze(Time.local(2015, 9, 1, 12))
+    end
+
     it "defaults to nil" do
       options.at.must_be_nil
       options[:at].must_be_nil
@@ -600,8 +604,29 @@ describe Montrose::Options do
     it "sets a recurrence time" do
       options[:at] = "3:30 PM"
 
-      options.at = [Time.parse("3:30 PM")]
-      options[:at] = [Time.parse("3:30 PM")]
+      options.at.must_equal [Time.parse("3:30 PM")]
+      options[:at].must_equal [Time.parse("3:30 PM")]
+    end
+
+    it "sets a start time later today" do
+      options[:at] = "3:30 PM"
+
+      options[:at].must_equal [Time.local(2015, 9, 1, 15, 30)]
+      options[:starts].must_equal Time.local(2015, 9, 1, 15, 30)
+    end
+
+    it "sets a start time tomorrow" do
+      Timecop.freeze(Time.local(2015, 9, 1, 12))
+      options[:at] = "10:30 AM"
+
+      options[:at].must_equal [Time.local(2015, 9, 1, 10, 30)]
+      options[:starts].must_equal Time.local(2015, 9, 2, 10, 30)
+    end
+
+    it "accepts an array of times" do
+      options[:at] = ["10:30 AM", "3:30 PM"]
+
+      options[:at].must_equal [Time.local(2015, 9, 1, 10, 30), Time.local(2015, 9, 1, 15, 30)]
     end
   end
 
