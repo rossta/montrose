@@ -27,7 +27,7 @@ describe Montrose::Recurrence do
       times.size.must_equal 3
     end
 
-    it "is enumerable" do
+    it "is mappable" do
       recurrence = new_recurrence(every: :day, total: 3)
 
       recurrence.map(&:to_date).must_equal [Date.today, Date.tomorrow, 2.days.from_now.to_date]
@@ -38,6 +38,12 @@ describe Montrose::Recurrence do
 
       recurrence.map(&:to_date).must_equal [Date.today, Date.tomorrow, 2.days.from_now.to_date]
       recurrence.map(&:to_date).must_equal [Date.today, Date.tomorrow, 2.days.from_now.to_date]
+    end
+
+    it "returns first" do
+      recurrence = new_recurrence(every: :day)
+
+      recurrence.first.must_equal now
     end
   end
 
