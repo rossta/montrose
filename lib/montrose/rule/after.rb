@@ -9,7 +9,7 @@ module Montrose
 
       # Initializes rule
       #
-      # @param [Array<Fixnum>] days - valid days of month, i.e. [1, 2, -1]
+      # @param [Time] start_time - lower bound timestamp
       #
       def initialize(start_time)
         @start_time = start_time
