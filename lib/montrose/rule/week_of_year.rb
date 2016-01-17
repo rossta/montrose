@@ -12,7 +12,7 @@ module Montrose
       # @param [Array[Fixnum]] weeks - valid weeks of year
       #
       def initialize(weeks)
-        @weeks = [*weeks].compact
+        @weeks = weeks
       end
 
       def include?(time)
