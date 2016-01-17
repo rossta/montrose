@@ -73,6 +73,7 @@ module Montrose
     def_option :total
     def_option :between
     def_option :at
+    def_option :on
 
     def initialize(opts = {})
       defaults = {
@@ -145,7 +146,7 @@ module Montrose
     end
 
     def hour=(hours)
-      @hour = map_arg(hours) { |d| assert_range_includes(1..MAX_HOURS_IN_DAY, d) }
+      @hour = map_arg(hours) { |h| assert_hour(h) }
     end
 
     def day=(days)
@@ -153,15 +154,15 @@ module Montrose
     end
 
     def mday=(mdays)
-      @mday = map_arg(mdays) { |d| assert_range_includes(1..MAX_DAYS_IN_MONTH, d, :absolute) }
+      @mday = map_mdays(mdays)
     end
 
     def yday=(ydays)
-      @yday = map_arg(ydays) { |d| assert_range_includes(1..MAX_DAYS_IN_YEAR, d, :absolute) }
+      @yday = map_ydays(ydays)
     end
 
     def week=(weeks)
-      @week = map_arg(weeks) { |d| assert_range_includes(1..MAX_WEEKS_IN_YEAR, d, :absolute) }
+      @week = map_arg(weeks) { |w| assert_week(w) }
     end
 
     def month=(months)
@@ -187,6 +188,13 @@ module Montrose
       @at = times
     end
 
+    def on=(arg)
+      wday, mday = assert_wday_mday(arg)
+      self[:day] = wday
+      self[:mday] = mday if mday
+      @on = arg
+    end
+
     private
 
     def nested_map_arg(arg, &block)
@@ -204,6 +212,43 @@ module Montrose
       return nil unless arg
 
       Array(arg).map(&block)
+    end
+
+    def map_days(arg)
+      map_arg(arg) { |d| Montrose::Utils.day_number(d) }
+    end
+
+    def map_mdays(arg)
+      map_arg(arg) { |d| assert_mday(d) }
+    end
+
+    def map_ydays(arg)
+      map_arg(arg) { |d| assert_yday(d) }
+    end
+
+    def assert_hour(hour)
+      assert_range_includes(1..MAX_HOURS_IN_DAY, hour)
+    end
+
+    def assert_mday(mday)
+      assert_range_includes(1..MAX_DAYS_IN_MONTH, mday, :absolute)
+    end
+
+    def assert_yday(yday)
+      assert_range_includes(1..MAX_DAYS_IN_YEAR, yday, :absolute)
+    end
+
+    def assert_week(week)
+      assert_range_includes(1..MAX_WEEKS_IN_YEAR, week, :absolute)
+    end
+
+    def assert_wday_mday(arg)
+      case arg
+      when Hash
+        [map_days(arg.keys), map_mdays(arg.values)]
+      else
+        map_days(arg)
+      end
     end
 
     def assert_range_includes(range, item, absolute = false)

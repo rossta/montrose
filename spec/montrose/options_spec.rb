@@ -630,6 +630,23 @@ describe Montrose::Options do
     end
   end
 
+  describe "#on" do
+    it "decomposes day name to wday" do
+      options[:on] = :friday
+
+      options[:day].must_equal [5]
+      options[:on].must_equal :friday
+    end
+
+    it "decomposes day name => month day to wday and mday" do
+      options[:on] = { friday: 13 }
+
+      options[:day].must_equal [5]
+      options[:mday].must_equal [13]
+      options[:on].must_equal(friday: 13)
+    end
+  end
+
   describe "#to_hash" do
     let(:options) { new_options(every: :day) }
 
