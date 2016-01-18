@@ -40,8 +40,8 @@ module Montrose
       event_enum
     end
 
-    def each
-      events.each(&Proc.new)
+    def each(&block)
+      events.each(&block)
     end
 
     def to_hash

@@ -45,6 +45,12 @@ describe Montrose::Recurrence do
 
       recurrence.first.must_equal now
     end
+
+    it "returns enumerator" do
+      recurrence = new_recurrence(every: :day)
+
+      recurrence.each.must_be_kind_of Enumerator
+    end
   end
 
   describe "#to_hash" do
