@@ -245,7 +245,7 @@ module Montrose
     def assert_wday_mday(arg)
       case arg
       when Hash
-        [map_days(arg.keys), map_mdays(arg.values)]
+        [map_days(arg.keys), map_mdays(*arg.values)]
       else
         map_days(arg)
       end

@@ -646,6 +646,13 @@ describe Montrose::Options do
       options[:on].must_equal(friday: 13)
     end
 
+    it "decomposes day name => month day to wday and mday as range" do
+      options[:on] = { tuesday: 2..8 }
+
+      options[:day].must_equal [2]
+      options[:mday].must_equal((2..8).to_a)
+    end
+
     it { -> { options[:on] = -3 }.must_raise Montrose::ConfigurationError }
   end
 
