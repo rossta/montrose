@@ -645,6 +645,8 @@ describe Montrose::Options do
       options[:mday].must_equal [13]
       options[:on].must_equal(friday: 13)
     end
+
+    it { -> { options[:on] = -3 }.must_raise Montrose::ConfigurationError }
   end
 
   describe "#to_hash" do

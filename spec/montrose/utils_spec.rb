@@ -46,6 +46,7 @@ describe Montrose::Utils do
     it { Montrose::Utils.day_number(4).must_equal 4 }
     it { Montrose::Utils.day_number(5).must_equal 5 }
     it { Montrose::Utils.day_number(6).must_equal 6 }
+    it { -> { Montrose::Utils.day_number(-3) }.must_raise Montrose::ConfigurationError }
     it { -> { Montrose::Utils.day_number(:foo) }.must_raise Montrose::ConfigurationError }
   end
 end

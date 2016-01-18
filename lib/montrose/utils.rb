@@ -18,7 +18,7 @@ module Montrose
 
     def day_number(name)
       index = case name
-              when Fixnum
+              when 0..6
                 name
               when Symbol, String
                 DAYS.index(name.to_s.titleize)
