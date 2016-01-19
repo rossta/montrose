@@ -7,9 +7,6 @@
 
 Recurring events in Ruby.
 
-This library is currently under development. Most of the functionality does not
-exist yet.
-
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -167,6 +164,10 @@ r.events.lazy.select { |time| time > 1.month.from_now }.take(3).each { |date| pu
 What `Montrose` isn't:
 
 * support all calendaring use cases under the sun
+
+## Inspiration
+
+Montrose is named after the beautifully diverse and artistic neighborhood in Houston, Texas.
 
 ## Related Projects
 
