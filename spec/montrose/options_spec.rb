@@ -698,4 +698,15 @@ describe Montrose::Options do
       -> { options.fetch(:every, nil, nil) }.must_raise
     end
   end
+
+  describe "#inspect" do
+    let(:now) { time_now }
+
+    before do
+      options[:every] = :month
+      options[:starts] = now
+    end
+
+    it { options.inspect.must_equal "#<Montrose::Options {:every=>:month, :starts=>#{now.inspect}, :interval=>1}>" }
+  end
 end

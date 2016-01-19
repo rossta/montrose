@@ -117,4 +117,15 @@ describe Montrose::Recurrence do
       ]
     end
   end
+
+  describe "#inspect" do
+    let(:now) { time_now }
+    let(:recurrence) { new_recurrence(every: :month, starts: now) }
+
+    it do
+      inspected = "#<Montrose::Recurrence:#{recurrence.object_id} "
+      inspected << "{:every=>:month, :starts=>#{now.inspect}, :interval=>1}>"
+      recurrence.inspect.must_equal inspected
+    end
+  end
 end

@@ -99,6 +99,7 @@ module Montrose
       end
       Hash[*hash_pairs].reject { |_k, v| v.nil? }
     end
+    alias to_h to_hash
 
     def []=(option, val)
       send(:"#{option}=", val)
@@ -193,6 +194,10 @@ module Montrose
       self[:day] = wday
       self[:mday] = mday if mday
       @on = arg
+    end
+
+    def inspect
+      "#<#{self.class} #{to_h.inspect}>"
     end
 
     private
