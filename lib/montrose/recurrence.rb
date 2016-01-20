@@ -47,6 +47,11 @@ module Montrose
     def to_hash
       default_options.to_hash
     end
+    alias to_h to_hash
+
+    def inspect
+      "#<#{self.class}:#{object_id.to_s(16)} #{to_h.inspect}>"
+    end
 
     private
 
