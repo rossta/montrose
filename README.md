@@ -99,15 +99,6 @@ Montrose.monthly(day: { Sunday: [1, =1] }) # first and last Sunday of the month
 Montrose.monthly(mday: 7..13, day: :saturday) # first Saturday that follow the
 first Sunday of the month
 
-# TODO: :on option not yet supported
-Montrose::Recurrence.new(every: :month, on: :first, weekday: :sunday)
-Montrose::Recurrence.new(every: :month, on: :third, weekday: :monday)
-Montrose::Recurrence.new(every: :month, on: :last,  weekday: :friday)
-Montrose::Recurrence.new(every: :month, on: :last,  weekday: :friday, interval: 2)
-Montrose::Recurrence.new(every: :month, on: :last,  weekday: :friday, interval: :quarterly)
-Montrose::Recurrence.new(every: :month, on: :last,  weekday: :friday, interval: :semesterly)
-Montrose::Recurrence.new(every: :month, on: :last,  weekday: :friday, repeat: 3)
-
 # Yearly
 Montrose.yearly
 Montrose.every(:year)
@@ -117,16 +108,11 @@ Montrose.yearly(month: [:june, :july]) # yearly in June and July
 Montrose.yearly(month: 6..8, day: :thursday) # yearly in June, July, August on
 Thursday
 Montrose.yearly(yday: [1, 100]) # yearly on the 1st and 100th day of year
-Montrose.yearly(month: :november, day: :tuesday, mday: 2..8) # every four years,
+Montrose.every(4.years, month: :november, on: { tuesday: 2..8 }) # every four years,
 the first Tuesday after a Monday in November, i.e., Election Day
 
-# TODO: :on option not yet supported
-Montrose::Recurrence.new(every: :year, on: [7, 4]) # => [month, day]
-Montrose::Recurrence.new(every: :year, on: [10, 31], interval: 3)
-Montrose::Recurrence.new(every: :year, on: [:jan, 31])
-Montrose::Recurrence.new(every: :year, on: [:january, 31])
-Montrose::Recurrence.new(every: :year, on: [10, 31], repeat: 3)
-Montrose::Recurrence.yearly(on: [:january, 31])
+Montrose::Recurrence.yearly(on: { january: 31 })
+Montrose::Recurrence.new(every: :year, on: { 10 => 31 }, interval: 3)
 
 # TODO: Remove a date in the series on the given except date(s)
 # :except defaults to being unset

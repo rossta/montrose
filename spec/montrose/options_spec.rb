@@ -647,10 +647,19 @@ describe Montrose::Options do
     end
 
     it "decomposes day name => month day to wday and mday as range" do
+      options[:month] = :november
       options[:on] = { tuesday: 2..8 }
 
       options[:day].must_equal [2]
       options[:mday].must_equal((2..8).to_a)
+      options[:month].must_equal [11]
+    end
+
+    it "decompose month name => month day to month and mday" do
+      options[:on] = { january: 31 }
+
+      options[:month].must_equal [1]
+      options[:mday].must_equal [31]
     end
 
     it { -> { options[:on] = -3 }.must_raise Montrose::ConfigurationError }

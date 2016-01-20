@@ -151,7 +151,7 @@ module Montrose
     end
 
     def day=(days)
-      @day = nested_map_arg(days) { |d| Montrose::Utils.day_number(d) }
+      @day = nested_map_arg(days) { |d| Montrose::Utils.day_number!(d) }
     end
 
     def mday=(mdays)
@@ -167,7 +167,7 @@ module Montrose
     end
 
     def month=(months)
-      @month = map_arg(months) { |d| Montrose::Utils.month_number(d) }
+      @month = map_arg(months) { |d| Montrose::Utils.month_number!(d) }
     end
 
     def between=(range)
@@ -190,9 +190,10 @@ module Montrose
     end
 
     def on=(arg)
-      wday, mday = assert_wday_mday(arg)
-      self[:day] = wday
-      self[:mday] = mday if mday
+      result = decompose_on_arg(arg)
+      self[:day] = result[:day] if result[:day]
+      self[:month] = result[:month] if result[:month]
+      self[:mday] = result[:mday] if result[:mday]
       @on = arg
     end
 
@@ -220,7 +221,7 @@ module Montrose
     end
 
     def map_days(arg)
-      map_arg(arg) { |d| Montrose::Utils.day_number(d) }
+      map_arg(arg) { |d| Montrose::Utils.day_number!(d) }
     end
 
     def map_mdays(arg)
@@ -247,13 +248,26 @@ module Montrose
       assert_range_includes(1..MAX_WEEKS_IN_YEAR, week, :absolute)
     end
 
-    def assert_wday_mday(arg)
+    def decompose_on_arg(arg)
       case arg
       when Hash
-        [map_days(arg.keys), map_mdays(*arg.values)]
+        arg.each_with_object({}) do |(k, v), result|
+          key, val = month_or_day(k)
+          result[key] = val
+          result[:mday] ||= []
+          result[:mday] += map_mdays(v)
+        end
       else
-        map_days(arg)
+        { day: map_days(arg) }
       end
+    end
+
+    def month_or_day(key)
+      month = Montrose::Utils.month_number(key)
+      return [:month, month] if month
+      day = Montrose::Utils.day_number(key)
+      return [:day, day] if day
+      fail ConfigurationError, "Did not recognize #{key} as a month or day"
     end
 
     def assert_range_includes(range, item, absolute = false)
