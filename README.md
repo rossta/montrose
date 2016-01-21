@@ -5,7 +5,7 @@
 [![Code Climate](https://codeclimate.com/github/rossta/montrose/badges/gpa.svg)](https://codeclimate.com/github/rossta/montrose)
 [![Dependency Status](https://gemnasium.com/rossta/montrose.svg)](https://gemnasium.com/rossta/montrose)
 
-Recurring events in Ruby.
+Recurring events in Ruby. This library is still a work-in-progress.
 
 ## Installation
 
