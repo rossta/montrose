@@ -95,8 +95,7 @@ Montrose.yearly(month: [:june, :july]) # yearly in June and July
 Montrose.yearly(month: 6..8, day: :thursday) # yearly in June, July, August on
 Thursday
 Montrose.yearly(yday: [1, 100]) # yearly on the 1st and 100th day of year
-Montrose.every(4.years, month: :november, on: { tuesday: 2..8 }) # every four years,
-the first Tuesday after a Monday in November, i.e., Election Day
+Montrose.every(4.years, month: :november, on: { tuesday: 2..8 }) # every four years, the first Tuesday after a Monday in November, i.e., Election Day
 
 Montrose::Recurrence.yearly(on: { january: 31 })
 Montrose::Recurrence.new(every: :year, on: { 10 => 31 }, interval: 3)
