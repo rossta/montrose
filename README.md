@@ -60,15 +60,11 @@ Montrose.weekly
 Montrose.every(:week)
 Montrose::Recurrence.new(every: :week)
 
-# TODO: :on option not yet supported
-Montrose::Recurrence.new(every: :week, on: 5)
-Montrose::Recurrence.new(every: :week, on: :monday)
-Montrose::Recurrence.new(every: :week, on: [:monday, :wednesday, :friday])
-Montrose::Recurrence.new(every: :week, on: :friday, interval: 2)
-Montrose::Recurrence.new(every: :week, on: :friday, repeat: 4)
-Montrose::Recurrence.new(every: :week, on: :friday, at: "3:41 PM")
-Montrose::Recurrence.new(every: :week, on: [:monday, :wednesday, :friday], at: "12:00 PM")
-Montrose::Recurrence.weekly(on: :thursday)
+Montrose.every(:week, on: :monday)
+Montrose.every(:week, on: [:monday, :wednesday, :friday])
+Montrose.every(2.weeks, on: :friday)
+Montrose.every(:week, on: :friday, at: "3:41 PM")
+Montrose.weekly(on: :thursday)
 
 # Monthly by month day
 Montrose.monthly(mday: 1) # first of the month
@@ -79,22 +75,13 @@ Montrose.monthly(mday: [2, 15]) # 2nd and 15th of the month
 Montrose.monthly(mday: -3) # third-to-last day of the month
 Montrose.monthly(mday: 10..15) # 10th through the 15th day of the month
 
-# TODO: :on option not yet supported
-Montrose::Recurrence.new(every: :month, on: 15)
-Montrose::Recurrence.new(every: :month, on: 31)
-Montrose::Recurrence.new(every: :month, on: 7, interval: 2)
-Montrose::Recurrence.new(every: :month, on: 7, interval: :monthly)
-Montrose::Recurrence.new(every: :month, on: 7, interval: :bimonthly)
-Montrose::Recurrence.new(every: :month, on: 7, repeat: 6)
-Montrose::Recurrence.monthly(on: 31)
-
 # Monthly by week day
 Montrose.monthly(day: :friday, interval: 2) # every Friday every other month
 Montrose.every(:month, day: :friday, interval: 2)
 Montrose::Recurrence.new(every: :month, day: :friday, interval: 2)
 
 Montrose.monthly(day: { friday: [1] }) # 1st Friday of the month
-Montrose.monthly(day: { Sunday: [1, =1] }) # first and last Sunday of the month
+Montrose.monthly(day: { Sunday: [1, -1] }) # first and last Sunday of the month
 
 Montrose.monthly(mday: 7..13, day: :saturday) # first Saturday that follow the
 first Sunday of the month
