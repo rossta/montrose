@@ -124,11 +124,10 @@ r.events.lazy.select { |time| time > 1.month.from_now }.take(3).each { |date| pu
 
 ## Goals
 
-`Montrose` intends to:
+`Montrose` aims to provide a simple interface for specifying and enumerating recurring events as Time objects. To that end, the project intends to:
 
 * embrace Ruby idioms
 * support Ruby 2.1+
-* provide a simple-to-use interface
 * be reasonably performant
 * serialize to yaml, hash, and [ical](http://www.kanzaki.com/docs/ical/rrule.html#basic) formats
 * be suitable for integration with persistence libraries
@@ -137,9 +136,9 @@ What `Montrose` isn't:
 
 * support all calendaring use cases under the sun
 
-## Inspiration
+### Inspiration
 
-Montrose is named after the beautifully diverse and artistic neighborhood in Houston, Texas.
+Montrose is named after the beautifully diverse and artistic [neighborhood in Houston, Texas](https://en.wikipedia.org/wiki/Montrose,_Houston).
 
 ## Related Projects
 
