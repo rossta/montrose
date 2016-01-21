@@ -28,6 +28,120 @@ Or install it yourself as:
 ```ruby
 require "montrose"
 
+# daily for 10 occurrences
+Montrose.daily(total: 10)
+
+# daily until December 23, 2015
+starts = Date.new(2015, 1, 1)
+ends = Date.new(2015, 12, 23)
+Montrose.daily(starts: starts, until: ends)
+
+# every other day forever
+Montrose.daily(interval: 2)
+
+# every 10 days 5 occurrences
+Montrose.every(10.days, total: 5)
+
+# everyday in January for 3 years
+starts = Time.now.beginning_of_year
+ends = Time.now.end_of_year + 2.years
+Montrose.daily(month: :january, between: starts...ends)
+
+# weekly for 10 occurrences
+Montrose.weekly(total: 10)
+
+# weekly until December 23, 2015
+ends_on = Date.new(2015, 12, 23)
+starts_on = ends_on - 15.weeks
+Montrose.every(:week, until: ends_on, starts: starts_on
+
+# every other week forever
+Montrose.every(2.weeks)
+
+# weekly on Tuesday and Thursday for five weeks
+# from September 1, 2015 until October 5, 2015
+Montrose.weekly(on: [:tuesday, :thursday],
+  between: Date.new(2015, 9, 1)..Date.new(2015, 10, 5))
+
+# every other week on Monday, Wednesday and Friday until December 23 2015,
+# but starting on Tuesday, September 1, 2015
+Montrose.every(2.weeks,
+  on: [:monday, :wednesday, :friday],
+  starts: Date.new(2015, 9, 1))
+
+# every other week on Tuesday and Thursday, for 8 occurrences
+Monday.weekly(on: [:tuesday, :thursday], total: 8, interval: 2)
+
+# monthly on the first Friday for ten occurrences
+Monstrose.monthly(day: { friday: [1] }, total: 10)
+
+# monthly on the first Friday until December 23, 2015
+Montrose.every(:month, day: { friday: [1] }, until: Date.new(2016, 12, 23))
+
+# every other month on the first and last Sunday of the month for 10 occurrences
+Montrose.every(:month, day: { sunday: [1, -1] }, interval: 2, total: 10)
+
+# monthly on the second-to-last Monday of the month for 6 months
+Montrose.every(:month, day: { monday: [-2] }, total: 6)
+
+# monthly on the third-to-the-last day of the month, forever
+Montrose.every(:month, mday: [-3])
+
+# monthly on the 2nd and 15th of the month for 10 occurrences
+Montrose.every(:month, on: [2, 15], total: 10)
+
+# monthly on the first and last day of the month for 10 occurrences
+Montrose.monthly(mday: [1, -1], total: 10)
+
+# every 18 months on the 10th thru 15th of the month for 10 occurrences
+Montrose.every(18.months, total: 10, mday: 10..15)
+
+# every Tuesday, every other month
+Montrose.every(2.months, on: :tuesday)
+
+# yearly in June and July for 10 occurrences
+Montrose.yearly(month: [:june, :july], total: 10)
+
+# every other year on January, February, and March for 10 occurrences
+Montrose.every(2.years, month: [:january, :february, :march], total: 10)
+
+# every third year on the 1st, 100th and 200th day for 10 occurrences
+Montrose.yearly(yday: [1, 100, 200], total: 10)
+
+# every 20th Monday of the year, forever
+Montrose.yearly(day: { monday: [20] })
+
+# Monday of week number 20 forever
+Montrose.yearly(week: [20], on: :monday)
+
+# every Thursday in March, forever
+Montrose.monthly(month: :march, on: :thursday, at: "12 pm")
+
+# every Thursday, but only during June, July, and August, forever" do
+Montrose.monthly(month: 6..8, on: :thursday)
+
+# every Friday 13th, forever
+Montrose.monthly(on: { friday: 13 })
+
+# first Saturday that follows the first Sunday of the month, forever
+Montrose.monthly(on: { saturday: 7..13 })
+
+# every four years, the first Tuesday after a Monday in November, forever (U.S. Presidential Election day)
+Montrose.every(4.years, month: :november, on: { tuesday: 2..8 })
+
+# every 3 hours from 9:00 AM to 5:00 PM on a specific day
+date = Date.new(2016, 9, 1)
+Montrose.hourly(between: date..(date+1), hour: 9..17, interval: 3)
+
+# every 15 minutes for 6 occurrences
+Montrose.every(90.minutes, total: 6)
+
+# every hour and a half for four occurrences
+Montrose.every(90.minutes, total: 4)
+
+# every 20 minutes from 9:00 AM to 4:40 PM every day
+Montrose.every(20.minutes, hour: 9..16)
+
 # Minutely
 Montrose.minutely
 Montrose::Recurrence.new(every: :minute)
@@ -95,7 +209,6 @@ Montrose.yearly(month: [:june, :july]) # yearly in June and July
 Montrose.yearly(month: 6..8, day: :thursday) # yearly in June, July, August on
 Thursday
 Montrose.yearly(yday: [1, 100]) # yearly on the 1st and 100th day of year
-Montrose.every(4.years, month: :november, on: { tuesday: 2..8 }) # every four years, the first Tuesday after a Monday in November, i.e., Election Day
 
 Montrose::Recurrence.yearly(on: { january: 31 })
 Montrose::Recurrence.new(every: :year, on: { 10 => 31 }, interval: 3)
