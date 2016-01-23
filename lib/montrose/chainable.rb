@@ -135,6 +135,22 @@ module Montrose
       merge(between: date_range)
     end
 
+    # Create a recurrence through :on option
+    #
+    # @param [Hash,Symbol] on { friday: 13 }
+    #
+    def on(day)
+      merge(on: day)
+    end
+
+    # Create a recurrence at given time
+    #
+    # @param [String,Time] at
+    #
+    def at(time)
+      merge(at: time)
+    end
+
     # Create a recurrence for given days of month
     #
     # @param [Fixnum] days (1, 2, -1, ...)

@@ -211,4 +211,30 @@ describe Montrose::Chainable do
       ]
     end
   end
+
+  describe "#on" do
+    it "returns new recurrence on given day" do
+      recurrence = Montrose.weekly
+      recurrence = recurrence.on(:monday)
+
+      recurrence.events.must_pair_with [
+        Time.local(2015, 9, 7, 12),
+        Time.local(2015, 9, 14, 12),
+        Time.local(2015, 9, 21, 12)
+      ]
+    end
+  end
+
+  describe "#at" do
+    it "returns new recurrence at given time" do
+      recurrence = Montrose.daily
+      recurrence = recurrence.at("4:05pm")
+
+      recurrence.events.must_pair_with [
+        Time.local(2015, 9, 1, 16, 5),
+        Time.local(2015, 9, 2, 16, 5),
+        Time.local(2015, 9, 3, 16, 5)
+      ]
+    end
+  end
 end
