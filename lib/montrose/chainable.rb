@@ -148,6 +148,7 @@ module Montrose
     def day_of_month(*days)
       merge(mday: days)
     end
+    alias mday day_of_month
 
     # Create a recurrence for given days of week
     #
@@ -156,6 +157,7 @@ module Montrose
     def day_of_week(*weekdays)
       merge(day: weekdays)
     end
+    alias day day_of_week
 
     # Create a recurrence for given days of year
     #
@@ -164,6 +166,7 @@ module Montrose
     def day_of_year(*days)
       merge(yday: days)
     end
+    alias yday day_of_year
 
     # Create a recurrence for given hours of day
     #
@@ -172,6 +175,7 @@ module Montrose
     def hour_of_day(*hours)
       merge(hour: hours)
     end
+    alias hour hour_of_day
 
     # Create a recurrence for given months of year
     #
@@ -180,6 +184,7 @@ module Montrose
     def month_of_year(*months)
       merge(month: months)
     end
+    alias month month_of_year
 
     # Create a recurrence that ends after given number
     # of occurrences
