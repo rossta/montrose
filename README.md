@@ -213,14 +213,18 @@ Montrose.yearly(yday: [1, 100]) # yearly on the 1st and 100th day of year
 Montrose::Recurrence.yearly(on: { january: 31 })
 Montrose::Recurrence.new(every: :year, on: { 10 => 31 }, interval: 3)
 
-# TODO: Remove a date in the series on the given except date(s)
-# :except defaults to being unset
-Montrose::Recurrence.new(every: :day, except: "2017-01-31")
-Montrose::Recurrence.new(every: :day, except: [Date.today, "2017-01-31"])
+# TODO: Remove a date in the series with :except date(s)
+Montrose.daily(:day, except: "2017-01-31")
+Montrose.daily(except: [Date.today, "2017-01-31"])
+
+# Chaining
+Montrose.weekly.starting(3.weeks.from_now).on(:friday)
+Montrose.every(:day).at("4:05pm")
 
 # Enumerating events
-r = Montrose::Recurrence.new(every: :month, mday: 31, until: "January 1, 2017")
+r = Montrose.every(:month, mday: 31, until: "January 1, 2017")
 r.each { |time| puts time.to_s }
+r.take(10).to_a
 
 # Merging rules and enumerating
 r.merge(starts: "2017-01-01").each { |time| puts time.to_s }

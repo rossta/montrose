@@ -75,19 +75,9 @@ module Montrose
     # Create a monthly recurrence.
     #
     # @example
-    #   Montrose.monthly(on: 15) #=> every 15th day
-    #   Montrose.monthly(on: :first, weekday: :sunday)
-    #   Montrose.monthly(on: :second, weekday: :sunday)
-    #   Montrose.monthly(on: :third, weekday: :sunday)
-    #   Montrose.monthly(on: :fourth, weekday: :sunday)
-    #   Montrose.monthly(on: :fifth, weekday: :sunday)
-    #   Montrose.monthly(on: :last, weekday: :sunday)
-    #   Montrose.monthly(on: 15, interval: 2)
-    #   Montrose.monthly(on: 15, interval: :monthly)
-    #   Montrose.monthly(on: 15, interval: :bimonthly)
-    #   Montrose.monthly(on: 15, interval: :quarterly)
-    #   Montrose.monthly(on: 15, interval: :semesterly)
-    #   Montrose.monthly(on: 15, total: 5)
+    # Montrose.monthly(mday: [2, 15]) # 2nd and 15th of the month
+    # Montrose.monthly(mday: -3) # third-to-last day of the month
+    # Montrose.monthly(mday: 10..15) # 10th through the 15th day of the month
     #
     # The <tt>:on</tt> option can be one of the following:
     #
