@@ -155,6 +155,7 @@ Montrose::Recurrence.new(every: :minute, until: "9:00 PM")
 
 # Daily
 Montrose.daily
+Montrose.every(:day)
 Montrose::Recurrence.new(every: :day)
 
 Montrose.every(9.days)
@@ -218,18 +219,15 @@ Montrose.daily(except: [Date.today, "2017-01-31"])
 # Chaining
 Montrose.weekly.starting(3.weeks.from_now).on(:friday)
 Montrose.every(:day).at("4:05pm")
+Montrose.yearly.between(Time.now..10.years.from_now)
 
 # Enumerating events
 r = Montrose.every(:month, mday: 31, until: "January 1, 2017")
 r.each { |time| puts time.to_s }
 r.take(10).to_a
 
-# Merging rules and enumerating
+# Merging rules
 r.merge(starts: "2017-01-01").each { |time| puts time.to_s }
-r.merge(starts: "2017-01-01").each { |date| puts date.to_s }
-r.merge(until: "2017-01-10").each { |date| puts date.to_s }
-r.merge(through: "2017-01-10").each { |date| puts date.to_s }
-r.merge(starts: "2017-01-05", until: "2017-01-10").each {|date| puts date.to_s }
 
 # Using #events Enumerator
 r.events # => #<Enumerator: ...>
