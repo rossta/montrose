@@ -251,11 +251,11 @@ What `Montrose` isn't:
 
 * support all calendaring use cases under the sun
 
-### Inspiration
+## Inspiration
 
 Montrose is named after the beautifully diverse and artistic [neighborhood in Houston, Texas](https://en.wikipedia.org/wiki/Montrose,_Houston).
 
-## Related Projects
+### Related Projects
 
 Check out following related projects, all of which have provided inspiration for `Montrose`.
 
