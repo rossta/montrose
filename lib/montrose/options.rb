@@ -272,7 +272,7 @@ module Montrose
 
     def assert_range_includes(range, item, absolute = false)
       test = absolute ? item.abs : item
-      fail ConfigurationError, "Out of range" unless range.include?(test)
+      fail ConfigurationError, "Out of range: #{range.inspect} does not include #{test}" unless range.include?(test)
 
       item
     end
