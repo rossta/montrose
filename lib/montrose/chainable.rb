@@ -1,7 +1,10 @@
 require "montrose/options"
+require "montrose/refinements/array_concat"
 
 module Montrose
   module Chainable
+    using Montrose::Refinements::ArrayConcat
+
     # Create a recurrence from the given frequency
     # @example
     #
@@ -146,7 +149,7 @@ module Montrose
     # @param [Fixnum] days (1, 2, -1, ...)
     #
     def day_of_month(days, *extras)
-      merge(mday: Array(days) + extras)
+      merge(mday: days.array_concat(extras))
     end
     alias mday day_of_month
 
@@ -155,7 +158,7 @@ module Montrose
     # @param [Symbol] weekdays (:sunday, :monday, ...)
     #
     def day_of_week(weekdays, *extras)
-      merge(day: Array(weekdays) + extras)
+      merge(day: weekdays.array_concat(extras))
     end
     alias day day_of_week
 
@@ -164,7 +167,7 @@ module Montrose
     # @param [Fixnum] days (1, 10, 100, ...)
     #
     def day_of_year(days, *extras)
-      merge(yday: Array(days) + extras)
+      merge(yday: days.array_concat(extras))
     end
     alias yday day_of_year
 
@@ -173,7 +176,7 @@ module Montrose
     # @param [Fixnum, Range] days (1, 10, 100, ...)
     #
     def hour_of_day(hours, *extras)
-      merge(hour: Array(hours) + extras)
+      merge(hour: hours.array_concat(extras))
     end
     alias hour hour_of_day
 
@@ -182,7 +185,7 @@ module Montrose
     # @param [Fixnum, Symbol] months (:january, :april, ...)
     #
     def month_of_year(months, *extras)
-      merge(month: Array(months) + extras)
+      merge(month: months.array_concat(extras))
     end
     alias month month_of_year
 
@@ -200,7 +203,7 @@ module Montrose
     # @param [Fixnum] weeks (1, 20, 50)
     #
     def week_of_year(weeks, *extras)
-      merge(week: Array(weeks) + extras)
+      merge(week: weeks.array_concat(extras))
     end
 
     # @private
