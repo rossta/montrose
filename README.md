@@ -70,10 +70,10 @@ Montrose.every(2.weeks,
   starts: Date.new(2015, 9, 1))
 
 # every other week on Tuesday and Thursday, for 8 occurrences
-Monday.weekly(on: [:tuesday, :thursday], total: 8, interval: 2)
+Montrose.weekly(on: [:tuesday, :thursday], total: 8, interval: 2)
 
 # monthly on the first Friday for ten occurrences
-Monstrose.monthly(day: { friday: [1] }, total: 10)
+Montrose.monthly(day: { friday: [1] }, total: 10)
 
 # monthly on the first Friday until December 23, 2015
 Montrose.every(:month, day: { friday: [1] }, until: Date.new(2016, 12, 23))
