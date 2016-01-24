@@ -145,8 +145,8 @@ module Montrose
     #
     # @param [Fixnum] days (1, 2, -1, ...)
     #
-    def day_of_month(*days)
-      merge(mday: days)
+    def day_of_month(days, *extras)
+      merge(mday: Array(days) + extras)
     end
     alias mday day_of_month
 
@@ -154,8 +154,8 @@ module Montrose
     #
     # @param [Symbol] weekdays (:sunday, :monday, ...)
     #
-    def day_of_week(*weekdays)
-      merge(day: weekdays)
+    def day_of_week(weekdays, *extras)
+      merge(day: Array(weekdays) + extras)
     end
     alias day day_of_week
 
@@ -163,8 +163,8 @@ module Montrose
     #
     # @param [Fixnum] days (1, 10, 100, ...)
     #
-    def day_of_year(*days)
-      merge(yday: days)
+    def day_of_year(days, *extras)
+      merge(yday: Array(days) + extras)
     end
     alias yday day_of_year
 
@@ -172,8 +172,8 @@ module Montrose
     #
     # @param [Fixnum, Range] days (1, 10, 100, ...)
     #
-    def hour_of_day(*hours)
-      merge(hour: hours)
+    def hour_of_day(hours, *extras)
+      merge(hour: Array(hours) + extras)
     end
     alias hour hour_of_day
 
@@ -181,8 +181,8 @@ module Montrose
     #
     # @param [Fixnum, Symbol] months (:january, :april, ...)
     #
-    def month_of_year(*months)
-      merge(month: months)
+    def month_of_year(months, *extras)
+      merge(month: Array(months) + extras)
     end
     alias month month_of_year
 
@@ -199,8 +199,8 @@ module Montrose
     #
     # @param [Fixnum] weeks (1, 20, 50)
     #
-    def week_of_year(*weeks)
-      merge(week: weeks)
+    def week_of_year(weeks, *extras)
+      merge(week: Array(weeks) + extras)
     end
 
     # @private
