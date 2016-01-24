@@ -197,8 +197,7 @@ Montrose::Recurrence.new(every: :month, day: :friday, interval: 2)
 Montrose.monthly(day: { friday: [1] }) # 1st Friday of the month
 Montrose.monthly(day: { Sunday: [1, -1] }) # first and last Sunday of the month
 
-Montrose.monthly(mday: 7..13, day: :saturday) # first Saturday that follow the
-first Sunday of the month
+Montrose.monthly(mday: 7..13, day: :saturday) # first Saturday that follow the first Sunday of the month
 
 # Yearly
 Montrose.yearly
@@ -206,8 +205,7 @@ Montrose.every(:year)
 Montrose::Recurrence.new(every: :year)
 
 Montrose.yearly(month: [:june, :july]) # yearly in June and July
-Montrose.yearly(month: 6..8, day: :thursday) # yearly in June, July, August on
-Thursday
+Montrose.yearly(month: 6..8, day: :thursday) # yearly in June, July, August on Thursday
 Montrose.yearly(yday: [1, 100]) # yearly on the 1st and 100th day of year
 
 Montrose::Recurrence.yearly(on: { january: 31 })
