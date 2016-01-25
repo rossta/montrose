@@ -1,3 +1,5 @@
+require "forwardable"
+
 module Montrose
   module Rule
     class NthDayMatcher
