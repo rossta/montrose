@@ -142,17 +142,53 @@ describe Montrose::Chainable do
       Time.local(2015, 9, 5, 12).wday.must_equal 6
       Time.local(2015, 9, 6, 12).wday.must_equal 0
     end
+
+    it "returns new recurrence by given range of days" do
+      recurrence = Montrose.weekly
+      recurrence = recurrence.day_of_week(1..3)
+
+      recurrence.events.must_pair_with [
+        Time.local(2015, 9, 1, 12), # Tuesday
+        Time.local(2015, 9, 2, 12),
+        Time.local(2015, 9, 7, 12)
+      ]
+    end
   end
 
   describe "#day_of_year" do
-    it "returns new recurrence by given days of month" do
+    it "returns new recurrence by given days of year" do
       recurrence = Montrose.yearly
       recurrence = recurrence.day_of_year(1, 10, 100)
 
       recurrence.events.must_pair_with [
         Time.local(2016, 1, 1, 12),
         Time.local(2016, 1, 10, 12),
-        Time.local(2016, 4, 9, 12) # 100th day
+        Time.local(2016, 4, 9, 12), # 100th day
+        Time.local(2017, 1, 1, 12)
+      ]
+    end
+
+    it "returns new recurrence by given array of days" do
+      recurrence = Montrose.yearly
+      recurrence = recurrence.day_of_year([1, 10, 100])
+
+      recurrence.events.must_pair_with [
+        Time.local(2016, 1, 1, 12),
+        Time.local(2016, 1, 10, 12),
+        Time.local(2016, 4, 9, 12), # 100th day
+        Time.local(2017, 1, 1, 12)
+      ]
+    end
+
+    it "returns new recurrence by given range of days" do
+      recurrence = Montrose.yearly
+      recurrence = recurrence.day_of_year(98..100)
+
+      recurrence.events.must_pair_with [
+        Time.local(2016, 4, 7, 12),
+        Time.local(2016, 4, 8, 12),
+        Time.local(2016, 4, 9, 12), # 100th day
+        Time.local(2017, 4, 8, 12)
       ]
     end
   end
@@ -161,6 +197,30 @@ describe Montrose::Chainable do
     it "returns new recurrence by given hours of day" do
       recurrence = Montrose.daily
       recurrence = recurrence.hour_of_day(6, 7, 8)
+
+      recurrence.events.must_pair_with [
+        Time.local(2015, 9, 2, 6),
+        Time.local(2015, 9, 2, 7),
+        Time.local(2015, 9, 2, 8),
+        Time.local(2015, 9, 3, 6)
+      ]
+    end
+
+    it "returns new recurrence by given array of hours" do
+      recurrence = Montrose.daily
+      recurrence = recurrence.hour_of_day([6, 7, 8])
+
+      recurrence.events.must_pair_with [
+        Time.local(2015, 9, 2, 6),
+        Time.local(2015, 9, 2, 7),
+        Time.local(2015, 9, 2, 8),
+        Time.local(2015, 9, 3, 6)
+      ]
+    end
+
+    it "returns new recurrence by given range of hours" do
+      recurrence = Montrose.daily
+      recurrence = recurrence.hour_of_day(6..8)
 
       recurrence.events.must_pair_with [
         Time.local(2015, 9, 2, 6),
@@ -179,6 +239,29 @@ describe Montrose::Chainable do
       recurrence.events.must_pair_with [
         Time.local(2016, 1, 1, 12),
         Time.local(2016, 4, 1, 12),
+        Time.local(2017, 1, 1, 12)
+      ]
+    end
+
+    it "returns new recurrence by given array of months" do
+      recurrence = Montrose.yearly
+      recurrence = recurrence.month_of_year([:january, :april])
+
+      recurrence.events.must_pair_with [
+        Time.local(2016, 1, 1, 12),
+        Time.local(2016, 4, 1, 12),
+        Time.local(2017, 1, 1, 12)
+      ]
+    end
+
+    it "returns new recurrence by given range of months" do
+      recurrence = Montrose.yearly
+      recurrence = recurrence.month_of_year(1..3)
+
+      recurrence.events.must_pair_with [
+        Time.local(2016, 1, 1, 12),
+        Time.local(2016, 2, 1, 12),
+        Time.local(2016, 3, 1, 12),
         Time.local(2017, 1, 1, 12)
       ]
     end
@@ -208,6 +291,17 @@ describe Montrose::Chainable do
       recurrence.events.must_pair_with [
         Time.local(2015, 12, 21, 12), # Monday, 52nd week
         Time.local(2016, 1, 4, 12) # Monday, 1st week
+      ]
+    end
+
+    it "returns new recurrence by given range of weeks" do
+      recurrence = Montrose.yearly
+      recurrence = recurrence.day_of_week(:monday).week_of_year(50..52)
+
+      recurrence.events.must_pair_with [
+        Time.local(2015, 12, 7, 12),
+        Time.local(2015, 12, 14, 12),
+        Time.local(2015, 12, 21, 12) # Monday, 52nd week
       ]
     end
   end
