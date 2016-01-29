@@ -166,15 +166,18 @@ describe Montrose::Options do
     end
 
     it "defaults to current time" do
-      options.starts.must_equal time_now
-      options[:starts].must_equal time_now
+      default = Montrose::Options.merge(options)
+
+      default.starts.must_equal time_now
+      default[:starts].must_equal time_now
     end
 
     it "defaults to default_until time" do
       Montrose::Options.default_starts = 3.days.from_now
+      default = Montrose::Options.merge(options)
 
-      options.starts.must_equal 3.days.from_now
-      options[:starts].must_equal 3.days.from_now
+      default.starts.must_equal 3.days.from_now
+      default[:starts].must_equal 3.days.from_now
     end
 
     it "can be set" do
@@ -223,9 +226,10 @@ describe Montrose::Options do
 
     it "defaults to default_until time" do
       Montrose::Options.default_until = 3.days.from_now
+      default = Montrose::Options.merge(options)
 
-      options.until.must_equal 3.days.from_now
-      options[:until].must_equal 3.days.from_now
+      default.until.must_equal 3.days.from_now
+      default[:until].must_equal 3.days.from_now
     end
 
     it "can be set" do
@@ -673,10 +677,7 @@ describe Montrose::Options do
     end
 
     it "returns Hash with non-nil key-value pairs" do
-      options.to_hash.must_equal(
-        every: :day,
-        starts: time_now,
-        interval: 1)
+      options.to_hash.must_equal(every: :day, interval: 1)
     end
   end
 

@@ -56,7 +56,7 @@ module Montrose
     private
 
     def event_enum
-      opts = @default_options
+      opts = Options.merge(@default_options)
       stack = Stack.new(opts)
       clock = Clock.new(opts)
 
