@@ -43,7 +43,7 @@ module Montrose
     end
 
     def initialize(opts = {})
-      opts = Montrose::Options.new(opts)
+      opts = Montrose::Options.merge(opts)
       @time = nil
       @starts = opts.fetch(:starts)
       @interval = opts.fetch(:interval)

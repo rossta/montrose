@@ -58,6 +58,18 @@ module Montrose
           @default_starts
         end
       end
+
+      def merge(opts = {})
+        new(default_options).merge(opts)
+      end
+
+      def default_options
+        {
+          starts: default_starts,
+          until: default_until,
+          interval: 1
+        }
+      end
     end
 
     def_option :every
@@ -78,9 +90,9 @@ module Montrose
     def initialize(opts = {})
       defaults = {
         every: self.class.default_every,
-        starts: self.class.default_starts,
-        until: self.class.default_until,
-        interval: 1,
+        interval: nil,
+        starts: nil,
+        until: nil,
         day: nil,
         mday: nil,
         yday: nil,

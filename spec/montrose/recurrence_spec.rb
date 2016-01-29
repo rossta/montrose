@@ -120,7 +120,7 @@ describe Montrose::Recurrence do
 
   describe "#inspect" do
     let(:now) { time_now }
-    let(:recurrence) { new_recurrence(every: :month, starts: now) }
+    let(:recurrence) { new_recurrence(every: :month, starts: now, interval: 1) }
 
     it do
       inspected = "#<Montrose::Recurrence:#{recurrence.object_id.to_s(16)} "

@@ -3,7 +3,7 @@ require "montrose/errors"
 module Montrose
   class Clock
     def initialize(opts = {})
-      @options = Montrose::Options.new(opts)
+      @options = Montrose::Options.merge(opts)
       @time = nil
       @every = @options.fetch(:every) { fail ConfigurationError, "Required option :every not provided" }
       @starts = @options.fetch(:starts)
