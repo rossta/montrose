@@ -280,8 +280,10 @@ describe Montrose::Options do
 
   describe "#interval" do
     it "defaults to 1" do
-      options.interval.must_equal 1
-      options[:interval].must_equal 1
+      default = Montrose::Options.merge(options)
+
+      default.interval.must_equal 1
+      default[:interval].must_equal 1
     end
 
     it "can be set" do
@@ -677,7 +679,7 @@ describe Montrose::Options do
     end
 
     it "returns Hash with non-nil key-value pairs" do
-      options.to_hash.must_equal(every: :day, interval: 1)
+      options.to_hash.must_equal(every: :day)
     end
   end
 
@@ -715,6 +717,7 @@ describe Montrose::Options do
     before do
       options[:every] = :month
       options[:starts] = now
+      options[:interval] = 1
     end
 
     it { options.inspect.must_equal "#<Montrose::Options {:every=>:month, :starts=>#{now.inspect}, :interval=>1}>" }

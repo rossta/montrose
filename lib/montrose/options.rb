@@ -66,7 +66,8 @@ module Montrose
       def default_options
         {
           starts: default_starts,
-          until: default_until
+          until: default_until,
+          interval: 1
         }
       end
     end
@@ -89,7 +90,7 @@ module Montrose
     def initialize(opts = {})
       defaults = {
         every: self.class.default_every,
-        interval: 1,
+        interval: nil,
         starts: nil,
         until: nil,
         day: nil,
