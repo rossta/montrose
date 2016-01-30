@@ -29,6 +29,27 @@ describe Montrose::Schedule do
       rule.default_options[:every].must_equal :year
       rule.default_options[:total].must_equal 3
     end
+
+    it "accepts a recurrence rule" do
+      schedule.add(Montrose.yearly.total(3))
+
+      schedule.rules.size.must_equal 1
+
+      rule = schedule.rules.first
+      rule.default_options[:every].must_equal :year
+      rule.default_options[:total].must_equal 3
+    end
+
+    it "is aliased to #<<" do
+      options = { every: :year, total: 3 }
+      schedule << options
+
+      schedule.rules.size.must_equal 1
+
+      rule = schedule.rules.first
+      rule.default_options[:every].must_equal :year
+      rule.default_options[:total].must_equal 3
+    end
   end
 
   describe "#events" do
