@@ -2,6 +2,12 @@ module Montrose
   class Schedule
     attr_accessor :rules
 
+    def self.build
+      schedule = new
+      yield schedule if block_given?
+      schedule
+    end
+
     def initialize
       @rules = []
     end

@@ -3,6 +3,21 @@ require "spec_helper"
 describe Montrose::Schedule do
   let(:schedule) { new_schedule }
 
+  describe ".build" do
+    it "returns a new instance" do
+      Montrose::Schedule.build.must_be_kind_of Montrose::Schedule
+    end
+
+    it "yields a new instance" do
+      schedule = Montrose::Schedule.build do |s|
+        s << { every: :day }
+        s << { every: :year }
+      end
+
+      schedule.rules.size.must_equal 2
+    end
+  end
+
   describe "#add" do
     it "adds options as new recurrence rule" do
       options = { every: :year, total: 3 }
