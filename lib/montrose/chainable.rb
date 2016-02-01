@@ -6,6 +6,9 @@ module Montrose
     using Montrose::Refinements::ArrayConcat
 
     # Create a recurrence from the given frequency
+    #
+    # @param options [Hash] additional recurrence options
+    #
     # @example
     #
     #   Montrose.every(:hour)
@@ -18,6 +21,8 @@ module Montrose
     end
 
     # Create a minutely recurrence.
+    #
+    # @param options [Hash] additional recurrence options
     #
     # @example
     #
@@ -34,6 +39,8 @@ module Montrose
 
     # Create a hourly recurrence.
     #
+    # @param options [Hash] additional recurrence options
+    #
     # @example
     #
     #   Montrose.hourly
@@ -48,6 +55,8 @@ module Montrose
     end
 
     # Create a daily recurrence.
+    #
+    # @param options [Hash] additional recurrence options
     #
     # @example
     #
@@ -64,6 +73,8 @@ module Montrose
 
     # Create a weekly recurrence.
     #
+    # @param options [Hash] additional recurrence options
+    #
     # @example
     #   Montrose.weekly(on: 5) #=> 0 = sunday, 1 = monday, ...
     #   Montrose.weekly(on: :saturday)
@@ -77,20 +88,20 @@ module Montrose
 
     # Create a monthly recurrence.
     #
+    # @param options [Hash] additional recurrence options
+    #
     # @example
-    # Montrose.monthly(mday: [2, 15]) # 2nd and 15th of the month
-    # Montrose.monthly(mday: -3) # third-to-last day of the month
-    # Montrose.monthly(mday: 10..15) # 10th through the 15th day of the month
-    #
-    # The <tt>:on</tt> option can be one of the following:
-    #
-    #   * :sunday, :monday, :tuesday, :wednesday, :thursday, :friday, :saturday
+    #   Montrose.monthly(mday: [2, 15]) # 2nd and 15th of the month
+    #   Montrose.monthly(mday: -3) # third-to-last day of the month
+    #   Montrose.monthly(mday: 10..15) # 10th through the 15th day of the month
     #
     def monthly(options = {})
       branch options.merge(every: :month)
     end
 
     # Create a yearly recurrence.
+    #
+    # @param options [Hash] additional recurrence options
     #
     # @example
     #
@@ -106,7 +117,7 @@ module Montrose
 
     # Create a recurrence starting at given timestamp.
     #
-    # @param [Time, Date] starts_at
+    # @param starts_at [Time, Date] start time of recurrence
     #
     def starting(starts_at)
       merge(starts: starts_at)
@@ -114,7 +125,7 @@ module Montrose
 
     # Create a recurrence ending at given timestamp.
     #
-    # @param [Time, Date] ends_at
+    # @param ends_at [Time, Date] end time of recurrence
     #
     def ending(ends_at)
       merge(until: ends_at)
@@ -130,7 +141,7 @@ module Montrose
 
     # Create a recurrence through :on option
     #
-    # @param [Hash,Symbol] on { friday: 13 }
+    # @param day [Hash,Symbol] weekday or day of month as hash, e.g. { friday: 13 }
     #
     def on(day)
       merge(on: day)
@@ -138,7 +149,7 @@ module Montrose
 
     # Create a recurrence at given time
     #
-    # @param [String,Time] at
+    # @param time [String,Time] represents time of day
     #
     def at(time)
       merge(at: time)
@@ -146,7 +157,7 @@ module Montrose
 
     # Create a recurrence for given days of month
     #
-    # @param [Fixnum] days (1, 2, -1, ...)
+    # @param days [Fixnum] days of month, e.g. 1, 2, -1, ...
     #
     def day_of_month(days, *extras)
       merge(mday: days.array_concat(extras))
@@ -155,7 +166,7 @@ module Montrose
 
     # Create a recurrence for given days of week
     #
-    # @param [Symbol] weekdays (:sunday, :monday, ...)
+    # @param weekdays [Symbol] days of week, e.g. :sunday, :monday, ...
     #
     def day_of_week(weekdays, *extras)
       merge(day: weekdays.array_concat(extras))
@@ -164,7 +175,7 @@ module Montrose
 
     # Create a recurrence for given days of year
     #
-    # @param [Fixnum] days (1, 10, 100, ...)
+    # @param days [Fixnum, Range, Array<Integer>] days of year, e.g., 1, 10, 100, ...
     #
     def day_of_year(days, *extras)
       merge(yday: days.array_concat(extras))
@@ -173,7 +184,7 @@ module Montrose
 
     # Create a recurrence for given hours of day
     #
-    # @param [Fixnum, Range] days (1, 10, 100, ...)
+    # @param hours [Fixnum, Range, Array<Integer>] hours of day, e.g. 1, 10, 100, ...
     #
     def hour_of_day(hours, *extras)
       merge(hour: hours.array_concat(extras))
@@ -182,7 +193,7 @@ module Montrose
 
     # Create a recurrence for given months of year
     #
-    # @param [Fixnum, Symbol] months (:january, :april, ...)
+    # @param months [Fixnum, Symbol] months of year, e.g., :january, :april, ...
     #
     def month_of_year(months, *extras)
       merge(month: months.array_concat(extras))
@@ -192,7 +203,7 @@ module Montrose
     # Create a recurrence that ends after given number
     # of occurrences
     #
-    # @param [Fixnum] total
+    # @param total [Fixnum]
     #
     def total(total)
       merge(total: total)

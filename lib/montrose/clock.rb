@@ -44,13 +44,13 @@ module Montrose
     # when options contain given unit as a key or as a value of
     # the key :every in options
     #
-    # @options = { every: :day, hour: 8.12 }
+    # options = { every: :day, hour: 8.12 }
     # unit_step(:minute)
     # => nil
     # unit_step(:hour)
     # => { hour: 1 }
     #
-    # @options = { every: :hour, interval: 6 }
+    # options = { every: :hour, interval: 6 }
     # unit_step(:minute)
     # => nil
     # unit_step(:hour)

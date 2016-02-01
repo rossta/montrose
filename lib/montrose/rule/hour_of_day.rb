@@ -9,7 +9,7 @@ module Montrose
 
       # Initializes rule
       #
-      # @param [Array<Fixnum>] hour - valid hours of days, e.g. [1, 2, 24]
+      # @param hours [Array<Fixnum>] valid hours of days, e.g. [1, 2, 24]
       #
       def initialize(hours)
         @hours = hours
