@@ -1,0 +1,1849 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Module: Montrose::Chainable
+  
+    &mdash; Documentation by YARD 0.8.7.6
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../';
+  framesUrl = "../frames.html#!Montrose/Chainable.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (C)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../Montrose.html" title="Montrose (module)">Montrose</a></span></span>
+     &raquo; 
+    <span class="title">Chainable</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Module: Montrose::Chainable
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+  
+    
+  
+    
+  
+  
+    <dt class="r1">Included in:</dt>
+    <dd class="r1"><span class='object_link'><a href="../Montrose.html" title="Montrose (module)">Montrose</a></span>, <span class='object_link'><a href="Recurrence.html" title="Montrose::Recurrence (class)">Recurrence</a></span></dd>
+    
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/montrose/chainable.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#at-instance_method" title="#at (instance method)">- (Object) <strong>at</strong>(time) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Create a recurrence at given time.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#between-instance_method" title="#between (instance method)">- (Object) <strong>between</strong>(date_range) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Create a recurrence occurring during date range.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#branch-instance_method" title="#branch (instance method)">- (Object) <strong>branch</strong>(options) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#daily-instance_method" title="#daily (instance method)">- (Object) <strong>daily</strong>(options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Create a daily recurrence.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#day_of_month-instance_method" title="#day_of_month (instance method)">- (Object) <strong>day_of_month</strong>(days, *extras) </a>
+    
+
+    
+      (also: #mday)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Create a recurrence for given days of month.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#day_of_week-instance_method" title="#day_of_week (instance method)">- (Object) <strong>day_of_week</strong>(weekdays, *extras) </a>
+    
+
+    
+      (also: #day)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Create a recurrence for given days of week.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#day_of_year-instance_method" title="#day_of_year (instance method)">- (Object) <strong>day_of_year</strong>(days, *extras) </a>
+    
+
+    
+      (also: #yday)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Create a recurrence for given days of year.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#default_options-instance_method" title="#default_options (instance method)">- (Object) <strong>default_options</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#ending-instance_method" title="#ending (instance method)">- (Object) <strong>ending</strong>(ends_at) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Create a recurrence ending at given timestamp.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#every-instance_method" title="#every (instance method)">- (Object) <strong>every</strong>(frequency, options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Create a recurrence from the given frequency.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#hour_of_day-instance_method" title="#hour_of_day (instance method)">- (Object) <strong>hour_of_day</strong>(hours, *extras) </a>
+    
+
+    
+      (also: #hour)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Create a recurrence for given hours of day.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#hourly-instance_method" title="#hourly (instance method)">- (Object) <strong>hourly</strong>(options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Create a hourly recurrence.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#merge-instance_method" title="#merge (instance method)">- (Object) <strong>merge</strong>(opts = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#minutely-instance_method" title="#minutely (instance method)">- (Object) <strong>minutely</strong>(options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Create a minutely recurrence.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#month_of_year-instance_method" title="#month_of_year (instance method)">- (Object) <strong>month_of_year</strong>(months, *extras) </a>
+    
+
+    
+      (also: #month)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Create a recurrence for given months of year.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#monthly-instance_method" title="#monthly (instance method)">- (Object) <strong>monthly</strong>(options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Create a monthly recurrence.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#on-instance_method" title="#on (instance method)">- (Object) <strong>on</strong>(day) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Create a recurrence through :on option.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#starting-instance_method" title="#starting (instance method)">- (Object) <strong>starting</strong>(starts_at) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Create a recurrence starting at given timestamp.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#total-instance_method" title="#total (instance method)">- (Object) <strong>total</strong>(total) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Create a recurrence that ends after given number of occurrences.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#week_of_year-instance_method" title="#week_of_year (instance method)">- (Object) <strong>week_of_year</strong>(weeks, *extras) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Create a recurrence for given weeks of year.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#weekly-instance_method" title="#weekly (instance method)">- (Object) <strong>weekly</strong>(options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Create a weekly recurrence.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#yearly-instance_method" title="#yearly (instance method)">- (Object) <strong>yearly</strong>(options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Create a yearly recurrence.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="at-instance_method">
+  
+    - (<tt>Object</tt>) <strong>at</strong>(time) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Create a recurrence at given time</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>at</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>Time</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+143
+144
+145</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 143</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_at'>at</span><span class='lparen'>(</span><span class='id identifier rubyid_time'>time</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>at:</span> <span class='id identifier rubyid_time'>time</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="between-instance_method">
+  
+    - (<tt>Object</tt>) <strong>between</strong>(date_range) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Create a recurrence occurring during date range.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>date_range</span>
+      
+      
+        <span class='type'>(<tt>Range&lt;Date&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+127
+128
+129</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 127</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_between'>between</span><span class='lparen'>(</span><span class='id identifier rubyid_date_range'>date_range</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>between:</span> <span class='id identifier rubyid_date_range'>date_range</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="branch-instance_method">
+  
+    - (<tt>Object</tt>) <strong>branch</strong>(options) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+220
+221
+222</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 220</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_branch'>branch</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+  <span class='const'>Montrose</span><span class='op'>::</span><span class='const'>Recurrence</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="daily-instance_method">
+  
+    - (<tt>Object</tt>) <strong>daily</strong>(options = {}) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Create a daily recurrence.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code>
+<span class='const'>Montrose</span><span class='period'>.</span><span class='id identifier rubyid_daily'>daily</span>
+<span class='const'>Montrose</span><span class='period'>.</span><span class='id identifier rubyid_daily'>daily</span><span class='lparen'>(</span><span class='label'>interval:</span> <span class='int'>2</span><span class='rparen'>)</span> <span class='comment'>#=&gt; every 2 days
+</span><span class='const'>Montrose</span><span class='period'>.</span><span class='id identifier rubyid_daily'>daily</span><span class='lparen'>(</span><span class='label'>starts:</span> <span class='int'>3</span><span class='period'>.</span><span class='id identifier rubyid_days'>days</span><span class='period'>.</span><span class='id identifier rubyid_from_now'>from_now</span><span class='rparen'>)</span>
+<span class='const'>Montrose</span><span class='period'>.</span><span class='id identifier rubyid_daily'>daily</span><span class='lparen'>(</span><span class='label'>until:</span> <span class='int'>10</span><span class='period'>.</span><span class='id identifier rubyid_days'>days</span><span class='period'>.</span><span class='id identifier rubyid_from_now'>from_now</span><span class='rparen'>)</span>
+<span class='const'>Montrose</span><span class='period'>.</span><span class='id identifier rubyid_daily'>daily</span><span class='lparen'>(</span><span class='label'>total:</span> <span class='int'>5</span><span class='rparen'>)</span>
+<span class='const'>Montrose</span><span class='period'>.</span><span class='id identifier rubyid_daily'>daily</span><span class='lparen'>(</span><span class='label'>except:</span> <span class='const'>Date</span><span class='period'>.</span><span class='id identifier rubyid_tomorrow'>tomorrow</span><span class='rparen'>)</span></code></pre>
+    
+  </div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+61
+62
+63</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 61</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_daily'>daily</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_branch'>branch</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>every:</span> <span class='symbol'>:day</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="day_of_month-instance_method">
+  
+    - (<tt>Object</tt>) <strong>day_of_month</strong>(days, *extras) 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='mday-instance_method'>mday</span></span>
+    </span>
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Create a recurrence for given days of month</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>days</span>
+      
+      
+        <span class='type'>(<tt>Fixnum</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>(1, 2, -1, …)</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+151
+152
+153</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 151</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_day_of_month'>day_of_month</span><span class='lparen'>(</span><span class='id identifier rubyid_days'>days</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_extras'>extras</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>mday:</span> <span class='id identifier rubyid_days'>days</span><span class='period'>.</span><span class='id identifier rubyid_array_concat'>array_concat</span><span class='lparen'>(</span><span class='id identifier rubyid_extras'>extras</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="day_of_week-instance_method">
+  
+    - (<tt>Object</tt>) <strong>day_of_week</strong>(weekdays, *extras) 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='day-instance_method'>day</span></span>
+    </span>
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Create a recurrence for given days of week</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>weekdays</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>(:sunday, :monday, …)</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+160
+161
+162</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 160</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_day_of_week'>day_of_week</span><span class='lparen'>(</span><span class='id identifier rubyid_weekdays'>weekdays</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_extras'>extras</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>day:</span> <span class='id identifier rubyid_weekdays'>weekdays</span><span class='period'>.</span><span class='id identifier rubyid_array_concat'>array_concat</span><span class='lparen'>(</span><span class='id identifier rubyid_extras'>extras</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="day_of_year-instance_method">
+  
+    - (<tt>Object</tt>) <strong>day_of_year</strong>(days, *extras) 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='yday-instance_method'>yday</span></span>
+    </span>
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Create a recurrence for given days of year</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>days</span>
+      
+      
+        <span class='type'>(<tt>Fixnum</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>(1, 10, 100, …)</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+169
+170
+171</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 169</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_day_of_year'>day_of_year</span><span class='lparen'>(</span><span class='id identifier rubyid_days'>days</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_extras'>extras</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>yday:</span> <span class='id identifier rubyid_days'>days</span><span class='period'>.</span><span class='id identifier rubyid_array_concat'>array_concat</span><span class='lparen'>(</span><span class='id identifier rubyid_extras'>extras</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="default_options-instance_method">
+  
+    - (<tt>Object</tt>) <strong>default_options</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+215
+216
+217</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 215</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_default_options'>default_options</span>
+  <span class='ivar'>@default_options</span> <span class='op'>||=</span> <span class='const'>Montrose</span><span class='op'>::</span><span class='const'>Options</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="ending-instance_method">
+  
+    - (<tt>Object</tt>) <strong>ending</strong>(ends_at) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Create a recurrence ending at given timestamp.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>ends_at</span>
+      
+      
+        <span class='type'>(<tt>Time</tt>, <tt>Date</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+119
+120
+121</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 119</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_ending'>ending</span><span class='lparen'>(</span><span class='id identifier rubyid_ends_at'>ends_at</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>until:</span> <span class='id identifier rubyid_ends_at'>ends_at</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="every-instance_method">
+  
+    - (<tt>Object</tt>) <strong>every</strong>(frequency, options = {}) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Create a recurrence from the given frequency</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code>
+<span class='const'>Montrose</span><span class='period'>.</span><span class='id identifier rubyid_every'>every</span><span class='lparen'>(</span><span class='symbol'>:hour</span><span class='rparen'>)</span>
+<span class='const'>Montrose</span><span class='period'>.</span><span class='id identifier rubyid_every'>every</span><span class='lparen'>(</span><span class='symbol'>:hour</span><span class='comma'>,</span> <span class='label'>interval:</span> <span class='int'>2</span><span class='rparen'>)</span> <span class='comment'>#=&gt; every 2 hours
+</span><span class='const'>Montrose</span><span class='period'>.</span><span class='id identifier rubyid_every'>every</span><span class='lparen'>(</span><span class='int'>3</span><span class='period'>.</span><span class='id identifier rubyid_days'>days</span><span class='comma'>,</span> <span class='label'>starts:</span> <span class='int'>2</span><span class='period'>.</span><span class='id identifier rubyid_days'>days</span><span class='period'>.</span><span class='id identifier rubyid_from_now'>from_now</span><span class='rparen'>)</span> <span class='comment'>#=&gt; every 3 days
+</span><span class='const'>Montrose</span><span class='period'>.</span><span class='id identifier rubyid_every'>every</span><span class='lparen'>(</span><span class='int'>1</span><span class='period'>.</span><span class='id identifier rubyid_year'>year</span><span class='comma'>,</span> <span class='label'>until:</span> <span class='int'>10</span><span class='period'>.</span><span class='id identifier rubyid_days'>days</span><span class='period'>.</span><span class='id identifier rubyid_from_now'>from_now</span><span class='rparen'>)</span></code></pre>
+    
+  </div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+16
+17
+18</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 16</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_every'>every</span><span class='lparen'>(</span><span class='id identifier rubyid_frequency'>frequency</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_branch'>branch</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>every:</span> <span class='id identifier rubyid_frequency'>frequency</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="hour_of_day-instance_method">
+  
+    - (<tt>Object</tt>) <strong>hour_of_day</strong>(hours, *extras) 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='hour-instance_method'>hour</span></span>
+    </span>
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Create a recurrence for given hours of day</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>days</span>
+      
+      
+        <span class='type'>(<tt>Fixnum</tt>, <tt>Range</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>(1, 10, 100, …)</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+178
+179
+180</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 178</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_hour_of_day'>hour_of_day</span><span class='lparen'>(</span><span class='id identifier rubyid_hours'>hours</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_extras'>extras</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>hour:</span> <span class='id identifier rubyid_hours'>hours</span><span class='period'>.</span><span class='id identifier rubyid_array_concat'>array_concat</span><span class='lparen'>(</span><span class='id identifier rubyid_extras'>extras</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="hourly-instance_method">
+  
+    - (<tt>Object</tt>) <strong>hourly</strong>(options = {}) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Create a hourly recurrence.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code>
+<span class='const'>Montrose</span><span class='period'>.</span><span class='id identifier rubyid_hourly'>hourly</span>
+<span class='const'>Montrose</span><span class='period'>.</span><span class='id identifier rubyid_hourly'>hourly</span><span class='lparen'>(</span><span class='label'>interval:</span> <span class='int'>2</span><span class='rparen'>)</span> <span class='comment'>#=&gt; every 2 hours
+</span><span class='const'>Montrose</span><span class='period'>.</span><span class='id identifier rubyid_hourly'>hourly</span><span class='lparen'>(</span><span class='label'>starts:</span> <span class='int'>3</span><span class='period'>.</span><span class='id identifier rubyid_days'>days</span><span class='period'>.</span><span class='id identifier rubyid_from_now'>from_now</span><span class='rparen'>)</span>
+<span class='const'>Montrose</span><span class='period'>.</span><span class='id identifier rubyid_hourly'>hourly</span><span class='lparen'>(</span><span class='label'>until:</span> <span class='int'>10</span><span class='period'>.</span><span class='id identifier rubyid_days'>days</span><span class='period'>.</span><span class='id identifier rubyid_from_now'>from_now</span><span class='rparen'>)</span>
+<span class='const'>Montrose</span><span class='period'>.</span><span class='id identifier rubyid_hourly'>hourly</span><span class='lparen'>(</span><span class='label'>total:</span> <span class='int'>5</span><span class='rparen'>)</span>
+<span class='const'>Montrose</span><span class='period'>.</span><span class='id identifier rubyid_hourly'>hourly</span><span class='lparen'>(</span><span class='label'>except:</span> <span class='const'>Date</span><span class='period'>.</span><span class='id identifier rubyid_tomorrow'>tomorrow</span><span class='rparen'>)</span></code></pre>
+    
+  </div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+46
+47
+48</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 46</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_hourly'>hourly</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_branch'>branch</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>every:</span> <span class='symbol'>:hour</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="merge-instance_method">
+  
+    - (<tt>Object</tt>) <strong>merge</strong>(opts = {}) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+210
+211
+212</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 210</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_opts'>opts</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_branch'>branch</span> <span class='id identifier rubyid_default_options'>default_options</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_opts'>opts</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="minutely-instance_method">
+  
+    - (<tt>Object</tt>) <strong>minutely</strong>(options = {}) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Create a minutely recurrence.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code>
+<span class='const'>Montrose</span><span class='period'>.</span><span class='id identifier rubyid_minutely'>minutely</span>
+<span class='const'>Montrose</span><span class='period'>.</span><span class='id identifier rubyid_minutely'>minutely</span><span class='lparen'>(</span><span class='label'>interval:</span> <span class='int'>2</span><span class='rparen'>)</span> <span class='comment'>#=&gt; every 2 minutes
+</span><span class='const'>Montrose</span><span class='period'>.</span><span class='id identifier rubyid_minutely'>minutely</span><span class='lparen'>(</span><span class='label'>starts:</span> <span class='int'>3</span><span class='period'>.</span><span class='id identifier rubyid_days'>days</span><span class='period'>.</span><span class='id identifier rubyid_from_now'>from_now</span><span class='rparen'>)</span>
+<span class='const'>Montrose</span><span class='period'>.</span><span class='id identifier rubyid_minutely'>minutely</span><span class='lparen'>(</span><span class='label'>until:</span> <span class='int'>10</span><span class='period'>.</span><span class='id identifier rubyid_days'>days</span><span class='period'>.</span><span class='id identifier rubyid_from_now'>from_now</span><span class='rparen'>)</span>
+<span class='const'>Montrose</span><span class='period'>.</span><span class='id identifier rubyid_minutely'>minutely</span><span class='lparen'>(</span><span class='label'>total:</span> <span class='int'>5</span><span class='rparen'>)</span>
+<span class='const'>Montrose</span><span class='period'>.</span><span class='id identifier rubyid_minutely'>minutely</span><span class='lparen'>(</span><span class='label'>except:</span> <span class='const'>Date</span><span class='period'>.</span><span class='id identifier rubyid_tomorrow'>tomorrow</span><span class='rparen'>)</span></code></pre>
+    
+  </div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+31
+32
+33</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 31</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_minutely'>minutely</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_branch'>branch</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>every:</span> <span class='symbol'>:minute</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="month_of_year-instance_method">
+  
+    - (<tt>Object</tt>) <strong>month_of_year</strong>(months, *extras) 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='month-instance_method'>month</span></span>
+    </span>
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Create a recurrence for given months of year</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>months</span>
+      
+      
+        <span class='type'>(<tt>Fixnum</tt>, <tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>(:january, :april, …)</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+187
+188
+189</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 187</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_month_of_year'>month_of_year</span><span class='lparen'>(</span><span class='id identifier rubyid_months'>months</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_extras'>extras</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>month:</span> <span class='id identifier rubyid_months'>months</span><span class='period'>.</span><span class='id identifier rubyid_array_concat'>array_concat</span><span class='lparen'>(</span><span class='id identifier rubyid_extras'>extras</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="monthly-instance_method">
+  
+    - (<tt>Object</tt>) <strong>monthly</strong>(options = {}) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Create a monthly recurrence.</p>
+
+<p>Montrose.monthly(mday: [2, 15]) # 2nd and 15th of the month
+Montrose.monthly(mday: -3) # third-to-last day of the month
+Montrose.monthly(mday: 10..15) # 10th through the 15th day of the month</p>
+
+<p>The <code>:on</code> option can be one of the following:</p>
+
+<pre class="code ruby"><code class="ruby">* :sunday, :monday, :tuesday, :wednesday, :thursday, :friday, :saturday</code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+89
+90
+91</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 89</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_monthly'>monthly</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_branch'>branch</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>every:</span> <span class='symbol'>:month</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="on-instance_method">
+  
+    - (<tt>Object</tt>) <strong>on</strong>(day) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Create a recurrence through :on option</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>on</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>, <tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>{ friday: 13 }</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+135
+136
+137</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 135</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_on'>on</span><span class='lparen'>(</span><span class='id identifier rubyid_day'>day</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>on:</span> <span class='id identifier rubyid_day'>day</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="starting-instance_method">
+  
+    - (<tt>Object</tt>) <strong>starting</strong>(starts_at) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Create a recurrence starting at given timestamp.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>starts_at</span>
+      
+      
+        <span class='type'>(<tt>Time</tt>, <tt>Date</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+111
+112
+113</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 111</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_starting'>starting</span><span class='lparen'>(</span><span class='id identifier rubyid_starts_at'>starts_at</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>starts:</span> <span class='id identifier rubyid_starts_at'>starts_at</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="total-instance_method">
+  
+    - (<tt>Object</tt>) <strong>total</strong>(total) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Create a recurrence that ends after given number of occurrences</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>total</span>
+      
+      
+        <span class='type'>(<tt>Fixnum</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+197
+198
+199</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 197</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_total'>total</span><span class='lparen'>(</span><span class='id identifier rubyid_total'>total</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>total:</span> <span class='id identifier rubyid_total'>total</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="week_of_year-instance_method">
+  
+    - (<tt>Object</tt>) <strong>week_of_year</strong>(weeks, *extras) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Create a recurrence for given weeks of year</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>weeks</span>
+      
+      
+        <span class='type'>(<tt>Fixnum</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>(1, 20, 50)</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+205
+206
+207</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 205</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_week_of_year'>week_of_year</span><span class='lparen'>(</span><span class='id identifier rubyid_weeks'>weeks</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_extras'>extras</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>week:</span> <span class='id identifier rubyid_weeks'>weeks</span><span class='period'>.</span><span class='id identifier rubyid_array_concat'>array_concat</span><span class='lparen'>(</span><span class='id identifier rubyid_extras'>extras</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="weekly-instance_method">
+  
+    - (<tt>Object</tt>) <strong>weekly</strong>(options = {}) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Create a weekly recurrence.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code><span class='const'>Montrose</span><span class='period'>.</span><span class='id identifier rubyid_weekly'>weekly</span><span class='lparen'>(</span><span class='label'>on:</span> <span class='int'>5</span><span class='rparen'>)</span> <span class='comment'>#=&gt; 0 = sunday, 1 = monday, ...
+</span><span class='const'>Montrose</span><span class='period'>.</span><span class='id identifier rubyid_weekly'>weekly</span><span class='lparen'>(</span><span class='label'>on:</span> <span class='symbol'>:saturday</span><span class='rparen'>)</span>
+<span class='const'>Montrose</span><span class='period'>.</span><span class='id identifier rubyid_weekly'>weekly</span><span class='lparen'>(</span><span class='label'>on:</span> <span class='lbracket'>[</span><span class='id identifier rubyid_sunday'>sunday</span><span class='comma'>,</span> <span class='symbol'>:saturday</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+<span class='const'>Montrose</span><span class='period'>.</span><span class='id identifier rubyid_weekly'>weekly</span><span class='lparen'>(</span><span class='label'>on:</span> <span class='symbol'>:saturday</span><span class='comma'>,</span> <span class='label'>interval:</span> <span class='int'>2</span><span class='rparen'>)</span>
+<span class='const'>Montrose</span><span class='period'>.</span><span class='id identifier rubyid_weekly'>weekly</span><span class='lparen'>(</span><span class='label'>on:</span> <span class='symbol'>:saturday</span><span class='comma'>,</span> <span class='label'>total:</span> <span class='int'>5</span><span class='rparen'>)</span></code></pre>
+    
+  </div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+74
+75
+76</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 74</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_weekly'>weekly</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_branch'>branch</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>every:</span> <span class='symbol'>:week</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="yearly-instance_method">
+  
+    - (<tt>Object</tt>) <strong>yearly</strong>(options = {}) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Create a yearly recurrence.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code>
+<span class='const'>Montrose</span><span class='period'>.</span><span class='id identifier rubyid_yearly'>yearly</span><span class='lparen'>(</span><span class='label'>on:</span> <span class='lbracket'>[</span><span class='int'>7</span><span class='comma'>,</span> <span class='int'>14</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='comment'>#=&gt; every Jul 14
+</span><span class='const'>Montrose</span><span class='period'>.</span><span class='id identifier rubyid_yearly'>yearly</span><span class='lparen'>(</span><span class='label'>on:</span> <span class='lbracket'>[</span><span class='int'>7</span><span class='comma'>,</span> <span class='int'>14</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>interval:</span> <span class='int'>2</span><span class='rparen'>)</span> <span class='comment'>#=&gt; every 2 years on Jul 14
+</span><span class='const'>Montrose</span><span class='period'>.</span><span class='id identifier rubyid_yearly'>yearly</span><span class='lparen'>(</span><span class='label'>on:</span> <span class='lbracket'>[</span><span class='symbol'>:jan</span><span class='comma'>,</span> <span class='int'>14</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>interval:</span> <span class='int'>2</span><span class='rparen'>)</span>
+<span class='const'>Montrose</span><span class='period'>.</span><span class='id identifier rubyid_yearly'>yearly</span><span class='lparen'>(</span><span class='label'>on:</span> <span class='lbracket'>[</span><span class='symbol'>:january</span><span class='comma'>,</span> <span class='int'>14</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>interval:</span> <span class='int'>2</span><span class='rparen'>)</span>
+<span class='const'>Montrose</span><span class='period'>.</span><span class='id identifier rubyid_yearly'>yearly</span><span class='lparen'>(</span><span class='label'>on:</span> <span class='lbracket'>[</span><span class='symbol'>:january</span><span class='comma'>,</span> <span class='int'>14</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>total:</span> <span class='int'>5</span><span class='rparen'>)</span></code></pre>
+    
+  </div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+103
+104
+105</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 103</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_yearly'>yearly</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_branch'>branch</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>every:</span> <span class='symbol'>:year</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Mon Feb  1 07:56:33 2016 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.6 (ruby-2.2.3).
+</div>
+
+  </body>
+</html>

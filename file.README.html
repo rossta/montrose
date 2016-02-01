@@ -1,0 +1,374 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>
+  File: README
+  
+    &mdash; Documentation by YARD 0.8.7.6
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!file.README.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: README</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><div id='filecontents'>
+<h1 id="label-Montrose">Montrose</h1>
+
+<p><a href="https://travis-ci.org/rossta/montrose"><img
+src="https://travis-ci.org/rossta/montrose.svg?branch=master"></a> <a
+href="https://coveralls.io/github/rossta/montrose?branch=master"><img
+src="https://coveralls.io/repos/rossta/montrose/badge.svg?branch=master&service=github"></a>
+<a href="https://codeclimate.com/github/rossta/montrose"><img
+src="https://codeclimate.com/github/rossta/montrose/badges/gpa.svg"></a> <a
+href="https://gemnasium.com/rossta/montrose"><img
+src="https://gemnasium.com/rossta/montrose.svg"></a></p>
+
+<p>Recurring events in Ruby. This library is still a work-in-progress.</p>
+
+<h2 id="label-Installation">Installation</h2>
+
+<p>Add this line to your application&#39;s Gemfile:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_gem'>gem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>montrose</span><span class='tstring_end'>&quot;</span></span>
+</code></pre>
+
+<p>And then execute:</p>
+
+<pre class="code ruby"><code class="ruby">$ bundle</code></pre>
+
+<p>Or install it yourself as:</p>
+
+<pre class="code ruby"><code class="ruby">$ gem install montrose</code></pre>
+
+<h2 id="label-Usage">Usage</h2>
+
+<pre class="code ruby"><code class="ruby">require &quot;montrose&quot;
+
+# daily for 10 occurrences
+Montrose.daily(total: 10)
+
+# daily until December 23, 2015
+starts = Date.new(2015, 1, 1)
+ends = Date.new(2015, 12, 23)
+Montrose.daily(starts: starts, until: ends)
+
+# every other day forever
+Montrose.daily(interval: 2)
+
+# every 10 days 5 occurrences
+Montrose.every(10.days, total: 5)
+
+# everyday in January for 3 years
+starts = Time.now.beginning_of_year
+ends = Time.now.end_of_year + 2.years
+Montrose.daily(month: :january, between: starts...ends)
+
+# weekly for 10 occurrences
+Montrose.weekly(total: 10)
+
+# weekly until December 23, 2015
+ends_on = Date.new(2015, 12, 23)
+starts_on = ends_on - 15.weeks
+Montrose.every(:week, until: ends_on, starts: starts_on
+
+# every other week forever
+Montrose.every(2.weeks)
+
+# weekly on Tuesday and Thursday for five weeks
+# from September 1, 2015 until October 5, 2015
+Montrose.weekly(on: [:tuesday, :thursday],
+  between: Date.new(2015, 9, 1)..Date.new(2015, 10, 5))
+
+# every other week on Monday, Wednesday and Friday until December 23 2015,
+# but starting on Tuesday, September 1, 2015
+Montrose.every(2.weeks,
+  on: [:monday, :wednesday, :friday],
+  starts: Date.new(2015, 9, 1))
+
+# every other week on Tuesday and Thursday, for 8 occurrences
+Montrose.weekly(on: [:tuesday, :thursday], total: 8, interval: 2)
+
+# monthly on the first Friday for ten occurrences
+Montrose.monthly(day: { friday: [1] }, total: 10)
+
+# monthly on the first Friday until December 23, 2015
+Montrose.every(:month, day: { friday: [1] }, until: Date.new(2016, 12, 23))
+
+# every other month on the first and last Sunday of the month for 10 occurrences
+Montrose.every(:month, day: { sunday: [1, -1] }, interval: 2, total: 10)
+
+# monthly on the second-to-last Monday of the month for 6 months
+Montrose.every(:month, day: { monday: [-2] }, total: 6)
+
+# monthly on the third-to-the-last day of the month, forever
+Montrose.every(:month, mday: [-3])
+
+# monthly on the 2nd and 15th of the month for 10 occurrences
+Montrose.every(:month, on: [2, 15], total: 10)
+
+# monthly on the first and last day of the month for 10 occurrences
+Montrose.monthly(mday: [1, -1], total: 10)
+
+# every 18 months on the 10th thru 15th of the month for 10 occurrences
+Montrose.every(18.months, total: 10, mday: 10..15)
+
+# every Tuesday, every other month
+Montrose.every(2.months, on: :tuesday)
+
+# yearly in June and July for 10 occurrences
+Montrose.yearly(month: [:june, :july], total: 10)
+
+# every other year on January, February, and March for 10 occurrences
+Montrose.every(2.years, month: [:january, :february, :march], total: 10)
+
+# every third year on the 1st, 100th and 200th day for 10 occurrences
+Montrose.yearly(yday: [1, 100, 200], total: 10)
+
+# every 20th Monday of the year, forever
+Montrose.yearly(day: { monday: [20] })
+
+# Monday of week number 20 forever
+Montrose.yearly(week: [20], on: :monday)
+
+# every Thursday in March, forever
+Montrose.monthly(month: :march, on: :thursday, at: &quot;12 pm&quot;)
+
+# every Thursday, but only during June, July, and August, forever&quot; do
+Montrose.monthly(month: 6..8, on: :thursday)
+
+# every Friday 13th, forever
+Montrose.monthly(on: { friday: 13 })
+
+# first Saturday that follows the first Sunday of the month, forever
+Montrose.monthly(on: { saturday: 7..13 })
+
+# every four years, the first Tuesday after a Monday in November, forever (U.S. Presidential Election day)
+Montrose.every(4.years, month: :november, on: { tuesday: 2..8 })
+
+# every 3 hours from 9:00 AM to 5:00 PM on a specific day
+date = Date.new(2016, 9, 1)
+Montrose.hourly(between: date..(date+1), hour: 9..17, interval: 3)
+
+# every 15 minutes for 6 occurrences
+Montrose.every(90.minutes, total: 6)
+
+# every hour and a half for four occurrences
+Montrose.every(90.minutes, total: 4)
+
+# every 20 minutes from 9:00 AM to 4:40 PM every day
+Montrose.every(20.minutes, hour: 9..16)
+
+# Minutely
+Montrose.minutely
+Montrose::Recurrence.new(every: :minute)
+
+Montrose.every(10.minutes)
+Montrose::Recurrence.new(every: 10.minutes)
+Montrose::Recurrence.new(every: :minute, interval: 10) # every 10 minutes
+
+Montrose.minutely(until: &quot;9:00 PM&quot;)
+Montrose::Recurrence.new(every: :minute, until: &quot;9:00 PM&quot;)
+
+# Daily
+Montrose.daily
+Montrose.every(:day)
+Montrose::Recurrence.new(every: :day)
+
+Montrose.every(9.days)
+Montrose::Recurrence.new(every: 9.days)
+Montrose::Recurrence.new(every: :day, interval: 9)
+
+Montrose.daily(at: &quot;9:00 AM&quot;)
+Montrose.every(:day, at: &quot;9:00 AM&quot;)
+Montrose::Recurrence.new(every: :day, at: &quot;9:00 AM&quot;)
+
+Montrose.daily(total: 7)
+Montrose.every(:day, total: 7)
+Montrose::Recurrence.new(every: :day, total: 7)
+
+# Weekly
+Montrose.weekly
+Montrose.every(:week)
+Montrose::Recurrence.new(every: :week)
+
+Montrose.every(:week, on: :monday)
+Montrose.every(:week, on: [:monday, :wednesday, :friday])
+Montrose.every(2.weeks, on: :friday)
+Montrose.every(:week, on: :friday, at: &quot;3:41 PM&quot;)
+Montrose.weekly(on: :thursday)
+
+# Monthly by month day
+Montrose.monthly(mday: 1) # first of the month
+Montrose.every(:month, mday: 1)
+Montrose::Recurrence.new(every: :month, mday: 1)
+
+Montrose.monthly(mday: [2, 15]) # 2nd and 15th of the month
+Montrose.monthly(mday: -3) # third-to-last day of the month
+Montrose.monthly(mday: 10..15) # 10th through the 15th day of the month
+
+# Monthly by week day
+Montrose.monthly(day: :friday, interval: 2) # every Friday every other month
+Montrose.every(:month, day: :friday, interval: 2)
+Montrose::Recurrence.new(every: :month, day: :friday, interval: 2)
+
+Montrose.monthly(day: { friday: [1] }) # 1st Friday of the month
+Montrose.monthly(day: { Sunday: [1, -1] }) # first and last Sunday of the month
+
+Montrose.monthly(mday: 7..13, day: :saturday) # first Saturday that follow the first Sunday of the month
+
+# Yearly
+Montrose.yearly
+Montrose.every(:year)
+Montrose::Recurrence.new(every: :year)
+
+Montrose.yearly(month: [:june, :july]) # yearly in June and July
+Montrose.yearly(month: 6..8, day: :thursday) # yearly in June, July, August on Thursday
+Montrose.yearly(yday: [1, 100]) # yearly on the 1st and 100th day of year
+
+Montrose::Recurrence.yearly(on: { january: 31 })
+Montrose::Recurrence.new(every: :year, on: { 10 =&gt; 31 }, interval: 3)
+
+# TODO: Remove a date in the series with :except date(s)
+Montrose.daily(:day, except: &quot;2017-01-31&quot;)
+Montrose.daily(except: [Date.today, &quot;2017-01-31&quot;])
+
+# Chaining
+Montrose.weekly.starting(3.weeks.from_now).on(:friday)
+Montrose.every(:day).at(&quot;4:05pm&quot;)
+Montrose.yearly.between(Time.now..10.years.from_now)
+
+# Enumerating events
+r = Montrose.every(:month, mday: 31, until: &quot;January 1, 2017&quot;)
+r.each { |time| puts time.to_s }
+r.take(10).to_a
+
+# Merging rules
+r.merge(starts: &quot;2017-01-01&quot;).each { |time| puts time.to_s }
+
+# Using #events Enumerator
+r.events # =&gt; #&lt;Enumerator: ...&gt;
+r.events.take(10).each { |date| puts date.to_s }
+r.events.lazy.select { |time| time &gt; 1.month.from_now }.take(3).each { |date| puts date.to_s }
+</code></pre>
+
+<h2 id="label-Goals">Goals</h2>
+
+<p><code>Montrose</code> aims to provide a simple interface for specifying and
+enumerating recurring events as Time objects. To that end, the project
+intends to:</p>
+<ul><li>
+<p>embrace Ruby idioms</p>
+</li><li>
+<p>support Ruby 2.1+</p>
+</li><li>
+<p>be reasonably performant</p>
+</li><li>
+<p>serialize to yaml, hash, and <a
+href="http://www.kanzaki.com/docs/ical/rrule.html#basic">ical</a> formats</p>
+</li><li>
+<p>be suitable for integration with persistence libraries</p>
+</li></ul>
+
+<p>What <code>Montrose</code> isn&#39;t:</p>
+<ul><li>
+<p>support all calendaring use cases under the sun</p>
+</li></ul>
+
+<h2 id="label-Inspiration">Inspiration</h2>
+
+<p>Montrose is named after the beautifully diverse and artistic <a
+href="https://en.wikipedia.org/wiki/Montrose,_Houston">neighborhood in
+Houston, Texas</a>.</p>
+
+<h3 id="label-Related+Projects">Related Projects</h3>
+
+<p>Check out following related projects, all of which have provided
+inspiration for <code>Montrose</code>.</p>
+<ul><li>
+<p><a href="https://github.com/fnando/recurrence">recurrence</a></p>
+</li><li>
+<p><a href="https://github.com/seejohnrun/ice_cube">ice_cube</a></p>
+</li><li>
+<p><a href="https://github.com/mlipper/runt">runt</a></p>
+</li></ul>
+
+<h2 id="label-Development">Development</h2>
+
+<p>After checking out the repo, run <code>bin/setup</code> to install
+dependencies. Then, run <code>bin/rake</code> to run the tests.</p>
+
+<p>You can also run <code>bin/console</code> for an interactive prompt that
+will allow you to experiment.</p>
+
+<h2 id="label-Contributing">Contributing</h2>
+
+<p>Bug reports and pull requests are welcome on GitHub at <a
+href="https://github.com/rossta/montrose">github.com/rossta/montrose</a>.
+This project is intended to be a safe, welcoming space for collaboration,
+and contributors are expected to adhere to the <a
+href="contributor-covenant.org">Contributor Covenant</a> code of conduct.</p>
+
+<h2 id="label-License">License</h2>
+
+<p>The gem is available as open source under the terms of the <a
+href="http://opensource.org/licenses/MIT">MIT License</a>.</p>
+</div></div>
+
+    <div id="footer">
+  Generated on Mon Feb  1 07:56:33 2016 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.6 (ruby-2.2.3).
+</div>
+
+  </body>
+</html>

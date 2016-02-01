@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Module: Montrose
+  
+    &mdash; Documentation by YARD 0.8.7.6
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!Montrose.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index (M)</a> &raquo;
+    
+    
+    <span class="title">Montrose</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Module: Montrose
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+  
+    
+      <dt class="r1">Extended by:</dt>
+      <dd class="r1"><span class='object_link'><a href="Montrose/Chainable.html" title="Montrose::Chainable (module)">Chainable</a></span></dd>
+      
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/montrose/version.rb<span class="defines">,<br />
+  lib/montrose.rb,<br /> lib/montrose/rule.rb,<br /> lib/montrose/clock.rb,<br /> lib/montrose/utils.rb,<br /> lib/montrose/stack.rb,<br /> lib/montrose/errors.rb,<br /> lib/montrose/options.rb,<br /> lib/montrose/schedule.rb,<br /> lib/montrose/frequency.rb,<br /> lib/montrose/chainable.rb,<br /> lib/montrose/recurrence.rb,<br /> lib/montrose/rule/total.rb,<br /> lib/montrose/rule/after.rb,<br /> lib/montrose/rule/before.rb,<br /> lib/montrose/frequency/daily.rb,<br /> lib/montrose/frequency/yearly.rb,<br /> lib/montrose/rule/day_of_year.rb,<br /> lib/montrose/rule/hour_of_day.rb,<br /> lib/montrose/frequency/weekly.rb,<br /> lib/montrose/frequency/hourly.rb,<br /> lib/montrose/rule/time_of_day.rb,<br /> lib/montrose/rule/day_of_week.rb,<br /> lib/montrose/frequency/monthly.rb,<br /> lib/montrose/rule/day_of_month.rb,<br /> lib/montrose/rule/week_of_year.rb,<br /> lib/montrose/rule/month_of_year.rb,<br /> lib/montrose/frequency/minutely.rb,<br /> lib/montrose/rule/nth_day_of_year.rb,<br /> lib/montrose/rule/nth_day_matcher.rb,<br /> lib/montrose/rule/nth_day_of_month.rb,<br /> lib/montrose/refinements/array_concat.rb</span>
+</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>frozen_string_literal: true</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Montrose/Chainable.html" title="Montrose::Chainable (module)">Chainable</a></span>, <span class='object_link'><a href="Montrose/Refinements.html" title="Montrose::Refinements (module)">Refinements</a></span>, <span class='object_link'><a href="Montrose/Rule.html" title="Montrose::Rule (module)">Rule</a></span>, <span class='object_link'><a href="Montrose/Utils.html" title="Montrose::Utils (module)">Utils</a></span>
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Montrose/Clock.html" title="Montrose::Clock (class)">Clock</a></span>, <span class='object_link'><a href="Montrose/Frequency.html" title="Montrose::Frequency (class)">Frequency</a></span>, <span class='object_link'><a href="Montrose/Options.html" title="Montrose::Options (class)">Options</a></span>, <span class='object_link'><a href="Montrose/Recurrence.html" title="Montrose::Recurrence (class)">Recurrence</a></span>, <span class='object_link'><a href="Montrose/Schedule.html" title="Montrose::Schedule (class)">Schedule</a></span>, <span class='object_link'><a href="Montrose/Stack.html" title="Montrose::Stack (class)">Stack</a></span>
+    
+  
+</p>
+
+  <h2>Constant Summary</h2>
+  
+    <dl class="constants">
+      
+        <dt id="Error-constant" class="">Error =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>Class</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'>StandardError</span><span class='rparen'>)</span></pre></dd>
+      
+        <dt id="ConfigurationError-constant" class="">ConfigurationError =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>Class</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'>Error</span><span class='rparen'>)</span></pre></dd>
+      
+        <dt id="SerializationError-constant" class="">SerializationError =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>Class</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'>Error</span><span class='rparen'>)</span></pre></dd>
+      
+        <dt id="VERSION-constant" class="">VERSION =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0.1.1</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  <h2>Method Summary</h2>
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Montrose/Chainable.html" title="Montrose::Chainable (module)">Chainable</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Montrose/Chainable.html#at-instance_method" title="Montrose::Chainable#at (method)">at</a></span>, <span class='object_link'><a href="Montrose/Chainable.html#between-instance_method" title="Montrose::Chainable#between (method)">between</a></span>, <span class='object_link'><a href="Montrose/Chainable.html#branch-instance_method" title="Montrose::Chainable#branch (method)">branch</a></span>, <span class='object_link'><a href="Montrose/Chainable.html#daily-instance_method" title="Montrose::Chainable#daily (method)">daily</a></span>, <span class='object_link'><a href="Montrose/Chainable.html#day_of_month-instance_method" title="Montrose::Chainable#day_of_month (method)">day_of_month</a></span>, <span class='object_link'><a href="Montrose/Chainable.html#day_of_week-instance_method" title="Montrose::Chainable#day_of_week (method)">day_of_week</a></span>, <span class='object_link'><a href="Montrose/Chainable.html#day_of_year-instance_method" title="Montrose::Chainable#day_of_year (method)">day_of_year</a></span>, <span class='object_link'><a href="Montrose/Chainable.html#default_options-instance_method" title="Montrose::Chainable#default_options (method)">default_options</a></span>, <span class='object_link'><a href="Montrose/Chainable.html#ending-instance_method" title="Montrose::Chainable#ending (method)">ending</a></span>, <span class='object_link'><a href="Montrose/Chainable.html#every-instance_method" title="Montrose::Chainable#every (method)">every</a></span>, <span class='object_link'><a href="Montrose/Chainable.html#hour_of_day-instance_method" title="Montrose::Chainable#hour_of_day (method)">hour_of_day</a></span>, <span class='object_link'><a href="Montrose/Chainable.html#hourly-instance_method" title="Montrose::Chainable#hourly (method)">hourly</a></span>, <span class='object_link'><a href="Montrose/Chainable.html#merge-instance_method" title="Montrose::Chainable#merge (method)">merge</a></span>, <span class='object_link'><a href="Montrose/Chainable.html#minutely-instance_method" title="Montrose::Chainable#minutely (method)">minutely</a></span>, <span class='object_link'><a href="Montrose/Chainable.html#month_of_year-instance_method" title="Montrose::Chainable#month_of_year (method)">month_of_year</a></span>, <span class='object_link'><a href="Montrose/Chainable.html#monthly-instance_method" title="Montrose::Chainable#monthly (method)">monthly</a></span>, <span class='object_link'><a href="Montrose/Chainable.html#on-instance_method" title="Montrose::Chainable#on (method)">on</a></span>, <span class='object_link'><a href="Montrose/Chainable.html#starting-instance_method" title="Montrose::Chainable#starting (method)">starting</a></span>, <span class='object_link'><a href="Montrose/Chainable.html#total-instance_method" title="Montrose::Chainable#total (method)">total</a></span>, <span class='object_link'><a href="Montrose/Chainable.html#week_of_year-instance_method" title="Montrose::Chainable#week_of_year (method)">week_of_year</a></span>, <span class='object_link'><a href="Montrose/Chainable.html#weekly-instance_method" title="Montrose::Chainable#weekly (method)">weekly</a></span>, <span class='object_link'><a href="Montrose/Chainable.html#yearly-instance_method" title="Montrose::Chainable#yearly (method)">yearly</a></span></p>
+
+
+</div>
+
+    <div id="footer">
+  Generated on Mon Feb  1 07:56:33 2016 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.6 (ruby-2.2.3).
+</div>
+
+  </body>
+</html>
