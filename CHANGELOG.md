@@ -1,3 +1,8 @@
+### 0.2.1 - 2016-02-03
+
+* bug fixes
+  * Handle `nil` in `Montrose::Options` constructor
+
 ### 0.2.0 - 2016-02-03
 
 * enhancements
