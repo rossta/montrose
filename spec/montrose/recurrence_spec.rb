@@ -95,7 +95,7 @@ describe Montrose::Recurrence do
       default_options = loaded.default_options
       default_options[:every].must_equal :day
       default_options[:total].must_equal 3
-      default_options[:starts].must_equal now
+      default_options[:starts].to_i.must_equal now.to_i
       default_options[:interval].must_equal 1
     end
   end
