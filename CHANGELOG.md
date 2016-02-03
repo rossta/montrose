@@ -1,4 +1,11 @@
-### 0.1.0 - 2016-25-01
+### 0.2.0 - 2016-02-03
+
+* enhancements
+  * extend `Montrose::Schedule` api for building and adding recurrences
+  * add more details to chainable docs
+  * merge default options at enumeration time for more consistent serialization
+
+### 0.1.1 - 2016-25-01
 
 * bug fixes
   * add missing `require "forwardable"`
