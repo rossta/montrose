@@ -5,7 +5,7 @@
 [![Code Climate](https://codeclimate.com/github/rossta/montrose/badges/gpa.svg)](https://codeclimate.com/github/rossta/montrose)
 [![Dependency Status](https://gemnasium.com/rossta/montrose.svg)](https://gemnasium.com/rossta/montrose)
 
-Recurring events in Ruby. This library is still a work-in-progress.
+Montrose is an easy-to-use library for defining recurring events in Ruby. It uses a simple chaining system for building recurrences, inspired heavily by the design principles of [HTTP.rb](https://github.com/httprb/http) and rule definitions available in [Recurrence](https://github.com/fnando/recurrence).
 
 ## Installation
 
