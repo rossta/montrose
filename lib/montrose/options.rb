@@ -101,7 +101,7 @@ module Montrose
         total: nil
       }
 
-      options = defaults.merge(opts)
+      options = defaults.merge(opts || {})
       options.each { |(k, v)| self[k] ||= v unless v.nil? }
     end
 

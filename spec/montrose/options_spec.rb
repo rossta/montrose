@@ -3,6 +3,8 @@ require "spec_helper"
 describe Montrose::Options do
   let(:options) { new_options }
 
+  it { Montrose::Options.new(nil).must_be_instance_of(Montrose::Options) }
+
   describe ".default_starts" do
     after do
       Montrose::Options.default_starts = nil
