@@ -7,6 +7,8 @@
 
 Montrose is an easy-to-use library for defining recurring events in Ruby. It uses a simple chaining system for building recurrences, inspired heavily by the design principles of [HTTP.rb](https://github.com/httprb/http) and rule definitions available in [Recurrence](https://github.com/fnando/recurrence).
 
+[Introduction](https://rossta.net/blog/recurring-events-in-ruby.html)
+
 ## Installation
 
 Add this line to your application's Gemfile:
