@@ -344,23 +344,9 @@ Mon, 29 Feb 2016,
 Sat, 26 Mar 2016]
 ```
 
-It's straightforward to convert recurrence options back to a hash.
+It's straightforward to convert a recurrence to a hash and back.
 
 ```ruby
-# Every 10 minutes starting now
-opts = Montrose::Recurrence.new(every: 10.minutes).to_h
-=> {:every=>:minute, :interval=>10}
-
-Montrose::Recurrence.new(opts).take(3)
-=> [2016-02-03 19:06:07 -0500,
-2016-02-03 19:16:07 -0500,
-2016-02-03 19:26:07 -0500]
-```
-
-It's straightforward to convert recurrence options back to a hash.
-
-```ruby
-# Every 10 minutes starting now
 opts = Montrose::Recurrence.new(every: 10.minutes).to_h
 => {:every=>:minute, :interval=>10}
 
