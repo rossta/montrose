@@ -252,7 +252,7 @@ More specifically, this project intends to:
 What `Montrose` doesn't do:
 
 * support all calendaring use cases under the sun
-* schedule recurring jobs for you. See instead (rufus-scheduler)[https://github.com/jmettraux/rufus-scheduler], (sidetiq)[https://github.com/tobiassvn/sidetiq], (whenever)[https://github.com/javan/whenever]
+* schedule recurring jobs for you. See instead [rufus-scheduler](https://github.com/jmettraux/rufus-scheduler), [sidetiq](https://github.com/tobiassvn/sidetiq), [whenever](https://github.com/javan/whenever)
 
 ## Concepts
 
