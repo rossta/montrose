@@ -267,7 +267,7 @@ module Montrose
     # and other. The value of entries with duplicate
     # keys will be those of other
     #
-    # @param opts [Hash,Montrose::Recurrence] other options or recurrence
+    # @param other [Hash,Montrose::Recurrence] other options or recurrence
     #
     # @example
     #   Montrose.daily.total(10)
