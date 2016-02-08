@@ -1,7 +1,13 @@
 require "spec_helper"
 
 describe Montrose do
-  def test_that_it_has_a_version_number
-    assert ::Montrose::VERSION
+  it { assert ::Montrose::VERSION }
+
+  describe ".r" do
+    it { Montrose.r(every: :day).must_be_kind_of(Montrose::Recurrence) }
+    it { Montrose.r(every: :day).default_options[:every].must_equal(:day) }
+
+    it { Montrose.recurrence(every: :day).must_be_kind_of(Montrose::Recurrence) }
+    it { Montrose.recurrence(every: :day).default_options[:every].must_equal(:day) }
   end
 end

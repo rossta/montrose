@@ -17,4 +17,20 @@ require "montrose/version"
 
 module Montrose
   extend Chainable
+
+  class << self
+    # Create a new recurrence from given options
+    # An alias to {Montrose::Recurrence.new}
+    #
+    # @param options [Hash] recurrence options
+    #
+    # @example
+    #   Montrose.recurrence(every: :day)
+    #   Montrose.r(every: :day)
+    #
+    # @return [Montrose::Recurrence]
+    #
+    alias recurrence branch
+    alias r branch
+  end
 end
