@@ -36,6 +36,14 @@ module Montrose
       @default_options = Montrose::Options.new(opts)
     end
 
+    # Returns an enumerator for iterating over
+    # timestamps in the recurrence
+    #
+    # @example
+    #   recurrence.events
+    #
+    # @return [Enumerator] a enumerator of recurrence timestamps
+    #
     def events
       event_enum
     end
@@ -44,6 +52,11 @@ module Montrose
       events.each(&block)
     end
 
+    # Returns a hash of the options used to create
+    # the recurrence
+    #
+    # @return [Hash] hash of recurrence options
+    #
     def to_hash
       default_options.to_hash
     end
