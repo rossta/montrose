@@ -134,9 +134,10 @@ module Montrose
     #
     # @return [Montrose::Recurrence]
     #
-    def starting(starts_at)
+    def starts(starts_at)
       merge(starts: starts_at)
     end
+    alias starting starts
 
     # Create a recurrence ending at given timestamp.
     #
@@ -147,9 +148,10 @@ module Montrose
     #
     # @return [Montrose::Recurrence]
     #
-    def ending(ends_at)
+    def until(ends_at)
       merge(until: ends_at)
     end
+    alias ending until
 
     # Create a recurrence occurring during date range.
     #
@@ -300,6 +302,7 @@ module Montrose
     def total(total)
       merge(total: total)
     end
+    alias repeat total
 
     # Create a new recurrence combining options of self
     # and other. The value of entries with duplicate
