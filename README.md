@@ -30,6 +30,11 @@ Or install it yourself as:
 ```ruby
 require "montrose"
 
+# a new recurrence
+Montrose.r
+Montrose.recurrence
+Montrose::Recurrence.new
+
 # daily for 10 occurrences
 Montrose.daily(total: 10)
 
@@ -146,36 +151,36 @@ Montrose.every(20.minutes, hour: 9..16)
 
 # Minutely
 Montrose.minutely
-Montrose::Recurrence.new(every: :minute)
+Montrose.r(every: :minute)
 
 Montrose.every(10.minutes)
-Montrose::Recurrence.new(every: 10.minutes)
-Montrose::Recurrence.new(every: :minute, interval: 10) # every 10 minutes
+Montrose.r(every: 10.minutes)
+Montrose.r(every: :minute, interval: 10) # every 10 minutes
 
 Montrose.minutely(until: "9:00 PM")
-Montrose::Recurrence.new(every: :minute, until: "9:00 PM")
+Montrose.r(every: :minute, until: "9:00 PM")
 
 # Daily
 Montrose.daily
 Montrose.every(:day)
-Montrose::Recurrence.new(every: :day)
+Montrose.r(every: :day)
 
 Montrose.every(9.days)
-Montrose::Recurrence.new(every: 9.days)
-Montrose::Recurrence.new(every: :day, interval: 9)
+Montrose.r(every: 9.days)
+Montrose.r(every: :day, interval: 9)
 
 Montrose.daily(at: "9:00 AM")
 Montrose.every(:day, at: "9:00 AM")
-Montrose::Recurrence.new(every: :day, at: "9:00 AM")
+Montrose.r(every: :day, at: "9:00 AM")
 
 Montrose.daily(total: 7)
 Montrose.every(:day, total: 7)
-Montrose::Recurrence.new(every: :day, total: 7)
+Montrose.r(every: :day, total: 7)
 
 # Weekly
 Montrose.weekly
 Montrose.every(:week)
-Montrose::Recurrence.new(every: :week)
+Montrose.r(every: :week)
 
 Montrose.every(:week, on: :monday)
 Montrose.every(:week, on: [:monday, :wednesday, :friday])
@@ -186,7 +191,7 @@ Montrose.weekly(on: :thursday)
 # Monthly by month day
 Montrose.monthly(mday: 1) # first of the month
 Montrose.every(:month, mday: 1)
-Montrose::Recurrence.new(every: :month, mday: 1)
+Montrose.r(every: :month, mday: 1)
 
 Montrose.monthly(mday: [2, 15]) # 2nd and 15th of the month
 Montrose.monthly(mday: -3) # third-to-last day of the month
@@ -195,7 +200,7 @@ Montrose.monthly(mday: 10..15) # 10th through the 15th day of the month
 # Monthly by week day
 Montrose.monthly(day: :friday, interval: 2) # every Friday every other month
 Montrose.every(:month, day: :friday, interval: 2)
-Montrose::Recurrence.new(every: :month, day: :friday, interval: 2)
+Montrose.r(every: :month, day: :friday, interval: 2)
 
 Montrose.monthly(day: { friday: [1] }) # 1st Friday of the month
 Montrose.monthly(day: { Sunday: [1, -1] }) # first and last Sunday of the month
@@ -205,14 +210,14 @@ Montrose.monthly(mday: 7..13, day: :saturday) # first Saturday that follow the f
 # Yearly
 Montrose.yearly
 Montrose.every(:year)
-Montrose::Recurrence.new(every: :year)
+Montrose.r(every: :year)
 
 Montrose.yearly(month: [:june, :july]) # yearly in June and July
 Montrose.yearly(month: 6..8, day: :thursday) # yearly in June, July, August on Thursday
 Montrose.yearly(yday: [1, 100]) # yearly on the 1st and 100th day of year
 
-Montrose::Recurrence.yearly(on: { january: 31 })
-Montrose::Recurrence.new(every: :year, on: { 10 => 31 }, interval: 3)
+Montrose.yearly(on: { january: 31 })
+Montrose.r(every: :year, on: { 10 => 31 }, interval: 3)
 
 # TODO: Remove a date in the series with :except date(s)
 Montrose.daily(:day, except: "2017-01-31")
@@ -267,7 +272,7 @@ Montrose.weekly.on(:monday).at("10:30 am")
 Or the constructor hash-syntax:
 
 ```ruby
-Montrose::Recurrence.new(every: :week, on: :monday, at: "10:30 am")
+Montrose.r(every: :week, on: :monday, at: "10:30 am")
 => #<Montrose::Recurrence...>
 ```
 
