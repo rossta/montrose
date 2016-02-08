@@ -16,6 +16,8 @@ module Montrose
     #   Montrose.every(3.days, starts: 2.days.from_now)
     #   Montrose.every(1.year, until: 10.days.from_now)
     #
+    # @return [Montrose::Recurrence]
+    #
     def every(frequency, options = {})
       branch options.merge(every: frequency)
     end
@@ -31,6 +33,8 @@ module Montrose
     #   Montrose.minutely(until: 10.days.from_now)
     #   Montrose.minutely(total: 5)
     #   Montrose.minutely(except: Date.tomorrow)
+    #
+    # @return [Montrose::Recurrence]
     #
     def minutely(options = {})
       branch options.merge(every: :minute)
@@ -48,6 +52,8 @@ module Montrose
     #   Montrose.hourly(total: 5)
     #   Montrose.hourly(except: Date.tomorrow)
     #
+    # @return [Montrose::Recurrence]
+    #
     def hourly(options = {})
       branch options.merge(every: :hour)
     end
@@ -64,6 +70,8 @@ module Montrose
     #   Montrose.daily(total: 5)
     #   Montrose.daily(except: Date.tomorrow)
     #
+    # @return [Montrose::Recurrence]
+    #
     def daily(options = {})
       branch options.merge(every: :day)
     end
@@ -79,6 +87,8 @@ module Montrose
     #   Montrose.weekly(on: :saturday, interval: 2)
     #   Montrose.weekly(on: :saturday, total: 5)
     #
+    # @return [Montrose::Recurrence]
+    #
     def weekly(options = {})
       branch options.merge(every: :week)
     end
@@ -91,6 +101,8 @@ module Montrose
     #   Montrose.monthly(mday: [2, 15]) # 2nd and 15th of the month
     #   Montrose.monthly(mday: -3) # third-to-last day of the month
     #   Montrose.monthly(mday: 10..15) # 10th through the 15th day of the month
+    #
+    # @return [Montrose::Recurrence]
     #
     def monthly(options = {})
       branch options.merge(every: :month)
@@ -107,6 +119,8 @@ module Montrose
     #   Montrose.yearly(on: [:january, 14], interval: 2)
     #   Montrose.yearly(on: [:january, 14], total: 5)
     #
+    # @return [Montrose::Recurrence]
+    #
     def yearly(options = {})
       branch options.merge(every: :year)
     end
@@ -117,6 +131,8 @@ module Montrose
     #
     # @example
     #   Montrose.daily.starting(Date.tomorrow)
+    #
+    # @return [Montrose::Recurrence]
     #
     def starting(starts_at)
       merge(starts: starts_at)
@@ -129,6 +145,8 @@ module Montrose
     # @example
     #   Montrose.daily.ending(1.year.from_now)
     #
+    # @return [Montrose::Recurrence]
+    #
     def ending(ends_at)
       merge(until: ends_at)
     end
@@ -139,6 +157,8 @@ module Montrose
     #
     # @example
     #   Montrose.weekly.between(Date.today..Date.new(2016, 3, 15))
+    #
+    # @return [Montrose::Recurrence]
     #
     def between(date_range)
       merge(between: date_range)
@@ -152,6 +172,8 @@ module Montrose
     #   Montrose.weekly.on(:friday)
     #   Montrose.monthly.on(friday: 13)
     #
+    # @return [Montrose::Recurrence]
+    #
     def on(day)
       merge(on: day)
     end
@@ -163,6 +185,8 @@ module Montrose
     # @example
     #   Montrose.daily.at("12pm")
     #   Montrose.daily.at("9:37am")
+    #
+    # @return [Montrose::Recurrence]
     #
     def at(time)
       merge(at: time)
@@ -176,6 +200,8 @@ module Montrose
     #   Montrose.daily.day_of_month(1, -1)
     #   Montrose.daily.day_of_month([1, -1])
     #   Montrose.daily.day_of_month(2..8)
+    #
+    # @return [Montrose::Recurrence]
     #
     def day_of_month(days, *extras)
       merge(mday: days.array_concat(extras))
@@ -191,6 +217,8 @@ module Montrose
     #   Montrose.daily.day_of_week(:monday, :tuesday)
     #   Montrose.daily.day_of_week(2..5)
     #
+    # @return [Montrose::Recurrence]
+    #
     def day_of_week(weekdays, *extras)
       merge(day: weekdays.array_concat(extras))
     end
@@ -204,6 +232,8 @@ module Montrose
     #   Montrose.daily.day_of_year(1, 10, 100)
     #   Montrose.daily.day_of_year([1, 10, 100])
     #   Montrose.daily.day_of_year(20..50)
+    #
+    # @return [Montrose::Recurrence]
     #
     def day_of_year(days, *extras)
       merge(yday: days.array_concat(extras))
@@ -219,6 +249,8 @@ module Montrose
     #   Montrose.hourly.hour_of_day(15)
     #   Montrose.hourly.hour_of_day(6..10)
     #
+    # @return [Montrose::Recurrence]
+    #
     def hour_of_day(hours, *extras)
       merge(hour: hours.array_concat(extras))
     end
@@ -232,6 +264,8 @@ module Montrose
     #   Montrose.monthly.month_of_year(9)
     #   Montrose.monthly.month_of_year([2, 5])
     #   Montrose.monthly.month_of_year(2..5)
+    #
+    # @return [Montrose::Recurrence]
     #
     def month_of_year(months, *extras)
       merge(month: months.array_concat(extras))
@@ -247,6 +281,8 @@ module Montrose
     #   Montrose.weekly.week_of_year([2, 5])
     #   Montrose.weekly.week_of_year(2..5)
     #
+    # @return [Montrose::Recurrence]
+    #
     def week_of_year(weeks, *extras)
       merge(week: weeks.array_concat(extras))
     end
@@ -258,6 +294,8 @@ module Montrose
     #
     # @example
     #   Montrose.daily.total(10)
+    #
+    # @return [Montrose::Recurrence]
     #
     def total(total)
       merge(total: total)
@@ -272,18 +310,20 @@ module Montrose
     # @example
     #   Montrose.daily.total(10)
     #
+    # @return [Montrose::Recurrence]
+    #
     def merge(other = {})
       branch default_options.merge(other)
     end
 
     # @private
-    def default_options
-      @default_options ||= Montrose::Options.new
+    def branch(options)
+      Montrose::Recurrence.new(options)
     end
 
     # @private
-    def branch(options)
-      Montrose::Recurrence.new(options)
+    def default_options
+      @default_options ||= Montrose::Options.new
     end
   end
 end
