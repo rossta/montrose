@@ -101,6 +101,11 @@ href="https://rossta.net/blog/recurring-events-in-ruby.html">Introduction</a></p
 
 <pre class="code ruby"><code class="ruby">require &quot;montrose&quot;
 
+# a new recurrence
+Montrose.r
+Montrose.recurrence
+Montrose::Recurrence.new
+
 # daily for 10 occurrences
 Montrose.daily(total: 10)
 
@@ -217,36 +222,36 @@ Montrose.every(20.minutes, hour: 9..16)
 
 # Minutely
 Montrose.minutely
-Montrose::Recurrence.new(every: :minute)
+Montrose.r(every: :minute)
 
 Montrose.every(10.minutes)
-Montrose::Recurrence.new(every: 10.minutes)
-Montrose::Recurrence.new(every: :minute, interval: 10) # every 10 minutes
+Montrose.r(every: 10.minutes)
+Montrose.r(every: :minute, interval: 10) # every 10 minutes
 
 Montrose.minutely(until: &quot;9:00 PM&quot;)
-Montrose::Recurrence.new(every: :minute, until: &quot;9:00 PM&quot;)
+Montrose.r(every: :minute, until: &quot;9:00 PM&quot;)
 
 # Daily
 Montrose.daily
 Montrose.every(:day)
-Montrose::Recurrence.new(every: :day)
+Montrose.r(every: :day)
 
 Montrose.every(9.days)
-Montrose::Recurrence.new(every: 9.days)
-Montrose::Recurrence.new(every: :day, interval: 9)
+Montrose.r(every: 9.days)
+Montrose.r(every: :day, interval: 9)
 
 Montrose.daily(at: &quot;9:00 AM&quot;)
 Montrose.every(:day, at: &quot;9:00 AM&quot;)
-Montrose::Recurrence.new(every: :day, at: &quot;9:00 AM&quot;)
+Montrose.r(every: :day, at: &quot;9:00 AM&quot;)
 
 Montrose.daily(total: 7)
 Montrose.every(:day, total: 7)
-Montrose::Recurrence.new(every: :day, total: 7)
+Montrose.r(every: :day, total: 7)
 
 # Weekly
 Montrose.weekly
 Montrose.every(:week)
-Montrose::Recurrence.new(every: :week)
+Montrose.r(every: :week)
 
 Montrose.every(:week, on: :monday)
 Montrose.every(:week, on: [:monday, :wednesday, :friday])
@@ -257,7 +262,7 @@ Montrose.weekly(on: :thursday)
 # Monthly by month day
 Montrose.monthly(mday: 1) # first of the month
 Montrose.every(:month, mday: 1)
-Montrose::Recurrence.new(every: :month, mday: 1)
+Montrose.r(every: :month, mday: 1)
 
 Montrose.monthly(mday: [2, 15]) # 2nd and 15th of the month
 Montrose.monthly(mday: -3) # third-to-last day of the month
@@ -266,7 +271,7 @@ Montrose.monthly(mday: 10..15) # 10th through the 15th day of the month
 # Monthly by week day
 Montrose.monthly(day: :friday, interval: 2) # every Friday every other month
 Montrose.every(:month, day: :friday, interval: 2)
-Montrose::Recurrence.new(every: :month, day: :friday, interval: 2)
+Montrose.r(every: :month, day: :friday, interval: 2)
 
 Montrose.monthly(day: { friday: [1] }) # 1st Friday of the month
 Montrose.monthly(day: { Sunday: [1, -1] }) # first and last Sunday of the month
@@ -276,14 +281,14 @@ Montrose.monthly(mday: 7..13, day: :saturday) # first Saturday that follow the f
 # Yearly
 Montrose.yearly
 Montrose.every(:year)
-Montrose::Recurrence.new(every: :year)
+Montrose.r(every: :year)
 
 Montrose.yearly(month: [:june, :july]) # yearly in June and July
 Montrose.yearly(month: 6..8, day: :thursday) # yearly in June, July, August on Thursday
 Montrose.yearly(yday: [1, 100]) # yearly on the 1st and 100th day of year
 
-Montrose::Recurrence.yearly(on: { january: 31 })
-Montrose::Recurrence.new(every: :year, on: { 10 =&gt; 31 }, interval: 3)
+Montrose.yearly(on: { january: 31 })
+Montrose.r(every: :year, on: { 10 =&gt; 31 }, interval: 3)
 
 # TODO: Remove a date in the series with :except date(s)
 Montrose.daily(:day, except: &quot;2017-01-31&quot;)
@@ -348,7 +353,7 @@ Montrose.weekly.on(:monday).at(&quot;10:30 am&quot;)
 
 <p>Or the constructor hash-syntax:</p>
 
-<pre class="code ruby"><code class="ruby">Montrose::Recurrence.new(every: :week, on: :monday, at: &quot;10:30 am&quot;)
+<pre class="code ruby"><code class="ruby">Montrose.r(every: :week, on: :monday, at: &quot;10:30 am&quot;)
 =&gt; #&lt;Montrose::Recurrence...&gt;
 </code></pre>
 
@@ -475,7 +480,7 @@ href="http://opensource.org/licenses/MIT">MIT License</a>.</p>
 </div></div>
 
     <div id="footer">
-  Generated on Sun Feb  7 17:15:36 2016 by
+  Generated on Mon Feb  8 16:37:02 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.2.3).
 </div>
