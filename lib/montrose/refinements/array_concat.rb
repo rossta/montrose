@@ -6,6 +6,14 @@ module Montrose
           Array(self) + other
         end
       end
+
+      refine Hash do
+        # array concat for Hash not supported
+        # so we just return self
+        def array_concat(_other)
+          self
+        end
+      end
     end
   end
 end

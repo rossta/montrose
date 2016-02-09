@@ -153,6 +153,17 @@ describe Montrose::Chainable do
         Time.local(2015, 9, 7, 12)
       ]
     end
+
+    it "handles hash arg for ordinal number" do
+      recurrence = Montrose.monthly
+      recurrence = recurrence.day_of_week(tuesday: [2]) # 2nd Tuesday of month
+
+      recurrence.events.must_pair_with [
+        Time.local(2015, 9, 8, 12), # Tuesday
+        Time.local(2015, 10, 13, 12),
+        Time.local(2015, 11, 10, 12)
+      ]
+    end
   end
 
   describe "#day_of_year" do
