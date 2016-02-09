@@ -1,3 +1,11 @@
+### 0.2.2 - 2016-02-08
+
+* bug fixes
+  * Handle `Hash` in `Montrose::Chainable` methods that support varargs
+* enhancements
+  * Adds `Montrose.r` method for starting a new recurrence
+  * Adds `Chainable` alias methods including `#starts`, `#until`, `#repeat`
+
 ### 0.2.1 - 2016-02-03
 
 * bug fixes
