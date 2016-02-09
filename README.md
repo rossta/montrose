@@ -60,7 +60,7 @@ Montrose.weekly(total: 10)
 # weekly until December 23, 2015
 ends_on = Date.new(2015, 12, 23)
 starts_on = ends_on - 15.weeks
-Montrose.every(:week, until: ends_on, starts: starts_on
+Montrose.every(:week, until: ends_on, starts: starts_on)
 
 # every other week forever
 Montrose.every(2.weeks)
