@@ -369,9 +369,10 @@ Montrose is named after the beautifully diverse and artistic [neighborhood in Ho
 
 Check out following related projects, all of which have provided inspiration for `Montrose`.
 
-* [recurrence](https://github.com/fnando/recurrence)
 * [ice_cube](https://github.com/seejohnrun/ice_cube)
+* [recurrence](https://github.com/fnando/recurrence)
 * [runt](https://github.com/mlipper/runt)
+* [http.rb](https://github.com/httprb/http) - not a Recurrence project, but inspirational for design, implementation, and interface
 
 ## Development
 
