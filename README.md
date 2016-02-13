@@ -27,9 +27,9 @@ Or install it yourself as:
 
     $ gem install montrose
 
-## Why?
+## Why
 
-`Montrose` aims to provide a simple interface for specifying and enumerating recurring events as `Time` objects.
+Dealing with recurring events is hard. `Montrose` provides a simple interface for specifying and enumerating recurring events as `Time` objects.
 
 More specifically, this project intends to:
 
