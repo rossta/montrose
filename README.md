@@ -7,7 +7,9 @@
 
 Montrose is an easy-to-use library for defining recurring events in Ruby. It uses a simple chaining system for building recurrences, inspired heavily by the design principles of [HTTP.rb](https://github.com/httprb/http) and rule definitions available in [Recurrence](https://github.com/fnando/recurrence).
 
-[Introduction](https://rossta.net/blog/recurring-events-in-ruby.html)
+* [Introductory blog post](https://rossta.net/blog/recurring-events-in-ruby.html)
+* [NYC.rb
+  presentation](https://speaderdeck.com/rossta/recurring-events-with-montrose)
 
 ## Installation
 
@@ -24,6 +26,125 @@ And then execute:
 Or install it yourself as:
 
     $ gem install montrose
+
+## Why?
+
+`Montrose` aims to provide a simple interface for specifying and enumerating recurring events as `Time` objects.
+
+More specifically, this project intends to:
+
+* embrace Ruby idioms
+* support Ruby 2.1+
+* be reasonably performant
+* serialize to yaml, hash, and [ical](http://www.kanzaki.com/docs/ical/rrule.html#basic) formats
+* be suitable for integration with persistence libraries
+
+What `Montrose` doesn't do:
+
+* support all calendaring use cases under the sun
+* schedule recurring jobs for you. See instead [rufus-scheduler](https://github.com/jmettraux/rufus-scheduler), [sidetiq](https://github.com/tobiassvn/sidetiq), [whenever](https://github.com/javan/whenever)
+
+## Concepts
+
+Montrose allows you to easily create "recurrence" objects through chaining:
+
+```ruby
+# Every Monday at 10:30am
+Montrose.weekly.on(:monday).at("10:30 am")
+=> #<Montrose::Recurrence...>
+```
+
+Or the constructor hash-syntax:
+
+```ruby
+Montrose.r(every: :week, on: :monday, at: "10:30 am")
+=> #<Montrose::Recurrence...>
+```
+
+A Montrose recurrence responds to `#events`, which returns an [`Enumerator`](/blog/what-is-enumerator.html) that can generate timestamps:
+
+```ruby
+r = Montrose.hourly
+=> #<Montrose::Recurrence...>
+
+r.events
+=> #<Enumerator:...>
+
+r.events.take(10)
+=> [2016-02-03 18:26:08 -0500,
+2016-02-03 19:26:08 -0500,
+2016-02-03 20:26:08 -0500,
+2016-02-03 21:26:08 -0500,
+2016-02-03 22:26:08 -0500,
+2016-02-03 23:26:08 -0500,
+2016-02-04 00:26:08 -0500,
+2016-02-04 01:26:08 -0500,
+2016-02-04 02:26:08 -0500,
+2016-02-04 03:26:08 -0500]
+```
+
+Montrose recurrences are themselves enumerable:
+
+```ruby
+# Every month starting a year from now on Friday the 13th for 5 occurrences
+r = Montrose.monthly.starting(1.year.from_now).on(friday: 13).repeat(5)
+
+r.map(&:to_date)
+=> [Fri, 13 Oct 2017,
+Fri, 13 Apr 2018,
+Fri, 13 Jul 2018,
+Fri, 13 Sep 2019,
+Fri, 13 Dec 2019]
+```
+
+Each chained recurrence returns a new object so they can be composed and
+merged:
+
+```ruby
+# Every week
+r1 = Montrose.every(:week)
+r2 = Montrose.on([:tuesday, :thursday])
+r3 = Montrose.at("12 pm")
+r4 = Montrose.total(4)
+
+r1.merge(r2).merge(r3).merge(r4).to_a
+=> [2016-02-04 12:00:00 -0500,
+2016-02-09 12:00:00 -0500,
+2016-02-11 12:00:00 -0500,
+2016-02-16 12:00:00 -0500]
+```
+
+Conceptually, recurrences can represent an infinite sequence. When we say
+simply "every day", there is no implied ending. It's therefore possible to
+create a recurrence that can enumerate forever.
+
+```ruby
+# Every day starting now
+r = Montrose.daily
+
+# this expression will never complete, Ctrl-c!
+r.map(&:to_date)
+
+# so use your `Enumerable` methods wisely
+r.lazy.map(&:to_date).select { |d| d.mday > 25 }.take(5).to_a
+=> [Fri, 26 Feb 2016,
+Sat, 27 Feb 2016,
+Sun, 28 Feb 2016,
+Mon, 29 Feb 2016,
+Sat, 26 Mar 2016]
+```
+
+It's straightforward to convert a recurrence to a hash and back.
+
+```ruby
+opts = Montrose::Recurrence.new(every: 10.minutes).to_h
+=> {:every=>:minute, :interval=>10}
+
+Montrose::Recurrence.new(opts).take(3)
+=> [2016-02-03 19:06:07 -0500,
+2016-02-03 19:16:07 -0500,
+2016-02-03 19:26:07 -0500]
+```
 
 ## Usage
 
@@ -240,125 +361,6 @@ r.merge(starts: "2017-01-01").each { |time| puts time.to_s }
 r.events # => #<Enumerator: ...>
 r.events.take(10).each { |date| puts date.to_s }
 r.events.lazy.select { |time| time > 1.month.from_now }.take(3).each { |date| puts date.to_s }
-```
-
-## Why?
-
-`Montrose` aims to provide a simple interface for specifying and enumerating recurring events as `Time` objects.
-
-More specifically, this project intends to:
-
-* embrace Ruby idioms
-* support Ruby 2.1+
-* be reasonably performant
-* serialize to yaml, hash, and [ical](http://www.kanzaki.com/docs/ical/rrule.html#basic) formats
-* be suitable for integration with persistence libraries
-
-What `Montrose` doesn't do:
-
-* support all calendaring use cases under the sun
-* schedule recurring jobs for you. See instead [rufus-scheduler](https://github.com/jmettraux/rufus-scheduler), [sidetiq](https://github.com/tobiassvn/sidetiq), [whenever](https://github.com/javan/whenever)
-
-## Concepts
-
-Montrose allows you to easily create "recurrence" objects through chaining:
-
-```ruby
-# Every Monday at 10:30am
-Montrose.weekly.on(:monday).at("10:30 am")
-=> #<Montrose::Recurrence...>
-```
-
-Or the constructor hash-syntax:
-
-```ruby
-Montrose.r(every: :week, on: :monday, at: "10:30 am")
-=> #<Montrose::Recurrence...>
-```
-
-A Montrose recurrence responds to `#events`, which returns an [`Enumerator`](/blog/what-is-enumerator.html) that can generate timestamps:
-
-```ruby
-r = Montrose.hourly
-=> #<Montrose::Recurrence...>
-
-r.events
-=> #<Enumerator:...>
-
-r.events.take(10)
-=> [2016-02-03 18:26:08 -0500,
-2016-02-03 19:26:08 -0500,
-2016-02-03 20:26:08 -0500,
-2016-02-03 21:26:08 -0500,
-2016-02-03 22:26:08 -0500,
-2016-02-03 23:26:08 -0500,
-2016-02-04 00:26:08 -0500,
-2016-02-04 01:26:08 -0500,
-2016-02-04 02:26:08 -0500,
-2016-02-04 03:26:08 -0500]
-```
-
-Montrose recurrences are themselves enumerable:
-
-```ruby
-# Every month starting a year from now on Friday the 13th for 5 occurrences
-r = Montrose.monthly.starting(1.year.from_now).on(friday: 13).repeat(5)
-
-r.map(&:to_date)
-=> [Fri, 13 Oct 2017,
-Fri, 13 Apr 2018,
-Fri, 13 Jul 2018,
-Fri, 13 Sep 2019,
-Fri, 13 Dec 2019]
-```
-
-Each chained recurrence returns a new object so they can be composed and
-merged:
-
-```ruby
-# Every week
-r1 = Montrose.every(:week)
-r2 = Montrose.on([:tuesday, :thursday])
-r3 = Montrose.at("12 pm")
-r4 = Montrose.total(4)
-
-r1.merge(r2).merge(r3).merge(r4).to_a
-=> [2016-02-04 12:00:00 -0500,
-2016-02-09 12:00:00 -0500,
-2016-02-11 12:00:00 -0500,
-2016-02-16 12:00:00 -0500]
-```
-
-Conceptually, recurrences can represent an infinite sequence. When we say
-simply "every day", there is no implied ending. It's therefore possible to
-create a recurrence that can enumerate forever.
-
-```ruby
-# Every day starting now
-r = Montrose.daily
-
-# this expression will never complete, Ctrl-c!
-r.map(&:to_date)
-
-# so use your `Enumerable` methods wisely
-r.lazy.map(&:to_date).select { |d| d.mday > 25 }.take(5).to_a
-=> [Fri, 26 Feb 2016,
-Sat, 27 Feb 2016,
-Sun, 28 Feb 2016,
-Mon, 29 Feb 2016,
-Sat, 26 Mar 2016]
-```
-
-It's straightforward to convert a recurrence to a hash and back.
-
-```ruby
-opts = Montrose::Recurrence.new(every: 10.minutes).to_h
-=> {:every=>:minute, :interval=>10}
-
-Montrose::Recurrence.new(opts).take(3)
-=> [2016-02-03 19:06:07 -0500,
-2016-02-03 19:16:07 -0500,
-2016-02-03 19:26:07 -0500]
 ```
 
 ## Inspiration
