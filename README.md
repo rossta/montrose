@@ -57,17 +57,19 @@ Montrose.weekly.on(:monday).at("10:30 am")
 Each chained recurrence returns a **new object** so they can be composed and merged:
 
 ```ruby
-# Every week
+# In both examples, recurrence `r4` represents 'every week on Tuesday and Thursday at noon for four occurrences'
+
+# Example 1 - building recurrence in succession
+r1 = Montrose.every(:week)
+r2 = r1.on([:tuesday, :thursday])
+r3 = r2.at("12 pm")
+r4 = r3.total(4)
+
+# Example 2 - merging distinct recurrences
 r1 = Montrose.every(:week)
 r2 = Montrose.on([:tuesday, :thursday])
 r3 = Montrose.at("12 pm")
-r4 = Montrose.total(4)
-
-r1.merge(r2).merge(r3).merge(r4).to_a
-=> [2016-02-04 12:00:00 -0500,
-2016-02-09 12:00:00 -0500,
-2016-02-11 12:00:00 -0500,
-2016-02-16 12:00:00 -0500]
+r4 = r1.merge(r2).merge(r3).total(4)
 ```
 
 Most recurrence methods accept additional options if you favor the hash-syntax:
