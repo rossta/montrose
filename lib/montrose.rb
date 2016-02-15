@@ -30,7 +30,9 @@ module Montrose
     #
     # @return [Montrose::Recurrence]
     #
-    alias recurrence branch
-    alias r branch
+    def recurrence(options = {})
+      branch(options)
+    end
+    alias r recurrence
   end
 end
