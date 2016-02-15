@@ -54,7 +54,23 @@ Montrose.weekly.on(:monday).at("10:30 am")
 => #<Montrose::Recurrence...>
 ```
 
-Or the constructor hash-syntax:
+Each chained recurrence returns a **new object** so they can be composed and merged:
+
+```ruby
+# Every week
+r1 = Montrose.every(:week)
+r2 = Montrose.on([:tuesday, :thursday])
+r3 = Montrose.at("12 pm")
+r4 = Montrose.total(4)
+
+r1.merge(r2).merge(r3).merge(r4).to_a
+=> [2016-02-04 12:00:00 -0500,
+2016-02-09 12:00:00 -0500,
+2016-02-11 12:00:00 -0500,
+2016-02-16 12:00:00 -0500]
+```
+
+Most recurrence methods accept additional options if you favor the hash-syntax:
 
 ```ruby
 Montrose.r(every: :week, on: :monday, at: "10:30 am")
@@ -95,23 +111,6 @@ Fri, 13 Apr 2018,
 Fri, 13 Jul 2018,
 Fri, 13 Sep 2019,
 Fri, 13 Dec 2019]
-```
-
-Each chained recurrence returns a new object so they can be composed and
-merged:
-
-```ruby
-# Every week
-r1 = Montrose.every(:week)
-r2 = Montrose.on([:tuesday, :thursday])
-r3 = Montrose.at("12 pm")
-r4 = Montrose.total(4)
-
-r1.merge(r2).merge(r3).merge(r4).to_a
-=> [2016-02-04 12:00:00 -0500,
-2016-02-09 12:00:00 -0500,
-2016-02-11 12:00:00 -0500,
-2016-02-16 12:00:00 -0500]
 ```
 
 Conceptually, recurrences can represent an infinite sequence. When we say
