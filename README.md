@@ -77,6 +77,8 @@ Montrose.r(every: :week, on: :monday, at: "10:30 am")
 => #<Montrose::Recurrence...>
 ```
 
+See [the docs for `Montrose::Chainable`](https://rossta.net/montrose/Montrose/Chainable.html) for more info on recurrence creation methods.
+
 A Montrose recurrence responds to `#events`, which returns an [`Enumerator`](/blog/what-is-enumerator.html) that can generate timestamps:
 
 ```ruby
@@ -143,6 +145,15 @@ Montrose::Recurrence.new(opts).take(3)
 => [2016-02-03 19:06:07 -0500,
 2016-02-03 19:16:07 -0500,
 2016-02-03 19:26:07 -0500]
+```
+
+A recurrence object must minimally specify a frequency, e.g. `:minute`, `:hour`, `:day`, `:week`, `:month`, or, `:year`, to be viable. Otherwise, you'll see an informative error message when attempting to enumerate the recurrence.
+
+```ruby
+r = Montrose.at("12pm")
+=> #<Montrose::Recurrence...>
+r.each
+Montrose::ConfigurationError: Please specify the :every option
 ```
 
 ## Usage
