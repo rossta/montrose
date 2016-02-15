@@ -54,11 +54,9 @@ Montrose.weekly.on(:monday).at("10:30 am")
 => #<Montrose::Recurrence...>
 ```
 
-Each chained recurrence returns a **new object** so they can be composed and merged:
+Each chained recurrence returns a **new object** so they can be composed and merged. In both examples below, recurrence `r4` represents 'every week on Tuesday and Thursday at noon for four occurrences'.
 
 ```ruby
-# In both examples, recurrence `r4` represents 'every week on Tuesday and Thursday at noon for four occurrences'
-
 # Example 1 - building recurrence in succession
 r1 = Montrose.every(:week)
 r2 = r1.on([:tuesday, :thursday])
