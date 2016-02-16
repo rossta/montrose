@@ -117,7 +117,7 @@ Fri, 13 Dec 2019]
 
 Conceptually, recurrences can represent an infinite sequence. When we say
 simply "every day", there is no implied ending. It's therefore possible to
-create a recurrence that can enumerate forever.
+create a recurrence that can enumerate forever, so use your `Enumerable` methods wisely.
 
 ```ruby
 # Every day starting now
@@ -126,7 +126,7 @@ r = Montrose.daily
 # this expression will never complete, Ctrl-c!
 r.map(&:to_date)
 
-# so use your `Enumerable` methods wisely
+# use `lazy` enumerator to avoid eager enumeration
 r.lazy.map(&:to_date).select { |d| d.mday > 25 }.take(5).to_a
 => [Fri, 26 Feb 2016,
 Sat, 27 Feb 2016,
