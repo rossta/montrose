@@ -673,6 +673,23 @@ describe Montrose::Options do
     it { -> { options[:on] = -3 }.must_raise Montrose::ConfigurationError }
   end
 
+  describe "#except" do
+    it "defaults to nil" do
+      options.except.must_be_nil
+      options[:except].must_be_nil
+    end
+
+    it "accepts a single date" do
+      options[:except] = "2016-03-01"
+      options[:except].must_equal ["2016-03-01".to_date]
+    end
+
+    it "accepts multiple dates" do
+      options[:except] = [Date.today, "2016-03-01"]
+      options[:except].must_equal [Date.today, "2016-03-01".to_date]
+    end
+  end
+
   describe "#to_hash" do
     let(:options) { new_options(every: :day) }
 
