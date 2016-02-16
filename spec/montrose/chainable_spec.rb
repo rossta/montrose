@@ -342,4 +342,20 @@ describe Montrose::Chainable do
       ]
     end
   end
+
+  describe "#except" do
+    it "returns recurrence without specific dates" do
+      recurrence = Montrose.daily
+      recurrence = recurrence.except([Date.today, Date.today + 7.days])
+
+      dates = recurrence.take(10).map(&:to_date)
+
+      assert dates.include?(Date.today + 1.day),
+        "dates should include #{Date.today + 1.day}"
+      refute dates.include?(Date.today),
+        "dates shouldn't include #{Date.today}"
+      refute dates.include?(Date.today + 7.days),
+        "dates shouldn't include #{Date.today + 7.days}"
+    end
+  end
 end

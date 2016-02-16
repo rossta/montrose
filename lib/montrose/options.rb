@@ -86,6 +86,7 @@ module Montrose
     def_option :between
     def_option :at
     def_option :on
+    def_option :except
 
     def initialize(opts = {})
       defaults = {
@@ -209,6 +210,11 @@ module Montrose
       @on = arg
     end
 
+    def except=(date)
+      dates = map_arg(date) { |d| as_date(d) }
+      @except = dates
+    end
+
     def inspect
       "#<#{self.class} #{to_h.inspect}>"
     end
@@ -287,6 +293,10 @@ module Montrose
       fail ConfigurationError, "Out of range: #{range.inspect} does not include #{test}" unless range.include?(test)
 
       item
+    end
+
+    def as_date(time)
+      as_time(time).to_date
     end
 
     def as_time(time)

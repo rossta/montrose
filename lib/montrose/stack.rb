@@ -11,6 +11,7 @@ module Montrose
         Frequency,
         Rule::After,
         Rule::Before,
+        Rule::Except,
         Rule::Total,
         Rule::TimeOfDay,
         Rule::HourOfDay,

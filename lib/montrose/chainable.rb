@@ -194,6 +194,20 @@ module Montrose
       merge(at: time)
     end
 
+    # Create a recurrence with dates except dates given
+    #
+    # @param date [String, Date] represents date
+    #
+    # @example
+    #   Montrose.daily.except("2016-03-01")
+    #   Montrose.daily.except(Date.today)
+    #
+    # @return [Montrose::Recurrence]
+    #
+    def except(date)
+      merge(except: date)
+    end
+
     # Create a recurrence for given days of month
     #
     # @param days [Fixnum] days of month, e.g. 1, 2, -1, ...

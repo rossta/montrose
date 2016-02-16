@@ -350,7 +350,6 @@ Montrose.yearly(yday: [1, 100]) # yearly on the 1st and 100th day of year
 Montrose.yearly(on: { january: 31 })
 Montrose.r(every: :year, on: { 10 => 31 }, interval: 3)
 
-# TODO: Remove a date in the series with :except date(s)
 Montrose.daily(:day, except: "2017-01-31")
 Montrose.daily(except: [Date.today, "2017-01-31"])
 
