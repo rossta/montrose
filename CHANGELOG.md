@@ -1,3 +1,11 @@
+### 0.3.0 - (unreleased)
+
+* enhancements
+  * Adds `:except` option and chainable method to filter timestamps by date (by
+    @thewatts)
+* bug fixes
+  * Using `Montrose.r` without any arguments no longer throws `ArgumentError`
+
 ### 0.2.2 - 2016-02-08
 
 * bug fixes
