@@ -18,10 +18,6 @@ module Montrose
       def include?(time)
         !@dates.include?(time.to_date)
       end
-
-      def continue?
-        true
-      end
     end
   end
 end

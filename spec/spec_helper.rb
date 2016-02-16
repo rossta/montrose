@@ -93,7 +93,7 @@ module Minitest
     def assert_tick(actual_duration, clock)
       first = clock.tick
       second = clock.tick
-      assert_equal second, first + actual_duration
+      assert_equal second.change(usec: 0), (first + actual_duration).change(usec: 0)
     end
   end
 end

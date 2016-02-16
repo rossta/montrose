@@ -211,8 +211,7 @@ module Montrose
     end
 
     def except=(date)
-      dates = map_arg(date) { |d| as_date(d) }
-      @except = dates
+      @except = map_arg(date) { |d| as_date(d) }
     end
 
     def inspect
