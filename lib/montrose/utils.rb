@@ -5,6 +5,23 @@ module Montrose
     MONTHS = Date::MONTHNAMES
     DAYS = Date::DAYNAMES
 
+    def as_time(time)
+      return nil unless time
+
+      case
+      when time.is_a?(String)
+        Time.parse(time)
+      when time.respond_to?(:to_time)
+        time.to_time
+      else
+        Array(time).flat_map { |d| as_time(d) }
+      end
+    end
+
+    def as_date(time)
+      as_time(time).to_date
+    end
+
     def month_number(name)
       case name
       when Symbol, String

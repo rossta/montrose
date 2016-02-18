@@ -45,7 +45,7 @@ module Montrose
     def initialize(opts = {})
       opts = Montrose::Options.merge(opts)
       @time = nil
-      @starts = opts.fetch(:starts)
+      @starts = opts.fetch(:start_time)
       @interval = opts.fetch(:interval)
     end
 
