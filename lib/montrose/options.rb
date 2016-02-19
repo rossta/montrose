@@ -1,5 +1,7 @@
 module Montrose
   class Options
+    include Montrose::Utils
+
     @default_starts = nil
     @default_until = nil
     @default_every = nil
@@ -65,7 +67,6 @@ module Montrose
 
       def default_options
         {
-          starts: default_starts,
           until: default_until,
           interval: 1
         }
@@ -164,7 +165,7 @@ module Montrose
     end
 
     def day=(days)
-      @day = nested_map_arg(days) { |d| Montrose::Utils.day_number!(d) }
+      @day = nested_map_arg(days) { |d| day_number!(d) }
     end
 
     def mday=(mdays)
@@ -180,7 +181,7 @@ module Montrose
     end
 
     def month=(months)
-      @month = map_arg(months) { |d| Montrose::Utils.month_number!(d) }
+      @month = map_arg(months) { |d| month_number!(d) }
     end
 
     def between=(range)
@@ -195,11 +196,7 @@ module Montrose
     end
 
     def at=(time)
-      times = map_arg(time) { |t| as_time(t) }
-      now = Time.now
-      first = times.map { |t| t < now ? t + 24.hours : t }.min
-      self[:starts] = first if first
-      @at = times
+      @at = map_arg(time) { |t| as_time_parts(t) }
     end
 
     def on=(arg)
@@ -218,7 +215,20 @@ module Montrose
       "#<#{self.class} #{to_h.inspect}>"
     end
 
+    def start_time
+      time = starts || default_starts
+      if at
+        at.map { |(hour, min)| time.change(hour: hour, min: min) }.min
+      else
+        time
+      end
+    end
+
     private
+
+    def default_starts
+      self.class.default_starts
+    end
 
     def nested_map_arg(arg, &block)
       case arg
@@ -238,7 +248,7 @@ module Montrose
     end
 
     def map_days(arg)
-      map_arg(arg) { |d| Montrose::Utils.day_number!(d) }
+      map_arg(arg) { |d| day_number!(d) }
     end
 
     def map_mdays(arg)
@@ -280,9 +290,9 @@ module Montrose
     end
 
     def month_or_day(key)
-      month = Montrose::Utils.month_number(key)
+      month = month_number(key)
       return [:month, month] if month
-      day = Montrose::Utils.day_number(key)
+      day = day_number(key)
       return [:day, day] if day
       fail ConfigurationError, "Did not recognize #{key} as a month or day"
     end
@@ -294,21 +304,11 @@ module Montrose
       item
     end
 
-    def as_date(time)
-      as_time(time).to_date
-    end
+    def as_time_parts(arg)
+      return arg if arg.is_a?(Array)
 
-    def as_time(time)
-      return nil unless time
-
-      case
-      when time.is_a?(String)
-        Time.parse(time)
-      when time.respond_to?(:to_time)
-        time.to_time
-      else
-        Array(time).flat_map { |d| as_time(d) }
-      end
+      time = as_time(arg)
+      [time.hour, time.min]
     end
 
     def parse_frequency(input)

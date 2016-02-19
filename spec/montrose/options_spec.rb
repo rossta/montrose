@@ -5,6 +5,56 @@ describe Montrose::Options do
 
   it { Montrose::Options.new(nil).must_be_instance_of(Montrose::Options) }
 
+  describe "#start_time" do
+    before do
+      Timecop.freeze(time_now)
+    end
+
+    after do
+      Montrose::Options.default_starts = nil
+    end
+
+    it "defaults to :starts" do
+      options[:starts] = 3.days.from_now
+
+      options.start_time.must_equal 3.days.from_now
+      options[:start_time].must_equal 3.days.from_now
+    end
+
+    it "defaults to default_starts time" do
+      Montrose::Options.default_starts = 3.days.from_now
+
+      options.start_time.must_equal 3.days.from_now
+      options[:start_time].must_equal 3.days.from_now
+    end
+
+    it "cannot be set" do
+      -> { options[:start_time] = 3.days.from_now }.must_raise
+    end
+
+    it "is  :at time on default_starts date" do
+      noon = Time.local(2015, 9, 1, 12)
+      Timecop.freeze(noon)
+      options[:at] = "7pm"
+
+      options[:start_time].must_equal Time.local(2015, 9, 1, 19)
+    end
+
+    it "is :at time on :starts date" do
+      options[:starts] = Time.local(2016, 6, 23, 12)
+      options[:at] = "10am"
+
+      options[:start_time].must_equal Time.local(2016, 6, 23, 10)
+    end
+
+    it "is earliest of several :at times on default_starts date" do
+      options[:starts] = Time.local(2019, 12, 25, 20)
+      options[:at] = %w[7pm 10am]
+
+      options[:start_time].must_equal Time.local(2019, 12, 25, 10)
+    end
+  end
+
   describe ".default_starts" do
     after do
       Montrose::Options.default_starts = nil
@@ -161,25 +211,6 @@ describe Montrose::Options do
   describe "#starts" do
     before do
       Timecop.freeze(time_now)
-    end
-
-    after do
-      Montrose::Options.default_starts = nil
-    end
-
-    it "defaults to current time" do
-      default = Montrose::Options.merge(options)
-
-      default.starts.must_equal time_now
-      default[:starts].must_equal time_now
-    end
-
-    it "defaults to default_until time" do
-      Montrose::Options.default_starts = 3.days.from_now
-      default = Montrose::Options.merge(options)
-
-      default.starts.must_equal 3.days.from_now
-      default[:starts].must_equal 3.days.from_now
     end
 
     it "can be set" do
@@ -609,32 +640,28 @@ describe Montrose::Options do
       options[:at].must_be_nil
     end
 
-    it "sets a recurrence time" do
+    it "sets :at to hour and min parts" do
       options[:at] = "3:30 PM"
 
-      options.at.must_equal [Time.parse("3:30 PM")]
-      options[:at].must_equal [Time.parse("3:30 PM")]
+      time = Time.parse("3:30 PM")
+      options.at.must_equal [[time.hour, time.min]]
+      options[:at].must_equal [[time.hour, time.min]]
     end
 
-    it "sets a start time later today" do
-      options[:at] = "3:30 PM"
+    it "accepts an array of time strings" do
+      options[:at] = ["10:30 AM", "3:45 PM"]
 
-      options[:at].must_equal [Time.local(2015, 9, 1, 15, 30)]
-      options[:starts].must_equal Time.local(2015, 9, 1, 15, 30)
+      time_1 = Time.local(2015, 9, 1, 10, 30)
+      time_2 = Time.local(2015, 9, 1, 15, 45)
+      options[:at].must_equal [[time_1.hour, time_1.min], [time_2.hour, time_2.min]]
     end
 
-    it "sets a start time tomorrow" do
-      Timecop.freeze(Time.local(2015, 9, 1, 12))
-      options[:at] = "10:30 AM"
+    it "accepts an array of time part arrays" do
+      options[:at] = [[10, 30], [15, 45]]
 
-      options[:at].must_equal [Time.local(2015, 9, 1, 10, 30)]
-      options[:starts].must_equal Time.local(2015, 9, 2, 10, 30)
-    end
-
-    it "accepts an array of times" do
-      options[:at] = ["10:30 AM", "3:30 PM"]
-
-      options[:at].must_equal [Time.local(2015, 9, 1, 10, 30), Time.local(2015, 9, 1, 15, 30)]
+      time_1 = Time.local(2015, 9, 1, 10, 30)
+      time_2 = Time.local(2015, 9, 1, 15, 45)
+      options[:at].must_equal [[time_1.hour, time_1.min], [time_2.hour, time_2.min]]
     end
   end
 

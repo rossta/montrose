@@ -116,6 +116,16 @@ describe Montrose::Recurrence do
         Time.local(2015, 9, 3, 15, 30)
       ]
     end
+
+    it "specifying starts and at option" do
+      recurrence = new_recurrence(every: :week, on: "tuesday", at: "5:00", starts: "2016-06-23")
+
+      recurrence.events.take(3).must_pair_with [
+        Time.local(2016, 6, 28, 5, 00),
+        Time.local(2016, 7, 5,  5, 00),
+        Time.local(2016, 7, 12, 5, 00)
+      ]
+    end
   end
 
   describe "#inspect" do

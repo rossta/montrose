@@ -6,8 +6,8 @@ module Montrose
       @options = Montrose::Options.merge(opts)
       @time = nil
       @every = @options.fetch(:every) { fail ConfigurationError, "Required option :every not provided" }
-      @starts = @options.fetch(:starts)
       @interval = @options.fetch(:interval)
+      @start_time = @options.fetch(:start_time)
     end
 
     # Advances time to new unit by increment and sets
@@ -18,7 +18,7 @@ module Montrose
     end
 
     def peek
-      return @starts if @time.nil?
+      return @start_time if @time.nil?
 
       @time.advance(step)
     end
