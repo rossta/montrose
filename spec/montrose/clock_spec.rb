@@ -67,7 +67,7 @@ describe Montrose::Clock do
       clock.must_have_tick 3.days
     end
 
-    it "emits 1 day iincrements when day smallest part" do
+    it "emits 1 day increments when day smallest part" do
       clock = new_clock(every: :month, day: :tuesday)
 
       clock.must_have_tick 1.day
@@ -95,6 +95,13 @@ describe Montrose::Clock do
       clock = new_clock(every: :year, interval: 10)
 
       clock.must_have_tick 10.years
+    end
+
+    it "emits increments on at values" do
+      clock = new_clock(every: :day, at: [[10, 0], [15, 30]])
+
+      clock.must_have_tick(5.hours + 30.minutes)
+      clock.must_have_tick(5.hours + 30.minutes)
     end
   end
 end

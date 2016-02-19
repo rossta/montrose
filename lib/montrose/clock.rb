@@ -8,6 +8,7 @@ module Montrose
       @every = @options.fetch(:every) { fail ConfigurationError, "Required option :every not provided" }
       @interval = @options.fetch(:interval)
       @start_time = @options.fetch(:start_time)
+      @at = @options.fetch(:at, nil)
     end
 
     # Advances time to new unit by increment and sets
@@ -20,10 +21,22 @@ module Montrose
     def peek
       return @start_time if @time.nil?
 
-      @time.advance(step)
+      if @at
+        times = @at.map { |(hour, min)| @time.change(hour: hour, min: min) }
+
+        min_next = times.select { |t| t > @time }.min and return min_next
+
+        advance_step(times.min)
+      else
+        advance_step(@time)
+      end
     end
 
     private
+
+    def advance_step(time)
+      time.advance(step)
+    end
 
     def step
       @step ||= smallest_step or fail ConfigurationError, "No step for #{@options.inspect}"

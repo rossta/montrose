@@ -93,7 +93,9 @@ module Minitest
     def assert_tick(actual_duration, clock)
       first = clock.tick
       second = clock.tick
-      assert_equal second.change(usec: 0), (first + actual_duration).change(usec: 0)
+      expected = (first + actual_duration).change(usec: 0)
+      actual = second.change(usec: 0)
+      assert_equal expected, actual, "Expected #{expected} but got #{actual} as next tick"
     end
   end
 end
