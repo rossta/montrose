@@ -26,7 +26,7 @@ module Montrose
 
         min_next = times.select { |t| t > @time }.min and return min_next
 
-        advance_step(times.min)
+        advance_step(times.min || @time)
       else
         advance_step(@time)
       end

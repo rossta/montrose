@@ -217,8 +217,9 @@ module Montrose
 
     def start_time
       time = starts || default_starts
+
       if at
-        at.map { |(hour, min)| time.change(hour: hour, min: min) }.min
+        at.map { |(hour, min)| time.change(hour: hour, min: min) }.min || time
       else
         time
       end

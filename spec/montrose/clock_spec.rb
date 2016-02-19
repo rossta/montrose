@@ -103,5 +103,11 @@ describe Montrose::Clock do
       clock.must_have_tick(5.hours + 30.minutes)
       clock.must_have_tick(5.hours + 30.minutes)
     end
+
+    it "emits correct tick when at values empty" do
+      clock = new_clock(every: :day, at: [])
+
+      clock.must_have_tick 1.day
+    end
   end
 end

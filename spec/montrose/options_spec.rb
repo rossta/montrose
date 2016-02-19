@@ -53,6 +53,13 @@ describe Montrose::Options do
 
       options[:start_time].must_equal Time.local(2019, 12, 25, 10)
     end
+
+    it "is :starts when :at empty" do
+      options[:starts] = Time.local(2019, 12, 25, 20)
+      options[:at] = []
+
+      options[:start_time].must_equal Time.local(2019, 12, 25, 20)
+    end
   end
 
   describe ".default_starts" do
