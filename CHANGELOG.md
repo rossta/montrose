@@ -1,9 +1,12 @@
-### 0.3.0 - (unreleased)
+### 0.3.0 - (2016-02-19)
 
 * enhancements
   * Adds `:except` option and chainable method to filter timestamps by date (by
     @thewatts)
 * bug fixes
+  * Fix recurrences when specifying both `:starts` and `:at` by treating
+    `:starts` value like a date
+  * Respect recurrence rules using multiple `:at` values
   * Using `Montrose.r` without any arguments no longer throws `ArgumentError`
 
 ### 0.2.2 - 2016-02-08
@@ -13,6 +16,7 @@
 * enhancements
   * Adds `Montrose.r` method for starting a new recurrence
   * Adds `Chainable` alias methods including `#starts`, `#until`, `#repeat`
+  * README updates (by @thegcat)
 
 ### 0.2.1 - 2016-02-03
 
