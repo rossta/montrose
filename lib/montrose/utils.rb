@@ -10,7 +10,7 @@ module Montrose
 
       case
       when time.is_a?(String)
-        Time.parse(time)
+        parse_time(time)
       when time.respond_to?(:to_time)
         time.to_time
       else
@@ -20,6 +20,14 @@ module Montrose
 
     def as_date(time)
       as_time(time).to_date
+    end
+
+    def parse_time(*args)
+      ::Time.zone.nil? ? ::Time.parse(*args) : ::Time.zone.parse(*args)
+    end
+
+    def current_time
+      ::Time.current
     end
 
     def month_number(name)

@@ -3,6 +3,20 @@ require "spec_helper"
 describe Montrose::Utils do
   include Montrose::Utils
 
+  describe "#parse_time" do
+    it { parse_time("Sept 1, 2015 12:00PM").must_equal Time.parse("Sept 1, 2015 12:00PM") }
+    it "uses Time.zone if available" do
+      Time.use_zone("Hawaii") do
+        time = parse_time("Sept 1, 2015 12:00PM")
+        time.month.must_equal 9
+        time.day.must_equal 1
+        time.year.must_equal 2015
+        time.hour.must_equal 12
+        time.utc_offset.must_equal(-10.hours)
+      end
+    end
+  end
+
   describe "#month_number" do
     it { month_number!(:january).must_equal 1 }
     it { month_number!(:february).must_equal 2 }

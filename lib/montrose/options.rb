@@ -36,7 +36,7 @@ module Montrose
       def default_until
         case @default_until
         when String
-          Time.parse(@default_until)
+          ::Montrose::Utils.parse_time(@default_until)
         when Proc
           @default_until.call
         else
@@ -51,11 +51,11 @@ module Montrose
       def default_starts
         case @default_starts
         when String
-          Time.parse(@default_starts)
+          ::Montrose::Utils.parse_time(@default_starts)
         when Proc
           @default_starts.call
         when nil
-          Time.current
+          ::Montrose::Utils.current_time
         else
           @default_starts
         end
