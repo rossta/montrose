@@ -55,7 +55,7 @@ module Montrose
         when Proc
           @default_starts.call
         when nil
-          Time.now
+          Time.current
         else
           @default_starts
         end
