@@ -30,7 +30,7 @@ module Montrose
       # If no year is specified, it will use the current year.
       # https://github.com/rails/rails/pull/22244
       def days_in_year(year)
-        Time.days_in_month(2, year) + 337
+        ::Montrose::Utils.days_in_month(2, year) + 337
       end
     end
   end

@@ -59,5 +59,9 @@ module Montrose
       day_number(name) or fail ConfigurationError,
         "Did not recognize day #{name}, must be one of #{DAYS.inspect}"
     end
+
+    def days_in_month(*args)
+      ::Time.days_in_month(*args)
+    end
   end
 end

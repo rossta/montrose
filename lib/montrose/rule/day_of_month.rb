@@ -23,7 +23,7 @@ module Montrose
 
       # matches days specified at negative numbers
       def included_from_end_of_month?(time)
-        month_days = Time.days_in_month(time.month, time.year) # given by activesupport
+        month_days = ::Montrose::Utils.days_in_month(time.month, time.year) # given by activesupport
         @days.any? { |d| month_days + d + 1 == time.mday }
       end
     end
