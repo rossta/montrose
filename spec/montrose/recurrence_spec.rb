@@ -100,7 +100,7 @@ describe Montrose::Recurrence do
     end
   end
 
-  describe "additional recurrence examples" do
+  describe "integration specs" do
     let(:now) { Time.local(2015, 9, 1, 12) } # Tuesday
 
     before do
@@ -124,6 +124,16 @@ describe Montrose::Recurrence do
         Time.local(2016, 6, 28, 5, 00),
         Time.local(2016, 7, 5,  5, 00),
         Time.local(2016, 7, 12, 5, 00)
+      ]
+    end
+
+    it "multiple at values" do
+      recurrence = new_recurrence(every: :day, at: ["7:00am", "3:30pm"])
+
+      recurrence.events.take(3).must_pair_with [
+        Time.local(2015, 9, 1, 7,  00),
+        Time.local(2015, 9, 1, 15, 30),
+        Time.local(2015, 9, 2, 7,  00)
       ]
     end
   end
