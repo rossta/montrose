@@ -60,8 +60,16 @@ module Montrose
         "Did not recognize day #{name}, must be one of #{DAYS.inspect}"
     end
 
-    def days_in_month(*args)
-      ::Time.days_in_month(*args)
+    def days_in_month(month, year = current_time.year)
+      date = ::Date.new(year, month, 1)
+      ((date >> 1) - date).to_i
+    end
+
+    # Returns the number of days in the given year.
+    # If no year is specified, it will use the current year.
+    # https://github.com/rails/rails/pull/22244
+    def days_in_year(year)
+      ::Montrose::Utils.days_in_month(2, year) + 337
     end
   end
 end

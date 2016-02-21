@@ -47,15 +47,7 @@ module Montrose
         end
 
         def total_days
-          days_in_month(@time)
-        end
-
-        private
-
-        # Get the days in the month for +time
-        def days_in_month(time)
-          date = Date.new(time.year, time.month, 1)
-          ((date >> 1) - date).to_i
+          ::Montrose::Utils.days_in_month(@time.month, @time.year)
         end
       end
     end
