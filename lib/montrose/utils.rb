@@ -2,8 +2,13 @@ module Montrose
   module Utils
     module_function
 
-    MONTHS = Date::MONTHNAMES
-    DAYS = Date::DAYNAMES
+    MONTHS = ::Date::MONTHNAMES
+    DAYS = ::Date::DAYNAMES
+
+    MAX_HOURS_IN_DAY = 24
+    MAX_DAYS_IN_YEAR = 366
+    MAX_WEEKS_IN_YEAR = 53
+    MAX_DAYS_IN_MONTH = 31
 
     def as_time(time)
       return nil unless time
