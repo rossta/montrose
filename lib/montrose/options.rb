@@ -6,11 +6,6 @@ module Montrose
     @default_until = nil
     @default_every = nil
 
-    MAX_HOURS_IN_DAY = 24
-    MAX_DAYS_IN_YEAR = 366
-    MAX_WEEKS_IN_YEAR = 53
-    MAX_DAYS_IN_MONTH = 31
-
     class << self
       def new(options = {})
         return options if options.is_a?(self)
@@ -36,7 +31,7 @@ module Montrose
       def default_until
         case @default_until
         when String
-          Time.parse(@default_until)
+          ::Montrose::Utils.parse_time(@default_until)
         when Proc
           @default_until.call
         else
@@ -51,11 +46,11 @@ module Montrose
       def default_starts
         case @default_starts
         when String
-          Time.parse(@default_starts)
+          ::Montrose::Utils.parse_time(@default_starts)
         when Proc
           @default_starts.call
         when nil
-          Time.now
+          ::Montrose::Utils.current_time
         else
           @default_starts
         end
@@ -261,19 +256,19 @@ module Montrose
     end
 
     def assert_hour(hour)
-      assert_range_includes(1..MAX_HOURS_IN_DAY, hour)
+      assert_range_includes(1..::Montrose::Utils::MAX_HOURS_IN_DAY, hour)
     end
 
     def assert_mday(mday)
-      assert_range_includes(1..MAX_DAYS_IN_MONTH, mday, :absolute)
+      assert_range_includes(1..::Montrose::Utils::MAX_DAYS_IN_MONTH, mday, :absolute)
     end
 
     def assert_yday(yday)
-      assert_range_includes(1..MAX_DAYS_IN_YEAR, yday, :absolute)
+      assert_range_includes(1..::Montrose::Utils::MAX_DAYS_IN_YEAR, yday, :absolute)
     end
 
     def assert_week(week)
-      assert_range_includes(1..MAX_WEEKS_IN_YEAR, week, :absolute)
+      assert_range_includes(1..::Montrose::Utils::MAX_WEEKS_IN_YEAR, week, :absolute)
     end
 
     def decompose_on_arg(arg)

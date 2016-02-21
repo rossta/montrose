@@ -47,7 +47,7 @@ module Minitest
     end
 
     def time_now
-      Time.now.change(usec: 0)
+      Time.current.change(usec: 0)
     end
 
     def consecutive_days(count, starts: time_now, interval: 1)

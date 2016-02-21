@@ -22,15 +22,8 @@ module Montrose
       private
 
       def included_from_end_of_month?(time)
-        year_days = days_in_year(time.year) # given by activesupport
+        year_days = ::Montrose::Utils.days_in_year(time.year) # given by activesupport
         @days.any? { |d| year_days + d + 1 == time.yday }
-      end
-
-      # Returns the number of days in the given year.
-      # If no year is specified, it will use the current year.
-      # https://github.com/rails/rails/pull/22244
-      def days_in_year(year)
-        Time.days_in_month(2, year) + 337
       end
     end
   end

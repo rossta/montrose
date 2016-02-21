@@ -181,8 +181,8 @@ Montrose.daily(interval: 2)
 Montrose.every(10.days, total: 5)
 
 # everyday in January for 3 years
-starts = Time.now.beginning_of_year
-ends = Time.now.end_of_year + 2.years
+starts = Time.current.beginning_of_year
+ends = Time.current.end_of_year + 2.years
 Montrose.daily(month: :january, between: starts...ends)
 
 # weekly for 10 occurrences
@@ -356,7 +356,7 @@ Montrose.daily(except: [Date.today, "2017-01-31"])
 # Chaining
 Montrose.weekly.starting(3.weeks.from_now).on(:friday)
 Montrose.every(:day).at("4:05pm")
-Montrose.yearly.between(Time.now..10.years.from_now)
+Montrose.yearly.between(Time.current..10.years.from_now)
 
 # Enumerating events
 r = Montrose.every(:month, mday: 31, until: "January 1, 2017")
