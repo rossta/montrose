@@ -142,10 +142,19 @@ describe Montrose::Recurrence do
     let(:now) { time_now }
     let(:recurrence) { new_recurrence(every: :month, starts: now, interval: 1) }
 
-    it do
+    it "is readable" do
       inspected = "#<Montrose::Recurrence:#{recurrence.object_id.to_s(16)} "
       inspected << "{:every=>:month, :starts=>#{now.inspect}, :interval=>1}>"
       recurrence.inspect.must_equal inspected
+    end
+  end
+
+  describe "#to_json" do
+    it "returns json string of its options" do
+      options = { every: :day, at: "3:45pm" }
+      recurrence = new_recurrence(options)
+
+      recurrence.to_json.must_equal "{\"every\":\"day\",\"at\":[[15,45]]}"
     end
   end
 end
