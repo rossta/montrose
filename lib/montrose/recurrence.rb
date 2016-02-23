@@ -62,6 +62,15 @@ module Montrose
     end
     alias to_h to_hash
 
+    # Returns json string of options used to create
+    # the recurrence
+    #
+    # @return [String] json of recurrence options
+    #
+    def to_json
+      to_hash.to_json
+    end
+
     def inspect
       "#<#{self.class}:#{object_id.to_s(16)} #{to_h.inspect}>"
     end
