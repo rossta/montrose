@@ -44,6 +44,7 @@ What `Montrose` doesn't do:
 
 * support all calendaring use cases under the sun
 * schedule recurring jobs for your Rails app. Use one of these instead: [cron](https://en.wikipedia.org/wiki/Cron), [rufus-scheduler](https://github.com/jmettraux/rufus-scheduler), [sidekiq-cron](https://github.com/ondrejbartas/sidekiq-cron), [sidetiq](https://github.com/tobiassvn/sidetiq), [whenever](https://github.com/javan/whenever)
+
 ## Concepts
 
 Montrose allows you to easily create "recurrence" objects through chaining:
