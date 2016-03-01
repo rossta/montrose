@@ -29,10 +29,11 @@ Or install it yourself as:
 
 ## Why
 
-Dealing with recurring events is hard. `Montrose` provides a simple interface for specifying and enumerating recurring events as `Time` objects.
+Dealing with recurring events is hard. `Montrose` provides a simple interface for specifying and enumerating recurring events as `Time` objects for Ruby applications.
 
 More specifically, this project intends to:
 
+* model recurring events in Ruby
 * embrace Ruby idioms
 * support Ruby 2.1+
 * be reasonably performant
@@ -42,8 +43,7 @@ More specifically, this project intends to:
 What `Montrose` doesn't do:
 
 * support all calendaring use cases under the sun
-* schedule recurring jobs for you. See instead [rufus-scheduler](https://github.com/jmettraux/rufus-scheduler), [sidekiq-cron](https://github.com/ondrejbartas/sidekiq-cron), [sidetiq](https://github.com/tobiassvn/sidetiq), [whenever](https://github.com/javan/whenever)
-
+* schedule recurring jobs for your Rails app. Use one of these instead: [cron](https://en.wikipedia.org/wiki/Cron), [rufus-scheduler](https://github.com/jmettraux/rufus-scheduler), [sidekiq-cron](https://github.com/ondrejbartas/sidekiq-cron), [sidetiq](https://github.com/tobiassvn/sidetiq), [whenever](https://github.com/javan/whenever)
 ## Concepts
 
 Montrose allows you to easily create "recurrence" objects through chaining:
