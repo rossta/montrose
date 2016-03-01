@@ -47,7 +47,7 @@ What `Montrose` doesn't do:
 
 ## Concepts
 
-Montrose allows you to easily create "recurrence" objects through chaining:
+Montrose allows you to easily create "recurrence objects" through chaining:
 
 ```ruby
 # Every Monday at 10:30am
