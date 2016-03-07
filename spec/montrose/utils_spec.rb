@@ -3,6 +3,12 @@ require "spec_helper"
 describe Montrose::Utils do
   include Montrose::Utils
 
+  it "return current_time" do
+    Time.freeze do
+      expect(current_time).to eq(Time.current)
+    end
+  end
+
   describe "#parse_time" do
     it { parse_time("Sept 1, 2015 12:00PM").must_equal Time.parse("Sept 1, 2015 12:00PM") }
     it "uses Time.zone if available" do
@@ -103,5 +109,12 @@ describe Montrose::Utils do
     it { days_in_month(10).must_equal 31 }
     it { days_in_month(11).must_equal 30 }
     it { days_in_month(12).must_equal 31 }
+  end
+
+  describe "#days_in_year" do
+    it { days_in_year(2005).must_equal 365 }
+    it { days_in_year(2004).must_equal 366 }
+    it { days_in_year(2000).must_equal 366 }
+    it { days_in_year(1900).must_equal 365 }
   end
 end
