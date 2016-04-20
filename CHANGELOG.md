@@ -1,3 +1,10 @@
+### 0.4.0 - (2016-04-20)
+
+* enhancements
+  * Respect configured time zone by using `Time.current` from `ActiveSupport`
+  * Adds `Montrose::Recurrence#to_json` method
+  * Additional tests for utils methods (by @AlexWheeler)
+
 ### 0.3.0 - (2016-02-19)
 
 * enhancements
