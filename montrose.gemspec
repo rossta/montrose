@@ -21,12 +21,12 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = ">= 2.1.0"
 
-  spec.add_dependency "activesupport"
+  spec.add_dependency "activesupport", "~> 4.0"
 
-  spec.add_development_dependency "bundler", "~> 1.10"
-  spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_development_dependency "minitest", "~> 5.8"
+  spec.add_development_dependency "bundler", "~> 1.12"
+  spec.add_development_dependency "rake", "~> 11.0"
+  spec.add_development_dependency "minitest", "~> 5.9"
   spec.add_development_dependency "m", "~> 1.4"
-  spec.add_development_dependency "rubocop", "~> 0.36"
+  spec.add_development_dependency "rubocop", "~> 0.41"
   spec.add_development_dependency "timecop"
 end
