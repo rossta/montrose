@@ -43,6 +43,7 @@ module Montrose
     end
 
     def smallest_step
+      unit_step(:second) ||
       unit_step(:minute) ||
         unit_step(:hour) ||
         unit_step(:day, :mday, :yday) ||
