@@ -13,7 +13,7 @@ describe Montrose::Chainable do
       recurrence.must_be_kind_of Montrose::Recurrence
     end
 
-    it "emits given frequencey by default" do
+    it "emits given frequency default" do
       recurrence = Montrose.every(:minute)
       recurrence.events.must_have_interval 1.minute
 

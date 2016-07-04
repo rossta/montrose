@@ -149,80 +149,67 @@ describe Montrose::Options do
       it "parses as every: :minute with interval" do
         options[:every] = 30.minutes
 
-        options[:every].must_equal :minute
-        options[:interval].must_equal 30
+        options_duration(options).must_equal 30.minutes
 
         options[:every] = 90.minutes
 
-        options[:every].must_equal :minute
-        options[:interval].must_equal 90
+        options_duration(options).must_equal 90.minutes
       end
 
       it "parses as every: :hour, with interval" do
         options[:every] = 1.hour
 
-        options[:every].must_equal :hour
-        options[:interval].must_equal 1
+        options_duration(options).must_equal 1.hour
 
         options[:every] = 5.hours
 
-        options[:every].must_equal :hour
-        options[:interval].must_equal 5
+        options_duration(options).must_equal 5.hours
       end
 
       it "parses as every: :day, with interval" do
         options[:every] = 1.day
 
-        options[:every].must_equal :day
-        options[:interval].must_equal 1
+        options_duration(options).must_equal 1.day
 
         options[:every] = 30.days
 
-        options[:every].must_equal :day
-        options[:interval].must_equal 30
+        options_duration(options).must_equal 30.days
       end
 
       it "parses as every: :week, with interval" do
         options[:every] = 1.week
 
-        options[:every].must_equal :week
-        options[:interval].must_equal 1
+        options_duration(options).must_equal 1.week
 
         options[:every] = 12.weeks
 
-        options[:every].must_equal :week
-        options[:interval].must_equal 12
+        options_duration(options).must_equal 12.weeks
       end
 
       it "parses as every: :month, with interval" do
         options[:every] = 1.month
 
-        options[:every].must_equal :month
-        options[:interval].must_equal 1
+        options_duration(options).must_equal 1.month
 
         options[:every] = 12.months
 
-        options[:every].must_equal :month
-        options[:interval].must_equal 12
+        options_duration(options).must_equal 12.months
       end
 
       it "parses as every: :year, with interval" do
         options[:every] = 1.year
 
-        options[:every].must_equal :year
-        options[:interval].must_equal 1
+        options_duration(options).must_equal 1.year
 
         options[:every] = 12.years
 
-        options[:every].must_equal :year
-        options[:interval].must_equal 12
+        options_duration(options).must_equal 12.years
       end
 
       it "parses on initialize, ignores given interval" do
         options = new_options(every: 5.years, interval: 2)
 
-        options[:every].must_equal :year
-        options[:interval].must_equal 5
+        options_duration(options).must_equal 5.years
       end
     end
   end
