@@ -170,6 +170,18 @@ describe Montrose::Options do
         options[:interval].must_equal 5
       end
 
+      it "parses as every: :day, with interval" do
+        options[:every] = 1.day
+
+        options[:every].must_equal :day
+        options[:interval].must_equal 1
+
+        options[:every] = 30.days
+
+        options[:every].must_equal :day
+        options[:interval].must_equal 30
+      end
+
       it "parses as every: :week, with interval" do
         options[:every] = 1.week
 
