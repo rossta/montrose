@@ -121,9 +121,9 @@ describe Montrose::Recurrence do
       recurrence = new_recurrence(every: :week, on: "tuesday", at: "5:00", starts: "2016-06-23")
 
       recurrence.events.take(3).must_pair_with [
-        Time.local(2016, 6, 28, 5, 00),
-        Time.local(2016, 7, 5,  5, 00),
-        Time.local(2016, 7, 12, 5, 00)
+        Time.local(2016, 6, 28, 5, 0o0),
+        Time.local(2016, 7, 5,  5, 0o0),
+        Time.local(2016, 7, 12, 5, 0o0)
       ]
     end
 
@@ -131,9 +131,9 @@ describe Montrose::Recurrence do
       recurrence = new_recurrence(every: :day, at: ["7:00am", "3:30pm"])
 
       recurrence.events.take(3).must_pair_with [
-        Time.local(2015, 9, 1, 7,  00),
+        Time.local(2015, 9, 1, 7,  0o0),
         Time.local(2015, 9, 1, 15, 30),
-        Time.local(2015, 9, 2, 7,  00)
+        Time.local(2015, 9, 2, 7,  0o0)
       ]
     end
   end
