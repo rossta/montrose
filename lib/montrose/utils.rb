@@ -13,10 +13,9 @@ module Montrose
     def as_time(time)
       return nil unless time
 
-      case
-      when time.is_a?(String)
+      if time.is_a?(String)
         parse_time(time)
-      when time.respond_to?(:to_time)
+      elsif time.respond_to?(:to_time)
         time.to_time
       else
         Array(time).flat_map { |d| as_time(d) }
