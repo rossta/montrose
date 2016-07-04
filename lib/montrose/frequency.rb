@@ -10,6 +10,7 @@ module Montrose
     include Montrose::Rule
 
     FREQUENCY_TERMS = {
+      "second" => "Secondly",
       "minute" => "Minutely",
       "hour" => "Hourly",
       "day" => "Daily",
@@ -59,5 +60,6 @@ require "montrose/frequency/daily"
 require "montrose/frequency/hourly"
 require "montrose/frequency/minutely"
 require "montrose/frequency/monthly"
+require "montrose/frequency/secondly"
 require "montrose/frequency/weekly"
 require "montrose/frequency/yearly"

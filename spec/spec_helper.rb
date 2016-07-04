@@ -42,6 +42,10 @@ module Minitest
       Montrose::Options.new(options)
     end
 
+    def options_duration(options)
+      options.fetch(:interval).send(options.fetch(:every))
+    end
+
     def to_time(obj)
       Time.zone.parse(obj)
     end
