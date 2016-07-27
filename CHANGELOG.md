@@ -1,3 +1,8 @@
+### 0.4.1 - (2016-07-04)
+
+* bug fixes
+  * Fix issue with repeating 'every 30 days'
+
 ### 0.4.0 - (2016-04-20)
 
 * enhancements
