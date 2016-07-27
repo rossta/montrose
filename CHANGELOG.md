@@ -1,7 +1,16 @@
-### 0.4.1 - (2016-07-04)
+### 0.4.2 - (2016-07-27)
 
 * bug fixes
-  * Fix issue with repeating 'every 30 days'
+  * Respect `ActiveSupport::TimeWithZone` objects for casting time objects (by
+    @tconst)
+
+### 0.4.1 - (2016-07-04)
+
+* enhancements
+  * Support `Montrose.every(:second)`
+
+* bug fixes
+  * Ensure `ActiveSupport::Duration` parts are used; fixes 'every 30 days' bug
 
 ### 0.4.0 - (2016-04-20)
 
