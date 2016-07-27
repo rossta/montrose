@@ -9,6 +9,26 @@ describe Montrose::Utils do
     end
   end
 
+  describe "#as_time" do
+    it "parses Strings" do
+      time_string = Time.now.to_s
+      as_time(time_string).class.must_equal Time
+      as_time(time_string).must_equal Time.parse(time_string)
+    end
+
+    it "returns unmodified ActiveSupport::TimeWithZone objects" do
+      Time.use_zone("Beijing") do
+        time_with_zone = Time.zone.now
+        time_with_zone.class.must_equal ActiveSupport::TimeWithZone
+        as_time(time_with_zone).must_equal time_with_zone
+      end
+    end
+
+    it "casts to_time if available" do
+      as_time(Date.today).must_equal Date.today.to_time
+    end
+  end
+
   describe "#parse_time" do
     it { parse_time("Sept 1, 2015 12:00PM").must_equal Time.parse("Sept 1, 2015 12:00PM") }
     it "uses Time.zone if available" do

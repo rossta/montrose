@@ -15,6 +15,8 @@ module Montrose
 
       if time.is_a?(String)
         parse_time(time)
+      elsif time.is_a?(ActiveSupport::TimeWithZone)
+        time
       elsif time.respond_to?(:to_time)
         time.to_time
       else
