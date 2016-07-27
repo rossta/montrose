@@ -227,7 +227,7 @@ Montrose.every(:month, day: { monday: [-2] }, total: 6)
 Montrose.every(:month, mday: [-3])
 
 # monthly on the 2nd and 15th of the month for 10 occurrences
-Montrose.every(:month, on: [2, 15], total: 10)
+Montrose.every(:month, mday: [2, 15], total: 10)
 
 # monthly on the first and last day of the month for 10 occurrences
 Montrose.monthly(mday: [1, -1], total: 10)
