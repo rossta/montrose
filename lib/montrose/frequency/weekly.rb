@@ -2,7 +2,7 @@ module Montrose
   class Frequency
     class Weekly < Frequency
       def include?(time)
-        weeks_since_start(time) % @interval == 0
+        (weeks_since_start(time) % @interval).zero?
       end
 
       private
