@@ -4,14 +4,11 @@ gemfile:
 - gemfiles/activesupport_5.0.gemfile
 - gemfiles/activesupport_4.2.gemfile
 - gemfiles/activesupport_4.1.gemfile
-- gemfiles/activesupport_4.0.gemfile
 language: ruby
 matrix:
-  allow_failures:
-  - gemfile: gemfiles/activesupport_4.0.gemfile
   exclude:
   - rvm: 2.1.10
-    gemfile: gemfiles/activesupport_5.0.gemfile
+    gemfile: gemfiles/activesupport_5.0.gemfile # Requires Ruby 2.2+
   fast_finish: true
 rvm:
   - 2.1.10
