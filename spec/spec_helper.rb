@@ -2,6 +2,7 @@ require "coveralls"
 Coveralls.wear! do
   add_filter "spec/support"
 end
+SimpleCov.maximum_coverage_drop 5
 
 $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
 require "montrose"
