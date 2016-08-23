@@ -1,6 +1,7 @@
 AllCops:
   Exclude:
     - 'bin/**/*'
+    - 'gemfiles/**/*'
 
 Lint/HandleExceptions:
   Exclude:

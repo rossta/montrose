@@ -1,6 +1,6 @@
 require "coveralls"
 Coveralls.wear! do
-  add_filter "spec/support"
+  add_filter "bundle|gemfiles|spec|vendor"
 end
 SimpleCov.maximum_coverage_drop 5
 

@@ -1,6 +1,17 @@
+bundler_args: "--jobs 4 --retry 3"
+cache: bundler
+gemfile:
+- gemfiles/activesupport_5.0.gemfile
+- gemfiles/activesupport_4.2.gemfile
+- gemfiles/activesupport_4.1.gemfile
 language: ruby
+matrix:
+  exclude:
+  - rvm: 2.1.10
+    gemfile: gemfiles/activesupport_5.0.gemfile # Requires Ruby 2.2+
+  fast_finish: true
 rvm:
   - 2.1.10
   - 2.2.5
   - 2.3.1
-before_install: gem install bundler -v 1.11.2
+sudo: false
