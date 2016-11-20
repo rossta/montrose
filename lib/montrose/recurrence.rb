@@ -28,7 +28,7 @@ module Montrose
       end
 
       def load(json)
-        new JSON.load(json)
+        new JSON.parse(json)
       end
     end
 
