@@ -75,6 +75,13 @@ module Montrose
       "#<#{self.class}:#{object_id.to_s(16)} #{to_h.inspect}>"
     end
 
+    def include?(timestamp)
+      event_enum.lazy.each do |event|
+        return true if event == timestamp
+        return false if event > timestamp
+      end or false
+    end
+
     private
 
     def event_enum
