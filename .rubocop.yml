@@ -112,3 +112,6 @@ Style/RegexpLiteral:
 
 Style/DotPosition:
   EnforcedStyle: trailing
+
+Style/VariableNumber:
+  Enabled: false
