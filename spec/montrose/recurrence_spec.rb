@@ -157,4 +157,34 @@ describe Montrose::Recurrence do
       recurrence.to_json.must_equal "{\"every\":\"day\",\"at\":[[15,45]]}"
     end
   end
+
+  describe "#include?" do
+    let(:now) { Time.local(2015, 9, 1, 12) } # Tuesday
+
+    before do
+      Timecop.freeze(now)
+    end
+
+    it "is true when given timestamp intersects infinite recurrence" do
+      recurrence = new_recurrence(every: :day, at: "3:30 PM")
+
+      timestamp = 3.days.from_now.beginning_of_day.advance(hours: 15, minutes: 30)
+      recurrence.include?(timestamp)
+    end
+
+    it "is false when given timestamp not included in recurrence" do
+      recurrence = new_recurrence(every: :week, on: "tuesday", at: "5:00", starts: "2016-06-23")
+
+      timestamp = 3.days.from_now.beginning_of_day.advance(hours: 15, minutes: 31)
+
+      recurrence.include?(timestamp).must_equal false
+    end
+
+    it "is false if falls outside range" do
+      recurrence = new_recurrence(every: :day, at: "3:30 PM").repeat(3)
+
+      timestamp = 4.days.from_now.beginning_of_day.advance(hours: 15, minutes: 30)
+      recurrence.include?(timestamp).must_equal false
+    end
+  end
 end
