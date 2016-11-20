@@ -1,3 +1,8 @@
+### 0.4.3 - (2016-07-27)
+
+* enhancements
+  * Add CI support for ActiveSupport 4.1, 4.2, 5.0 (by @phlipper)
+
 ### 0.4.2 - (2016-07-27)
 
 * bug fixes
