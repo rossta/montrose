@@ -75,6 +75,11 @@ module Montrose
       "#<#{self.class}:#{object_id.to_s(16)} #{to_h.inspect}>"
     end
 
+    # Return true/false if given timestamp equals a
+    # timestamp given by the recurrence
+    #
+    # @return [Boolean] timestamp is included in recurrence
+    #
     def include?(timestamp)
       event_enum.lazy.each do |event|
         return true if event == timestamp
