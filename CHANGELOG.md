@@ -1,4 +1,10 @@
-### 0.4.3 - (2016-07-27)
+### 0.5.0 - (2016-11-23)
+
+* enhancements
+  * Adds `Recurrence#include?`
+  * Improved documentation
+
+### 0.4.3 - (2016-11-20)
 
 * enhancements
   * Add CI support for ActiveSupport 4.1, 4.2, 5.0 (by @phlipper)
