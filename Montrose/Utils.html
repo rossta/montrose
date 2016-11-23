@@ -77,9 +77,13 @@
     
   
   
+    <dt class="r1">Included in:</dt>
+    <dd class="r1"><span class='object_link'><a href="Options.html" title="Montrose::Options (class)">Options</a></span></dd>
+    
   
-    <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">lib/montrose/utils.rb</dd>
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/montrose/utils.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -92,12 +96,32 @@
         <dt id="MONTHS-constant" class="">MONTHS =
           
         </dt>
-        <dd><pre class="code"><span class='const'>Date</span><span class='op'>::</span><span class='const'>MONTHNAMES</span></pre></dd>
+        <dd><pre class="code"><span class='op'>::</span><span class='const'>Date</span><span class='op'>::</span><span class='const'>MONTHNAMES</span></pre></dd>
       
         <dt id="DAYS-constant" class="">DAYS =
           
         </dt>
-        <dd><pre class="code"><span class='const'>Date</span><span class='op'>::</span><span class='const'>DAYNAMES</span></pre></dd>
+        <dd><pre class="code"><span class='op'>::</span><span class='const'>Date</span><span class='op'>::</span><span class='const'>DAYNAMES</span></pre></dd>
+      
+        <dt id="MAX_HOURS_IN_DAY-constant" class="">MAX_HOURS_IN_DAY =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>24</span></pre></dd>
+      
+        <dt id="MAX_DAYS_IN_YEAR-constant" class="">MAX_DAYS_IN_YEAR =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>366</span></pre></dd>
+      
+        <dt id="MAX_WEEKS_IN_YEAR-constant" class="">MAX_WEEKS_IN_YEAR =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>53</span></pre></dd>
+      
+        <dt id="MAX_DAYS_IN_MONTH-constant" class="">MAX_DAYS_IN_MONTH =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>31</span></pre></dd>
       
     </dl>
   
@@ -115,6 +139,72 @@
     </h2>
 
     <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#as_date-class_method" title="as_date (class method)">+ (Object) <strong>as_date</strong>(time) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#as_time-class_method" title="as_time (class method)">+ (Object) <strong>as_time</strong>(time) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#current_time-class_method" title="current_time (class method)">+ (Object) <strong>current_time</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
       
         <li class="public ">
   <span class="summary_signature">
@@ -163,6 +253,52 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#days_in_month-class_method" title="days_in_month (class method)">+ (Object) <strong>days_in_month</strong>(month, year = current_time.year) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#days_in_year-class_method" title="days_in_year (class method)">+ (Object) <strong>days_in_year</strong>(year) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the number of days in the given year.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#month_number-class_method" title="month_number (class method)">+ (Object) <strong>month_number</strong>(name) </a>
     
 
@@ -204,6 +340,28 @@
 </li>
 
       
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#parse_time-class_method" title="parse_time (class method)">+ (Object) <strong>parse_time</strong>(*args) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
     </ul>
   
 
@@ -214,7 +372,117 @@
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="day_number-class_method">
+  <h3 class="signature first" id="as_date-class_method">
+  
+    + (<tt>Object</tt>) <strong>as_date</strong>(time) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+27
+28
+29</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/montrose/utils.rb', line 27</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_as_date'>as_date</span><span class='lparen'>(</span><span class='id identifier rubyid_time'>time</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_as_time'>as_time</span><span class='lparen'>(</span><span class='id identifier rubyid_time'>time</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_date'>to_date</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="as_time-class_method">
+  
+    + (<tt>Object</tt>) <strong>as_time</strong>(time) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/montrose/utils.rb', line 13</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_as_time'>as_time</span><span class='lparen'>(</span><span class='id identifier rubyid_time'>time</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>nil</span> <span class='kw'>unless</span> <span class='id identifier rubyid_time'>time</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_time'>time</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_parse_time'>parse_time</span><span class='lparen'>(</span><span class='id identifier rubyid_time'>time</span><span class='rparen'>)</span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_time'>time</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>ActiveSupport</span><span class='op'>::</span><span class='const'>TimeWithZone</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_time'>time</span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_time'>time</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:to_time</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_time'>time</span><span class='period'>.</span><span class='id identifier rubyid_to_time'>to_time</span>
+  <span class='kw'>else</span>
+    <span class='const'>Array</span><span class='lparen'>(</span><span class='id identifier rubyid_time'>time</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_flat_map'>flat_map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_d'>d</span><span class='op'>|</span> <span class='id identifier rubyid_as_time'>as_time</span><span class='lparen'>(</span><span class='id identifier rubyid_d'>d</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="current_time-class_method">
+  
+    + (<tt>Object</tt>) <strong>current_time</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+35
+36
+37</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/montrose/utils.rb', line 35</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_current_time'>current_time</span>
+  <span class='op'>::</span><span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_current'>current</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="day_number-class_method">
   
     + (<tt>Object</tt>) <strong>day_number</strong>(name) 
   
@@ -228,19 +496,19 @@
       <pre class="lines">
 
 
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31</pre>
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/utils.rb', line 22</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/utils.rb', line 53</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_day_number'>day_number</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_name'>name</span>
@@ -272,17 +540,92 @@
       <pre class="lines">
 
 
-33
-34
-35
-36</pre>
+64
+65
+66
+67</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/utils.rb', line 33</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/utils.rb', line 64</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_day_number!'>day_number!</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_day_number'>day_number</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span> <span class='kw'>or</span> <span class='id identifier rubyid_fail'>fail</span> <span class='const'>ConfigurationError</span><span class='comma'>,</span>
     <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Did not recognize day </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>, must be one of </span><span class='embexpr_beg'>#{</span><span class='const'>DAYS</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="days_in_month-class_method">
+  
+    + (<tt>Object</tt>) <strong>days_in_month</strong>(month, year = current_time.year) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+69
+70
+71
+72</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/montrose/utils.rb', line 69</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_days_in_month'>days_in_month</span><span class='lparen'>(</span><span class='id identifier rubyid_month'>month</span><span class='comma'>,</span> <span class='id identifier rubyid_year'>year</span> <span class='op'>=</span> <span class='id identifier rubyid_current_time'>current_time</span><span class='period'>.</span><span class='id identifier rubyid_year'>year</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_date'>date</span> <span class='op'>=</span> <span class='op'>::</span><span class='const'>Date</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_year'>year</span><span class='comma'>,</span> <span class='id identifier rubyid_month'>month</span><span class='comma'>,</span> <span class='int'>1</span><span class='rparen'>)</span>
+  <span class='lparen'>(</span><span class='lparen'>(</span><span class='id identifier rubyid_date'>date</span> <span class='op'>&gt;&gt;</span> <span class='int'>1</span><span class='rparen'>)</span> <span class='op'>-</span> <span class='id identifier rubyid_date'>date</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="days_in_year-class_method">
+  
+    + (<tt>Object</tt>) <strong>days_in_year</strong>(year) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the number of days in the given year. If no year is specified, it
+will use the current year. <a
+href="https://github.com/rails/rails/pull/22244">github.com/rails/rails/pull/22244</a></p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+77
+78
+79</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/montrose/utils.rb', line 77</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_days_in_year'>days_in_year</span><span class='lparen'>(</span><span class='id identifier rubyid_year'>year</span><span class='rparen'>)</span>
+  <span class='op'>::</span><span class='const'>Montrose</span><span class='op'>::</span><span class='const'>Utils</span><span class='period'>.</span><span class='id identifier rubyid_days_in_month'>days_in_month</span><span class='lparen'>(</span><span class='int'>2</span><span class='comma'>,</span> <span class='id identifier rubyid_year'>year</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='int'>337</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -304,17 +647,17 @@
       <pre class="lines">
 
 
-8
-9
-10
-11
-12
-13
-14
-15</pre>
+39
+40
+41
+42
+43
+44
+45
+46</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/utils.rb', line 8</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/utils.rb', line 39</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_month_number'>month_number</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_name'>name</span>
@@ -344,17 +687,47 @@
       <pre class="lines">
 
 
-17
-18
-19
-20</pre>
+48
+49
+50
+51</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/utils.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/utils.rb', line 48</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_month_number!'>month_number!</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_month_number'>month_number</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span> <span class='kw'>or</span> <span class='id identifier rubyid_fail'>fail</span> <span class='const'>ConfigurationError</span><span class='comma'>,</span>
     <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Did not recognize month </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>, must be one of </span><span class='embexpr_beg'>#{</span><span class='const'>MONTHS</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="parse_time-class_method">
+  
+    + (<tt>Object</tt>) <strong>parse_time</strong>(*args) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+31
+32
+33</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/montrose/utils.rb', line 31</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_parse_time'>parse_time</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+  <span class='op'>::</span><span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_zone'>zone</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>?</span> <span class='op'>::</span><span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='op'>::</span><span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_zone'>zone</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -366,9 +739,9 @@
 </div>
 
     <div id="footer">
-  Generated on Mon Feb  8 16:37:03 2016 by
+  Generated on Wed Nov 23 17:24:31 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.6 (ruby-2.2.3).
+  0.8.7.6 (ruby-2.3.1).
 </div>
 
   </body>

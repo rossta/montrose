@@ -88,22 +88,537 @@
   
   
     
+      <dt class="r2">Extended by:</dt>
+      <dd class="r2">Forwardable</dd>
+      
+    
   
     
-      <dt class="r2">Includes:</dt>
-      <dd class="r2">Enumerable, <span class='object_link'><a href="Chainable.html" title="Montrose::Chainable (module)">Chainable</a></span></dd>
+      <dt class="r1">Includes:</dt>
+      <dd class="r1">Enumerable, <span class='object_link'><a href="Chainable.html" title="Montrose::Chainable (module)">Chainable</a></span></dd>
       
     
   
   
   
-    <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">lib/montrose/recurrence.rb</dd>
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/montrose/recurrence.rb</dd>
   
 </dl>
 <div class="clear"></div>
 
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>Represents the rules for a set of recurring events. Can be instantiated and
+extended in a variety of ways as show in the examples below.</p>
 
+<p>rules in hash-like format</p>
+
+<p>Montrose.r Montrose.recurrence Montrose::Recurrence.new</p>
+
+<p>Montrose.daily(total: 10)</p>
+
+<p>starts = Date.new(2015, 1, 1) ends = Date.new(2015, 12, 23)
+Montrose.daily(starts: starts, until: ends)</p>
+
+<p>Montrose.daily(interval: 2)</p>
+
+<p>Montrose.every(10.days, total: 5)</p>
+
+<p>starts = Time.current.beginning_of_year ends = Time.current.end_of_year +
+2.years Montrose.daily(month: :january, between: starts…ends)</p>
+
+<p>Montrose.weekly(total: 10)</p>
+
+<p>ends_on = Date.new(2015, 12, 23) starts_on = ends_on - 15.weeks
+Montrose.every(:week, until: ends_on, starts: starts_on)</p>
+
+<p>Montrose.every(2.weeks)</p>
+
+<p>Montrose.weekly(on: [:tuesday, :thursday],</p>
+
+<pre class="code ruby"><code class="ruby">between: Date.new(2015, 9, 1)..Date.new(2015, 10, 5))</code></pre>
+
+<p>Montrose.every(2.weeks,</p>
+
+<pre class="code ruby"><code class="ruby">on: [:monday, :wednesday, :friday],
+starts: Date.new(2015, 9, 1))</code></pre>
+
+<p>Montrose.weekly(on: [:tuesday, :thursday], total: 8, interval: 2)</p>
+
+<p>Montrose.monthly(day: { friday: [1] }, total: 10)</p>
+
+<p>Montrose.every(:month, day: { friday: [1] }, until: Date.new(2016, 12, 23))</p>
+
+<p>Montrose.every(:month, day: { sunday: [1, -1] }, interval: 2, total: 10)</p>
+
+<p>Montrose.every(:month, day: { monday: [-2] }, total: 6)</p>
+
+<p>Montrose.every(:month, mday: [-3])</p>
+
+<p>Montrose.every(:month, mday: [2, 15], total: 10)</p>
+
+<p>Montrose.monthly(mday: [1, -1], total: 10)</p>
+
+<p>Montrose.every(18.months, total: 10, mday: 10..15)</p>
+
+<p>Montrose.every(2.months, on: :tuesday)</p>
+
+<p>Montrose.yearly(month: [:june, :july], total: 10)</p>
+
+<p>Montrose.every(2.years, month: [:january, :february, :march], total: 10)</p>
+
+<p>Montrose.yearly(yday: [1, 100, 200], total: 10)</p>
+
+<p>Montrose.yearly(day: { monday: [20] })</p>
+
+<p>Montrose.yearly(week: [20], on: :monday)</p>
+
+<p>Montrose.monthly(month: :march, on: :thursday, at: “12 pm”)</p>
+
+<p>Montrose.monthly(month: 6..8, on: :thursday)</p>
+
+<p>Montrose.monthly(on: { friday: 13 })</p>
+
+<p>Montrose.monthly(on: { saturday: 7..13 })</p>
+
+<p>Montrose.every(4.years, month: :november, on: { tuesday: 2..8 })</p>
+
+<p>date = Date.new(2016, 9, 1) Montrose.hourly(between: date..(date+1), hour:
+9..17, interval: 3)</p>
+
+<p>Montrose.every(90.minutes, total: 6)</p>
+
+<p>Montrose.every(90.minutes, total: 4)</p>
+
+<p>Montrose.every(20.minutes, hour: 9..16)</p>
+
+<p>Montrose.minutely Montrose.r(every: :minute) Montrose.every(10.minutes)
+Montrose.r(every: 10.minutes) Montrose.r(every: :minute, interval: 10) #
+every 10 minutes Montrose.minutely(until: “9:00 PM”) Montrose.r(every:
+:minute, until: “9:00 PM”)</p>
+
+<p>Montrose.daily Montrose.every(:day) Montrose.r(every: :day)
+Montrose.every(9.days) Montrose.r(every: 9.days) Montrose.r(every: :day,
+interval: 9) Montrose.daily(at: “9:00 AM”) Montrose.every(:day, at: “9:00
+AM”) Montrose.r(every: :day, at: “9:00 AM”) Montrose.daily(total: 7)
+Montrose.every(:day, total: 7) Montrose.r(every: :day, total: 7)</p>
+
+<p>Montrose.weekly Montrose.every(:week) Montrose.r(every: :week)
+Montrose.every(:week, on: :monday) Montrose.every(:week, on: [:monday,
+:wednesday, :friday]) Montrose.every(2.weeks, on: :friday)
+Montrose.every(:week, on: :friday, at: “3:41 PM”) Montrose.weekly(on:
+:thursday)</p>
+
+<p>Montrose.monthly(mday: 1) # first of the month Montrose.every(:month, mday:
+1) Montrose.r(every: :month, mday: 1) Montrose.monthly(mday: [2, 15]) # 2nd
+and 15th of the month Montrose.monthly(mday: -3) # third-to-last day of the
+month Montrose.monthly(mday: 10..15) # 10th through the 15th day of the
+month</p>
+
+<p>Montrose.monthly(day: :friday, interval: 2) # every Friday every other
+month Montrose.every(:month, day: :friday, interval: 2) Montrose.r(every:
+:month, day: :friday, interval: 2) Montrose.monthly(day: { friday: [1] }) #
+1st Friday of the month Montrose.monthly(day: { Sunday: [1, -1] }) # first
+and last Sunday of the month Montrose.monthly(mday: 7..13, day: :saturday)
+# first Saturday that follow the first Sunday of the month</p>
+
+<p>Montrose.yearly Montrose.every(:year) Montrose.r(every: :year)
+Montrose.yearly(month: [:june, :july]) # yearly in June and July
+Montrose.yearly(month: 6..8, day: :thursday) # yearly in June, July, August
+on Thursday Montrose.yearly(yday: [1, 100]) # yearly on the 1st and 100th
+day of year Montrose.yearly(on: { january: 31 }) Montrose.r(every: :year,
+on: { 10 =&gt; 31 }, interval: 3)</p>
+
+<p>Montrose.weekly.starting(3.weeks.from_now).on(:friday)
+Montrose.every(:day).at(“4:05pm”)
+Montrose.yearly.between(Time.current..10.years.from_now)</p>
+
+<p>r = Montrose.every(:month, mday: 31, until: “January 1, 2017”) r.each {
+|time| puts time.to_s } r.take(10).to_a</p>
+
+<p>r.merge(starts: “2017-01-01”).each { |time| puts time.to_s }</p>
+
+<p>r.events # =&gt; #&lt;Enumerator: …&gt; r.events.take(10).each { |date|
+puts date.to_s } r.events.lazy.select { |time| time &gt; 1.month.from_now
+}.take(3).each { |date| puts date.to_s }</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>a new recurrence</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>daily for 10 occurrences</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>daily until December 23, 2015</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>every other day forever</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>every 10 days 5 occurrences</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>everyday in January for 3 years</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>weekly for 10 occurrences</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>weekly until December 23, 2015</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>every other week forever</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>weekly on Tuesday and Thursday for five weeks</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>from September 1, 2015 until October 5, 2015</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>every other week on Monday, Wednesday and Friday until December 23 2015,</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>but starting on Tuesday, September 1, 2015</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>every other week on Tuesday and Thursday, for 8 occurrences</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>monthly on the first Friday for ten occurrences</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>monthly on the first Friday until December 23, 2015</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>every other month on the first and last Sunday of the month for 10
+occurrences</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>monthly on the second-to-last Monday of the month for 6 months</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>monthly on the third-to-the-last day of the month, forever</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>monthly on the 2nd and 15th of the month for 10 occurrences</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>monthly on the first and last day of the month for 10 occurrences</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>every 18 months on the 10th thru 15th of the month for 10 occurrences</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>every Tuesday, every other month</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>yearly in June and July for 10 occurrences</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>every other year on January, February, and March for 10 occurrences</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>every third year on the 1st, 100th and 200th day for 10 occurrences</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>every 20th Monday of the year, forever</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Monday of week number 20 forever</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>every Thursday in March, forever</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>every Thursday, but only during June, July, and August, forever“ do</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>every Friday 13th, forever</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>first Saturday that follows the first Sunday of the month, forever</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>every four years, the first Tuesday after a Monday in November, forever
+(U.S. Presidential Election day)</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>every 3 hours from 9:00 AM to 5:00 PM on a specific day</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>every 15 minutes for 6 occurrences</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>every hour and a half for four occurrences</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>every 20 minutes from 9:00 AM to 4:40 PM every day</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Minutely</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Daily</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Weekly</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Monthly by month day</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Monthly by week day</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Yearly</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Chaining</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Enumerating events</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Merging rules</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Using #events Enumerator</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+  </div>
+
+<p class="tag_title">Author:</p>
+<ul class="author">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>Ross Kaffenberger</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.0.1</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div>
 
 
 
@@ -113,7 +628,7 @@
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#default_options-instance_method" title="#default_options (instance method)">- (Object) <strong>default_options</strong> </a>
+      <a href="#default_options-instance_method" title="#default_options (instance method)">- (Montrose::Options) <strong>default_options</strong> </a>
     
 
     
@@ -133,7 +648,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Returns the value of attribute default_options.</p>
+<p>contains the recurrence.</p>
 </div></span>
   
 </li>
@@ -230,7 +745,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#each-instance_method" title="#each (instance method)">- (Object) <strong>each</strong>(&amp;block) </a>
+      <a href="#each-instance_method" title="#each (instance method)">- (Enumerator) <strong>each</strong>(&amp;block) </a>
     
 
     
@@ -244,7 +759,33 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Iterate over the events of a recurrence.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#earlier%3F-instance_method" title="#earlier? (instance method)">- (Boolean) <strong>earlier?</strong>(timestamp) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Return true/false if given timestamp occurs before the recurrence.</p>
+</div></span>
   
 </li>
 
@@ -268,6 +809,55 @@
   
     <span class="summary_desc"><div class='inline'>
 <p>Returns an enumerator for iterating over timestamps in the recurrence.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#finite%3F-instance_method" title="#finite? (instance method)">- (Boolean) <strong>finite?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Return true/false if recurrence will iterate infinitely.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#include%3F-instance_method" title="#include? (instance method)">- (Boolean) <strong>include?</strong>(timestamp) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Return true/false if given timestamp equals a timestamp given by the
+recurrence.</p>
 </div></span>
   
 </li>
@@ -324,6 +914,30 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#later%3F-instance_method" title="#later? (instance method)">- (Boolean) <strong>later?</strong>(timestamp) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Return true/false if given timestamp occurs after the recurrence.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#to_hash-instance_method" title="#to_hash (instance method)">- (Hash) <strong>to_hash</strong> </a>
     
 
@@ -347,6 +961,30 @@
 </li>
 
       
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#to_json-instance_method" title="#to_json (instance method)">- (String) <strong>to_json</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns json string of options used to create the recurrence.</p>
+</div></span>
+  
+</li>
+
+      
     </ul>
   
 
@@ -360,8 +998,9 @@
   
   
   
+  
   <h3 class="inherited">Methods included from <span class='object_link'><a href="Chainable.html" title="Montrose::Chainable (module)">Chainable</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Chainable.html#at-instance_method" title="Montrose::Chainable#at (method)">#at</a></span>, <span class='object_link'><a href="Chainable.html#between-instance_method" title="Montrose::Chainable#between (method)">#between</a></span>, <span class='object_link'><a href="Chainable.html#branch-instance_method" title="Montrose::Chainable#branch (method)">#branch</a></span>, <span class='object_link'><a href="Chainable.html#daily-instance_method" title="Montrose::Chainable#daily (method)">#daily</a></span>, <span class='object_link'><a href="Chainable.html#day_of_month-instance_method" title="Montrose::Chainable#day_of_month (method)">#day_of_month</a></span>, <span class='object_link'><a href="Chainable.html#day_of_week-instance_method" title="Montrose::Chainable#day_of_week (method)">#day_of_week</a></span>, <span class='object_link'><a href="Chainable.html#day_of_year-instance_method" title="Montrose::Chainable#day_of_year (method)">#day_of_year</a></span>, <span class='object_link'><a href="Chainable.html#ending-instance_method" title="Montrose::Chainable#ending (method)">#ending</a></span>, <span class='object_link'><a href="Chainable.html#every-instance_method" title="Montrose::Chainable#every (method)">#every</a></span>, <span class='object_link'><a href="Chainable.html#hour_of_day-instance_method" title="Montrose::Chainable#hour_of_day (method)">#hour_of_day</a></span>, <span class='object_link'><a href="Chainable.html#hourly-instance_method" title="Montrose::Chainable#hourly (method)">#hourly</a></span>, <span class='object_link'><a href="Chainable.html#merge-instance_method" title="Montrose::Chainable#merge (method)">#merge</a></span>, <span class='object_link'><a href="Chainable.html#minutely-instance_method" title="Montrose::Chainable#minutely (method)">#minutely</a></span>, <span class='object_link'><a href="Chainable.html#month_of_year-instance_method" title="Montrose::Chainable#month_of_year (method)">#month_of_year</a></span>, <span class='object_link'><a href="Chainable.html#monthly-instance_method" title="Montrose::Chainable#monthly (method)">#monthly</a></span>, <span class='object_link'><a href="Chainable.html#on-instance_method" title="Montrose::Chainable#on (method)">#on</a></span>, <span class='object_link'><a href="Chainable.html#starting-instance_method" title="Montrose::Chainable#starting (method)">#starting</a></span>, <span class='object_link'><a href="Chainable.html#total-instance_method" title="Montrose::Chainable#total (method)">#total</a></span>, <span class='object_link'><a href="Chainable.html#week_of_year-instance_method" title="Montrose::Chainable#week_of_year (method)">#week_of_year</a></span>, <span class='object_link'><a href="Chainable.html#weekly-instance_method" title="Montrose::Chainable#weekly (method)">#weekly</a></span>, <span class='object_link'><a href="Chainable.html#yearly-instance_method" title="Montrose::Chainable#yearly (method)">#yearly</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="Chainable.html#at-instance_method" title="Montrose::Chainable#at (method)">#at</a></span>, <span class='object_link'><a href="Chainable.html#between-instance_method" title="Montrose::Chainable#between (method)">#between</a></span>, <span class='object_link'><a href="Chainable.html#branch-instance_method" title="Montrose::Chainable#branch (method)">#branch</a></span>, <span class='object_link'><a href="Chainable.html#daily-instance_method" title="Montrose::Chainable#daily (method)">#daily</a></span>, <span class='object_link'><a href="Chainable.html#day_of_month-instance_method" title="Montrose::Chainable#day_of_month (method)">#day_of_month</a></span>, <span class='object_link'><a href="Chainable.html#day_of_week-instance_method" title="Montrose::Chainable#day_of_week (method)">#day_of_week</a></span>, <span class='object_link'><a href="Chainable.html#day_of_year-instance_method" title="Montrose::Chainable#day_of_year (method)">#day_of_year</a></span>, <span class='object_link'><a href="Chainable.html#every-instance_method" title="Montrose::Chainable#every (method)">#every</a></span>, <span class='object_link'><a href="Chainable.html#except-instance_method" title="Montrose::Chainable#except (method)">#except</a></span>, <span class='object_link'><a href="Chainable.html#hour_of_day-instance_method" title="Montrose::Chainable#hour_of_day (method)">#hour_of_day</a></span>, <span class='object_link'><a href="Chainable.html#hourly-instance_method" title="Montrose::Chainable#hourly (method)">#hourly</a></span>, <span class='object_link'><a href="Chainable.html#merge-instance_method" title="Montrose::Chainable#merge (method)">#merge</a></span>, <span class='object_link'><a href="Chainable.html#minutely-instance_method" title="Montrose::Chainable#minutely (method)">#minutely</a></span>, <span class='object_link'><a href="Chainable.html#month_of_year-instance_method" title="Montrose::Chainable#month_of_year (method)">#month_of_year</a></span>, <span class='object_link'><a href="Chainable.html#monthly-instance_method" title="Montrose::Chainable#monthly (method)">#monthly</a></span>, <span class='object_link'><a href="Chainable.html#on-instance_method" title="Montrose::Chainable#on (method)">#on</a></span>, <span class='object_link'><a href="Chainable.html#starts-instance_method" title="Montrose::Chainable#starts (method)">#starts</a></span>, <span class='object_link'><a href="Chainable.html#total-instance_method" title="Montrose::Chainable#total (method)">#total</a></span>, <span class='object_link'><a href="Chainable.html#until-instance_method" title="Montrose::Chainable#until (method)">#until</a></span>, <span class='object_link'><a href="Chainable.html#week_of_year-instance_method" title="Montrose::Chainable#week_of_year (method)">#week_of_year</a></span>, <span class='object_link'><a href="Chainable.html#weekly-instance_method" title="Montrose::Chainable#weekly (method)">#weekly</a></span>, <span class='object_link'><a href="Chainable.html#yearly-instance_method" title="Montrose::Chainable#yearly (method)">#yearly</a></span></p>
 <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
@@ -384,6 +1023,22 @@
 </div>
 <div class="tags">
   
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.0.1</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -391,12 +1046,12 @@
       <pre class="lines">
 
 
-35
-36
-37</pre>
+244
+245
+246</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/recurrence.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/recurrence.rb', line 244</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_opts'>opts</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='ivar'>@default_options</span> <span class='op'>=</span> <span class='const'>Montrose</span><span class='op'>::</span><span class='const'>Options</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_opts'>opts</span><span class='rparen'>)</span>
@@ -416,7 +1071,7 @@
       <div class="method_details first">
   <h3 class="signature first" id="default_options-instance_method">
   
-    - (<tt>Object</tt>) <strong>default_options</strong>  <span class="extras">(readonly)</span>
+    - (<tt><span class='object_link'><a href="Options.html" title="Montrose::Options (class)">Montrose::Options</a></span></tt>) <strong>default_options</strong>  <span class="extras">(readonly)</span>
   
 
   
@@ -425,13 +1080,47 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns the value of attribute default_options</p>
+<p>contains the recurrence</p>
 
 
   </div>
 </div>
 <div class="tags">
   
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Options.html" title="Montrose::Options (class)">Montrose::Options</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the current value of default_options</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.0.1</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -439,12 +1128,12 @@
       <pre class="lines">
 
 
-12
-13
-14</pre>
+213
+214
+215</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/recurrence.rb', line 12</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/recurrence.rb', line 213</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_default_options'>default_options</span>
   <span class='ivar'>@default_options</span>
@@ -470,24 +1159,49 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.0.1</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-20
-21
-22
-23
-24
-25
-26
-27
-28</pre>
+229
+230
+231
+232
+233
+234
+235
+236
+237</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/recurrence.rb', line 20</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/recurrence.rb', line 229</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_dump'>dump</span><span class='lparen'>(</span><span class='id identifier rubyid_obj'>obj</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>nil</span> <span class='kw'>if</span> <span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -512,21 +1226,46 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.0.1</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-30
-31
-32</pre>
+239
+240
+241</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/recurrence.rb', line 30</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/recurrence.rb', line 239</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_load'>load</span><span class='lparen'>(</span><span class='id identifier rubyid_json'>json</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_new'>new</span> <span class='const'>JSON</span><span class='period'>.</span><span class='id identifier rubyid_load'>load</span><span class='lparen'>(</span><span class='id identifier rubyid_json'>json</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_new'>new</span> <span class='const'>JSON</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_json'>json</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -542,19 +1281,44 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.0.1</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-15
-16
-17
-18</pre>
+224
+225
+226
+227</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/recurrence.rb', line 15</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/recurrence.rb', line 224</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_options'>options</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
@@ -574,27 +1338,173 @@
       <div class="method_details first">
   <h3 class="signature first" id="each-instance_method">
   
-    - (<tt>Object</tt>) <strong>each</strong>(&amp;block) 
+    - (<tt>Enumerator</tt>) <strong>each</strong>(&amp;block) 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Iterate over the events of a recurrence. Along with the Enumerable module,
+this makes Montrose occurrences enumerable like other Ruby collections</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Iterate over a finite recurrence</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_recurrence'>recurrence</span> <span class='op'>=</span> <span class='const'>Montrose</span><span class='period'>.</span><span class='id identifier rubyid_recurrence'>recurrence</span><span class='lparen'>(</span><span class='label'>every:</span> <span class='symbol'>:day</span><span class='comma'>,</span> <span class='label'>until:</span> <span class='int'>1</span><span class='period'>.</span><span class='id identifier rubyid_year'>year</span><span class='period'>.</span><span class='id identifier rubyid_from_now'>from_now</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_recurrence'>recurrence</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_event'>event</span><span class='op'>|</span>
+  <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_event'>event</span>
+<span class='kw'>end</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Iterate over an infinite recurrence</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_recurrence'>recurrence</span> <span class='op'>=</span> <span class='const'>Montrose</span><span class='period'>.</span><span class='id identifier rubyid_recurrence'>recurrence</span><span class='lparen'>(</span><span class='label'>every:</span> <span class='symbol'>:day</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_recurrence'>recurrence</span><span class='period'>.</span><span class='id identifier rubyid_lazy'>lazy</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_event'>event</span><span class='op'>|</span>
+  <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_event'>event</span>
+<span class='kw'>end</span></code></pre>
+    
+  </div>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Enumerator</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>an enumerator of recurrence timestamps</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.0.1</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-51
-52
-53</pre>
+289
+290
+291</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/recurrence.rb', line 51</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/recurrence.rb', line 289</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_events'>events</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="earlier?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>earlier?</strong>(timestamp) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Return true/false if given timestamp occurs before the recurrence</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>whether or not timestamp is earlier</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.0.1</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+343
+344
+345</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/montrose/recurrence.rb', line 343</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_earlier?'>earlier?</span><span class='lparen'>(</span><span class='id identifier rubyid_timestamp'>timestamp</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_starts_at'>starts_at</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_timestamp'>timestamp</span> <span class='op'>&lt;</span> <span class='id identifier rubyid_starts_at'>starts_at</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -624,7 +1534,32 @@
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code><span class='id identifier rubyid_recurrence'>recurrence</span><span class='period'>.</span><span class='id identifier rubyid_events'>events</span></code></pre>
+        <p class="example_title"><div class='inline'>
+<p>Return the events</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_recurrence'>recurrence</span> <span class='op'>=</span> <span class='const'>Montrose</span><span class='period'>.</span><span class='id identifier rubyid_recurrence'>recurrence</span><span class='lparen'>(</span><span class='label'>every:</span> <span class='symbol'>:day</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_recurrence'>recurrence</span><span class='period'>.</span><span class='id identifier rubyid_events'>events</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Iterate over a finite recurrence</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_recurrence'>recurrence</span> <span class='op'>=</span> <span class='const'>Montrose</span><span class='period'>.</span><span class='id identifier rubyid_recurrence'>recurrence</span><span class='lparen'>(</span><span class='label'>every:</span> <span class='symbol'>:day</span><span class='comma'>,</span> <span class='label'>until:</span> <span class='int'>1</span><span class='period'>.</span><span class='id identifier rubyid_year'>year</span><span class='period'>.</span><span class='id identifier rubyid_from_now'>from_now</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_recurrence'>recurrence</span><span class='period'>.</span><span class='id identifier rubyid_events'>events</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_event'>event</span><span class='op'>|</span>
+  <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_event'>event</span>
+<span class='kw'>end</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Iterate over an infinite recurrence</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_recurrence'>recurrence</span> <span class='op'>=</span> <span class='const'>Montrose</span><span class='period'>.</span><span class='id identifier rubyid_recurrence'>recurrence</span><span class='lparen'>(</span><span class='label'>every:</span> <span class='symbol'>:day</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_recurrence'>recurrence</span><span class='period'>.</span><span class='id identifier rubyid_events'>events</span><span class='period'>.</span><span class='id identifier rubyid_lazy'>lazy</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_event'>event</span><span class='op'>|</span>
+  <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_event'>event</span>
+<span class='kw'>end</span></code></pre>
     
   </div>
 
@@ -640,7 +1575,23 @@
       
         &mdash;
         <div class='inline'>
-<p>a enumerator of recurrence timestamps</p>
+<p>an enumerator of recurrence timestamps</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.0.1</p>
 </div>
       
     </li>
@@ -653,15 +1604,180 @@
       <pre class="lines">
 
 
-47
-48
-49</pre>
+268
+269
+270</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/recurrence.rb', line 47</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/recurrence.rb', line 268</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_events'>events</span>
   <span class='id identifier rubyid_event_enum'>event_enum</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="finite?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>finite?</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Return true/false if recurrence will iterate infinitely</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>whether or not recurrence is infinite</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.0.1</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+334
+335
+336</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/montrose/recurrence.rb', line 334</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_finite?'>finite?</span>
+  <span class='id identifier rubyid_ends_at'>ends_at</span> <span class='op'>||</span> <span class='id identifier rubyid_length'>length</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="include?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>include?</strong>(timestamp) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Return true/false if given timestamp equals a timestamp given by the
+recurrence</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>whether or not timestamp is included in recurrence</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.0.1</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/montrose/recurrence.rb', line 319</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_timestamp'>timestamp</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_earlier?'>earlier?</span><span class='lparen'>(</span><span class='id identifier rubyid_timestamp'>timestamp</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_later?'>later?</span><span class='lparen'>(</span><span class='id identifier rubyid_timestamp'>timestamp</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_recurrence'>recurrence</span> <span class='op'>=</span> <span class='id identifier rubyid_finite?'>finite?</span> <span class='op'>?</span> <span class='kw'>self</span> <span class='op'>:</span> <span class='id identifier rubyid_starts'>starts</span><span class='lparen'>(</span><span class='id identifier rubyid_timestamp'>timestamp</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_recurrence'>recurrence</span><span class='period'>.</span><span class='id identifier rubyid_events'>events</span><span class='period'>.</span><span class='id identifier rubyid_lazy'>lazy</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_event'>event</span><span class='op'>|</span>
+    <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>if</span> <span class='id identifier rubyid_event'>event</span> <span class='op'>==</span> <span class='id identifier rubyid_timestamp'>timestamp</span>
+    <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_event'>event</span> <span class='op'>&gt;</span> <span class='id identifier rubyid_timestamp'>timestamp</span>
+  <span class='kw'>end</span> <span class='kw'>or</span> <span class='kw'>false</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -677,21 +1793,121 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.0.1</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-65
-66
-67</pre>
+310
+311
+312</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/recurrence.rb', line 65</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/recurrence.rb', line 310</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inspect'>inspect</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>#&lt;</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='embexpr_end'>}</span><span class='tstring_content'>:</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_object_id'>object_id</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='lparen'>(</span><span class='int'>16</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_to_h'>to_h</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>&gt;</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="later?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>later?</strong>(timestamp) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Return true/false if given timestamp occurs after the recurrence</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>whether or not timestamp is later</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.0.1</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+352
+353
+354</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/montrose/recurrence.rb', line 352</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_later?'>later?</span><span class='lparen'>(</span><span class='id identifier rubyid_timestamp'>timestamp</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_ends_at'>ends_at</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_timestamp'>timestamp</span> <span class='op'>&gt;</span> <span class='id identifier rubyid_ends_at'>ends_at</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -739,6 +1955,22 @@
     </li>
   
 </ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.0.1</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -746,15 +1978,90 @@
       <pre class="lines">
 
 
-60
-61
-62</pre>
+297
+298
+299</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/recurrence.rb', line 60</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/recurrence.rb', line 297</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_hash'>to_hash</span>
   <span class='id identifier rubyid_default_options'>default_options</span><span class='period'>.</span><span class='id identifier rubyid_to_hash'>to_hash</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="to_json-instance_method">
+  
+    - (<tt>String</tt>) <strong>to_json</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns json string of options used to create the recurrence</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>json of recurrence options</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.0.1</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+306
+307
+308</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/montrose/recurrence.rb', line 306</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_to_json'>to_json</span>
+  <span class='id identifier rubyid_to_hash'>to_hash</span><span class='period'>.</span><span class='id identifier rubyid_to_json'>to_json</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -766,9 +2073,9 @@
 </div>
 
     <div id="footer">
-  Generated on Mon Feb  8 16:37:03 2016 by
+  Generated on Wed Nov 23 17:24:31 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.6 (ruby-2.2.3).
+  0.8.7.6 (ruby-2.3.1).
 </div>
 
   </body>

@@ -242,12 +242,12 @@ non-matching rules.</p>
       <pre class="lines">
 
 
-27
 28
-29</pre>
+29
+30</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/stack.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/stack.rb', line 28</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_opts'>opts</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='ivar'>@stack</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_build'>build</span><span class='lparen'>(</span><span class='id identifier rubyid_opts'>opts</span><span class='rparen'>)</span>
@@ -295,7 +295,8 @@ non-matching rules.</p>
 22
 23
 24
-25</pre>
+25
+26</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/montrose/stack.rb', line 9</span>
@@ -305,6 +306,7 @@ non-matching rules.</p>
     <span class='const'>Frequency</span><span class='comma'>,</span>
     <span class='const'>Rule</span><span class='op'>::</span><span class='const'>After</span><span class='comma'>,</span>
     <span class='const'>Rule</span><span class='op'>::</span><span class='const'>Before</span><span class='comma'>,</span>
+    <span class='const'>Rule</span><span class='op'>::</span><span class='const'>Except</span><span class='comma'>,</span>
     <span class='const'>Rule</span><span class='op'>::</span><span class='const'>Total</span><span class='comma'>,</span>
     <span class='const'>Rule</span><span class='op'>::</span><span class='const'>TimeOfDay</span><span class='comma'>,</span>
     <span class='const'>Rule</span><span class='op'>::</span><span class='const'>HourOfDay</span><span class='comma'>,</span>
@@ -377,7 +379,6 @@ non-matching rules.</p>
       <pre class="lines">
 
 
-38
 39
 40
 41
@@ -388,10 +389,11 @@ non-matching rules.</p>
 46
 47
 48
-49</pre>
+49
+50</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/stack.rb', line 38</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/stack.rb', line 39</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_advance'>advance</span><span class='lparen'>(</span><span class='id identifier rubyid_time'>time</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_yes'>yes</span><span class='comma'>,</span> <span class='id identifier rubyid_no'>no</span> <span class='op'>=</span> <span class='ivar'>@stack</span><span class='period'>.</span><span class='id identifier rubyid_partition'>partition</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_rule'>rule</span><span class='op'>|</span> <span class='id identifier rubyid_rule'>rule</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_time'>time</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -415,9 +417,9 @@ non-matching rules.</p>
 </div>
 
     <div id="footer">
-  Generated on Mon Feb  8 16:37:03 2016 by
+  Generated on Wed Nov 23 17:24:31 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.6 (ruby-2.2.3).
+  0.8.7.6 (ruby-2.3.1).
 </div>
 
   </body>

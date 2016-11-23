@@ -99,7 +99,50 @@
 </dl>
 <div class="clear"></div>
 
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>A schedule represents a group of recurrences</p>
 
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Author:</p>
+<ul class="author">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>Ross Kaffenberger</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.0.1</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div>
 
 
 
@@ -109,7 +152,7 @@
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#rules-instance_method" title="#rules (instance method)">- (Object) <strong>rules</strong> </a>
+      <a href="#rules-instance_method" title="#rules (instance method)">- (Array) <strong>rules</strong> </a>
     
 
     
@@ -127,7 +170,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Returns the value of attribute rules.</p>
+<p>the list of recurrences.</p>
 </div></span>
   
 </li>
@@ -149,7 +192,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#build-class_method" title="build (class method)">+ (Object) <strong>build</strong> {|schedule| ... }</a>
+      <a href="#build-class_method" title="build (class method)">+ (Montrose::Schedule) <strong>build</strong> {|schedule| ... }</a>
     
 
     
@@ -163,7 +206,10 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Instantiates a schedule and yields the instance to an optional block for
+building recurrences inline.</p>
+</div></span>
   
 </li>
 
@@ -196,7 +242,10 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Add a recurrence rule to the schedule, either by hash or recurrence
+instance.</p>
+</div></span>
   
 </li>
 
@@ -204,7 +253,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#events-instance_method" title="#events (instance method)">- (Object) <strong>events</strong>(opts = {}) </a>
+      <a href="#events-instance_method" title="#events (instance method)">- (Enumerator) <strong>events</strong>(opts = {}) </a>
     
 
     
@@ -218,7 +267,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Returns an enumerator for iterating over timestamps in the schedule.</p>
+</div></span>
   
 </li>
 
@@ -226,7 +277,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#include%3F-instance_method" title="#include? (instance method)">- (Boolean) <strong>include?</strong>(time) </a>
+      <a href="#include%3F-instance_method" title="#include? (instance method)">- (Boolean) <strong>include?</strong>(timestamp) </a>
     
 
     
@@ -240,7 +291,10 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Return true/false if given timestamp is included in any of the rules found
+in the schedule.</p>
+</div></span>
   
 </li>
 
@@ -296,6 +350,22 @@
 </div>
 <div class="tags">
   
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.0.1</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -303,12 +373,12 @@
       <pre class="lines">
 
 
-11
-12
-13</pre>
+29
+30
+31</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/schedule.rb', line 11</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/schedule.rb', line 29</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span>
   <span class='ivar'>@rules</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -328,7 +398,7 @@
       <div class="method_details first">
   <h3 class="signature first" id="rules-instance_method">
   
-    - (<tt>Object</tt>) <strong>rules</strong> 
+    - (<tt>Array</tt>) <strong>rules</strong> 
   
 
   
@@ -337,13 +407,47 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns the value of attribute rules</p>
+<p>the list of recurrences</p>
 
 
   </div>
 </div>
 <div class="tags">
   
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the current value of rules</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.0.1</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -351,12 +455,12 @@
       <pre class="lines">
 
 
-3
-4
-5</pre>
+8
+9
+10</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/schedule.rb', line 3</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/schedule.rb', line 8</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_rules'>rules</span>
   <span class='ivar'>@rules</span>
@@ -376,7 +480,7 @@
       <div class="method_details first">
   <h3 class="signature first" id="build-class_method">
   
-    + (<tt>Object</tt>) <strong>build</strong> {|schedule| ... }
+    + (<tt><span class='object_link'><a href="" title="Montrose::Schedule (class)">Montrose::Schedule</a></span></tt>) <strong>build</strong> {|schedule| ... }
   
 
   
@@ -385,11 +489,34 @@
 </h3><div class="docstring">
   <div class="discussion">
     
+<p>Instantiates a schedule and yields the instance to an optional block for
+building recurrences inline</p>
+
+<p>schedule = Montrose::Schedule.build do |s|</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_s'>s</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span> <span class='label'>every:</span> <span class='symbol'>:day</span> <span class='rbrace'>}</span>
+<span class='id identifier rubyid_s'>s</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span> <span class='label'>every:</span> <span class='symbol'>:year</span> <span class='rbrace'>}</span>
+</code></pre>
+
+<p>end</p>
+
 
   </div>
 </div>
 <div class="tags">
   
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Build a schedule with multiple rules added in the given block</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+  </div>
+
 <p class="tag_title">Yields:</p>
 <ul class="yield">
   
@@ -403,6 +530,35 @@
     </li>
   
 </ul>
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="Montrose::Schedule (class)">Montrose::Schedule</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.0.1</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -410,14 +566,14 @@
       <pre class="lines">
 
 
-5
-6
-7
-8
-9</pre>
+23
+24
+25
+26
+27</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/schedule.rb', line 5</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/schedule.rb', line 23</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_build'>build</span>
   <span class='id identifier rubyid_schedule'>schedule</span> <span class='op'>=</span> <span class='id identifier rubyid_new'>new</span>
@@ -448,20 +604,72 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Add a recurrence rule to the schedule, either by hash or recurrence
+instance</p>
+
+<p>schedule = Montrose::Schedule.new schedule &lt;&lt; { every: :day }</p>
+
+<p>schedule = Montrose::Schedule.new recurrence = Montrose.recurrence(every:
+:day) schedule &lt;&lt; recurrence</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Add a recurrence by hash</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Add a recurrence by instance</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+  </div>
+
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.0.1</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-15
-16
-17
-18
-19</pre>
+47
+48
+49
+50
+51</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/schedule.rb', line 15</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/schedule.rb', line 47</span>
 
 <span class='kw'>def</span> <span class='op'>&lt;&lt;</span><span class='lparen'>(</span><span class='id identifier rubyid_rule'>rule</span><span class='rparen'>)</span>
   <span class='ivar'>@rules</span> <span class='op'>&lt;&lt;</span> <span class='const'>Montrose</span><span class='op'>::</span><span class='const'>Recurrence</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_rule'>rule</span><span class='rparen'>)</span>
@@ -476,30 +684,90 @@
       <div class="method_details ">
   <h3 class="signature " id="events-instance_method">
   
-    - (<tt>Object</tt>) <strong>events</strong>(opts = {}) 
+    - (<tt>Enumerator</tt>) <strong>events</strong>(opts = {}) 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns an enumerator for iterating over timestamps in the schedule</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Return the events</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_schedule'>schedule</span> <span class='op'>=</span> <span class='const'>Montrose</span><span class='op'>::</span><span class='const'>Schedule</span><span class='period'>.</span><span class='id identifier rubyid_build'>build</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span>
+  <span class='id identifier rubyid_s'>s</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span> <span class='label'>every:</span> <span class='symbol'>:day</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span>
+<span class='id identifier rubyid_schedule'>schedule</span><span class='period'>.</span><span class='id identifier rubyid_events'>events</span></code></pre>
+    
+  </div>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Enumerator</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>an enumerator of recurrence timestamps</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.0.1</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-26
-27
-28
-29
-30
-31
-32
-33
-34</pre>
+73
+74
+75
+76
+77
+78
+79
+80
+81</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/schedule.rb', line 26</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/schedule.rb', line 73</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_events'>events</span><span class='lparen'>(</span><span class='id identifier rubyid_opts'>opts</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_enums'>enums</span> <span class='op'>=</span> <span class='ivar'>@rules</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_r'>r</span><span class='op'>|</span> <span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_opts'>opts</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_events'>events</span> <span class='rbrace'>}</span>
@@ -518,7 +786,7 @@
       <div class="method_details ">
   <h3 class="signature " id="include?-instance_method">
   
-    - (<tt>Boolean</tt>) <strong>include?</strong>(time) 
+    - (<tt>Boolean</tt>) <strong>include?</strong>(timestamp) 
   
 
   
@@ -527,6 +795,9 @@
 </h3><div class="docstring">
   <div class="discussion">
     
+<p>Return true/false if given timestamp is included in any of the rules found
+in the schedule</p>
+
 
   </div>
 </div>
@@ -542,6 +813,27 @@
       
       
       
+        &mdash;
+        <div class='inline'>
+<p>whether or not timestamp is included in schedule</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.0.1</p>
+</div>
+      
     </li>
   
 </ul>
@@ -552,15 +844,15 @@
       <pre class="lines">
 
 
-22
-23
-24</pre>
+59
+60
+61</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/schedule.rb', line 22</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/schedule.rb', line 59</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_time'>time</span><span class='rparen'>)</span>
-  <span class='ivar'>@rules</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_r'>r</span><span class='op'>|</span> <span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_time'>time</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_timestamp'>timestamp</span><span class='rparen'>)</span>
+  <span class='ivar'>@rules</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_r'>r</span><span class='op'>|</span> <span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_timestamp'>timestamp</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -572,9 +864,9 @@
 </div>
 
     <div id="footer">
-  Generated on Mon Feb  8 16:37:03 2016 by
+  Generated on Wed Nov 23 17:24:31 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.6 (ruby-2.2.3).
+  0.8.7.6 (ruby-2.3.1).
 </div>
 
   </body>

@@ -225,7 +225,8 @@ for next tick.</p>
 8
 9
 10
-11</pre>
+11
+12</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/montrose/clock.rb', line 5</span>
@@ -234,8 +235,9 @@ for next tick.</p>
   <span class='ivar'>@options</span> <span class='op'>=</span> <span class='const'>Montrose</span><span class='op'>::</span><span class='const'>Options</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_opts'>opts</span><span class='rparen'>)</span>
   <span class='ivar'>@time</span> <span class='op'>=</span> <span class='kw'>nil</span>
   <span class='ivar'>@every</span> <span class='op'>=</span> <span class='ivar'>@options</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='symbol'>:every</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fail'>fail</span> <span class='const'>ConfigurationError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Required option :every not provided</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
-  <span class='ivar'>@starts</span> <span class='op'>=</span> <span class='ivar'>@options</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='symbol'>:starts</span><span class='rparen'>)</span>
   <span class='ivar'>@interval</span> <span class='op'>=</span> <span class='ivar'>@options</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='symbol'>:interval</span><span class='rparen'>)</span>
+  <span class='ivar'>@start_time</span> <span class='op'>=</span> <span class='ivar'>@options</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='symbol'>:start_time</span><span class='rparen'>)</span>
+  <span class='ivar'>@at</span> <span class='op'>=</span> <span class='ivar'>@options</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='symbol'>:at</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -264,19 +266,35 @@ for next tick.</p>
       <pre class="lines">
 
 
-20
 21
 22
 23
-24</pre>
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/clock.rb', line 20</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/clock.rb', line 21</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_peek'>peek</span>
-  <span class='kw'>return</span> <span class='ivar'>@starts</span> <span class='kw'>if</span> <span class='ivar'>@time</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+  <span class='kw'>return</span> <span class='ivar'>@start_time</span> <span class='kw'>if</span> <span class='ivar'>@time</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
 
-  <span class='ivar'>@time</span><span class='period'>.</span><span class='id identifier rubyid_advance'>advance</span><span class='lparen'>(</span><span class='id identifier rubyid_step'>step</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='ivar'>@at</span>
+    <span class='id identifier rubyid_times'>times</span> <span class='op'>=</span> <span class='ivar'>@at</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='lparen'>(</span><span class='id identifier rubyid_hour'>hour</span><span class='comma'>,</span> <span class='id identifier rubyid_min'>min</span><span class='rparen'>)</span><span class='op'>|</span> <span class='ivar'>@time</span><span class='period'>.</span><span class='id identifier rubyid_change'>change</span><span class='lparen'>(</span><span class='label'>hour:</span> <span class='id identifier rubyid_hour'>hour</span><span class='comma'>,</span> <span class='label'>min:</span> <span class='id identifier rubyid_min'>min</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+
+    <span class='id identifier rubyid_min_next'>min_next</span> <span class='op'>=</span> <span class='id identifier rubyid_times'>times</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_t'>t</span><span class='op'>|</span> <span class='id identifier rubyid_t'>t</span> <span class='op'>&gt;</span> <span class='ivar'>@time</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_min'>min</span> <span class='kw'>and</span> <span class='kw'>return</span> <span class='id identifier rubyid_min_next'>min_next</span>
+
+    <span class='id identifier rubyid_advance_step'>advance_step</span><span class='lparen'>(</span><span class='id identifier rubyid_times'>times</span><span class='period'>.</span><span class='id identifier rubyid_min'>min</span> <span class='op'>||</span> <span class='ivar'>@time</span><span class='rparen'>)</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_advance_step'>advance_step</span><span class='lparen'>(</span><span class='ivar'>@time</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -310,12 +328,12 @@ for next tick</p>
       <pre class="lines">
 
 
-16
 17
-18</pre>
+18
+19</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/clock.rb', line 16</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/clock.rb', line 17</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_tick'>tick</span>
   <span class='ivar'>@time</span> <span class='op'>=</span> <span class='id identifier rubyid_peek'>peek</span>
@@ -330,9 +348,9 @@ for next tick</p>
 </div>
 
     <div id="footer">
-  Generated on Mon Feb  8 16:37:03 2016 by
+  Generated on Wed Nov 23 17:24:31 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.6 (ruby-2.2.3).
+  0.8.7.6 (ruby-2.3.1).
 </div>
 
   </body>

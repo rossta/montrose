@@ -343,7 +343,7 @@
       <pre class="code"><span class="info file"># File 'lib/montrose/rule/nth_day_of_month.rb', line 49</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_total_days'>total_days</span>
-  <span class='id identifier rubyid_days_in_month'>days_in_month</span><span class='lparen'>(</span><span class='ivar'>@time</span><span class='rparen'>)</span>
+  <span class='op'>::</span><span class='const'>Montrose</span><span class='op'>::</span><span class='const'>Utils</span><span class='period'>.</span><span class='id identifier rubyid_days_in_month'>days_in_month</span><span class='lparen'>(</span><span class='ivar'>@time</span><span class='period'>.</span><span class='id identifier rubyid_month'>month</span><span class='comma'>,</span> <span class='ivar'>@time</span><span class='period'>.</span><span class='id identifier rubyid_year'>year</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -355,9 +355,9 @@
 </div>
 
     <div id="footer">
-  Generated on Mon Feb  8 16:37:03 2016 by
+  Generated on Wed Nov 23 17:24:31 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.6 (ruby-2.2.3).
+  0.8.7.6 (ruby-2.3.1).
 </div>
 
   </body>
