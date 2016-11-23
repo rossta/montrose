@@ -12,11 +12,10 @@ module Montrose
     # block for building recurrences inline
     #
     # @example Build a schedule with multiple rules added in the given block
-    #
-    # schedule = Montrose::Schedule.build do |s|
-    #   s << { every: :day }
-    #   s << { every: :year }
-    # end
+    #   schedule = Montrose::Schedule.build do |s|
+    #     s << { every: :day }
+    #     s << { every: :year }
+    #   end
     #
     # @return [Montrose::Schedule]
     #
@@ -34,15 +33,13 @@ module Montrose
     # instance
     #
     # @example Add a recurrence by hash
-    #
-    # schedule = Montrose::Schedule.new
-    # schedule << { every: :day }
+    #   schedule = Montrose::Schedule.new
+    #   schedule << { every: :day }
     #
     # @example Add a recurrence by instance
-    #
-    # schedule = Montrose::Schedule.new
-    # recurrence = Montrose.recurrence(every: :day)
-    # schedule << recurrence
+    #   schedule = Montrose::Schedule.new
+    #   recurrence = Montrose.recurrence(every: :day)
+    #   schedule << recurrence
     #
     def <<(rule)
       @rules << Montrose::Recurrence.new(rule)
