@@ -1,4 +1,5 @@
 require "spec_helper"
+require "benchmark"
 
 describe Montrose::Recurrence do
   let(:now) { time_now }
@@ -169,22 +170,45 @@ describe Montrose::Recurrence do
       recurrence = new_recurrence(every: :day, at: "3:30 PM")
 
       timestamp = 3.days.from_now.beginning_of_day.advance(hours: 15, minutes: 30)
-      recurrence.include?(timestamp)
+
+      assert recurrence.include?(timestamp)
     end
 
     it "is false when given timestamp not included in recurrence" do
-      recurrence = new_recurrence(every: :week, on: "tuesday", at: "5:00", starts: "2016-06-23")
+      recurrence = new_recurrence(every: :week).on("tuesday").at("5:00").starts("2016-06-23")
 
       timestamp = 3.days.from_now.beginning_of_day.advance(hours: 15, minutes: 31)
 
-      recurrence.include?(timestamp).must_equal false
+      refute recurrence.include?(timestamp)
     end
 
-    it "is false if falls outside range" do
-      recurrence = new_recurrence(every: :day, at: "3:30 PM").repeat(3)
+    it "is false if falls outside finite range by total" do
+      recurrence = new_recurrence(every: :day).at("3:30 PM").repeat(3)
 
       timestamp = 4.days.from_now.beginning_of_day.advance(hours: 15, minutes: 30)
-      recurrence.include?(timestamp).must_equal false
+
+      refute recurrence.include?(timestamp)
+    end
+
+    it "is false if falls outside finite range by date" do
+      recurrence = new_recurrence(every: :day).at("3:30 PM").ending(10.days.from_now)
+
+      timestamp = 11.days.from_now.beginning_of_day.advance(hours: 15, minutes: 30)
+
+      refute recurrence.include?(timestamp)
+    end
+
+    it "is optimized to handle long/infinite recurrences" do
+      recurrence = new_recurrence(every: :day).at("3:30 PM")
+      far_future_timestamp = 100_000.days.from_now.beginning_of_day
+      far_future_timestamp = far_future_timestamp.advance(hours: 15, minutes: 30)
+
+      elapsed = Benchmark.realtime do
+        assert recurrence.include?(far_future_timestamp)
+      end
+
+      assert_operator 1.0, :>, elapsed.to_f,
+        "Elased time was too long: %.1f seconds" % elapsed
     end
   end
 end
