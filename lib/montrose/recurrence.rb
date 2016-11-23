@@ -10,8 +10,7 @@ module Montrose
   #
   # @author Ross Kaffenberger
   # @since 0.0.1
-  # @attr_reader [Montrose::Options] default_options contains the recurrence
-  # rules in hash-like format
+  # @attr_reader [Montrose::Options] default_options contains the recurrence rules in hash-like format
   #
   # @example a new recurrence
   #   Montrose.r
@@ -48,13 +47,11 @@ module Montrose
   # @example every other week forever
   #   Montrose.every(2.weeks)
   #
-  # @example weekly on Tuesday and Thursday for five weeks
-  # from September 1, 2015 until October 5, 2015
+  # @example weekly on Tuesday and Thursday for five weeks from September 1, 2015 until October 5, 2015
   #   Montrose.weekly(on: [:tuesday, :thursday],
   #     between: Date.new(2015, 9, 1)..Date.new(2015, 10, 5))
   #
-  # @example every other week on Monday, Wednesday and Friday until December 23 2015,
-  # but starting on Tuesday, September 1, 2015
+  # @example every other week on Mon, Wed and Fri until December 23 2015, but starting on Tuesday, September 1, 2015
   #   Montrose.every(2.weeks,
   #     on: [:monday, :wednesday, :friday],
   #     starts: Date.new(2015, 9, 1))
