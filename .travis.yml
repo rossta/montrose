@@ -16,4 +16,4 @@ rvm:
   - 2.3.3
 sudo: false
 after_success:
-  - bin/rake doc:publish
+  - bin/rake doc:travis
