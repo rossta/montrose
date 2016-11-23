@@ -373,12 +373,12 @@ in the schedule.</p>
       <pre class="lines">
 
 
+28
 29
-30
-31</pre>
+30</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/schedule.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/schedule.rb', line 28</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span>
   <span class='ivar'>@rules</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -492,14 +492,6 @@ in the schedule.</p>
 <p>Instantiates a schedule and yields the instance to an optional block for
 building recurrences inline</p>
 
-<p>schedule = Montrose::Schedule.build do |s|</p>
-
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_s'>s</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span> <span class='label'>every:</span> <span class='symbol'>:day</span> <span class='rbrace'>}</span>
-<span class='id identifier rubyid_s'>s</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span> <span class='label'>every:</span> <span class='symbol'>:year</span> <span class='rbrace'>}</span>
-</code></pre>
-
-<p>end</p>
-
 
   </div>
 </div>
@@ -513,7 +505,10 @@ building recurrences inline</p>
 <p>Build a schedule with multiple rules added in the given block</p>
 </div></p>
       
-      <pre class="example code"><code></code></pre>
+      <pre class="example code"><code><span class='id identifier rubyid_schedule'>schedule</span> <span class='op'>=</span> <span class='const'>Montrose</span><span class='op'>::</span><span class='const'>Schedule</span><span class='period'>.</span><span class='id identifier rubyid_build'>build</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span>
+  <span class='id identifier rubyid_s'>s</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span> <span class='label'>every:</span> <span class='symbol'>:day</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_s'>s</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span> <span class='label'>every:</span> <span class='symbol'>:year</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></code></pre>
     
   </div>
 
@@ -566,14 +561,14 @@ building recurrences inline</p>
       <pre class="lines">
 
 
+22
 23
 24
 25
-26
-27</pre>
+26</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/schedule.rb', line 23</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/schedule.rb', line 22</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_build'>build</span>
   <span class='id identifier rubyid_schedule'>schedule</span> <span class='op'>=</span> <span class='id identifier rubyid_new'>new</span>
@@ -610,11 +605,6 @@ building recurrences inline</p>
 <p>Add a recurrence rule to the schedule, either by hash or recurrence
 instance</p>
 
-<p>schedule = Montrose::Schedule.new schedule &lt;&lt; { every: :day }</p>
-
-<p>schedule = Montrose::Schedule.new recurrence = Montrose.recurrence(every:
-:day) schedule &lt;&lt; recurrence</p>
-
 
   </div>
 </div>
@@ -628,14 +618,17 @@ instance</p>
 <p>Add a recurrence by hash</p>
 </div></p>
       
-      <pre class="example code"><code></code></pre>
+      <pre class="example code"><code><span class='id identifier rubyid_schedule'>schedule</span> <span class='op'>=</span> <span class='const'>Montrose</span><span class='op'>::</span><span class='const'>Schedule</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+<span class='id identifier rubyid_schedule'>schedule</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span> <span class='label'>every:</span> <span class='symbol'>:day</span> <span class='rbrace'>}</span></code></pre>
     
       
         <p class="example_title"><div class='inline'>
 <p>Add a recurrence by instance</p>
 </div></p>
       
-      <pre class="example code"><code></code></pre>
+      <pre class="example code"><code><span class='id identifier rubyid_schedule'>schedule</span> <span class='op'>=</span> <span class='const'>Montrose</span><span class='op'>::</span><span class='const'>Schedule</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+<span class='id identifier rubyid_recurrence'>recurrence</span> <span class='op'>=</span> <span class='const'>Montrose</span><span class='period'>.</span><span class='id identifier rubyid_recurrence'>recurrence</span><span class='lparen'>(</span><span class='label'>every:</span> <span class='symbol'>:day</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_schedule'>schedule</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_recurrence'>recurrence</span></code></pre>
     
   </div>
 
@@ -662,14 +655,14 @@ instance</p>
       <pre class="lines">
 
 
+44
+45
+46
 47
-48
-49
-50
-51</pre>
+48</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/schedule.rb', line 47</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/schedule.rb', line 44</span>
 
 <span class='kw'>def</span> <span class='op'>&lt;&lt;</span><span class='lparen'>(</span><span class='id identifier rubyid_rule'>rule</span><span class='rparen'>)</span>
   <span class='ivar'>@rules</span> <span class='op'>&lt;&lt;</span> <span class='const'>Montrose</span><span class='op'>::</span><span class='const'>Recurrence</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_rule'>rule</span><span class='rparen'>)</span>
@@ -756,18 +749,18 @@ instance</p>
       <pre class="lines">
 
 
+70
+71
+72
 73
 74
 75
 76
 77
-78
-79
-80
-81</pre>
+78</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/schedule.rb', line 73</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/schedule.rb', line 70</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_events'>events</span><span class='lparen'>(</span><span class='id identifier rubyid_opts'>opts</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_enums'>enums</span> <span class='op'>=</span> <span class='ivar'>@rules</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_r'>r</span><span class='op'>|</span> <span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_opts'>opts</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_events'>events</span> <span class='rbrace'>}</span>
@@ -844,12 +837,12 @@ in the schedule</p>
       <pre class="lines">
 
 
-59
-60
-61</pre>
+56
+57
+58</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/schedule.rb', line 59</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/schedule.rb', line 56</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_timestamp'>timestamp</span><span class='rparen'>)</span>
   <span class='ivar'>@rules</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_r'>r</span><span class='op'>|</span> <span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_timestamp'>timestamp</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -864,7 +857,7 @@ in the schedule</p>
 </div>
 
     <div id="footer">
-  Generated on Wed Nov 23 17:24:31 2016 by
+  Generated on Wed Nov 23 17:30:41 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.3.1).
 </div>
