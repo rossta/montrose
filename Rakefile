@@ -20,6 +20,7 @@ task default: [:spec, :rubocop]
 namespace :doc do
   desc "Generate docs and publish to gh-pages"
   task :publish do
+    puts "Generating docs"
     require "fileutils"
     sh "yard doc"
     sh "git checkout gh-pages"
@@ -30,8 +31,8 @@ namespace :doc do
   end
 
   task :travis do
-    ENV["TRAVIS_PULL_REQUEST"] == "false" &&
-      ENV["TRAVIS_BRANCH"] == "master" &&
-      Rake::Task["doc:publish"].invoke or puts "No docs built"
+    puts "Generating docs on travis"
+    ENV["TRAVIS_BRANCH"] == "master" &&
+      Rake::Task["doc:publish"].invoke
   end
 end
