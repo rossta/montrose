@@ -351,9 +351,6 @@ Montrose.yearly(yday: [1, 100]) # yearly on the 1st and 100th day of year
 Montrose.yearly(on: { january: 31 })
 Montrose.r(every: :year, on: { 10 => 31 }, interval: 3)
 
-Montrose.daily(:day, except: "2017-01-31")
-Montrose.daily(except: [Date.today, "2017-01-31"])
-
 # Chaining
 Montrose.weekly.starting(3.weeks.from_now).on(:friday)
 Montrose.every(:day).at("4:05pm")
