@@ -76,7 +76,9 @@ module Montrose
     end
 
     def include?(timestamp)
-      event_enum.lazy.each do |event|
+      recurrence = finite? ? self : starts(timestamp)
+
+      recurrence.events.lazy.each do |event|
         return true if event == timestamp
         return false if event > timestamp
       end or false
@@ -96,6 +98,11 @@ module Montrose
           end or break
         end
       end
+    end
+
+    def finite?
+      options = to_hash
+      options.key?(:until) || options.key?(:total)
     end
   end
 end

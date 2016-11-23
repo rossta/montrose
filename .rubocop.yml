@@ -115,3 +115,6 @@ Style/DotPosition:
 
 Style/VariableNumber:
   Enabled: false
+
+Style/FormatString:
+  Enabled: false
