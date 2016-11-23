@@ -32,6 +32,6 @@ namespace :doc do
   task :travis do
     ENV["TRAVIS_PULL_REQUEST"] == "false" &&
       ENV["TRAVIS_BRANCH"] == "master" &&
-      Rake::Task["doc:publish"].invoke
+      Rake::Task["doc:publish"].invoke or puts "No docs built"
   end
 end
