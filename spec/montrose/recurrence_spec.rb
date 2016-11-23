@@ -190,10 +190,18 @@ describe Montrose::Recurrence do
       refute recurrence.include?(timestamp)
     end
 
-    it "is false if falls outside finite range by date" do
+    it "is false if falls after finite range by date" do
       recurrence = new_recurrence(every: :day).at("3:30 PM").ending(10.days.from_now)
 
       timestamp = 11.days.from_now.beginning_of_day.advance(hours: 15, minutes: 30)
+
+      refute recurrence.include?(timestamp)
+    end
+
+    it "is false if falls before finite range by date" do
+      recurrence = new_recurrence(every: :day).at("3:30 PM").starts(1.day.from_now)
+
+      timestamp = Time.now.beginning_of_day.advance(hours: 15, minutes: 30)
 
       refute recurrence.include?(timestamp)
     end

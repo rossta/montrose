@@ -6,10 +6,14 @@ require "montrose/clock"
 
 module Montrose
   class Recurrence
+    extend Forwardable
     include Chainable
     include Enumerable
 
     attr_reader :default_options
+    def_delegator :@default_options, :total, :length
+    def_delegator :@default_options, :starts, :starts_at
+    def_delegator :@default_options, :until, :ends_at
 
     class << self
       def new(options = {})
@@ -81,12 +85,27 @@ module Montrose
     # @return [Boolean] timestamp is included in recurrence
     #
     def include?(timestamp)
+      return false if earlier?(timestamp) || later?(timestamp)
+
       recurrence = finite? ? self : starts(timestamp)
 
       recurrence.events.lazy.each do |event|
         return true if event == timestamp
         return false if event > timestamp
       end or false
+    end
+
+    # Return true/false if given timestamp equals
+    def finite?
+      ends_at || length
+    end
+
+    def earlier?(timestamp)
+      starts_at && timestamp < starts_at
+    end
+
+    def later?(timestamp)
+      ends_at && timestamp > ends_at
     end
 
     private
@@ -103,11 +122,6 @@ module Montrose
           end or break
         end
       end
-    end
-
-    def finite?
-      options = to_hash
-      options.key?(:until) || options.key?(:total)
     end
   end
 end
