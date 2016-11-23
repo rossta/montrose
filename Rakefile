@@ -28,4 +28,10 @@ namespace :doc do
     sh "git push origin gh-pages"
     sh "git checkout -"
   end
+
+  task :travis do
+    ENV["TRAVIS_PULL_REQUEST"] == "false" &&
+      ENV["TRAVIS_BRANCH"] == "master" &&
+      Rake::Task["doc:publish"].invoke
+  end
 end
