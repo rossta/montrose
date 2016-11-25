@@ -335,7 +335,7 @@ Montrose.every(:month, day: :friday, interval: 2)
 Montrose.r(every: :month, day: :friday, interval: 2)
 
 Montrose.monthly(day: { friday: [1] }) # 1st Friday of the month
-Montrose.monthly(day: { Sunday: [1, -1] }) # first and last Sunday of the month
+Montrose.monthly(day: { sunday: [1, -1] }) # first and last Sunday of the month
 
 Montrose.monthly(mday: 7..13, day: :saturday) # first Saturday that follow the first Sunday of the month
 
