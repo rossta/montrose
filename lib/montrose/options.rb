@@ -79,7 +79,6 @@ module Montrose
     def_option :month
     def_option :interval
     def_option :total
-    def_option :between
     def_option :at
     def_option :on
     def_option :except
