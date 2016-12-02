@@ -1,8 +1,9 @@
+require "simplecov"
 require "coveralls"
-Coveralls.wear! do
+SimpleCov.maximum_coverage_drop 5
+SimpleCov.start do
   add_filter "bundle|gemfiles|spec|vendor"
 end
-SimpleCov.maximum_coverage_drop 5
 
 $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
 require "montrose"
