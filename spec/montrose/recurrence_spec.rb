@@ -77,11 +77,26 @@ describe Montrose::Recurrence do
       parsed[:starts].must_equal now.to_s
     end
 
-    it "raises error if not a self" do
-      -> { Montrose::Recurrence.dump(Object.new) }.must_raise Montrose::SerializationError
+    it "accepts json string" do
+      str = { every: :day, total: 3, starts: now, interval: 1 }.to_json
+
+      dump = Montrose::Recurrence.dump(str)
+      parsed = JSON.parse(dump).symbolize_keys
+      parsed[:every].must_equal "day"
+      parsed[:total].must_equal 3
+      parsed[:interval].must_equal 1
+      parsed[:starts].must_equal now.to_s
     end
 
     it { Montrose::Recurrence.dump(nil).must_be_nil }
+
+    it "raises error if str not parseable as JSON" do
+      -> { Montrose::Recurrence.dump("foo") }.must_raise Montrose::SerializationError
+    end
+
+    it "raises error otherwise" do
+      -> { Montrose::Recurrence.dump(Object.new) }.must_raise Montrose::SerializationError
+    end
   end
 
   describe ".load" do
