@@ -146,6 +146,9 @@ module Montrose
       @every = parsed.fetch(:every)
     end
 
+    alias frequency every
+    alias frequency= every=
+
     def starts=(time)
       @starts = as_time(time) || self.class.default_starts
     end
