@@ -224,6 +224,9 @@ module Montrose
 
       def dump(obj)
         return nil if obj.nil?
+
+        obj = load(obj) if obj.is_a?(String)
+
         unless obj.is_a?(self)
           fail SerializationError,
             "Object was supposed to be a #{self}, but was a #{obj.class}. -- #{obj.inspect}"
@@ -236,6 +239,8 @@ module Montrose
         return nil if json.nil?
 
         new JSON.parse(json)
+      rescue JSON::ParserError => e
+        fail SerializationError, "Could not parse JSON: #{e}"
       end
     end
 
