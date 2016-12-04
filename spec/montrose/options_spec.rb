@@ -145,6 +145,14 @@ describe Montrose::Options do
       -> { options[:every] = :nonsense }.must_raise
     end
 
+    it "aliases to :frequency" do
+      options[:frequency] = "month"
+
+      options.every.must_equal :month
+      options[:every].must_equal :month
+      options[:frequency].must_equal :month
+    end
+
     describe "from integer" do
       it "parses as every: :minute with interval" do
         options[:every] = 30.minutes
