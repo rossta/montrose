@@ -99,6 +99,12 @@ describe Montrose::Recurrence do
       default_options[:starts].to_i.must_equal now.to_i
       default_options[:interval].must_equal 1
     end
+
+    it "returns nil for nil dump" do
+      loaded = Montrose::Recurrence.load(nil)
+
+      loaded.must_be_nil
+    end
   end
 
   describe "integration specs" do

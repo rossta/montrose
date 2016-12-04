@@ -233,6 +233,8 @@ module Montrose
       end
 
       def load(json)
+        return nil if json.nil?
+
         new JSON.parse(json)
       end
     end
