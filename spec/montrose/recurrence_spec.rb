@@ -77,11 +77,23 @@ describe Montrose::Recurrence do
       parsed[:starts].must_equal now.to_s
     end
 
+    it "accepts json hash" do
+      hash = { every: :day, total: 3, starts: now, interval: 1 }
+
+      dump = Montrose::Recurrence.dump(hash)
+      parsed = JSON.parse(dump).symbolize_keys
+      parsed[:every].must_equal "day"
+      parsed[:total].must_equal 3
+      parsed[:interval].must_equal 1
+      parsed[:starts].must_equal now.to_s
+    end
+
     it "accepts json string" do
       str = { every: :day, total: 3, starts: now, interval: 1 }.to_json
 
       dump = Montrose::Recurrence.dump(str)
       parsed = JSON.parse(dump).symbolize_keys
+
       parsed[:every].must_equal "day"
       parsed[:total].must_equal 3
       parsed[:interval].must_equal 1

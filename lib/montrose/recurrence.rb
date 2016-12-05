@@ -224,15 +224,19 @@ module Montrose
 
       def dump(obj)
         return nil if obj.nil?
+        return dump(load(obj)) if obj.is_a?(String)
 
-        obj = load(obj) if obj.is_a?(String)
+        hash = case obj
+               when Hash
+                 obj
+               when self
+                 obj.to_hash
+               else
+                 fail SerializationError,
+                   "Object was supposed to be a #{self}, but was a #{obj.class}. -- #{obj.inspect}"
+               end
 
-        unless obj.is_a?(self)
-          fail SerializationError,
-            "Object was supposed to be a #{self}, but was a #{obj.class}. -- #{obj.inspect}"
-        end
-
-        JSON.dump(obj.to_hash)
+        JSON.dump(hash)
       end
 
       def load(json)
