@@ -132,6 +132,12 @@ describe Montrose::Recurrence do
 
       loaded.must_be_nil
     end
+
+    it "returns nil for empty dump" do
+      loaded = Montrose::Recurrence.load("")
+
+      loaded.must_be_nil
+    end
   end
 
   describe "integration specs" do

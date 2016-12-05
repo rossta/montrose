@@ -240,7 +240,7 @@ module Montrose
       end
 
       def load(json)
-        return nil if json.nil?
+        return nil if json.blank?
 
         new JSON.parse(json)
       rescue JSON::ParserError => e
