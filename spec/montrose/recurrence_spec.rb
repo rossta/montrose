@@ -184,8 +184,8 @@ describe Montrose::Recurrence do
     let(:recurrence) { new_recurrence(every: :month, starts: now, interval: 1) }
 
     it "is readable" do
-      inspected = "#<Montrose::Recurrence:#{recurrence.object_id.to_s(16)} "
-      inspected << "{:every=>:month, :starts=>#{now.inspect}, :interval=>1}>"
+      inspected = "#<Montrose::Recurrence:#{recurrence.object_id.to_s(16)} " \
+                  "{:every=>:month, :starts=>#{now.inspect}, :interval=>1}>"
       recurrence.inspect.must_equal inspected
     end
   end
