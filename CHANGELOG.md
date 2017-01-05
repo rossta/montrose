@@ -1,3 +1,10 @@
+### 0.6.0 - (2016-01-05)
+
+* enhancements
+  * Alias `every` to `frequency`
+  * Handle JSON and hashes in Recurrence serialization
+  * Handle blank and nil objects in Recurrence deserialization
+
 ### 0.5.0 - (2016-11-23)
 
 * enhancements
