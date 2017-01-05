@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "simplecov"
 require "coveralls"
 SimpleCov.maximum_coverage_drop 5
