@@ -26,7 +26,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.12"
   spec.add_development_dependency "appraisal", "~> 2.1.0"
   spec.add_development_dependency "rake", "~> 11.0"
-  spec.add_development_dependency "minitest", "~> 5.9"
+  spec.add_development_dependency "minitest", "~> 5.10"
   spec.add_development_dependency "m", "~> 1.4"
   spec.add_development_dependency "rubocop", "0.46.0"
   spec.add_development_dependency "timecop"
