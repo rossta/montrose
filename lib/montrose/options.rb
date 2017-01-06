@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Montrose
   class Options
     include Montrose::Utils

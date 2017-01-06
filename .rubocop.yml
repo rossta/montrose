@@ -118,3 +118,9 @@ Style/VariableNumber:
 
 Style/FormatString:
   Enabled: false
+
+Style/MutableConstant:
+  Enabled: false
+
+Style/NumericPredicate:
+  Enabled: false
