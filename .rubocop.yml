@@ -121,3 +121,6 @@ Style/FormatString:
 
 Style/MutableConstant:
   Enabled: false
+
+Style/NumericPredicate:
+  Enabled: false
