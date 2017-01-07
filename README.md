@@ -1,8 +1,8 @@
 # Montrose
 
 [![Build Status](https://travis-ci.org/rossta/montrose.svg?branch=master)](https://travis-ci.org/rossta/montrose)
-[![Coverage Status](https://coveralls.io/repos/rossta/montrose/badge.svg?branch=master&service=github)](https://coveralls.io/github/rossta/montrose?branch=master)
 [![Code Climate](https://codeclimate.com/github/rossta/montrose/badges/gpa.svg)](https://codeclimate.com/github/rossta/montrose)
+[![Coverage Status](https://coveralls.io/repos/rossta/montrose/badge.svg?branch=master&service=github)](https://coveralls.io/github/rossta/montrose?branch=master)
 [![Dependency Status](https://gemnasium.com/rossta/montrose.svg)](https://gemnasium.com/rossta/montrose)
 
 Montrose is an easy-to-use library for defining recurring events in Ruby. It uses a simple chaining system for building recurrences, inspired heavily by the design principles of [HTTP.rb](https://github.com/httprb/http) and rule definitions available in [Recurrence](https://github.com/fnando/recurrence).
