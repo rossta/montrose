@@ -15,3 +15,6 @@ rvm:
   - 2.2.6
   - 2.3.3
 sudo: false
+before_install:
+  - gem update --system
+  - gem --version
