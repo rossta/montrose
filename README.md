@@ -9,7 +9,7 @@ Montrose is an easy-to-use library for defining recurring events in Ruby. It use
 
 * [Introductory blog post](http://bit.ly/1PA68Zb)
 * [NYC.rb
-  presentation](https://speaderdeck.com/rossta/recurring-events-with-montrose)
+  presentation](https://speakerdeck.com/rossta/recurring-events-with-montrose)
 
 ## Installation
 
