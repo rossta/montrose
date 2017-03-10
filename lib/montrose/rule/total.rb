@@ -13,16 +13,16 @@ module Montrose
         @count = 0
       end
 
-      def include?(_time)
-        continue?
+      def include?(time)
+        continue?(time)
       end
 
-      def advance!(_time)
+      def advance!(time)
         @count += 1
-        continue?
+        continue?(time)
       end
 
-      def continue?
+      def continue?(_time)
         @count <= @max
       end
     end

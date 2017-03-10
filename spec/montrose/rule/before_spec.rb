@@ -11,6 +11,6 @@ describe Montrose::Rule::Before do
   end
 
   describe "#continue?" do
-    it { refute rule.continue? }
+    it { refute rule.continue?(time_now) }
   end
 end

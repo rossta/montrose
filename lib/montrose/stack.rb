@@ -12,6 +12,7 @@ module Montrose
         Frequency,
         Rule::After,
         Rule::Before,
+        Rule::Between,
         Rule::Except,
         Rule::Total,
         Rule::TimeOfDay,
@@ -46,7 +47,7 @@ module Montrose
         yield time if block_given?
         true
       else
-        no.any?(&:continue?)
+        no.any? { |rule| rule.continue?(time) }
       end
     end
   end

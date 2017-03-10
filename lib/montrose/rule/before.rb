@@ -16,7 +16,7 @@ module Montrose
         time < @end_time
       end
 
-      def continue?
+      def continue?(_time)
         false
       end
     end
