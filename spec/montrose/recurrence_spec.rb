@@ -189,6 +189,19 @@ describe Montrose::Recurrence do
         Time.local(2015, 9, 6, 12)
       ]
     end
+
+    it "anchors to starts time inside of between range" do
+      recurrence = new_recurrence(every: :day,
+                                  interval: 3,
+                                  starts: 1.day.from_now,
+                                  between: Date.today..7.days.from_now)
+
+      recurrence.events.to_a.must_pair_with [
+        Time.local(2015, 9, 2, 12),
+        Time.local(2015, 9, 5, 12),
+        Time.local(2015, 9, 8, 12)
+      ]
+    end
   end
 
   describe "#inspect" do

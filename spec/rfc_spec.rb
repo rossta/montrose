@@ -26,7 +26,7 @@ describe "RFC Recurrence Rules" do
     ends_on = Date.parse("December 23, 2015")
     days = starts_on.upto(ends_on).count - 1
 
-    recurrence = new_recurrence every: :day, until: ends_on, starts: starts_on
+    recurrence = new_recurrence every: :day, until: ends_on, starts: starts_on, exclude_end: true
 
     expected_dates = consecutive_days(days, starts: starts_on)
     dates = recurrence.events.to_a
@@ -105,7 +105,7 @@ describe "RFC Recurrence Rules" do
     ends_on = Date.parse("December 23, 2015")
     starts_on = ends_on - 15.weeks
 
-    recurrence = new_recurrence every: :week, until: ends_on, starts: starts_on
+    recurrence = new_recurrence every: :week, until: ends_on, starts: starts_on, exclude_end: true
 
     expected_dates = consecutive(:weeks, 15, starts: starts_on)
     dates = recurrence.events.to_a
@@ -162,7 +162,8 @@ describe "RFC Recurrence Rules" do
       day: [:monday, :wednesday, :friday],
       starts: Date.parse("September 1, 2015"),
       until: Date.parse("December 23, 2015"),
-      interval: 2
+      interval: 2,
+      exclude_end: true
     )
 
     # TODO: Non-interval start date not supported

@@ -11,7 +11,7 @@ module Montrose
       [
         Frequency,
         Rule::After,
-        Rule::Before,
+        Rule::Until,
         Rule::Between,
         Rule::Except,
         Rule::Total,

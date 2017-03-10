@@ -84,6 +84,7 @@ module Montrose
     def_option :at
     def_option :on
     def_option :except
+    def_option :exclude_end
 
     def initialize(opts = {})
       defaults = {
@@ -96,7 +97,8 @@ module Montrose
         yday: nil,
         week: nil,
         month: nil,
-        total: nil
+        total: nil,
+        exclude_end: nil
       }
 
       options = defaults.merge(opts || {})
