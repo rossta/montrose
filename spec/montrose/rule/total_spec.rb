@@ -29,6 +29,6 @@ describe Montrose::Rule::Total do
   end
 
   describe "#continue?" do
-    it { assert rule.continue? }
+    it { assert rule.continue?(time_now) }
   end
 end

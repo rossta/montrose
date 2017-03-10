@@ -322,7 +322,21 @@ describe Montrose::Options do
     it "returns given date range" do
       options[:between] = Date.today..1.month.from_now.to_date
 
-      options.between.must_equal(Date.today.to_time..1.month.from_now.beginning_of_day)
+      options.between.must_equal(Date.today..1.month.from_now.to_date)
+    end
+
+    it "defers to separate starts time outside of range" do
+      options[:between] = Date.today..1.month.from_now.to_date
+      options[:starts] = 1.day.ago
+
+      options.starts.must_equal 1.day.ago.to_time
+    end
+
+    it "defers to separate starts time within range" do
+      options[:between] = Date.today..1.month.from_now.to_date
+      options[:starts] = 1.day.from_now
+
+      options.starts.must_equal 1.day.from_now.to_time
     end
   end
 

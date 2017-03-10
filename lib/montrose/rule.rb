@@ -14,7 +14,7 @@ module Montrose
       true
     end
 
-    def continue?
+    def continue?(_time = nil)
       true
     end
 
@@ -36,6 +36,7 @@ end
 
 require "montrose/rule/after"
 require "montrose/rule/before"
+require "montrose/rule/between"
 require "montrose/rule/day_of_month"
 require "montrose/rule/day_of_week"
 require "montrose/rule/day_of_year"

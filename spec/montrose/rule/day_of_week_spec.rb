@@ -15,6 +15,6 @@ describe Montrose::Rule::DayOfWeek do
   end
 
   describe "#continue?" do
-    it { assert rule.continue? }
+    it { assert rule.continue?(time_now) }
   end
 end

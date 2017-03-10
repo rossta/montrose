@@ -72,6 +72,7 @@ module Montrose
     def_option :every
     def_option :starts
     def_option :until
+    def_option :between
     def_option :hour
     def_option :day
     def_option :mday
@@ -183,14 +184,9 @@ module Montrose
     end
 
     def between=(range)
-      self[:starts] = range.first
-      self[:until] = range.last
-    end
-
-    def between
-      return nil unless self[:starts] && self[:until]
-
-      (self[:starts]..self[:until])
+      @between = range
+      self[:starts] = range.first unless self[:starts]
+      self[:until] = range.last unless self[:until]
     end
 
     def at=(time)
