@@ -60,24 +60,27 @@ describe Montrose::Recurrence do
       now = time_now
       options = { every: :day, total: 3, starts: now, interval: 1 }
       recurrence = new_recurrence(options)
-      recurrence.to_hash.must_equal options
+      hash = recurrence.to_hash
+
+      hash.size.must_equal 4
+      hash[:every].must_equal :day
+      hash[:interval].must_equal 1
+      hash[:total].must_equal 3
+      hash[:starts].must_equal now
     end
   end
 
   describe "#to_yaml" do
-    let(:now) { Time.local(2015, 9, 1, 12) } # Tuesday
-
     it "returns default options as yaml" do
-      options = { every: :day, total: 3, starts: now, interval: 1 }
+      options = { every: :day, starts: now, interval: 1, total: 3 }
       recurrence = new_recurrence(options)
-      yaml = <<YAML
----
-:every: :day
-:starts: 2015-09-01 12:00:00.000000000 -04:00
-:interval: 1
-:total: 3
-YAML
-      recurrence.to_yaml.must_equal yaml
+      yaml = YAML.load recurrence.to_yaml
+
+      yaml.size.must_equal 4
+      yaml[:every].must_equal :day
+      yaml[:interval].must_equal 1
+      yaml[:total].must_equal 3
+      yaml[:starts].must_equal now
     end
   end
 
