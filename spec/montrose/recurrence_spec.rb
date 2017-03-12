@@ -65,8 +65,9 @@ describe Montrose::Recurrence do
   end
 
   describe "#to_yaml" do
+    let(:now) { Time.local(2015, 9, 1, 12) } # Tuesday
+
     it "returns default options as yaml" do
-      now = time_now
       options = { every: :day, total: 3, starts: now, interval: 1 }
       recurrence = new_recurrence(options)
       yaml = <<YAML
