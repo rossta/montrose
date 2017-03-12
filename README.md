@@ -370,6 +370,17 @@ r.events.take(10).each { |date| puts date.to_s }
 r.events.lazy.select { |time| time > 1.month.from_now }.take(3).each { |date| puts date.to_s }
 ```
 
+### Ruby on Rails
+
+Instances of `Montrose::Recurrence` support the ActiveRecord serialization API so recurrence objects can be marshalled to and from a single database column:
+
+```ruby
+class RecurringEvent < ApplicationRecord
+  serialize :recurrence, Montrose::Recurrence
+
+end
+```
+
 ## Inspiration
 
 Montrose is named after the beautifully diverse and artistic [neighborhood in Houston, Texas](https://en.wikipedia.org/wiki/Montrose,_Houston).
