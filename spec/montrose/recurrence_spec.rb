@@ -64,6 +64,22 @@ describe Montrose::Recurrence do
     end
   end
 
+  describe "#to_yaml" do
+    it "returns default options as yaml" do
+      now = time_now
+      options = { every: :day, total: 3, starts: now, interval: 1 }
+      recurrence = new_recurrence(options)
+      yaml = <<YAML
+---
+:every: :day
+:starts: 2015-09-01 12:00:00.000000000 -04:00
+:interval: 1
+:total: 3
+YAML
+      recurrence.to_yaml.must_equal yaml
+    end
+  end
+
   describe ".dump" do
     it "returns options as JSON string" do
       now = time_now

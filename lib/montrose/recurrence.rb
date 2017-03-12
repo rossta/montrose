@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 require "json"
+require "yaml"
 require "montrose/chainable"
 require "montrose/errors"
 require "montrose/stack"
@@ -313,6 +314,14 @@ module Montrose
     #
     def to_json
       to_hash.to_json
+    end
+
+    # Returns options used to create the recurrence in YAML format
+    #
+    # @return [String] YAML-formatted recurrence options
+    #
+    def to_yaml(*args)
+      YAML.dump(to_hash, *args)
     end
 
     def inspect
