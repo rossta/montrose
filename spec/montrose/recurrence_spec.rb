@@ -57,7 +57,6 @@ describe Montrose::Recurrence do
 
   describe "#to_hash" do
     it "returns default options as hash" do
-      now = time_now
       options = { every: :day, total: 3, starts: now, interval: 1 }
       recurrence = new_recurrence(options)
       hash = recurrence.to_hash
@@ -86,7 +85,6 @@ describe Montrose::Recurrence do
 
   describe ".dump" do
     it "returns options as JSON string" do
-      now = time_now
       options = { every: :day, total: 3, starts: now, interval: 1 }
       recurrence = new_recurrence(options)
 
@@ -134,7 +132,6 @@ describe Montrose::Recurrence do
 
   describe ".load" do
     it "returns Recurrence instance" do
-      now = time_now
       options = { every: :day, total: 3, starts: now, interval: 1 }
       recurrence = new_recurrence(options)
       dump = Montrose::Recurrence.dump(recurrence)
