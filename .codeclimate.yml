@@ -7,9 +7,6 @@ engines:
     config:
       languages:
       - ruby
-      - javascript
-      - python
-      - php
   fixme:
     enabled: true
   rubocop:
@@ -17,12 +14,6 @@ engines:
 ratings:
   paths:
   - Gemfile.lock
-  - "**.inc"
-  - "**.js"
-  - "**.jsx"
-  - "**.module"
-  - "**.php"
-  - "**.py"
   - "**.rb"
 exclude_paths:
 - spec/
