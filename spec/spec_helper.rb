@@ -94,7 +94,7 @@ module Minitest
     def assert_interval(actual_duration, given_enum)
       first = given_enum.next
       second = given_enum.next
-      assert_equal actual_duration.to_i, (second - first).to_i
+      assert_equal first + actual_duration, second
     end
 
     def assert_tick(actual_duration, clock)
