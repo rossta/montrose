@@ -1,4 +1,24 @@
-### 0.6.0 - (2016-01-05)
+### 0.7.0 - (2017-09-18)
+
+* enhancements
+  * Adds the :exclude_end option can be used to determine whether :until value
+    is included in the recurrence. Mimics the API to Ruby's Range.
+  * Support activesupport-5.1 (by @fauxparse)
+  * Support ruby-2.4
+
+* bug fixes
+  * Recurrence#to_json accepts arguments for JSON.dump
+
+* breaking changes
+  * Previously, the :between option served as a shorthand for :starts to :until.
+    Now, when both :starts and :between are provided, the recurrence will behave
+as if anchored by the given :starts option, but filtered through the given
+:betweeen option.
+  * The :exclude_end option changes the default behavior of :until--when the
+    timestamp of the interval matches the :until timestamp, it will be included
+by default unless the :exclude_end option is set to true.
+
+### 0.6.0 - (2017-01-05)
 
 * enhancements
   * Alias `every` to `frequency`
