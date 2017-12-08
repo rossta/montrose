@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Montrose
   # A schedule represents a group of recurrences
   #

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Montrose
   # Defines the Rule duck type for recurrence rules
   module Rule
