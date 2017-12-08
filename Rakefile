@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "bundler/setup"
 require "bundler/gem_tasks"
 require "rake/testtask"
@@ -16,7 +17,7 @@ task test: :spec
 
 RuboCop::RakeTask.new
 
-task default: [:spec, :rubocop]
+task default: %i[spec rubocop]
 
 namespace :doc do
   desc "Generate docs and publish to gh-pages"

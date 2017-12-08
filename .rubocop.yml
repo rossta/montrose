@@ -31,6 +31,9 @@ Metrics/CyclomaticComplexity:
 Metrics/PerceivedComplexity:
   Enabled: false
 
+Metrics/BlockLength:
+  Enabled: false
+
 Documentation:
   Enabled: false # TODO: Enable again once we have more docs
 
@@ -56,13 +59,13 @@ Style/TrivialAccessors:
 Style/HashSyntax:
   Enabled: true
 
-Style/MethodName:
+Naming/MethodName:
   Enabled: false
 
-Style/AlignParameters:
+Layout/AlignParameters:
   EnforcedStyle: with_fixed_indentation
 
-Style/AccessModifierIndentation:
+Layout/AccessModifierIndentation:
   Enabled: true
 
 Style/StringLiterals:
@@ -71,7 +74,7 @@ Style/StringLiterals:
 Style/StringLiteralsInInterpolation:
   EnforcedStyle: double_quotes
 
-Style/ClosingParenthesisIndentation:
+Layout/ClosingParenthesisIndentation:
   Enabled: false
 
 Style/OneLineConditional:
@@ -83,8 +86,7 @@ Style/AndOr:
 Style/Not:
   Enabled: false
 
-Style/CaseIndentation:
-  IndentWhenRelativeTo: case
+Layout/CaseIndentation:
   SupportedStyles:
     - case
     - end
@@ -95,13 +97,13 @@ Style/PercentLiteralDelimiters:
     '%w': "[]"
     '%W': "[]"
 
-Style/AccessModifierIndentation:
+Layout/AccessModifierIndentation:
   EnforcedStyle: indent
 
 Style/SignalException:
   Enabled: false
 
-Style/IndentationWidth:
+Layout/IndentationWidth:
   Enabled: false
 
 Style/TrivialAccessors:
@@ -110,10 +112,10 @@ Style/TrivialAccessors:
 Style/RegexpLiteral:
   EnforcedStyle: percent_r
 
-Style/DotPosition:
+Layout/DotPosition:
   EnforcedStyle: trailing
 
-Style/VariableNumber:
+Naming/VariableNumber:
   Enabled: false
 
 Style/FormatString:
