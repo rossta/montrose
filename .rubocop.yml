@@ -126,3 +126,6 @@ Style/MutableConstant:
 
 Style/NumericPredicate:
   Enabled: false
+
+Style/SymbolArray:
+  Enabled: false

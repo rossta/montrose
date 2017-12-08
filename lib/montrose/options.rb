@@ -24,7 +24,8 @@ module Montrose
         protected :"#{name}="
       end
 
-      attr_accessor :default_starts, :default_until, :default_every
+      attr_accessor :default_every
+      attr_writer :default_starts, :default_until
 
       # Return the default ending time.
       #
