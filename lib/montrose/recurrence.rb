@@ -322,7 +322,7 @@ module Montrose
     # @return [String] YAML-formatted recurrence options
     #
     def to_yaml(*args)
-      YAML.dump(to_hash, *args)
+      YAML.dump(JSON.parse(to_json(*args)))
     end
 
     def inspect
