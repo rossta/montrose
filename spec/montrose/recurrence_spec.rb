@@ -74,13 +74,15 @@ describe Montrose::Recurrence do
     it "returns default options as yaml" do
       options = { every: :day, starts: now, interval: 1, total: 3 }
       recurrence = new_recurrence(options)
-      yaml = YAML.load recurrence.to_yaml
 
-      yaml.size.must_equal 4
-      yaml[:every].must_equal :day
-      yaml[:interval].must_equal 1
-      yaml[:total].must_equal 3
-      yaml[:starts].must_equal now
+      yaml = recurrence.to_yaml
+      recurrence_from_yaml = new_recurrence(YAML.safe_load(yaml))
+
+      hash = recurrence_from_yaml.to_hash
+      hash[:every].must_equal :day
+      hash[:interval].must_equal 1
+      hash[:total].must_equal 3
+      hash[:starts].must_equal now
     end
   end
 
