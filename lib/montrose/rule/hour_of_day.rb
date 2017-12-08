@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Montrose
   module Rule
     class HourOfDay

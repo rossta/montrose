@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 if ENV["TRACE"]
   $stack_size = ENV["TRACE"].to_i
   $trace_out = open("trace.txt", "w")
