@@ -670,12 +670,12 @@ describe Montrose::Options do
       options[:at].must_be_nil
     end
 
-    it "sets :at to hour and min parts" do
+    it "sets :at to hour, min, sec parts" do
       options[:at] = "3:30 PM"
 
       time = Time.parse("3:30 PM")
-      options.at.must_equal [[time.hour, time.min]]
-      options[:at].must_equal [[time.hour, time.min]]
+      options.at.must_equal [[time.hour, time.min, time.sec]]
+      options[:at].must_equal [[time.hour, time.min, time.sec]]
     end
 
     it "accepts an array of time strings" do
@@ -683,7 +683,16 @@ describe Montrose::Options do
 
       time_1 = Time.local(2015, 9, 1, 10, 30)
       time_2 = Time.local(2015, 9, 1, 15, 45)
-      options[:at].must_equal [[time_1.hour, time_1.min], [time_2.hour, time_2.min]]
+      options[:at].must_equal [[time_1.hour, time_1.min, time_1.sec], [time_2.hour, time_2.min, time_2.sec]]
+    end
+
+    it "retains seconds info" do
+      options[:at] = "23:59:59"
+
+      time = Time.parse("23:59:59")
+
+      options.at.must_equal [[time.hour, time.min, time.sec]]
+      options[:at].must_equal [[time.hour, time.min, time.sec]]
     end
 
     it "accepts an array of time part arrays" do
