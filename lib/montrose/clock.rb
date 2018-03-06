@@ -24,7 +24,7 @@ module Montrose
       return @start_time if @time.nil?
 
       if @at
-        times = @at.map { |(hour, min)| @time.change(hour: hour, min: min) }
+        times = @at.map { |hour, min, sec = 0| @time.change(hour: hour, min: min, sec: sec) }
 
         min_next = times.select { |t| t > @time }.min and return min_next
 
