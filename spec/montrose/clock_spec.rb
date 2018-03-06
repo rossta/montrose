@@ -100,10 +100,11 @@ describe Montrose::Clock do
     end
 
     it "emits increments on at values" do
-      clock = new_clock(every: :day, at: [[10, 0], [15, 30]])
+      clock = new_clock(every: :day, at: [[10, 0, 59], [15, 30, 34]])
 
-      clock.must_have_tick(5.hours + 30.minutes)
-      clock.must_have_tick(5.hours + 30.minutes)
+      clock.tick # throwaway default start time
+      clock.tick.must_equal time_now.change(hour: 10, min: 0, sec: 59)
+      clock.tick.must_equal time_now.change(hour: 15, min: 30, sec: 34)
     end
 
     it "emits correct tick when at values empty" do
