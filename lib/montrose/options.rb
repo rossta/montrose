@@ -307,7 +307,7 @@ module Montrose
       return arg if arg.is_a?(Array)
 
       time = as_time(arg)
-      [time.hour, time.min]
+      [time.hour, time.min, time.sec]
     end
 
     def parse_frequency(input)

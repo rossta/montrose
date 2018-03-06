@@ -240,7 +240,7 @@ describe Montrose::Recurrence do
       options = { every: :day, at: "3:45pm" }
       recurrence = new_recurrence(options)
 
-      recurrence.to_json.must_equal "{\"every\":\"day\",\"at\":[[15,45]]}"
+      recurrence.to_json.must_equal "{\"every\":\"day\",\"at\":[[15,45,0]]}"
     end
   end
 

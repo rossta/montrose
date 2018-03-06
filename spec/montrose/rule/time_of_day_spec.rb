@@ -3,7 +3,7 @@
 require "spec_helper"
 
 describe Montrose::Rule::TimeOfDay do
-  let(:rule) { Montrose::Rule::TimeOfDay.new([[9, 0], [15, 30]]) }
+  let(:rule) { Montrose::Rule::TimeOfDay.new([[9, 0, 0], [15, 30, 0]]) }
 
   describe "#include?" do
     it { assert rule.include?(Time.local(2016, 1, 1, 9)) }

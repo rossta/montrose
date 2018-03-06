@@ -11,7 +11,7 @@ module Montrose
 
       # Initializes rule
       #
-      # @param [Array<Time>] times - valid hours of days
+      # @param [Array<Time>] times - valid times
       #
       def initialize(times)
         @times = times
@@ -24,7 +24,7 @@ module Montrose
       private
 
       def parts(time)
-        [time.hour, time.min]
+        [time.hour, time.min, time.sec]
       end
     end
   end
