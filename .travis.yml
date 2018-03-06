@@ -8,18 +8,21 @@ gemfile:
 language: ruby
 matrix:
   exclude:
-  - rvm: 2.1.10
+  - rvm: 2.1
     gemfile: gemfiles/activesupport_5.0.gemfile # Requires Ruby 2.2+
-  - rvm: 2.1.10
+  - rvm: 2.1
     gemfile: gemfiles/activesupport_5.1.gemfile # Requires Ruby 2.2+
-  - rvm: 2.4.0
+  - rvm: 2.4
+    gemfile: gemfiles/activesupport_4.1.gemfile # Requires json 1.8.5+
+  - rvm: 2.5
     gemfile: gemfiles/activesupport_4.1.gemfile # Requires json 1.8.5+
   fast_finish: true
 rvm:
-  - 2.1.10
-  - 2.2.6
-  - 2.3.3
-  - 2.4.0
+  - 2.1
+  - 2.2
+  - 2.3
+  - 2.4
+  - 2.5
 sudo: false
 before_install:
   - gem update --system
