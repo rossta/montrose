@@ -1,6 +1,7 @@
 bundler_args: "--jobs 4 --retry 3"
 cache: bundler
 gemfile:
+- gemfiles/activesupport_5.2.gemfile
 - gemfiles/activesupport_5.1.gemfile
 - gemfiles/activesupport_5.0.gemfile
 - gemfiles/activesupport_4.2.gemfile
@@ -12,6 +13,8 @@ matrix:
     gemfile: gemfiles/activesupport_5.0.gemfile # Requires Ruby 2.2+
   - rvm: 2.1
     gemfile: gemfiles/activesupport_5.1.gemfile # Requires Ruby 2.2+
+  - rvm: 2.1
+    gemfile: gemfiles/activesupport_5.2.gemfile # Requires Ruby 2.2+
   - rvm: 2.4
     gemfile: gemfiles/activesupport_4.1.gemfile # Requires json 1.8.5+
   - rvm: 2.5
