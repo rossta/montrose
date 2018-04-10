@@ -30,3 +30,4 @@ sudo: false
 before_install:
   - gem update --system
   - gem --version
+  - gem install bundler
