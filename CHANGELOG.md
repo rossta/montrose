@@ -1,3 +1,11 @@
+### 0.8.0 - (2018-05-29)
+
+* enhancements
+  * Parsing the `:at` option now initializes recurrence by the hour-minute-second
+  * Support activesupport-5.2 (by @zokioki)
+  * Support ruby-2.5
+  * Support YAML.safe_load for Recurrence#to_yaml
+
 ### 0.7.0 - (2017-09-18)
 
 * enhancements
