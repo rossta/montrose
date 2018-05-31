@@ -55,6 +55,16 @@ module Montrose
     def matches_interval?(time_diff)
       (time_diff % @interval).zero?
     end
+
+    def to_cron
+      raise "abstract"
+    end
+
+    protected
+
+    def interval_str
+      @interval != 1 ? "*/#{@interval}" : "*"
+    end
   end
 end
 

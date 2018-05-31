@@ -7,6 +7,11 @@ module Montrose
         (weeks_since_start(time) % @interval).zero?
       end
 
+      def to_cron
+        raise "Intervals unsupported" unless @interval == 1
+        "#{@starts.min} #{@starts.hour} * * #{@starts.wday}"
+      end
+
       private
 
       def weeks_since_start(time)
