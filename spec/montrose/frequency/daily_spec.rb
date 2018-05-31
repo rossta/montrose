@@ -33,4 +33,20 @@ describe Montrose::Frequency::Daily do
       refute frequency.include? now + 3.days
     end
   end
+
+  describe "#to_cron" do
+    let(:now) { Time.new(2018, 5, 31, 16, 30, 0) }
+
+    it "returns a valid crontab entry with no interval" do
+      frequency = new_frequency(every: :day)
+
+      assert_equal frequency.to_cron, "30 16 * * *"
+    end
+
+    it "returns a valid crontab entry with days interval" do
+      frequency = new_frequency(every: :day, interval: 2)
+
+      assert_equal frequency.to_cron, "30 16 */2 * *"
+    end
+  end
 end

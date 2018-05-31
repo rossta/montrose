@@ -33,4 +33,19 @@ describe Montrose::Frequency::Yearly do
       refute frequency.include? now + 3.years
     end
   end
+  describe "#to_cron" do
+    let(:now) { Time.new(2018, 5, 31, 16, 30, 0) }
+
+    it "returns a valid crontab with no interval" do
+      frequency = new_frequency(every: :year)
+
+      assert_equal frequency.to_cron, "30 16 31 5 *"
+    end
+
+    it "raises on non-yearly interval" do
+      frequency = new_frequency(every: :year, interval: 3)
+
+      assert_raises(RuntimeError) { frequency.to_cron }
+    end
+  end
 end
