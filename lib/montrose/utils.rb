@@ -5,7 +5,10 @@ module Montrose
     module_function
 
     MONTHS = ::Date::MONTHNAMES
+    MONTH_NUMBERS = {'1' => 1, '2' => 2, '3' => 3, '4' => 4, '5' => 5, '6' => 6,
+                     '7' => 7, '8' => 8, '9' => 9, '10' => 10, '11' => 11, '12' => 12}
     DAYS = ::Date::DAYNAMES
+    DAY_NUMBERS = {'0' => 0, '1' => 1, '2' => 2, '3' => 3, '4' => 4, '5' => 5, '6' => 6}
 
     MAX_HOURS_IN_DAY = 24
     MAX_DAYS_IN_YEAR = 366
@@ -41,7 +44,7 @@ module Montrose
     def month_number(name)
       case name
       when Symbol, String
-        MONTHS.index(name.to_s.titleize)
+        MONTHS.index(name.to_s.titleize) || MONTH_NUMBERS[name.to_s]
       when 1..12
         name
       end
@@ -49,7 +52,7 @@ module Montrose
 
     def month_number!(name)
       month_number(name) or fail ConfigurationError,
-        "Did not recognize month #{name}, must be one of #{MONTHS.inspect}"
+        "Did not recognize month #{name}, must be one of #{(MONTHS + MONTH_NUMBERS.keys).inspect}"
     end
 
     def day_number(name)
@@ -57,7 +60,7 @@ module Montrose
       when 0..6
         name
       when Symbol, String
-        DAYS.index(name.to_s.titleize)
+        DAYS.index(name.to_s.titleize) || DAY_NUMBERS[name.to_s]
       when Array
         day_number name.first
       end
@@ -65,7 +68,7 @@ module Montrose
 
     def day_number!(name)
       day_number(name) or fail ConfigurationError,
-        "Did not recognize day #{name}, must be one of #{DAYS.inspect}"
+        "Did not recognize day #{name}, must be one of #{(DAYS + DAY_NUMBERS.keys).inspect}"
     end
 
     def days_in_month(month, year = current_time.year)
