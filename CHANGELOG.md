@@ -1,3 +1,9 @@
+### 0.8.1 - (2018-05-29)
+
+* bug fixes
+  * Fixes interval comparisons for secondly, hourly, minutely by zeroing usec
+    for recurrence start and end times
+
 ### 0.8.0 - (2018-05-29)
 
 * enhancements
