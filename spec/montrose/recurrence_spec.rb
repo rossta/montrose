@@ -304,4 +304,25 @@ describe Montrose::Recurrence do
         "Elased time was too long: %.1f seconds" % elapsed
     end
   end
+
+  describe "intervals" do
+    before do
+      Timecop.return # turn off timecop to test enumeration against real clock
+    end
+
+    # Test for issue #101 in which interval comparisons for second, minute, and hour were fail
+    require "timeout"
+    [:second, :minute, :hour, :day, :month, :year].each do |interval|
+      it "returns enumerable for every recognized interval" do
+        recurrence = new_recurrence(every: interval)
+        begin
+          Timeout.timeout(2) do
+            recurrence.take(5).length.must_equal 5
+          end
+        rescue Timeout::Error
+          assert false, "Expected recurrence for every #{interval.inspect} to return 5 results"
+        end
+      end
+    end
+  end
 end
