@@ -29,6 +29,11 @@ module Montrose
       end
     end
 
+    # Recurrence at fractions of a second are not recognized
+    def normalize_time(time)
+      time && time.change(usec: 0)
+    end
+
     def as_date(time)
       as_time(time).to_date
     end

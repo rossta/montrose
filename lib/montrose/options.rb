@@ -32,6 +32,11 @@ module Montrose
       # @example Recurrence.default_until #=> <Date>
       #
       def default_until
+        ::Montrose::Utils.normalize_time determine_default_until
+      end
+
+      # private
+      def determine_default_until
         case @default_until
         when String
           ::Montrose::Utils.parse_time(@default_until)
@@ -47,6 +52,11 @@ module Montrose
       # @example Recurrence.default_starts #=> <Date>
       #
       def default_starts
+        ::Montrose::Utils.normalize_time determine_default_starts
+      end
+
+      # private
+      def determine_default_starts
         case @default_starts
         when String
           ::Montrose::Utils.parse_time(@default_starts)
@@ -156,11 +166,11 @@ module Montrose
     alias frequency= every=
 
     def starts=(time)
-      @starts = as_time(time) || self.class.default_starts
+      @starts = normalize_time(as_time(time)) || default_starts
     end
 
     def until=(time)
-      @until = as_time(time) || self.class.default_until
+      @until = normalize_time(as_time(time)) || default_until
     end
 
     def hour=(hours)
@@ -227,6 +237,10 @@ module Montrose
 
     def default_starts
       self.class.default_starts
+    end
+
+    def default_until
+      self.class.default_until
     end
 
     def nested_map_arg(arg, &block)
