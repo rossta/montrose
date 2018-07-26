@@ -310,7 +310,9 @@ describe Montrose::Recurrence do
       Timecop.return # turn off timecop to test enumeration against real clock
     end
 
-    # Test for issue #101 in which interval comparisons for second, minute, and hour were fail
+    # Test for issue #101 in which interval comparisons for
+    # second, minute, and hour were failing, cause enumeration
+    # to get stuck in an infinite loop.
     require "timeout"
     [:second, :minute, :hour, :day, :month, :year].each do |interval|
       it "returns enumerable for every recognized interval" do
@@ -320,7 +322,7 @@ describe Montrose::Recurrence do
             recurrence.take(5).length.must_equal 5
           end
         rescue Timeout::Error
-          assert false, "Expected recurrence for every #{interval.inspect} to return 5 results"
+          assert false, "Expected recurrence for every #{interval.inspect} to return 5 results but timed out."
         end
       end
     end
