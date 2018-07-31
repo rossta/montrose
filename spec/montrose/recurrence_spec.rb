@@ -326,5 +326,13 @@ describe Montrose::Recurrence do
         end
       end
     end
+
+    it "returns daily events with :at specified prior to :starts" do
+      starts = 1.day.from_now.beginning_of_day + 12.hours
+      at = "6:00am"
+      recurrence = new_recurrence(every: :day, starts: starts, at: at)
+
+      recurrence.take(3).length.must_equal 3
+    end
   end
 end
