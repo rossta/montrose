@@ -1,4 +1,9 @@
-### 0.8.1 - (2018-05-29)
+### 0.8.2 - (2018-08-02)
+
+* bug fixes
+  * Fixes use of :at when time of day earlier than :starts
+
+### 0.8.1 - (2018-07-27)
 
 * bug fixes
   * Fixes interval comparisons for secondly, hourly, minutely by zeroing usec
