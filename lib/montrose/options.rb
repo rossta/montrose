@@ -11,6 +11,7 @@ module Montrose
     class << self
       def new(options = {})
         return options if options.is_a?(self)
+
         super
       end
 
@@ -142,6 +143,7 @@ module Montrose
 
     def fetch(key, *args, &_block)
       fail ArgumentError, "wrong number of arguments (#{args.length} for 1..2)" if args.length > 1
+
       found = send(key)
       return found if found
       return args.first if args.length == 1
@@ -305,8 +307,10 @@ module Montrose
     def month_or_day(key)
       month = month_number(key)
       return [:month, month] if month
+
       day = day_number(key)
       return [:day, day] if day
+
       fail ConfigurationError, "Did not recognize #{key} as a month or day"
     end
 

@@ -7,7 +7,7 @@ SimpleCov.start do
   add_filter "bundle|gemfiles|spec|vendor"
 end
 
-$LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
+$LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 require "montrose"
 
 require "minitest/autorun"
@@ -20,7 +20,7 @@ begin
 rescue LoadError
 end
 
-Dir[File.expand_path("../../spec/support/**/*.rb", __FILE__)].each { |f| require f }
+Dir[File.expand_path("../spec/support/**/*.rb", __dir__)].each { |f| require f }
 
 module Minitest
   class Spec
