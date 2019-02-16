@@ -25,7 +25,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "activesupport", ">= 4.1", "< 5.3"
 
   spec.add_development_dependency "appraisal", "~> 2.2.0"
-  spec.add_development_dependency "bundler", "~> 1.13"
   spec.add_development_dependency "m", "~> 1.5"
   spec.add_development_dependency "minitest", "~> 5.10"
   spec.add_development_dependency "rake", "~> 11.0"
