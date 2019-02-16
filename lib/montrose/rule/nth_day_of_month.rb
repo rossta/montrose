@@ -8,7 +8,7 @@ module Montrose
       include Montrose::Rule
 
       def self.apply_options?(opts)
-        opts[:every] == :month && opts[:day].is_a?(Hash)
+        (opts[:every] == :month || opts[:month]) && opts[:day].is_a?(Hash)
       end
 
       def self.apply_options(opts)
