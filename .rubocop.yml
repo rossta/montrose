@@ -3,7 +3,7 @@ AllCops:
     - 'bin/**/*'
     - 'gemfiles/**/*'
     - 'tmp/**/*'
-  TargetRubyVersion: '2.1.0'
+  TargetRubyVersion: '2.3.0'
 
 Lint/HandleExceptions:
   Exclude:
@@ -51,6 +51,9 @@ Lint/HandleExceptions:
 Style/GlobalVars:
   Exclude:
   - spec/support/trace.rb
+
+Style/SafeNavigation:
+  Enabled: false
 
 Style/SpecialGlobalVars:
   Enabled: false
