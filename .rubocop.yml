@@ -39,12 +39,6 @@ Metrics/BlockLength:
 Documentation:
   Enabled: false # TODO: Enable again once we have more docs
 
-Lint/EndAlignment:
-  Enabled: false
-
-Lint/DefEndAlignment:
-  Enabled: false
-
 Lint/HandleExceptions:
   Enabled: false
 
@@ -80,6 +74,12 @@ Style/StringLiteralsInInterpolation:
   EnforcedStyle: double_quotes
 
 Layout/ClosingParenthesisIndentation:
+  Enabled: false
+
+Layout/EndAlignment:
+  Enabled: false
+
+Layout/DefEndAlignment:
   Enabled: false
 
 Style/OneLineConditional:

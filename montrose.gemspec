@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-lib = File.expand_path("../lib", __FILE__)
+lib = File.expand_path("lib", __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "montrose/version"
 
@@ -28,6 +28,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "m", "~> 1.5"
   spec.add_development_dependency "minitest", "~> 5.10"
   spec.add_development_dependency "rake", "~> 11.0"
-  spec.add_development_dependency "rubocop", "~> 0.52.1"
+  spec.add_development_dependency "rubocop", "~> 0.64.0"
   spec.add_development_dependency "timecop"
 end

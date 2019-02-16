@@ -222,6 +222,7 @@ module Montrose
     class << self
       def new(options = {})
         return options if options.is_a?(self)
+
         super
       end
 

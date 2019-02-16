@@ -9,6 +9,7 @@ module Montrose
 
       def to_cron
         raise "Intervals unsupported" unless @interval == 1
+
         "#{@starts.min} #{@starts.hour} * * #{@starts.wday}"
       end
 
