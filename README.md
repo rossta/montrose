@@ -34,7 +34,7 @@ More specifically, this project intends to:
 
 * model recurring events in Ruby
 * embrace Ruby idioms
-* support Ruby 2.1+
+* support recent Rubies
 * be reasonably performant
 * serialize to yaml, hash, and [ical](http://www.kanzaki.com/docs/ical/rrule.html#basic) formats
 * be suitable for integration with persistence libraries
