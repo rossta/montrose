@@ -271,9 +271,6 @@ Montrose.every(4.years, month: :november, on: { tuesday: 2..8 })
 date = Date.new(2016, 9, 1)
 Montrose.hourly(between: date..(date+1), hour: 9..17, interval: 3)
 
-# every 15 minutes for 6 occurrences
-Montrose.every(90.minutes, total: 6)
-
 # every hour and a half for four occurrences
 Montrose.every(90.minutes, total: 4)
 
