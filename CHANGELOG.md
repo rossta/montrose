@@ -1,3 +1,16 @@
+### 0.9.0 - (2019-03-11)
+
+* enhancements
+  * enables support for ActiveRecord 6
+
+* bug fixes
+  * Fixes bug for nth day of month when used with yearly interval
+
+* breaking changes
+  * using selected with :month with :day as a Hash will now enforce the
+    `NthDayOfMonth` recurrence rule
+  * drops official support for Ruby 2.1 and 2.2
+
 ### 0.8.2 - (2018-08-02)
 
 * bug fixes
