@@ -10,9 +10,15 @@ gemfile:
 language: ruby
 matrix:
   exclude:
+  - rvm: 2.3
+    gemfile: gemfiles/activesupport_6.0.gemfile # Requires ruby 2.5+
   - rvm: 2.4
     gemfile: gemfiles/activesupport_4.1.gemfile # Requires json 1.8.5+
+  - rvm: 2.4
+    gemfile: gemfiles/activesupport_6.0.gemfile # Requires ruby 2.5+
   - rvm: 2.5
+    gemfile: gemfiles/activesupport_4.1.gemfile # Requires json 1.8.5+
+  - rvm: 2.6
     gemfile: gemfiles/activesupport_4.1.gemfile # Requires json 1.8.5+
   fast_finish: true
 rvm:
