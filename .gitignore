@@ -10,3 +10,5 @@
 /profile.log
 /trace.txt
 gemfiles/*.lock
+/.ruby-gemset
+/.ruby-version
