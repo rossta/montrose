@@ -34,9 +34,9 @@ describe Montrose::Recurrence do
       recurrence = new_recurrence(every: :day, at: ["7:00am", "3:30pm"])
 
       recurrence.events.take(3).must_pair_with [
-        Time.local(2015, 9, 1, 7,  0),
         Time.local(2015, 9, 1, 15, 30),
-        Time.local(2015, 9, 2, 7,  0)
+        Time.local(2015, 9, 2, 7,  0),
+        Time.local(2015, 9, 2, 15, 30)
       ]
     end
 
@@ -62,6 +62,25 @@ describe Montrose::Recurrence do
         Time.local(2015, 9, 2, 12),
         Time.local(2015, 9, 5, 12),
         Time.local(2015, 9, 8, 12)
+      ]
+    end
+
+    it "returns daily events with :at specified prior to :starts" do
+      starts = 1.day.from_now.beginning_of_day + 12.hours
+      at = "6:00am"
+      recurrence = new_recurrence(every: :day, starts: starts, at: at)
+
+      recurrence.take(3).length.must_equal 3
+    end
+
+    it "returns daily events after current time" do
+      at = "6:00am"
+      recurrence = new_recurrence(every: :day, at: at)
+
+      recurrence.take(3).must_pair_with [
+        Time.local(2015, 9, 2, 6),
+        Time.local(2015, 9, 3, 6),
+        Time.local(2015, 9, 4, 6)
       ]
     end
 
