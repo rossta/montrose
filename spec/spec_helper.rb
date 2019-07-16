@@ -24,10 +24,8 @@ Dir[File.expand_path("../spec/support/**/*.rb", __dir__)].each { |f| require f }
 
 module Minitest
   class Spec
-    def new_schedule(options = {})
-      schedule = Montrose::Schedule.new
-      schedule << options if options.any?
-      schedule
+    def new_schedule(rules = [])
+      Montrose::Schedule.new(rules)
     end
 
     def new_recurrence(options = {})

@@ -71,4 +71,176 @@ describe Montrose::Schedule do
       events.size.must_equal 4
     end
   end
+
+  describe ".dump" do
+    it "returns options as JSON string" do
+      schedule = new_schedule([
+                                { every: :week, on: :thursday, at: "7pm" },
+                                { every: :week, on: :tuesday, at: "6pm" }
+                              ])
+
+      dump = Montrose::Schedule.dump(schedule)
+      parsed = JSON.parse(dump).map(&:symbolize_keys)
+      parsed[0][:every].must_equal "week"
+      parsed[0][:on].must_equal "thursday"
+      parsed[0][:at].must_equal [[19, 0, 0]]
+      parsed[1][:every].must_equal "week"
+      parsed[1][:on].must_equal "tuesday"
+      parsed[1][:at].must_equal [[18, 0, 0]]
+    end
+
+    it "accepts json array" do
+      array = [
+        { every: :week, on: :thursday, at: "7pm" },
+        { every: :week, on: :tuesday, at: "6pm" }
+      ]
+
+      dump = Montrose::Schedule.dump(array)
+      parsed = JSON.parse(dump).map(&:symbolize_keys)
+      parsed[0][:every].must_equal "week"
+      parsed[0][:on].must_equal "thursday"
+      parsed[0][:at].must_equal [[19, 0, 0]]
+      parsed[1][:every].must_equal "week"
+      parsed[1][:on].must_equal "tuesday"
+      parsed[1][:at].must_equal [[18, 0, 0]]
+    end
+
+    it "accepts json string" do
+       str = [
+         { every: :week, on: :thursday, at: "7pm" },
+         { every: :week, on: :tuesday, at: "6pm" }
+       ].to_json
+
+       dump = Montrose::Schedule.dump(str)
+       parsed = JSON.parse(dump).map(&:symbolize_keys)
+       parsed[0][:every].must_equal "week"
+       parsed[0][:on].must_equal "thursday"
+       parsed[0][:at].must_equal [[19, 0, 0]]
+       parsed[1][:every].must_equal "week"
+       parsed[1][:on].must_equal "tuesday"
+       parsed[1][:at].must_equal [[18, 0, 0]]
+    end
+
+    it { Montrose::Schedule.dump(nil).must_be_nil }
+
+    it "raises error if str not parseable as JSON" do
+      -> { Montrose::Schedule.dump("foo") }.must_raise Montrose::SerializationError
+    end
+
+    it "raises error otherwise" do
+      -> { Montrose::Schedule.dump(Object.new) }.must_raise Montrose::SerializationError
+    end
+  end
+
+  describe ".load" do
+    it "returns Recurrence instance" do
+      schedule = new_schedule([
+                                { every: :week, on: :thursday, at: "7pm" },
+                                { every: :week, on: :tuesday, at: "6pm" }
+                              ])
+
+      dump = Montrose::Schedule.dump(schedule)
+      loaded = Montrose::Schedule.load(dump).to_a
+
+      loaded[0][:every].must_equal :week
+      loaded[0][:on].must_equal "thursday"
+      loaded[0][:at].must_equal [[19, 0, 0]]
+      loaded[1][:every].must_equal :week
+      loaded[1][:on].must_equal "tuesday"
+      loaded[1][:at].must_equal [[18, 0, 0]]
+    end
+
+    it "returns nil for nil dump" do
+      loaded = Montrose::Schedule.load(nil)
+
+      loaded.must_be_nil
+    end
+
+    it "returns nil for empty dump" do
+      loaded = Montrose::Schedule.load("")
+
+      loaded.must_be_nil
+    end
+  end
+
+  describe "#inspect" do
+    let(:now) { time_now }
+    let(:recurrence) { new_recurrence(every: :month, starts: now, interval: 1) }
+
+    it "is readable" do
+      inspected = "#<Montrose::Recurrence:#{recurrence.object_id.to_s(16)} " \
+                  "{:every=>:month, :starts=>#{now.inspect}, :interval=>1}>"
+      recurrence.inspect.must_equal inspected
+    end
+  end
+
+  describe "#to_json" do
+    it "returns json string of its options" do
+      options = { every: :day, at: "3:45pm" }
+      recurrence = new_recurrence(options)
+
+      recurrence.to_json.must_equal "{\"every\":\"day\",\"at\":[[15,45,0]]}"
+    end
+  end
+
+  describe "#include?" do
+    let(:now) { Time.local(2015, 9, 1, 12) } # Tuesday
+
+    before do
+      Timecop.freeze(now)
+    end
+
+    it "is true when given timestamp intersects infinite recurrence" do
+      recurrence = new_recurrence(every: :day, at: "3:30 PM")
+
+      timestamp = 3.days.from_now.beginning_of_day.advance(hours: 15, minutes: 30)
+
+      assert recurrence.include?(timestamp)
+    end
+
+    it "is false when given timestamp not included in recurrence" do
+      recurrence = new_recurrence(every: :week).on("tuesday").at("5:00").starts("2016-06-23")
+
+      timestamp = 3.days.from_now.beginning_of_day.advance(hours: 15, minutes: 31)
+
+      refute recurrence.include?(timestamp)
+    end
+
+    it "is false if falls outside finite range by total" do
+      recurrence = new_recurrence(every: :day).at("3:30 PM").repeat(3)
+
+      timestamp = 4.days.from_now.beginning_of_day.advance(hours: 15, minutes: 30)
+
+      refute recurrence.include?(timestamp)
+    end
+
+    it "is false if falls after finite range by date" do
+      recurrence = new_recurrence(every: :day).at("3:30 PM").ending(10.days.from_now)
+
+      timestamp = 11.days.from_now.beginning_of_day.advance(hours: 15, minutes: 30)
+
+      refute recurrence.include?(timestamp)
+    end
+
+    it "is false if falls before finite range by date" do
+      recurrence = new_recurrence(every: :day).at("3:30 PM").starts(1.day.from_now)
+
+      timestamp = Time.now.beginning_of_day.advance(hours: 15, minutes: 30)
+
+      refute recurrence.include?(timestamp)
+    end
+
+    it "is optimized to handle long/infinite recurrences" do
+      recurrence = new_recurrence(every: :day).at("3:30 PM")
+      far_future_timestamp = 100_000.days.from_now.beginning_of_day
+      far_future_timestamp = far_future_timestamp.advance(hours: 15, minutes: 30)
+
+      elapsed = Benchmark.realtime do
+        assert recurrence.include?(far_future_timestamp)
+      end
+
+      assert_operator 1.0, :>, elapsed.to_f,
+        "Elased time was too long: %.1f seconds" % elapsed
+    end
+  end
 end
