@@ -27,8 +27,35 @@ module Montrose
       schedule
     end
 
-    def initialize
-      @rules = []
+    class << self
+      def dump(obj)
+        return nil if obj.nil?
+        return dump(load(obj)) if obj.is_a?(String)
+
+        array = case obj
+                when Array
+                  new(obj).to_a
+                when self
+                  obj.to_a
+                else
+                  fail SerializationError,
+                    "Object was supposed to be a #{self}, but was a #{obj.class}. -- #{obj.inspect}"
+                end
+
+        JSON.dump(array)
+      end
+
+      def load(json)
+        return nil if json.blank?
+
+        new JSON.parse(json)
+      rescue JSON::ParserError => e
+        fail SerializationError, "Could not parse JSON: #{e}"
+      end
+    end
+
+    def initialize(rules = [])
+      @rules = rules.map { |rule| Montrose::Recurrence.new(rule) }
     end
 
     # Add a recurrence rule to the schedule, either by hash or recurrence
@@ -77,6 +104,10 @@ module Montrose
           y << enum.next
         end
       end
+    end
+
+    def to_a
+      @rules.map(&:to_hash)
     end
 
     private
