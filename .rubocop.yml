@@ -118,7 +118,7 @@ Style/RegexpLiteral:
   EnforcedStyle: percent_r
 
 Layout/DotPosition:
-  EnforcedStyle: trailing
+  EnforcedStyle: leading
 
 Naming/VariableNumber:
   Enabled: false
