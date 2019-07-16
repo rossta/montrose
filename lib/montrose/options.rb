@@ -229,7 +229,9 @@ module Montrose
       time = starts || default_starts
 
       if at
-        at.map { |(hour, min)| time.change(hour: hour, min: min) }.min || time
+        at.map { |hour, min, sec = 0| time.change(hour: hour, min: min, sec: sec) }
+          .select { |t| t >= time }
+          .min || time
       else
         time
       end

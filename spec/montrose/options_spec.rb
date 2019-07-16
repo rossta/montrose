@@ -34,7 +34,7 @@ describe Montrose::Options do
       -> { options[:start_time] = 3.days.from_now }.must_raise
     end
 
-    it "is  :at time on default_starts date" do
+    it "is :at time on default_starts date" do
       noon = Time.local(2015, 9, 1, 12)
       Timecop.freeze(noon)
       options[:at] = "7pm"
@@ -42,18 +42,11 @@ describe Montrose::Options do
       options[:start_time].must_equal Time.local(2015, 9, 1, 19)
     end
 
-    it "is :at time on :starts date" do
-      options[:starts] = Time.local(2016, 6, 23, 12)
-      options[:at] = "10am"
-
-      options[:start_time].must_equal Time.local(2016, 6, 23, 10)
-    end
-
-    it "is earliest of several :at times on default_starts date" do
+    it "is current time despite :at time earlier in day" do
       options[:starts] = Time.local(2019, 12, 25, 20)
       options[:at] = %w[7pm 10am]
 
-      options[:start_time].must_equal Time.local(2019, 12, 25, 10)
+      options[:start_time].must_equal Time.local(2019, 12, 25, 20)
     end
 
     it "is :starts when :at empty" do

@@ -6,7 +6,7 @@ module Montrose
       include Montrose::Rule
 
       def self.apply_options(opts)
-        opts[:starts] && opts.start_time
+        opts.start_time
       end
 
       # Initializes rule
