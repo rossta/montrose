@@ -70,6 +70,20 @@ describe Montrose::Recurrence do
     end
   end
 
+  describe "#as_json" do
+    it "returns default options as json" do
+      options = { every: :day, total: 3, starts: now, interval: 1 }
+      recurrence = new_recurrence(options)
+      hash = recurrence.as_json
+
+      hash.size.must_equal 4
+      hash["every"].must_equal "day"
+      hash["interval"].must_equal 1
+      hash["total"].must_equal 3
+      hash["starts"].must_equal now.as_json
+    end
+  end
+
   describe "#to_yaml" do
     it "returns default options as yaml" do
       options = { every: :day, starts: now, interval: 1, total: 3 }

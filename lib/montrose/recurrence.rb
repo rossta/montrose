@@ -318,6 +318,14 @@ module Montrose
       JSON.dump(to_hash, *args)
     end
 
+    # Returns json of options used to create the recurrence
+    #
+    # @return [Hash] json of recurrence options
+    #
+    def as_json
+      to_hash.as_json
+    end
+
     # Returns options used to create the recurrence in YAML format
     #
     # @return [String] YAML-formatted recurrence options
