@@ -6,6 +6,7 @@ require "montrose/chainable"
 require "montrose/errors"
 require "montrose/stack"
 require "montrose/clock"
+require "montrose/ical"
 
 module Montrose
   # Represents the rules for a set of recurring events. Can be instantiated
@@ -255,6 +256,10 @@ module Montrose
 
       def from_yaml(yaml)
         new(YAML.safe_load(yaml))
+      end
+
+      def from_ical(ical)
+        new(Montrose::ICal.parse(ical))
       end
     end
 

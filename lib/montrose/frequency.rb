@@ -37,6 +37,12 @@ module Montrose
       Montrose::Frequency.const_get(class_name).new(opts)
     end
 
+    def self.from_term(term)
+      FREQUENCY_TERMS.invert.map { |k, v| [k.downcase, v] }.to_h.fetch(term.downcase) do
+        fail "Don't know how to convert #{term} to a Montrose frequency"
+      end
+    end
+
     # @private
     def self.assert(frequency)
       FREQUENCY_TERMS.key?(frequency.to_s) || fail(ConfigurationError,

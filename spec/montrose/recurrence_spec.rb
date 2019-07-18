@@ -184,6 +184,18 @@ describe Montrose::Recurrence do
     end
   end
 
+  describe ".from_ical" do
+    it "returns Recurrence instance" do
+      ical = "DTSTART;TZID=US-Eastern:19970902T090000\nRRULE:FREQ=DAILY;COUNT=10;INTERVAL=2"
+      recurrence = Montrose::Recurrence.from_ical(ical)
+
+      recurrence.default_options[:every].must_equal :day
+      recurrence.default_options[:total].must_equal 10
+      recurrence.default_options[:interval].must_equal 2
+      recurrence.default_options[:starts].must_equal Time.parse("1997-09-02 09:00:00 -0400")
+    end
+  end
+
   describe "#inspect" do
     let(:now) { time_now }
     let(:recurrence) { new_recurrence(every: :month, starts: now, interval: 1) }
