@@ -1,15 +1,31 @@
+### 0.10.0 - (2019-07-17)
+
+* enhancements
+  * Overrides `Recurrence#as_json` (by @mmagn) to correlate with behavior of
+    `Recurrence#to_json`
+
+* bug fixes
+  * In overriding `Recurrence#as_json` as described above, fixes potential
+    infinite loop of calling the method with an infinite recurrence
+
+* breaking changes
+  * Start time for a daily Recurrence defined with :at options will no longer
+    reset to the beginning of the day; addresses confusion with original
+    behavior in which such occurrences could emit events in the past relative
+    to the given or explicit start time, i.e., earlier in the day
+
 ### 0.9.0 - (2019-03-11)
 
 * enhancements
-  * enables support for ActiveRecord 6
+  * Enables support for ActiveRecord 6
 
 * bug fixes
   * Fixes bug for nth day of month when used with yearly interval
 
 * breaking changes
-  * using selected with :month with :day as a Hash will now enforce the
+  * Using selected with :month with :day as a Hash will now enforce the
     `NthDayOfMonth` recurrence rule
-  * drops official support for Ruby 2.1 and 2.2
+  * Drops official support for Ruby 2.1 and 2.2
 
 ### 0.8.2 - (2018-08-02)
 
