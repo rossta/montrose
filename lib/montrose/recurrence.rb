@@ -250,6 +250,12 @@ module Montrose
       rescue JSON::ParserError => e
         fail SerializationError, "Could not parse JSON: #{e}"
       end
+
+      alias from_json load
+
+      def from_yaml(yaml)
+        new(YAML.safe_load(yaml))
+      end
     end
 
     def initialize(opts = {})
@@ -331,7 +337,7 @@ module Montrose
     # @return [String] YAML-formatted recurrence options
     #
     def to_yaml(*args)
-      YAML.dump(JSON.parse(to_json(*args)))
+      YAML.dump(as_json(*args))
     end
 
     def inspect

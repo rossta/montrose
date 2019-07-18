@@ -175,6 +175,15 @@ describe Montrose::Recurrence do
     end
   end
 
+  describe ".from_yaml" do
+    it "returns Recurrence instance" do
+      yaml = "---\nevery: day\n"
+      recurrence = Montrose::Recurrence.from_yaml(yaml)
+
+      recurrence.default_options[:every].must_equal :day
+    end
+  end
+
   describe "#inspect" do
     let(:now) { time_now }
     let(:recurrence) { new_recurrence(every: :month, starts: now, interval: 1) }
