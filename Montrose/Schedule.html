@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>
   Class: Montrose::Schedule
   
-    &mdash; Documentation by YARD 0.8.7.6
+    &mdash; Documentation by YARD 0.9.18
   
 </title>
 
@@ -15,9 +15,8 @@
   <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
-  hasFrames = window.top.frames.main ? true : false;
+  pathId = "Montrose::Schedule";
   relpath = '../';
-  framesUrl = "../frames.html#!Montrose/Schedule.html";
 </script>
 
 
@@ -28,51 +27,48 @@
 
   </head>
   <body>
-    <div id="header">
-      <div id="menu">
+    <div class="nav_wrap">
+      <iframe id="nav" src="../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
   
     <a href="../_index.html">Index (S)</a> &raquo;
     <span class='title'><span class='object_link'><a href="../Montrose.html" title="Montrose (module)">Montrose</a></span></span>
      &raquo; 
     <span class="title">Schedule</span>
   
-
-  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
 </div>
 
-      <div id="search">
+        <div id="search">
   
     <a class="full_list_link" id="class_list_link"
         href="../class_list.html">
-      Class List
-    </a>
-  
-    <a class="full_list_link" id="method_list_link"
-        href="../method_list.html">
-      Method List
-    </a>
-  
-    <a class="full_list_link" id="file_list_link"
-        href="../file_list.html">
-      File List
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
     </a>
   
 </div>
-      <div class="clear"></div>
-    </div>
+        <div class="clear"></div>
+      </div>
 
-    <iframe id="search_frame"></iframe>
-
-    <div id="content"><h1>Class: Montrose::Schedule
+      <div id="content"><h1>Class: Montrose::Schedule
   
   
   
 </h1>
-
-<dl class="box">
+<div class="box_info">
   
-    <dt class="r1">Inherits:</dt>
-    <dd class="r1">
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
       <span class="inheritName">Object</span>
       
         <ul class="fullTree">
@@ -83,21 +79,25 @@
         </ul>
         <a href="#" class="inheritanceTree">show all</a>
       
-      </dd>
-    
+    </dd>
+  </dl>
   
-  
-    
-  
-    
+
   
   
   
-    <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">lib/montrose/schedule.rb</dd>
   
-</dl>
-<div class="clear"></div>
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/montrose/schedule.rb</dd>
+  </dl>
+  
+</div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
@@ -146,13 +146,13 @@
 
 
 
-  <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
+  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
   <ul class="summary">
     
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#rules-instance_method" title="#rules (instance method)">- (Array) <strong>rules</strong> </a>
+      <a href="#rules-instance_method" title="#rules (instance method)">#<strong>rules</strong>  &#x21d2; Array </a>
     
 
     
@@ -184,7 +184,7 @@
   
     <h2>
       Class Method Summary
-      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+      <small><a href="#" class="summary_toggle">collapse</a></small>
     </h2>
 
     <ul class="summary">
@@ -192,7 +192,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#build-class_method" title="build (class method)">+ (Montrose::Schedule) <strong>build</strong> {|schedule| ... }</a>
+      <a href="#build-class_method" title="build (class method)">.<strong>build</strong> {|schedule| ... } &#x21d2; Montrose::Schedule </a>
     
 
     
@@ -218,7 +218,7 @@ building recurrences inline.</p>
   
     <h2>
       Instance Method Summary
-      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+      <small><a href="#" class="summary_toggle">collapse</a></small>
     </h2>
 
     <ul class="summary">
@@ -226,7 +226,7 @@ building recurrences inline.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#%3C%3C-instance_method" title="#&lt;&lt; (instance method)">- (Object) <strong>&lt;&lt;</strong>(rule) </a>
+      <a href="#<<-instance_method" title="#&lt;&lt; (instance method)">#<strong>&lt;&lt;</strong>(rule)  &#x21d2; Object </a>
     
 
     
@@ -253,7 +253,7 @@ instance.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#events-instance_method" title="#events (instance method)">- (Enumerator) <strong>events</strong>(opts = {}) </a>
+      <a href="#events-instance_method" title="#events (instance method)">#<strong>events</strong>(opts = {})  &#x21d2; Enumerator </a>
     
 
     
@@ -277,7 +277,7 @@ instance.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#include%3F-instance_method" title="#include? (instance method)">- (Boolean) <strong>include?</strong>(timestamp) </a>
+      <a href="#include%3F-instance_method" title="#include? (instance method)">#<strong>include?</strong>(timestamp)  &#x21d2; Boolean </a>
     
 
     
@@ -302,7 +302,7 @@ in the schedule.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Schedule) <strong>initialize</strong> </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>  &#x21d2; Schedule </a>
     
 
     
@@ -334,7 +334,7 @@ in the schedule.</p>
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    - (<tt><span class='object_link'><a href="" title="Montrose::Schedule (class)">Schedule</a></span></tt>) <strong>initialize</strong> 
+    #<strong>initialize</strong>  &#x21d2; <tt><span class='object_link'><a href="" title="Montrose::Schedule (class)">Schedule</a></span></tt> 
   
 
   
@@ -373,12 +373,12 @@ in the schedule.</p>
       <pre class="lines">
 
 
-28
-29
-30</pre>
+30
+31
+32</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/schedule.rb', line 28</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/schedule.rb', line 30</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span>
   <span class='ivar'>@rules</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -398,7 +398,7 @@ in the schedule.</p>
       <div class="method_details first">
   <h3 class="signature first" id="rules-instance_method">
   
-    - (<tt>Array</tt>) <strong>rules</strong> 
+    #<strong>rules</strong>  &#x21d2; <tt>Array</tt> 
   
 
   
@@ -455,12 +455,12 @@ in the schedule.</p>
       <pre class="lines">
 
 
-8
-9
-10</pre>
+10
+11
+12</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/schedule.rb', line 8</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/schedule.rb', line 10</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_rules'>rules</span>
   <span class='ivar'>@rules</span>
@@ -480,7 +480,7 @@ in the schedule.</p>
       <div class="method_details first">
   <h3 class="signature first" id="build-class_method">
   
-    + (<tt><span class='object_link'><a href="" title="Montrose::Schedule (class)">Montrose::Schedule</a></span></tt>) <strong>build</strong> {|schedule| ... }
+    .<strong>build</strong> {|schedule| ... } &#x21d2; <tt><span class='object_link'><a href="" title="Montrose::Schedule (class)">Montrose::Schedule</a></span></tt> 
   
 
   
@@ -505,7 +505,7 @@ building recurrences inline</p>
 <p>Build a schedule with multiple rules added in the given block</p>
 </div></p>
       
-      <pre class="example code"><code><span class='id identifier rubyid_schedule'>schedule</span> <span class='op'>=</span> <span class='const'>Montrose</span><span class='op'>::</span><span class='const'>Schedule</span><span class='period'>.</span><span class='id identifier rubyid_build'>build</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span>
+      <pre class="example code"><code><span class='id identifier rubyid_schedule'>schedule</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Montrose.html" title="Montrose (module)">Montrose</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="Montrose::Schedule (class)">Schedule</a></span></span><span class='period'>.</span><span class='id identifier rubyid_build'>build</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span>
   <span class='id identifier rubyid_s'>s</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span> <span class='label'>every:</span> <span class='symbol'>:day</span> <span class='rbrace'>}</span>
   <span class='id identifier rubyid_s'>s</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span> <span class='label'>every:</span> <span class='symbol'>:year</span> <span class='rbrace'>}</span>
 <span class='kw'>end</span></code></pre>
@@ -561,14 +561,14 @@ building recurrences inline</p>
       <pre class="lines">
 
 
-22
-23
 24
 25
-26</pre>
+26
+27
+28</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/schedule.rb', line 22</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/schedule.rb', line 24</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_build'>build</span>
   <span class='id identifier rubyid_schedule'>schedule</span> <span class='op'>=</span> <span class='id identifier rubyid_new'>new</span>
@@ -589,7 +589,7 @@ building recurrences inline</p>
       <div class="method_details first">
   <h3 class="signature first" id="<<-instance_method">
   
-    - (<tt>Object</tt>) <strong>&lt;&lt;</strong>(rule) 
+    #<strong>&lt;&lt;</strong>(rule)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -618,7 +618,7 @@ instance</p>
 <p>Add a recurrence by hash</p>
 </div></p>
       
-      <pre class="example code"><code><span class='id identifier rubyid_schedule'>schedule</span> <span class='op'>=</span> <span class='const'>Montrose</span><span class='op'>::</span><span class='const'>Schedule</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+      <pre class="example code"><code><span class='id identifier rubyid_schedule'>schedule</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Montrose.html" title="Montrose (module)">Montrose</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="Montrose::Schedule (class)">Schedule</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Montrose::Schedule#initialize (method)">new</a></span></span>
 <span class='id identifier rubyid_schedule'>schedule</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span> <span class='label'>every:</span> <span class='symbol'>:day</span> <span class='rbrace'>}</span></code></pre>
     
       
@@ -626,8 +626,8 @@ instance</p>
 <p>Add a recurrence by instance</p>
 </div></p>
       
-      <pre class="example code"><code><span class='id identifier rubyid_schedule'>schedule</span> <span class='op'>=</span> <span class='const'>Montrose</span><span class='op'>::</span><span class='const'>Schedule</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
-<span class='id identifier rubyid_recurrence'>recurrence</span> <span class='op'>=</span> <span class='const'>Montrose</span><span class='period'>.</span><span class='id identifier rubyid_recurrence'>recurrence</span><span class='lparen'>(</span><span class='label'>every:</span> <span class='symbol'>:day</span><span class='rparen'>)</span>
+      <pre class="example code"><code><span class='id identifier rubyid_schedule'>schedule</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Montrose.html" title="Montrose (module)">Montrose</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="Montrose::Schedule (class)">Schedule</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Montrose::Schedule#initialize (method)">new</a></span></span>
+<span class='id identifier rubyid_recurrence'>recurrence</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Montrose.html" title="Montrose (module)">Montrose</a></span></span><span class='period'>.</span><span class='id identifier rubyid_recurrence'><span class='object_link'><a href="../Montrose.html#recurrence-class_method" title="Montrose.recurrence (method)">recurrence</a></span></span><span class='lparen'>(</span><span class='label'>every:</span> <span class='symbol'>:day</span><span class='rparen'>)</span>
 <span class='id identifier rubyid_schedule'>schedule</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_recurrence'>recurrence</span></code></pre>
     
   </div>
@@ -655,17 +655,17 @@ instance</p>
       <pre class="lines">
 
 
-44
-45
 46
 47
-48</pre>
+48
+49
+50</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/schedule.rb', line 44</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/schedule.rb', line 46</span>
 
 <span class='kw'>def</span> <span class='op'>&lt;&lt;</span><span class='lparen'>(</span><span class='id identifier rubyid_rule'>rule</span><span class='rparen'>)</span>
-  <span class='ivar'>@rules</span> <span class='op'>&lt;&lt;</span> <span class='const'>Montrose</span><span class='op'>::</span><span class='const'>Recurrence</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_rule'>rule</span><span class='rparen'>)</span>
+  <span class='ivar'>@rules</span> <span class='op'>&lt;&lt;</span> <span class='const'><span class='object_link'><a href="../Montrose.html" title="Montrose (module)">Montrose</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Recurrence.html" title="Montrose::Recurrence (class)">Recurrence</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Recurrence.html#new-class_method" title="Montrose::Recurrence.new (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_rule'>rule</span><span class='rparen'>)</span>
 
   <span class='kw'>self</span>
 <span class='kw'>end</span></pre>
@@ -677,7 +677,7 @@ instance</p>
       <div class="method_details ">
   <h3 class="signature " id="events-instance_method">
   
-    - (<tt>Enumerator</tt>) <strong>events</strong>(opts = {}) 
+    #<strong>events</strong>(opts = {})  &#x21d2; <tt>Enumerator</tt> 
   
 
   
@@ -701,7 +701,7 @@ instance</p>
 <p>Return the events</p>
 </div></p>
       
-      <pre class="example code"><code><span class='id identifier rubyid_schedule'>schedule</span> <span class='op'>=</span> <span class='const'>Montrose</span><span class='op'>::</span><span class='const'>Schedule</span><span class='period'>.</span><span class='id identifier rubyid_build'>build</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span>
+      <pre class="example code"><code><span class='id identifier rubyid_schedule'>schedule</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Montrose.html" title="Montrose (module)">Montrose</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="Montrose::Schedule (class)">Schedule</a></span></span><span class='period'>.</span><span class='id identifier rubyid_build'><span class='object_link'><a href="#build-class_method" title="Montrose::Schedule.build (method)">build</a></span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span>
   <span class='id identifier rubyid_s'>s</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span> <span class='label'>every:</span> <span class='symbol'>:day</span> <span class='rbrace'>}</span>
 <span class='kw'>end</span>
 <span class='id identifier rubyid_schedule'>schedule</span><span class='period'>.</span><span class='id identifier rubyid_events'>events</span></code></pre>
@@ -749,18 +749,18 @@ instance</p>
       <pre class="lines">
 
 
-70
-71
 72
 73
 74
 75
 76
 77
-78</pre>
+78
+79
+80</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/schedule.rb', line 70</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/schedule.rb', line 72</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_events'>events</span><span class='lparen'>(</span><span class='id identifier rubyid_opts'>opts</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_enums'>enums</span> <span class='op'>=</span> <span class='ivar'>@rules</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_r'>r</span><span class='op'>|</span> <span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_opts'>opts</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_events'>events</span> <span class='rbrace'>}</span>
@@ -779,7 +779,7 @@ instance</p>
       <div class="method_details ">
   <h3 class="signature " id="include?-instance_method">
   
-    - (<tt>Boolean</tt>) <strong>include?</strong>(timestamp) 
+    #<strong>include?</strong>(timestamp)  &#x21d2; <tt>Boolean</tt> 
   
 
   
@@ -837,12 +837,12 @@ in the schedule</p>
       <pre class="lines">
 
 
-56
-57
-58</pre>
+58
+59
+60</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/schedule.rb', line 56</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/schedule.rb', line 58</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_timestamp'>timestamp</span><span class='rparen'>)</span>
   <span class='ivar'>@rules</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_r'>r</span><span class='op'>|</span> <span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_timestamp'>timestamp</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -856,11 +856,12 @@ in the schedule</p>
 
 </div>
 
-    <div id="footer">
-  Generated on Wed Nov 23 17:42:31 2016 by
+      <div id="footer">
+  Generated on Wed Jul 17 20:47:43 2019 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.6 (ruby-2.3.1).
+  0.9.18 (ruby-2.5.3).
 </div>
 
+    </div>
   </body>
 </html>

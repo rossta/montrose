@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>
   Class: Montrose::Stack
   
-    &mdash; Documentation by YARD 0.8.7.6
+    &mdash; Documentation by YARD 0.9.18
   
 </title>
 
@@ -15,9 +15,8 @@
   <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
-  hasFrames = window.top.frames.main ? true : false;
+  pathId = "Montrose::Stack";
   relpath = '../';
-  framesUrl = "../frames.html#!Montrose/Stack.html";
 </script>
 
 
@@ -28,51 +27,48 @@
 
   </head>
   <body>
-    <div id="header">
-      <div id="menu">
+    <div class="nav_wrap">
+      <iframe id="nav" src="../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
   
     <a href="../_index.html">Index (S)</a> &raquo;
     <span class='title'><span class='object_link'><a href="../Montrose.html" title="Montrose (module)">Montrose</a></span></span>
      &raquo; 
     <span class="title">Stack</span>
   
-
-  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
 </div>
 
-      <div id="search">
+        <div id="search">
   
     <a class="full_list_link" id="class_list_link"
         href="../class_list.html">
-      Class List
-    </a>
-  
-    <a class="full_list_link" id="method_list_link"
-        href="../method_list.html">
-      Method List
-    </a>
-  
-    <a class="full_list_link" id="file_list_link"
-        href="../file_list.html">
-      File List
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
     </a>
   
 </div>
-      <div class="clear"></div>
-    </div>
+        <div class="clear"></div>
+      </div>
 
-    <iframe id="search_frame"></iframe>
-
-    <div id="content"><h1>Class: Montrose::Stack
+      <div id="content"><h1>Class: Montrose::Stack
   
   
   
 </h1>
-
-<dl class="box">
+<div class="box_info">
   
-    <dt class="r1">Inherits:</dt>
-    <dd class="r1">
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
       <span class="inheritName">Object</span>
       
         <ul class="fullTree">
@@ -83,21 +79,25 @@
         </ul>
         <a href="#" class="inheritanceTree">show all</a>
       
-      </dd>
-    
+    </dd>
+  </dl>
   
-  
-    
-  
-    
+
   
   
   
-    <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">lib/montrose/stack.rb</dd>
   
-</dl>
-<div class="clear"></div>
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/montrose/stack.rb</dd>
+  </dl>
+  
+</div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
@@ -122,7 +122,7 @@ are iterated.</p>
   
     <h2>
       Class Method Summary
-      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+      <small><a href="#" class="summary_toggle">collapse</a></small>
     </h2>
 
     <ul class="summary">
@@ -130,7 +130,7 @@ are iterated.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#build-class_method" title="build (class method)">+ (Object) <strong>build</strong>(opts = {}) </a>
+      <a href="#build-class_method" title="build (class method)">.<strong>build</strong>(opts = {})  &#x21d2; Object </a>
     
 
     
@@ -153,7 +153,7 @@ are iterated.</p>
   
     <h2>
       Instance Method Summary
-      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+      <small><a href="#" class="summary_toggle">collapse</a></small>
     </h2>
 
     <ul class="summary">
@@ -161,7 +161,7 @@ are iterated.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#advance-instance_method" title="#advance (instance method)">- (Object) <strong>advance</strong>(time) </a>
+      <a href="#advance-instance_method" title="#advance (instance method)">#<strong>advance</strong>(time)  &#x21d2; Object </a>
     
 
     
@@ -187,7 +187,7 @@ non-matching rules.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Stack) <strong>initialize</strong>(opts = {}) </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(opts = {})  &#x21d2; Stack </a>
     
 
     
@@ -219,7 +219,7 @@ non-matching rules.</p>
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    - (<tt><span class='object_link'><a href="" title="Montrose::Stack (class)">Stack</a></span></tt>) <strong>initialize</strong>(opts = {}) 
+    #<strong>initialize</strong>(opts = {})  &#x21d2; <tt><span class='object_link'><a href="" title="Montrose::Stack (class)">Stack</a></span></tt> 
   
 
   
@@ -242,12 +242,12 @@ non-matching rules.</p>
       <pre class="lines">
 
 
-28
-29
-30</pre>
+31
+32
+33</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/stack.rb', line 28</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/stack.rb', line 31</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_opts'>opts</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='ivar'>@stack</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_build'>build</span><span class='lparen'>(</span><span class='id identifier rubyid_opts'>opts</span><span class='rparen'>)</span>
@@ -267,7 +267,7 @@ non-matching rules.</p>
       <div class="method_details first">
   <h3 class="signature first" id="build-class_method">
   
-    + (<tt>Object</tt>) <strong>build</strong>(opts = {}) 
+    .<strong>build</strong>(opts = {})  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -279,8 +279,6 @@ non-matching rules.</p>
       <pre class="lines">
 
 
-9
-10
 11
 12
 13
@@ -296,27 +294,31 @@ non-matching rules.</p>
 23
 24
 25
-26</pre>
+26
+27
+28
+29</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/stack.rb', line 9</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/stack.rb', line 11</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_build'>build</span><span class='lparen'>(</span><span class='id identifier rubyid_opts'>opts</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='lbracket'>[</span>
-    <span class='const'>Frequency</span><span class='comma'>,</span>
-    <span class='const'>Rule</span><span class='op'>::</span><span class='const'>After</span><span class='comma'>,</span>
-    <span class='const'>Rule</span><span class='op'>::</span><span class='const'>Before</span><span class='comma'>,</span>
-    <span class='const'>Rule</span><span class='op'>::</span><span class='const'>Except</span><span class='comma'>,</span>
-    <span class='const'>Rule</span><span class='op'>::</span><span class='const'>Total</span><span class='comma'>,</span>
-    <span class='const'>Rule</span><span class='op'>::</span><span class='const'>TimeOfDay</span><span class='comma'>,</span>
-    <span class='const'>Rule</span><span class='op'>::</span><span class='const'>HourOfDay</span><span class='comma'>,</span>
-    <span class='const'>Rule</span><span class='op'>::</span><span class='const'>NthDayOfMonth</span><span class='comma'>,</span>
-    <span class='const'>Rule</span><span class='op'>::</span><span class='const'>NthDayOfYear</span><span class='comma'>,</span>
-    <span class='const'>Rule</span><span class='op'>::</span><span class='const'>DayOfWeek</span><span class='comma'>,</span>
-    <span class='const'>Rule</span><span class='op'>::</span><span class='const'>DayOfMonth</span><span class='comma'>,</span>
-    <span class='const'>Rule</span><span class='op'>::</span><span class='const'>DayOfYear</span><span class='comma'>,</span>
-    <span class='const'>Rule</span><span class='op'>::</span><span class='const'>WeekOfYear</span><span class='comma'>,</span>
-    <span class='const'>Rule</span><span class='op'>::</span><span class='const'>MonthOfYear</span>
+    <span class='const'><span class='object_link'><a href="Frequency.html" title="Montrose::Frequency (class)">Frequency</a></span></span><span class='comma'>,</span>
+    <span class='const'><span class='object_link'><a href="Rule.html" title="Montrose::Rule (module)">Rule</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Rule/After.html" title="Montrose::Rule::After (class)">After</a></span></span><span class='comma'>,</span>
+    <span class='const'><span class='object_link'><a href="Rule.html" title="Montrose::Rule (module)">Rule</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Rule/Until.html" title="Montrose::Rule::Until (class)">Until</a></span></span><span class='comma'>,</span>
+    <span class='const'><span class='object_link'><a href="Rule.html" title="Montrose::Rule (module)">Rule</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Rule/Between.html" title="Montrose::Rule::Between (class)">Between</a></span></span><span class='comma'>,</span>
+    <span class='const'><span class='object_link'><a href="Rule.html" title="Montrose::Rule (module)">Rule</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Rule/Except.html" title="Montrose::Rule::Except (class)">Except</a></span></span><span class='comma'>,</span>
+    <span class='const'><span class='object_link'><a href="Rule.html" title="Montrose::Rule (module)">Rule</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Rule/Total.html" title="Montrose::Rule::Total (class)">Total</a></span></span><span class='comma'>,</span>
+    <span class='const'><span class='object_link'><a href="Rule.html" title="Montrose::Rule (module)">Rule</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Rule/TimeOfDay.html" title="Montrose::Rule::TimeOfDay (class)">TimeOfDay</a></span></span><span class='comma'>,</span>
+    <span class='const'><span class='object_link'><a href="Rule.html" title="Montrose::Rule (module)">Rule</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Rule/HourOfDay.html" title="Montrose::Rule::HourOfDay (class)">HourOfDay</a></span></span><span class='comma'>,</span>
+    <span class='const'><span class='object_link'><a href="Rule.html" title="Montrose::Rule (module)">Rule</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Rule/NthDayOfMonth.html" title="Montrose::Rule::NthDayOfMonth (class)">NthDayOfMonth</a></span></span><span class='comma'>,</span>
+    <span class='const'><span class='object_link'><a href="Rule.html" title="Montrose::Rule (module)">Rule</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Rule/NthDayOfYear.html" title="Montrose::Rule::NthDayOfYear (class)">NthDayOfYear</a></span></span><span class='comma'>,</span>
+    <span class='const'><span class='object_link'><a href="Rule.html" title="Montrose::Rule (module)">Rule</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Rule/DayOfWeek.html" title="Montrose::Rule::DayOfWeek (class)">DayOfWeek</a></span></span><span class='comma'>,</span>
+    <span class='const'><span class='object_link'><a href="Rule.html" title="Montrose::Rule (module)">Rule</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Rule/DayOfMonth.html" title="Montrose::Rule::DayOfMonth (class)">DayOfMonth</a></span></span><span class='comma'>,</span>
+    <span class='const'><span class='object_link'><a href="Rule.html" title="Montrose::Rule (module)">Rule</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Rule/DayOfYear.html" title="Montrose::Rule::DayOfYear (class)">DayOfYear</a></span></span><span class='comma'>,</span>
+    <span class='const'><span class='object_link'><a href="Rule.html" title="Montrose::Rule (module)">Rule</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Rule/WeekOfYear.html" title="Montrose::Rule::WeekOfYear (class)">WeekOfYear</a></span></span><span class='comma'>,</span>
+    <span class='const'><span class='object_link'><a href="Rule.html" title="Montrose::Rule (module)">Rule</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Rule/MonthOfYear.html" title="Montrose::Rule::MonthOfYear (class)">MonthOfYear</a></span></span>
   <span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_r'>r</span><span class='op'>|</span> <span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_from_options'>from_options</span><span class='lparen'>(</span><span class='id identifier rubyid_opts'>opts</span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -333,7 +335,7 @@ non-matching rules.</p>
       <div class="method_details first">
   <h3 class="signature first" id="advance-instance_method">
   
-    - (<tt>Object</tt>) <strong>advance</strong>(time) 
+    #<strong>advance</strong>(time)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -379,9 +381,6 @@ non-matching rules.</p>
       <pre class="lines">
 
 
-39
-40
-41
 42
 43
 44
@@ -390,10 +389,13 @@ non-matching rules.</p>
 47
 48
 49
-50</pre>
+50
+51
+52
+53</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/stack.rb', line 39</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/stack.rb', line 42</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_advance'>advance</span><span class='lparen'>(</span><span class='id identifier rubyid_time'>time</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_yes'>yes</span><span class='comma'>,</span> <span class='id identifier rubyid_no'>no</span> <span class='op'>=</span> <span class='ivar'>@stack</span><span class='period'>.</span><span class='id identifier rubyid_partition'>partition</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_rule'>rule</span><span class='op'>|</span> <span class='id identifier rubyid_rule'>rule</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_time'>time</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -404,7 +406,7 @@ non-matching rules.</p>
     <span class='kw'>yield</span> <span class='id identifier rubyid_time'>time</span> <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
     <span class='kw'>true</span>
   <span class='kw'>else</span>
-    <span class='id identifier rubyid_no'>no</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:continue?</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_no'>no</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_rule'>rule</span><span class='op'>|</span> <span class='id identifier rubyid_rule'>rule</span><span class='period'>.</span><span class='id identifier rubyid_continue?'>continue?</span><span class='lparen'>(</span><span class='id identifier rubyid_time'>time</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -416,11 +418,12 @@ non-matching rules.</p>
 
 </div>
 
-    <div id="footer">
-  Generated on Wed Nov 23 17:42:31 2016 by
+      <div id="footer">
+  Generated on Wed Jul 17 20:47:43 2019 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.6 (ruby-2.3.1).
+  0.9.18 (ruby-2.5.3).
 </div>
 
+    </div>
   </body>
 </html>
