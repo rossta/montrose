@@ -10,24 +10,24 @@ module Montrose
   class Schedule
     attr_accessor :rules
 
-    # Instantiates a schedule and yields the instance to an optional
-    # block for building recurrences inline
-    #
-    # @example Build a schedule with multiple rules added in the given block
-    #   schedule = Montrose::Schedule.build do |s|
-    #     s << { every: :day }
-    #     s << { every: :year }
-    #   end
-    #
-    # @return [Montrose::Schedule]
-    #
-    def self.build
-      schedule = new
-      yield schedule if block_given?
-      schedule
-    end
-
     class << self
+      # Instantiates a schedule and yields the instance to an optional
+      # block for building recurrences inline
+      #
+      # @example Build a schedule with multiple rules added in the given block
+      #   schedule = Montrose::Schedule.build do |s|
+      #     s << { every: :day }
+      #     s << { every: :year }
+      #   end
+      #
+      # @return [Montrose::Schedule]
+      #
+      def build
+        schedule = new
+        yield schedule if block_given?
+        schedule
+      end
+
       def dump(obj)
         return nil if obj.nil?
         return dump(load(obj)) if obj.is_a?(String)
