@@ -653,6 +653,51 @@ describe Montrose::Options do
     end
   end
 
+  describe "#during" do
+    it "defaults to nil" do
+      options.during.must_be_nil
+      options[:during].must_be_nil
+    end
+
+    it "handles ranges of time" do
+      range = Time.parse("9am")..Time.parse("5pm")
+      options[:during] = range
+
+      options.during.must_equal [[[9, 0, 0], [17, 0, 0]]]
+      options[:during].must_equal [[[9, 0, 0], [17, 0, 0]]]
+    end
+
+    it "handles string of beginning and end times" do
+      options[:during] = "9am - 5pm"
+
+      options.during.must_equal [[[9, 0, 0], [17, 0, 0]]]
+      options[:during].must_equal [[[9, 0, 0], [17, 0, 0]]]
+    end
+
+    it "can be set by an array time ranges" do
+      range_1 = Time.parse("9am")..Time.parse("5pm")
+      range_2 = "7:30pm-11:30pm"
+      options[:during] = [range_1, range_2]
+
+      options.during.must_equal [[[9, 0, 0], [17, 0, 0]], [[19, 30, 0], [23, 30, 0]]]
+      options[:during].must_equal [[[9, 0, 0], [17, 0, 0]], [[19, 30, 0], [23, 30, 0]]]
+    end
+
+    it "can be set by an array time arrays" do
+      options[:during] = [[[9, 0, 0], [17, 0, 0]], [[19, 30, 0], [23, 30, 0]]]
+
+      options.during.must_equal [[[9, 0, 0], [17, 0, 0]], [[19, 30, 0], [23, 30, 0]]]
+      options[:during].must_equal [[[9, 0, 0], [17, 0, 0]], [[19, 30, 0], [23, 30, 0]]]
+    end
+
+    it "can be set to nil" do
+      options[:during] = nil
+
+      options.during.must_be_nil
+      options[:during].must_be_nil
+    end
+  end
+
   describe "#at" do
     before do
       Timecop.freeze(Time.local(2015, 9, 1, 12))
