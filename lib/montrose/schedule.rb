@@ -8,6 +8,8 @@ module Montrose
   # @attr_reader [Array] rules the list of recurrences
   #
   class Schedule
+    include Enumerable
+
     attr_accessor :rules
 
     class << self
@@ -84,6 +86,31 @@ module Montrose
     #
     def include?(timestamp)
       @rules.any? { |r| r.include?(timestamp) }
+    end
+
+    # Iterate over the events of a recurrence. Along with the Enumerable
+    # module, this makes Montrose occurrences enumerable like other Ruby
+    # collections
+    #
+    # @example Iterate over a finite recurrence
+    #   schedule = Montrose::Schedule.build do |s|
+    #     s << { every: :day }
+    #   end
+    #   schedule.each do |event|
+    #     puts event
+    #   end
+    #
+    # @example Iterate over an infinite recurrence
+    #   schedule = Montrose::Schedule.build do |s|
+    #     s << { every: :day }
+    #   end
+    #   schedule.lazy.each do |event|
+    #     puts event
+    #   end
+    #
+    # @return [Enumerator] an enumerator of recurrence timestamps
+    def each(&block)
+      events.each(&block)
     end
 
     # Returns an enumerator for iterating over timestamps in the schedule
