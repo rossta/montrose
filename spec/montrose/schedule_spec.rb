@@ -20,58 +20,6 @@ describe Montrose::Schedule do
     end
   end
 
-  describe "#add" do
-    it "adds options as new recurrence rule" do
-      options = { every: :year, total: 3 }
-      schedule.add(options)
-
-      schedule.rules.size.must_equal 1
-
-      rule = schedule.rules.first
-      rule.default_options[:every].must_equal :year
-      rule.default_options[:total].must_equal 3
-    end
-
-    it "accepts a recurrence rule" do
-      schedule.add(Montrose.yearly.total(3))
-
-      schedule.rules.size.must_equal 1
-
-      rule = schedule.rules.first
-      rule.default_options[:every].must_equal :year
-      rule.default_options[:total].must_equal 3
-    end
-
-    it "is aliased to #<<" do
-      options = { every: :year, total: 3 }
-      schedule << options
-
-      schedule.rules.size.must_equal 1
-
-      rule = schedule.rules.first
-      rule.default_options[:every].must_equal :year
-      rule.default_options[:total].must_equal 3
-    end
-  end
-
-  describe "#events" do
-    it "combines events of given rules in order" do
-      today = Date.today.to_time
-
-      schedule.add(every: 2.days, total: 2, starts: today)
-      schedule.add(every: 2.days, total: 2, starts: today + 1.day)
-
-      events = schedule.events.to_a
-      events.must_pair_with [
-        today,
-        today + 1.day,
-        today + 2.days,
-        today + 3.days
-      ]
-      events.size.must_equal 4
-    end
-  end
-
   describe ".dump" do
     it "returns options as JSON string" do
       schedule = new_schedule([
@@ -160,6 +108,84 @@ describe Montrose::Schedule do
       loaded = Montrose::Schedule.load("")
 
       loaded.must_be_nil
+    end
+  end
+
+  describe "#add" do
+    it "adds options as new recurrence rule" do
+      options = { every: :year, total: 3 }
+      schedule.add(options)
+
+      schedule.rules.size.must_equal 1
+
+      rule = schedule.rules.first
+      rule.default_options[:every].must_equal :year
+      rule.default_options[:total].must_equal 3
+    end
+
+    it "accepts a recurrence rule" do
+      schedule.add(Montrose.yearly.total(3))
+
+      schedule.rules.size.must_equal 1
+
+      rule = schedule.rules.first
+      rule.default_options[:every].must_equal :year
+      rule.default_options[:total].must_equal 3
+    end
+
+    it "is aliased to #<<" do
+      options = { every: :year, total: 3 }
+      schedule << options
+
+      schedule.rules.size.must_equal 1
+
+      rule = schedule.rules.first
+      rule.default_options[:every].must_equal :year
+      rule.default_options[:total].must_equal 3
+    end
+  end
+
+  describe "#events" do
+    it "combines events of given rules in order" do
+      today = Date.today.to_time
+
+      schedule.add(every: 2.days, total: 2, starts: today)
+      schedule.add(every: 2.days, total: 2, starts: today + 1.day)
+
+      events = schedule.events.to_a
+      events.must_pair_with [
+        today,
+        today + 1.day,
+        today + 2.days,
+        today + 3.days
+      ]
+      events.size.must_equal 4
+    end
+
+    it "is an enumerator" do
+      schedule.events.must_be_instance_of(Enumerator)
+    end
+  end
+
+  describe "#each" do
+    it "is defined" do
+      schedule.must_respond_to :each
+    end
+
+    it "responsds to enumerable methods" do
+      today = Date.today.to_time
+
+      schedule.add(every: 2.days, total: 2, starts: today)
+      schedule.add(every: 2.days, total: 2, starts: today + 1.day)
+
+      events = schedule.take(4).to_a
+      events.must_pair_with [
+        today,
+        today + 1.day,
+        today + 2.days,
+        today + 3.days
+      ]
+      events.size.must_equal 4
     end
   end
 
