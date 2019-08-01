@@ -86,6 +86,7 @@ module Montrose
     def_option :starts
     def_option :until
     def_option :between
+    def_option :during
     def_option :hour
     def_option :day
     def_option :mday
@@ -177,6 +178,26 @@ module Montrose
 
     def hour=(hours)
       @hour = map_arg(hours) { |h| assert_hour(h) }
+    end
+
+    def during=(during)
+      @during = case during
+                when Range
+                  [decompose_during_arg(during)]
+                else
+                  map_arg(during) { |d| decompose_during_arg(d) }
+                end
+    end
+
+    def decompose_during_arg(during)
+      case during
+      when Range
+        [decompose_during_arg(during.first), decompose_during_arg(during.last)]
+      when String
+        during.split(%r{[-—–]}).map { |d| as_time_parts(d) }
+      else
+        as_time_parts(during)
+      end
     end
 
     def day=(days)
