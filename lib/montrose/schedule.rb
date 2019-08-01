@@ -133,8 +133,40 @@ module Montrose
       end
     end
 
+    # Returns an array of the options used to create the recurrence
+    #
+    # @return [Array] array of hashes of recurrence options
+    #
     def to_a
       @rules.map(&:to_hash)
+    end
+
+    # Returns json string of options used to create the schedule
+    #
+    # @return [String] json of schedule recurrences
+    #
+    def to_json(*args)
+      JSON.dump(to_a, *args)
+    end
+
+    # Returns json array of options used to create the schedule
+    #
+    # @return [Array] json of schedule recurrence options
+    #
+    def as_json(*args)
+      to_a.as_json(*args)
+    end
+
+    # Returns options used to create the schedule recurrences in YAML format
+    #
+    # @return [String] YAML-formatted schedule recurrence options
+    #
+    def to_yaml(*args)
+      YAML.dump(JSON.parse(to_json(*args)))
+    end
+
+    def inspect
+      "#<#{self.class}:#{object_id.to_s(16)} #{to_a.inspect}>"
     end
 
     private

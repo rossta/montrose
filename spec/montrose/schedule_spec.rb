@@ -269,4 +269,71 @@ describe Montrose::Schedule do
         "Elased time was too long: %.1f seconds" % elapsed
     end
   end
+
+  describe "#inspect" do
+    before do
+      schedule << { every: :month }
+      schedule << { every: :day }
+    end
+
+    it "is readable" do
+      inspected = "#<Montrose::Schedule:#{schedule.object_id.to_s(16)} " \
+                  "[{:every=>:month}, {:every=>:day}]>"
+      schedule.inspect.must_equal inspected
+    end
+  end
+
+  describe "#to_json" do
+    before do
+      schedule << { every: :month }
+      schedule << { every: :day }
+    end
+
+    it "returns json string of its options" do
+      schedule.to_json.must_equal "[{\"every\":\"month\"},{\"every\":\"day\"}]"
+    end
+  end
+
+  describe "#to_a" do
+    before do
+      schedule << { every: :month }
+      schedule << { every: :day }
+    end
+
+    it "returns default options as array" do
+      array = schedule.to_a
+
+      array.size.must_equal 2
+      array.must_equal [{ every: :month }, { every: :day }]
+    end
+  end
+
+  describe "#as_json" do
+    before do
+      schedule << { every: :month }
+      schedule << { every: :day }
+    end
+
+    it "returns default options as array" do
+      array = schedule.as_json
+
+      array.size.must_equal 2
+      array.must_equal [{ "every" => "month" }, { "every" => "day" }]
+    end
+  end
+
+  describe "#to_yaml" do
+    before do
+      schedule << { every: :month }
+      schedule << { every: :day }
+    end
+
+    it "returns default options as array" do
+      yaml = schedule.to_yaml
+
+      array = YAML.safe_load(yaml)
+      array.size.must_equal 2
+      array.must_equal [{ "every" => "month" }, { "every" => "day" }]
+    end
+  end
 end
