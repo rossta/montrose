@@ -366,6 +366,40 @@ r.events.take(10).each { |date| puts date.to_s }
 r.events.lazy.select { |time| time > 1.month.from_now }.take(3).each { |date| puts date.to_s }
 ```
 
+### Combining recurrences
+
+It may be necessary to combine several recurrence rules into a single
+enumeration of events. For this purpose, there is `Montrose::Schedule`. To create a schedule of multiple recurrences:
+
+```ruby
+recurrence_1 = Montrose.monthly(day: { friday: [1] })
+recurrence_2 = Montrose.weekly(on: :tuesday)
+
+schedule = Montrose::Schedule.build do |s|
+  s << recurrence_1
+  s << recurrence_2
+end
+
+# add after building
+s << Montrose.yearly
+```
+The `Schedule#<<` method also accepts valid recurrence options as hashes:
+```ruby
+schedule = Montrose::Schedule.build do |s|
+  s << { day: { friday: [1] } }
+  s << { on: :tuesday }
+end
+```
+A schedule acts like a collection of recurrence rules that also behaves as a single
+stream of events:
+
+```ruby
+schedule.events # => #<Enumerator: ...>
+schedule.each do |event|
+  puts event
+end
+```
+
 ### Ruby on Rails
 
 Instances of `Montrose::Recurrence` support the ActiveRecord serialization API so recurrence objects can be marshalled to and from a single database column:
@@ -373,6 +407,13 @@ Instances of `Montrose::Recurrence` support the ActiveRecord serialization API s
 ```ruby
 class RecurringEvent < ApplicationRecord
   serialize :recurrence, Montrose::Recurrence
+
+end
+```
+`Montrose::Schedule` can also be serialized:
+```ruby
+class RecurringEvent < ApplicationRecord
+  serialize :recurrence, Montrose::Schedule
 
 end
 ```
