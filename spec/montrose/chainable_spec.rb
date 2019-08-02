@@ -117,6 +117,35 @@ describe Montrose::Chainable do
     end
   end
 
+  describe "#during" do
+    let(:now) { Time.local(2015, 9, 1, 6, 0, 0) }
+
+    it "returns recurrence" do
+      recurrence = Montrose.every(20.minutes).during("9am-10am")
+      recurrence.must_be_kind_of Montrose::Recurrence
+    end
+
+    it "emits within given time-of-day range" do
+      recurrence = Montrose.every(20.minutes).during("9am-10am")
+      recurrence.events.must_pair_with [
+        Time.local(2015, 9, 1, 9, 0, 0),
+        Time.local(2015, 9, 1, 9, 20, 0),
+        Time.local(2015, 9, 1, 9, 40, 0),
+        Time.local(2015, 9, 1, 10, 0, 0)
+      ]
+    end
+
+    it "emits within given time-of-day range" do
+      recurrence = Montrose.every(20.minutes).during("9am-10am")
+      recurrence.events.must_pair_with [
+        Time.local(2015, 9, 1, 9, 0, 0),
+        Time.local(2015, 9, 1, 9, 20, 0),
+        Time.local(2015, 9, 1, 9, 40, 0),
+        Time.local(2015, 9, 1, 10, 0, 0)
+      ]
+    end
+  end
+
   describe "#day_of_month" do
     it "returns new recurrence by given days of month" do
       recurrence = Montrose.monthly.starting(Time.local(2016, 1, 2))

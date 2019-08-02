@@ -168,6 +168,23 @@ module Montrose
       merge(between: date_range)
     end
 
+    # Create a recurrence occurring within a time-of-day range or ranges.
+    # Given time ranges will parse as times-of-day and ignore given dates.
+    #
+    # @param [Range<Time>,String,Array<Array>] time-of-day range(s)
+    #
+    # @example
+    #   Montrose.every(20.minutes).during("9am-5pm")
+    #   Montrose.every(20.minutes).during(time.change(hour: 9)..time.change(hour: 5))
+    #   Montrose.every(20.minutes).during([9, 0, 0], [17, 0, 0])
+    #   Montrose.every(20.minutes).during("9am-12pm", "1pm-5pm")
+    #
+    # @return [Montrose::Recurrence]
+    #
+    def during(time_of_day, *extras)
+      merge(during: time_of_day.array_concat(extras))
+    end
+
     # Create a recurrence through :on option
     #
     # @param day [Hash,Symbol] weekday or day of month as hash, e.g. { friday: 13 }
