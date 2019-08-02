@@ -14,6 +14,7 @@ module Montrose
         Rule::After,
         Rule::Until,
         Rule::Between,
+        Rule::During,
         Rule::Except,
         Rule::Total,
         Rule::TimeOfDay,

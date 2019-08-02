@@ -576,6 +576,19 @@ describe "RFC Recurrence Rules" do
     dates.must_pair_with expected_dates
   end
 
+  it "every 20 minutes from 9:00 AM to 4:40 PM every day (alt)" do
+    Timecop.freeze(now.beginning_of_day)
+    recurrence = new_recurrence(every: :minute, interval: 20, during: "9:00am-4:59pm")
+
+    expected_dates = consecutive(:minute, 24, starts: Time.parse("September 1, 2015 9:00 AM"), interval: 20)
+    expected_dates += consecutive(:minute, 24, starts: Time.parse("September 2, 2015 9:00 AM"), interval: 20)
+    expected_dates += consecutive(:minute, 24, starts: Time.parse("September 3, 2015 9:00 AM"), interval: 20)
+
+    dates = recurrence.events.take(72)
+
+    dates.must_pair_with expected_dates
+  end
+
   # TODO: Support week start on Monday
   # An example where the days generated makes a difference because of
   # WKST:
