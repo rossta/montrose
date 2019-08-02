@@ -277,6 +277,15 @@ Montrose.every(90.minutes, total: 4)
 # every 20 minutes from 9:00 AM to 4:40 PM every day
 Montrose.every(20.minutes, hour: 9..16)
 
+# every 20 minutes from 9:00 AM to 4:40 PM every day with time-of-day precision
+r = Montrose.every(20.minutes)
+r.during("9am-4:40pm")                                        # as semantic time-of-day range OR
+r.during(time.change(hour: 9)..time.change(hour: 4: min: 40)) # as ruby time range OR
+r.during([9, 0, 0], [16, 40, 0])                              # as hour, min, sec tuple pairs for start, end
+
+# every 20 minutes during multiple time-of-day ranges
+Montrose.every(20.minutes).during("9am-12pm", "1pm-5pm")
+
 # Minutely
 Montrose.minutely
 Montrose.r(every: :minute)
