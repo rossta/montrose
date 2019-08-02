@@ -189,17 +189,6 @@ module Montrose
                 end
     end
 
-    def decompose_during_arg(during)
-      case during
-      when Range
-        [decompose_during_arg(during.first), decompose_during_arg(during.last)]
-      when String
-        during.split(%r{[-—–]}).map { |d| as_time_parts(d) }
-      else
-        as_time_parts(during)
-      end
-    end
-
     def day=(days)
       @day = nested_map_arg(days) { |d| day_number!(d) }
     end
@@ -375,6 +364,17 @@ module Montrose
 
     def duration_to_frequency_parts(duration)
       duration.parts.first
+    end
+
+    def decompose_during_arg(during)
+      case during
+      when Range
+        [decompose_during_arg(during.first), decompose_during_arg(during.last)]
+      when String
+        during.split(%r{[-—–]}).map { |d| as_time_parts(d) }
+      else
+        as_time_parts(during)
+      end
     end
   end
 end
