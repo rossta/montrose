@@ -1,3 +1,9 @@
+### Unreleased
+
+* enhancements
+  * Adds `Recurrence#during` to support recurrences within time-of-day ranges,
+    e.g. `Montrose.every(20.minutes).during("9am-5pm")`
+
 ### 0.10.0 - (2019-07-17)
 
 * enhancements
@@ -61,7 +67,7 @@
   * Previously, the :between option served as a shorthand for :starts to :until.
     Now, when both :starts and :between are provided, the recurrence will behave
 as if anchored by the given :starts option, but filtered through the given
-:betweeen option.
+:between option.
   * The :exclude_end option changes the default behavior of :until--when the
     timestamp of the interval matches the :until timestamp, it will be included
 by default unless the :exclude_end option is set to true.
