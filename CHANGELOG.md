@@ -1,8 +1,14 @@
-### Unreleased
+### 0.11.0 - (2019-08-16)
 
 * enhancements
   * Adds `Recurrence#during` to support recurrences within time-of-day ranges,
     e.g. `Montrose.every(20.minutes).during("9am-5pm")`
+
+### 0.10.1 - (2019-07-22)
+
+* enhancements
+  * Adds `Schedule.dump` and `Schedule.load` to support ActiveRecord column
+    serialization
 
 ### 0.10.0 - (2019-07-17)
 
