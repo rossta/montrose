@@ -256,6 +256,26 @@ describe Montrose::Recurrence do
     end
   end
 
+  describe "#finite? / #infinite?" do
+    it "is true if there is an ends at" do
+      recurrence = new_recurrence(every: :day).ending(1.day.from_now)
+      assert_equal recurrence.finite?, true
+      assert_equal recurrence.infinite?, false
+    end
+
+    it "is true if there is a length" do
+      recurrence = new_recurrence(every: :day).repeat(3)
+      assert_equal recurrence.finite?, true
+      assert_equal recurrence.infinite?, false
+    end
+
+    it "is false if there is no end date or length" do
+      recurrence = new_recurrence(every: :day)
+      assert_equal recurrence.finite?, false
+      assert_equal recurrence.infinite?, true
+    end
+  end
+
   describe "intervals" do
     before do
       Timecop.return # turn off timecop to test enumeration against real clock

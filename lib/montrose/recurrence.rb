@@ -354,12 +354,20 @@ module Montrose
       end or false
     end
 
-    # Return true/false if recurrence will iterate infinitely
+    # Return true/false if recurrence will terminate
     #
-    # @return [Boolean] whether or not recurrence is infinite
+    # @return [Boolean] returns true if recurrence has an end
     #
     def finite?
-      ends_at || length
+      !infinite?
+    end
+
+    # Return true/false if recurrence will iterate infinitely
+    #
+    # @return [Boolean] returns true if recurrence has no end
+    #
+    def infinite?
+      !ends_at && !length
     end
 
     # Return true/false if given timestamp occurs before
