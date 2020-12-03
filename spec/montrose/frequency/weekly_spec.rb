@@ -32,6 +32,30 @@ describe Montrose::Frequency::Weekly do
       refute frequency.include? now + 1.weeks
       refute frequency.include? now + 3.weeks
     end
+
+    it "is true when matches given weekly interval with specific days" do
+      start_date = Date.new(2020, 12, 2)
+      frequency = new_frequency(every: :week, interval: 2, on: [:wednesday], starts: start_date)
+
+      assert frequency.include? start_date.to_time + 2.weeks
+      assert frequency.include? start_date.to_time + 4.weeks
+    end
+
+    it "is false when matches given weekly interval but not specific day" do
+      start_date = Date.new(2020, 12, 2)
+      frequency = new_frequency(every: :week, interval: 2, on: [:wednesday], starts: start_date)
+
+      refute frequency.include? start_date.to_time + 2.weeks + 1.day
+      refute frequency.include? start_date.to_time + 4.weeks + 1.day
+    end
+
+    it "is false when does not match given weekly interval with specific days" do
+      start_date = Date.new(2020, 12, 2)
+      frequency = new_frequency(every: :week, interval: 2, on: [:wednesday], starts: start_date)
+
+      refute frequency.include? start_date.to_time + 1.weeks
+      refute frequency.include? start_date.to_time + 9.weeks
+    end
   end
 
   describe "#to_cron" do
