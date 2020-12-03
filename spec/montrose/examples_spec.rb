@@ -30,6 +30,14 @@ describe Montrose::Recurrence do
       ]
     end
 
+    it "every 2 weeks" do
+      start_date = Date.new(2019, 12, 2)
+      recurrence = new_recurrence(every: :week, interval: 2, starts: start_date)
+
+      assert recurrence.include?(start_date.to_time + 2.weeks)
+      refute recurrence.include?(start_date.to_time + 1.weeks)
+    end
+
     it "multiple at values" do
       recurrence = new_recurrence(every: :day, at: ["7:00am", "3:30pm"])
 
