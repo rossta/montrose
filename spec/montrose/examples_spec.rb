@@ -25,7 +25,7 @@ describe Montrose::Recurrence do
 
       recurrence.events.take(3).must_pair_with [
         Time.local(2016, 6, 28, 5, 0),
-        Time.local(2016, 7, 5,  5, 0),
+        Time.local(2016, 7, 5, 5, 0),
         Time.local(2016, 7, 12, 5, 0)
       ]
     end
@@ -35,7 +35,7 @@ describe Montrose::Recurrence do
 
       recurrence.events.take(3).must_pair_with [
         Time.local(2015, 9, 1, 15, 30),
-        Time.local(2015, 9, 2, 7,  0),
+        Time.local(2015, 9, 2, 7, 0),
         Time.local(2015, 9, 2, 15, 30)
       ]
     end
@@ -89,7 +89,7 @@ describe Montrose::Recurrence do
       it "when nth day N falls in given month" do
         recurrence = new_recurrence(every: :year,
                                     month: 1,
-                                    day: { friday: [2] })
+                                    day: {friday: [2]})
 
         recurrence.events.take(3).to_a.must_pair_with [
           Time.local(2016, 1, 8, 12),
@@ -101,7 +101,7 @@ describe Montrose::Recurrence do
       it "when nth day N falls outside of given month" do
         recurrence = new_recurrence(every: :year,
                                     month: 2,
-                                    day: { friday: [2] })
+                                    day: {friday: [2]})
 
         recurrence.events.take(3).to_a.must_pair_with [
           Time.local(2016, 2, 12, 12),

@@ -42,7 +42,7 @@ module Montrose
                 else
                   fail SerializationError,
                     "Object was supposed to be a #{self}, but was a #{obj.class}. -- #{obj.inspect}"
-                end
+        end
 
         JSON.dump(array)
       end
@@ -77,7 +77,7 @@ module Montrose
 
       self
     end
-    alias add <<
+    alias_method :add, :<<
 
     # Return true/false if given timestamp is included in any of the rules
     # found in the schedule
@@ -127,7 +127,7 @@ module Montrose
       enums = @rules.map { |r| r.merge(opts).events }
       Enumerator.new do |y|
         loop do
-          enum = active_enums(enums).min_by(&:peek) or break
+          (enum = active_enums(enums).min_by(&:peek)) || break
           y << enum.next
         end
       end
@@ -173,11 +173,9 @@ module Montrose
 
     def active_enums(enums)
       enums.select do |e|
-        begin
-          e.peek
-        rescue StopIteration
-          false
-        end
+        e.peek
+      rescue StopIteration
+        false
       end
     end
   end

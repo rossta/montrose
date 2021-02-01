@@ -371,7 +371,7 @@ describe Montrose::Options do
     end
 
     it "casts day names to day numbers" do
-      options[:day] = [:monday, :tuesday]
+      options[:day] = %i[monday tuesday]
 
       options.day.must_equal [1, 2]
       options[:day].must_equal [1, 2]
@@ -393,14 +393,14 @@ describe Montrose::Options do
 
     describe "nested hash" do
       it "converts day name keys" do
-        options[:day] = { friday: [1] }
+        options[:day] = {friday: [1]}
 
         options.day.must_equal(5 => [1])
         options[:day].must_equal(5 => [1])
       end
 
       it "casts day number values to arrays" do
-        options[:day] = { 5 => 1 }
+        options[:day] = {5 => 1}
 
         options.day.must_equal(5 => [1])
         options[:day].must_equal(5 => [1])
@@ -564,7 +564,7 @@ describe Montrose::Options do
     end
 
     it "casts month names to month numbers" do
-      options[:month] = [:january, :december]
+      options[:month] = %i[january december]
 
       options.month.must_equal [1, 12]
       options[:month].must_equal [1, 12]
@@ -751,7 +751,7 @@ describe Montrose::Options do
     end
 
     it "decomposes day name => month day to wday and mday" do
-      options[:on] = { friday: 13 }
+      options[:on] = {friday: 13}
 
       options[:day].must_equal [5]
       options[:mday].must_equal [13]
@@ -760,7 +760,7 @@ describe Montrose::Options do
 
     it "decomposes day name => month day to wday and mday as range" do
       options[:month] = :november
-      options[:on] = { tuesday: 2..8 }
+      options[:on] = {tuesday: 2..8}
 
       options[:day].must_equal [2]
       options[:mday].must_equal((2..8).to_a)
@@ -768,7 +768,7 @@ describe Montrose::Options do
     end
 
     it "decompose month name => month day to month and mday" do
-      options[:on] = { january: 31 }
+      options[:on] = {january: 31}
 
       options[:month].must_equal [1]
       options[:mday].must_equal [31]
@@ -822,7 +822,7 @@ describe Montrose::Options do
     end
 
     it "calls block if not found" do
-      options.fetch(:every) { :foo }.must_equal :foo
+      options.fetch(:every, :foo).must_equal :foo
     end
 
     it "raises for no block given and value not found" do

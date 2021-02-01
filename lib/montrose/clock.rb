@@ -26,7 +26,7 @@ module Montrose
       if @at
         times = @at.map { |hour, min, sec = 0| @time.change(hour: hour, min: min, sec: sec) }
 
-        min_next = times.select { |t| t > @time }.min and return min_next
+        (min_next = times.select { |t| t > @time }.min) && (return min_next)
 
         advance_step(times.min || @time)
       else
@@ -41,7 +41,7 @@ module Montrose
     end
 
     def step
-      @step ||= smallest_step or fail ConfigurationError, "No step for #{@options.inspect}"
+      (@step ||= smallest_step) || fail(ConfigurationError, "No step for #{@options.inspect}")
     end
 
     def smallest_step
@@ -76,9 +76,9 @@ module Montrose
       is_frequency = @every == unit
       if ([unit] + alternates).any? { |u| @options.key?(u) } && !is_frequency
         # smallest unit, increment by 1
-        { step_key(unit) => 1 }
+        {step_key(unit) => 1}
       elsif is_frequency
-        { step_key(unit) => @interval }
+        {step_key(unit) => @interval}
       end
     end
 

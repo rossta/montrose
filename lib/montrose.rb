@@ -35,6 +35,6 @@ module Montrose
     def recurrence(options = {})
       branch(options)
     end
-    alias r recurrence
+    alias_method :r, :recurrence
   end
 end

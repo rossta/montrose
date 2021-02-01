@@ -20,7 +20,7 @@ begin
 rescue LoadError
 end
 
-Dir[File.expand_path("../spec/support/**/*.rb", __dir__)].each { |f| require f }
+Dir[File.expand_path("../spec/support/**/*.rb", __dir__)].sort.each { |f| require f }
 
 module Minitest
   class Spec
@@ -33,11 +33,11 @@ module Minitest
     end
 
     def new_clock(options = {})
-      Montrose::Clock.new({ starts: time_now }.merge(options))
+      Montrose::Clock.new({starts: time_now}.merge(options))
     end
 
     def new_frequency(options = {})
-      Montrose::Frequency.from_options({ starts: time_now }.merge(options))
+      Montrose::Frequency.from_options({starts: time_now}.merge(options))
     end
 
     def new_options(options = {})

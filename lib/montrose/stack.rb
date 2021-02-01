@@ -44,7 +44,7 @@ module Montrose
       yes, no = @stack.partition { |rule| rule.include?(time) }
 
       if no.empty?
-        yes.all? { |rule| rule.advance!(time) } or return false
+        yes.all? { |rule| rule.advance!(time) } || (return false)
         puts time if ENV["DEBUG"]
         yield time if block_given?
         true

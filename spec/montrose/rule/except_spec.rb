@@ -4,7 +4,7 @@ require "spec_helper"
 
 describe Montrose::Rule::Except do
   let(:dates) { [Date.today, Date.today + 5.days] }
-  let(:rule)  { Montrose::Rule::Except.new(dates) }
+  let(:rule) { Montrose::Rule::Except.new(dates) }
 
   describe "#include?" do
     it { refute rule.include?(time_now) }
