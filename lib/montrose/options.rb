@@ -120,12 +120,12 @@ module Montrose
     end
 
     def to_hash
-      hash_pairs = self.class.defined_options.flat_map do |opt_name|
+      hash_pairs = self.class.defined_options.flat_map { |opt_name|
         [opt_name, send(opt_name)]
-      end
+      }
       Hash[*hash_pairs].reject { |_k, v| v.nil? }
     end
-    alias to_h to_hash
+    alias_method :to_h, :to_hash
 
     def []=(option, val)
       send(:"#{option}=", val)
@@ -142,13 +142,13 @@ module Montrose
       self.class.new(h1.merge(h2))
     end
 
-    def fetch(key, *args, &_block)
-      fail ArgumentError, "wrong number of arguments (#{args.length} for 1..2)" if args.length > 1
+    def fetch(key, *args)
+      raise ArgumentError, "wrong number of arguments (#{args.length} for 1..2)" if args.length > 1
 
       found = send(key)
       return found if found
       return args.first if args.length == 1
-      fail "Key #{key.inspect} not found" unless block_given?
+      raise "Key #{key.inspect} not found" unless block
 
       yield
     end
@@ -165,8 +165,8 @@ module Montrose
       @every = parsed.fetch(:every)
     end
 
-    alias frequency every
-    alias frequency= every=
+    alias_method :frequency, :every
+    alias_method :frequency=, :every=
 
     def starts=(time)
       @starts = normalize_time(as_time(time)) || default_starts
@@ -186,7 +186,7 @@ module Montrose
                   [decompose_during_arg(during)]
                 else
                   map_arg(during) { |d| decompose_during_arg(d) }
-                end
+      end
     end
 
     def day=(days)
@@ -312,7 +312,7 @@ module Montrose
           result[:mday] += map_mdays(v)
         end
       else
-        { day: map_days(arg) }
+        {day: map_days(arg)}
       end
     end
 
@@ -323,12 +323,12 @@ module Montrose
       day = day_number(key)
       return [:day, day] if day
 
-      fail ConfigurationError, "Did not recognize #{key} as a month or day"
+      raise ConfigurationError, "Did not recognize #{key} as a month or day"
     end
 
     def assert_range_includes(range, item, absolute = false)
       test = absolute ? item.abs : item
-      fail ConfigurationError, "Out of range: #{range.inspect} does not include #{test}" unless range.include?(test)
+      raise ConfigurationError, "Out of range: #{range.inspect} does not include #{test}" unless range.include?(test)
 
       item
     end
@@ -343,18 +343,18 @@ module Montrose
     def parse_frequency(input)
       if input.respond_to?(:parts)
         frequency, interval = duration_to_frequency_parts(input)
-        { every: frequency.to_s.singularize.to_sym, interval: interval }
+        {every: frequency.to_s.singularize.to_sym, interval: interval}
       elsif input.is_a?(Numeric)
         frequency, interval = numeric_to_frequency_parts(input)
-        { every: frequency, interval: interval }
+        {every: frequency, interval: interval}
       else
-        { every: Frequency.assert(input) }
+        {every: Frequency.assert(input)}
       end
     end
 
     def numeric_to_frequency_parts(number)
       parts = nil
-      [:year, :month, :week, :day, :hour, :minute].each do |freq|
+      %i[year month week day hour minute].each do |freq|
         div, mod = number.divmod(1.send(freq))
         parts = [freq, div]
         return parts if mod.zero?
@@ -371,7 +371,7 @@ module Montrose
       when Range
         [decompose_during_arg(during.first), decompose_during_arg(during.last)]
       when String
-        during.split(%r{[-—–]}).map { |d| as_time_parts(d) }
+        during.split(/[-—–]/).map { |d| as_time_parts(d) }
       else
         as_time_parts(during)
       end

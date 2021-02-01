@@ -133,7 +133,7 @@ describe "RFC Recurrence Rules" do
         until: Date.parse("October 5, 2015")
       )
 
-      expected_dates = cherry_pick 2015 => { 9 => [1, 3, 8, 10, 15, 17, 22, 24, 29], 10 => [1] }
+      expected_dates = cherry_pick 2015 => {9 => [1, 3, 8, 10, 15, 17, 22, 24, 29], 10 => [1]}
       dates = recurrence.events.to_a
 
       dates.must_pair_with expected_dates
@@ -148,7 +148,7 @@ describe "RFC Recurrence Rules" do
         total: 10
       )
 
-      expected_dates = cherry_pick 2015 => { 11 => [24, 26], 12 => [1, 3, 8, 10, 15, 17, 22, 24] }
+      expected_dates = cherry_pick 2015 => {11 => [24, 26], 12 => [1, 3, 8, 10, 15, 17, 22, 24]}
       dates = recurrence.events.to_a
 
       dates.must_pair_with expected_dates
@@ -191,7 +191,7 @@ describe "RFC Recurrence Rules" do
       interval: 2
     )
 
-    expected_dates = cherry_pick 2015 => { 9 => [1, 3, 15, 17, 29], 10 => [1, 13, 15] }
+    expected_dates = cherry_pick 2015 => {9 => [1, 3, 15, 17, 29], 10 => [1, 13, 15]}
 
     dates = recurrence.events.to_a
 
@@ -202,13 +202,13 @@ describe "RFC Recurrence Rules" do
   it "monthly on the first Friday for ten occurrences" do
     recurrence = new_recurrence(
       every: :month,
-      day: { friday: [1] },
+      day: {friday: [1]},
       total: 10
     )
 
     expected_dates = cherry_pick(
-      2015 => { 9 => [4], 10 => [2], 11 => [6], 12 => [4] },
-      2016 => { 1 => [1], 2 => [5], 3 => [4], 4 => [1], 5 => [6], 6 => [3] }
+      2015 => {9 => [4], 10 => [2], 11 => [6], 12 => [4]},
+      2016 => {1 => [1], 2 => [5], 3 => [4], 4 => [1], 5 => [6], 6 => [3]}
     ).map { |t| t + 12.hours }
 
     dates = recurrence.events.to_a
@@ -220,12 +220,12 @@ describe "RFC Recurrence Rules" do
   it "monthly on the first Friday until December 23, 2015" do
     recurrence = new_recurrence(
       every: :month,
-      day: { friday: [1] },
+      day: {friday: [1]},
       until: Date.parse("December 23, 2015")
     )
 
     expected_dates = cherry_pick(
-      2015 => { 9 => [4], 10 => [2], 11 => [6], 12 => [4] }
+      2015 => {9 => [4], 10 => [2], 11 => [6], 12 => [4]}
     ).map { |t| t + 12.hours }
 
     dates = recurrence.events.to_a
@@ -241,14 +241,14 @@ describe "RFC Recurrence Rules" do
     recurrence = new_recurrence(
       every: :month,
       starts: starts,
-      day: { sunday: [1, -1] },
+      day: {sunday: [1, -1]},
       interval: 2,
       total: 10
     )
 
     expected_dates = cherry_pick(
-      2015 => { 9 => [6, 27], 11 => [1, 29] },
-      2016 => { 1 => [3, 31], 3 => [6, 27], 5 => [1, 29] }
+      2015 => {9 => [6, 27], 11 => [1, 29]},
+      2016 => {1 => [3, 31], 3 => [6, 27], 5 => [1, 29]}
     )
 
     dates = recurrence.events.to_a
@@ -260,13 +260,13 @@ describe "RFC Recurrence Rules" do
   it "monthly on the second-to-last Monday of the month for 6 months" do
     recurrence = new_recurrence(
       every: :month,
-      day: { monday: [-2] },
+      day: {monday: [-2]},
       total: 6
     )
 
     expected_dates = cherry_pick(
-      2015 => { 9 => [21], 10 => [19], 11 => [23], 12 => [21] },
-      2016 => { 1 => [18], 2 => [22] }
+      2015 => {9 => [21], 10 => [19], 11 => [23], 12 => [21]},
+      2016 => {1 => [18], 2 => [22]}
     ).map { |t| t + 12.hours }
 
     dates = recurrence.events.to_a
@@ -279,8 +279,8 @@ describe "RFC Recurrence Rules" do
     recurrence = new_recurrence(every: :month, mday: [-3])
 
     expected_dates = cherry_pick(
-      2015 => { 9 => [28], 10 => [29], 11 => [28], 12 => [29] },
-      2016 => { 1 => [29], 2 => [27] }
+      2015 => {9 => [28], 10 => [29], 11 => [28], 12 => [29]},
+      2016 => {1 => [29], 2 => [27]}
     ).map { |t| t + 12.hours }
 
     dates = recurrence.events.take(6)
@@ -293,8 +293,8 @@ describe "RFC Recurrence Rules" do
     recurrence = new_recurrence(every: :month, mday: [2, 15], total: 10)
 
     expected_dates = cherry_pick(
-      2015 => { 9 => [2, 15], 10 => [2, 15], 11 => [2, 15], 12 => [2, 15] },
-      2016 => { 1 => [2, 15] }
+      2015 => {9 => [2, 15], 10 => [2, 15], 11 => [2, 15], 12 => [2, 15]},
+      2016 => {1 => [2, 15]}
     ).map { |t| t + 12.hours }
 
     dates = recurrence.events.to_a
@@ -308,8 +308,8 @@ describe "RFC Recurrence Rules" do
     recurrence = new_recurrence(starts: starts, every: :month, mday: [1, -1], total: 10)
 
     expected_dates = cherry_pick(
-      2015 => { 9 => [30], 10 => [1, 31], 11 => [1, 30], 12 => [1, 31] },
-      2016 => { 1 => [1, 31], 2 => [1] }
+      2015 => {9 => [30], 10 => [1, 31], 11 => [1, 30], 12 => [1, 31]},
+      2016 => {1 => [1, 31], 2 => [1]}
     )
 
     dates = recurrence.events.to_a
@@ -323,8 +323,8 @@ describe "RFC Recurrence Rules" do
     recurrence = new_recurrence(starts: starts, every: :month, interval: 18, total: 10, mday: 10..15)
 
     expected_dates = cherry_pick(
-      2015 => { 9 => [10, 11, 12, 13, 14, 15] },
-      2017 => { 3 => [10, 11, 12, 13] }
+      2015 => {9 => [10, 11, 12, 13, 14, 15]},
+      2017 => {3 => [10, 11, 12, 13]}
     )
 
     dates = recurrence.events.to_a
@@ -338,8 +338,8 @@ describe "RFC Recurrence Rules" do
     recurrence = new_recurrence(every: :month, interval: 2, day: :tuesday, starts: starts)
 
     expected_dates = cherry_pick(
-      2015 => { 9 => [1, 8, 15, 22, 29], 11 => [3, 10, 17, 24] },
-      2016 => { 1 => [5, 12, 19, 26], 3 => [1, 8, 15, 22, 29] }
+      2015 => {9 => [1, 8, 15, 22, 29], 11 => [3, 10, 17, 24]},
+      2016 => {1 => [5, 12, 19, 26], 3 => [1, 8, 15, 22, 29]}
     )
 
     dates = recurrence.events.take(expected_dates.size)
@@ -351,11 +351,11 @@ describe "RFC Recurrence Rules" do
     recurrence = new_recurrence(every: :year, month: [:june, :july], total: 10)
 
     expected_dates = cherry_pick(
-      2016 => { 6 => [1], 7 => [1] },
-      2017 => { 6 => [1], 7 => [1] },
-      2018 => { 6 => [1], 7 => [1] },
-      2019 => { 6 => [1], 7 => [1] },
-      2020 => { 6 => [1], 7 => [1] }
+      2016 => {6 => [1], 7 => [1]},
+      2017 => {6 => [1], 7 => [1]},
+      2018 => {6 => [1], 7 => [1]},
+      2019 => {6 => [1], 7 => [1]},
+      2020 => {6 => [1], 7 => [1]}
     ).map { |i| i + 12.hours }
 
     dates = recurrence.events.to_a
@@ -375,10 +375,10 @@ describe "RFC Recurrence Rules" do
     )
 
     expected_dates = cherry_pick(
-      2015 => { 3 => [10] },
-      2017 => { 1 => [10], 2 => [10], 3 => [10] },
-      2019 => { 1 => [10], 2 => [10], 3 => [10] },
-      2021 => { 1 => [10], 2 => [10], 3 => [10] }
+      2015 => {3 => [10]},
+      2017 => {1 => [10], 2 => [10], 3 => [10]},
+      2019 => {1 => [10], 2 => [10], 3 => [10]},
+      2021 => {1 => [10], 2 => [10], 3 => [10]}
     )
 
     dates = recurrence.events.to_a
@@ -395,10 +395,10 @@ describe "RFC Recurrence Rules" do
     )
 
     expected_dates = cherry_pick(
-      2016 => { 1 => [1], 4 => [9], 7 => [18] },
-      2017 => { 1 => [1], 4 => [10], 7 => [19] },
-      2018 => { 1 => [1], 4 => [10], 7 => [19] },
-      2019 => { 1 => [1] }
+      2016 => {1 => [1], 4 => [9], 7 => [18]},
+      2017 => {1 => [1], 4 => [10], 7 => [19]},
+      2018 => {1 => [1], 4 => [10], 7 => [19]},
+      2019 => {1 => [1]}
     ).map { |i| i + 12.hours }
 
     dates = recurrence.events.to_a
@@ -408,12 +408,12 @@ describe "RFC Recurrence Rules" do
   end
 
   it "every 20th Monday of the year, forever" do
-    recurrence = new_recurrence(every: :year, day: { monday: [20] })
+    recurrence = new_recurrence(every: :year, day: {monday: [20]})
 
     expected_dates = cherry_pick(
-      2016 => { 5 => [16] },
-      2017 => { 5 => [15] },
-      2018 => { 5 => [14] }
+      2016 => {5 => [16]},
+      2017 => {5 => [15]},
+      2018 => {5 => [14]}
     ).map { |i| i + 12.hours }
 
     dates = recurrence.events.take(3)
@@ -424,9 +424,9 @@ describe "RFC Recurrence Rules" do
     recurrence = new_recurrence(every: :year, week: [20], day: [:monday])
 
     expected_dates = cherry_pick(
-      2016 => { 5 => [16] },
-      2017 => { 5 => [15] },
-      2018 => { 5 => [14] }
+      2016 => {5 => [16]},
+      2017 => {5 => [15]},
+      2018 => {5 => [14]}
     ).map { |i| i + 12.hours }
 
     dates = recurrence.events.take(3)
@@ -439,9 +439,9 @@ describe "RFC Recurrence Rules" do
     recurrence = new_recurrence(every: :year, month: :march, day: :thursday, starts: starts)
 
     expected_dates = cherry_pick(
-      2016 => { 3 => [10, 17, 24, 31] },
-      2017 => { 3 => [2, 9, 16, 23, 30] },
-      2018 => { 3 => [1, 8, 15, 22, 29] }
+      2016 => {3 => [10, 17, 24, 31]},
+      2017 => {3 => [2, 9, 16, 23, 30]},
+      2018 => {3 => [1, 8, 15, 22, 29]}
     ).map { |i| i + 12.hours }
 
     dates = recurrence.events.take(expected_dates.size)
@@ -452,9 +452,9 @@ describe "RFC Recurrence Rules" do
     recurrence = new_recurrence(every: :year, month: 6..8, day: :thursday)
 
     expected_dates = cherry_pick(
-      2016 => { 6 => [2, 9, 16, 23, 30], 7 => [7, 14, 21, 28], 8 => [4, 11, 18, 25] },
-      2017 => { 6 => [1, 8, 15, 22, 29], 7 => [6, 13, 20, 27], 8 => [3, 10, 17, 24, 31] },
-      2018 => { 6 => [7, 14, 21, 28], 7 => [5, 12, 19, 26], 8 => [2, 9, 16, 23, 30] }
+      2016 => {6 => [2, 9, 16, 23, 30], 7 => [7, 14, 21, 28], 8 => [4, 11, 18, 25]},
+      2017 => {6 => [1, 8, 15, 22, 29], 7 => [6, 13, 20, 27], 8 => [3, 10, 17, 24, 31]},
+      2018 => {6 => [7, 14, 21, 28], 7 => [5, 12, 19, 26], 8 => [2, 9, 16, 23, 30]}
     ).map { |i| i + 12.hours }
 
     dates = recurrence.events.take(expected_dates.size)
@@ -466,10 +466,10 @@ describe "RFC Recurrence Rules" do
     recurrence = new_recurrence(every: :month, mday: 13, day: :friday)
 
     expected_dates = cherry_pick(
-      2015 => { 11 => [13] },
-      2016 => { 5 => [13] },
-      2017 => { 1 => [13], 10 => [13] },
-      2018 => { 4 => [13], 7 => [13] }
+      2015 => {11 => [13]},
+      2016 => {5 => [13]},
+      2017 => {1 => [13], 10 => [13]},
+      2018 => {4 => [13], 7 => [13]}
     ).map { |i| i + 12.hours }
 
     dates = recurrence.events.take(expected_dates.size)
@@ -481,8 +481,8 @@ describe "RFC Recurrence Rules" do
     recurrence = new_recurrence(every: :month, mday: 7..13, day: :saturday)
 
     expected_dates = cherry_pick(
-      2015 => { 9 => [12], 10 => [10], 11 => [7], 12 => [12] },
-      2016 => { 1 => [9], 2 => [13], 3 => [12], 4 => [9], 5 => [7], 6 => [11] }
+      2015 => {9 => [12], 10 => [10], 11 => [7], 12 => [12]},
+      2016 => {1 => [9], 2 => [13], 3 => [12], 4 => [9], 5 => [7], 6 => [11]}
     ).map { |i| i + 12.hours }
 
     dates = recurrence.events.take(expected_dates.size)
@@ -495,9 +495,9 @@ describe "RFC Recurrence Rules" do
     recurrence = new_recurrence(every: :year, interval: 4, month: :november, day: :tuesday, mday: 2..8)
 
     expected_dates = cherry_pick(
-      2016 => { 11 => [8] },
-      2020 => { 11 => [3] },
-      2024 => { 11 => [5] }
+      2016 => {11 => [8]},
+      2020 => {11 => [3]},
+      2024 => {11 => [5]}
     )
 
     dates = recurrence.events.take(expected_dates.size)

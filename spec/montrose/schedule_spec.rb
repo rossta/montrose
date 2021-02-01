@@ -11,10 +11,10 @@ describe Montrose::Schedule do
     end
 
     it "yields a new instance" do
-      schedule = Montrose::Schedule.build do |s|
-        s << { every: :day }
-        s << { every: :year }
-      end
+      schedule = Montrose::Schedule.build { |s|
+        s << {every: :day}
+        s << {every: :year}
+      }
 
       schedule.rules.size.must_equal 2
     end
@@ -23,9 +23,9 @@ describe Montrose::Schedule do
   describe ".dump" do
     it "returns options as JSON string" do
       schedule = new_schedule([
-                                { every: :week, on: :thursday, at: "7pm" },
-                                { every: :week, on: :tuesday, at: "6pm" }
-                              ])
+        {every: :week, on: :thursday, at: "7pm"},
+        {every: :week, on: :tuesday, at: "6pm"}
+      ])
 
       dump = Montrose::Schedule.dump(schedule)
       parsed = JSON.parse(dump).map(&:symbolize_keys)
@@ -39,8 +39,8 @@ describe Montrose::Schedule do
 
     it "accepts json array" do
       array = [
-        { every: :week, on: :thursday, at: "7pm" },
-        { every: :week, on: :tuesday, at: "6pm" }
+        {every: :week, on: :thursday, at: "7pm"},
+        {every: :week, on: :tuesday, at: "6pm"}
       ]
 
       dump = Montrose::Schedule.dump(array)
@@ -54,19 +54,19 @@ describe Montrose::Schedule do
     end
 
     it "accepts json string" do
-       str = [
-         { every: :week, on: :thursday, at: "7pm" },
-         { every: :week, on: :tuesday, at: "6pm" }
-       ].to_json
+      str = [
+        {every: :week, on: :thursday, at: "7pm"},
+        {every: :week, on: :tuesday, at: "6pm"}
+      ].to_json
 
-       dump = Montrose::Schedule.dump(str)
-       parsed = JSON.parse(dump).map(&:symbolize_keys)
-       parsed[0][:every].must_equal "week"
-       parsed[0][:on].must_equal "thursday"
-       parsed[0][:at].must_equal [[19, 0, 0]]
-       parsed[1][:every].must_equal "week"
-       parsed[1][:on].must_equal "tuesday"
-       parsed[1][:at].must_equal [[18, 0, 0]]
+      dump = Montrose::Schedule.dump(str)
+      parsed = JSON.parse(dump).map(&:symbolize_keys)
+      parsed[0][:every].must_equal "week"
+      parsed[0][:on].must_equal "thursday"
+      parsed[0][:at].must_equal [[19, 0, 0]]
+      parsed[1][:every].must_equal "week"
+      parsed[1][:on].must_equal "tuesday"
+      parsed[1][:at].must_equal [[18, 0, 0]]
     end
 
     it { Montrose::Schedule.dump(nil).must_be_nil }
@@ -83,9 +83,9 @@ describe Montrose::Schedule do
   describe ".load" do
     it "returns Recurrence instance" do
       schedule = new_schedule([
-                                { every: :week, on: :thursday, at: "7pm" },
-                                { every: :week, on: :tuesday, at: "6pm" }
-                              ])
+        {every: :week, on: :thursday, at: "7pm"},
+        {every: :week, on: :tuesday, at: "6pm"}
+      ])
 
       dump = Montrose::Schedule.dump(schedule)
       loaded = Montrose::Schedule.load(dump).to_a
@@ -113,7 +113,7 @@ describe Montrose::Schedule do
 
   describe "#add" do
     it "adds options as new recurrence rule" do
-      options = { every: :year, total: 3 }
+      options = {every: :year, total: 3}
       schedule.add(options)
 
       schedule.rules.size.must_equal 1
@@ -134,7 +134,7 @@ describe Montrose::Schedule do
     end
 
     it "is aliased to #<<" do
-      options = { every: :year, total: 3 }
+      options = {every: :year, total: 3}
       schedule << options
 
       schedule.rules.size.must_equal 1
@@ -202,7 +202,7 @@ describe Montrose::Schedule do
 
   describe "#to_json" do
     it "returns json string of its options" do
-      options = { every: :day, at: "3:45pm" }
+      options = {every: :day, at: "3:45pm"}
       recurrence = new_recurrence(options)
 
       recurrence.to_json.must_equal "{\"every\":\"day\",\"at\":[[15,45,0]]}"
@@ -261,9 +261,9 @@ describe Montrose::Schedule do
       far_future_timestamp = 100_000.days.from_now.beginning_of_day
       far_future_timestamp = far_future_timestamp.advance(hours: 15, minutes: 30)
 
-      elapsed = Benchmark.realtime do
+      elapsed = Benchmark.realtime {
         assert recurrence.include?(far_future_timestamp)
-      end
+      }
 
       assert_operator 1.0, :>, elapsed.to_f,
         "Elased time was too long: %.1f seconds" % elapsed
@@ -272,8 +272,8 @@ describe Montrose::Schedule do
 
   describe "#inspect" do
     before do
-      schedule << { every: :month }
-      schedule << { every: :day }
+      schedule << {every: :month}
+      schedule << {every: :day}
     end
 
     it "is readable" do
@@ -285,8 +285,8 @@ describe Montrose::Schedule do
 
   describe "#to_json" do
     before do
-      schedule << { every: :month }
-      schedule << { every: :day }
+      schedule << {every: :month}
+      schedule << {every: :day}
     end
 
     it "returns json string of its options" do
@@ -296,36 +296,36 @@ describe Montrose::Schedule do
 
   describe "#to_a" do
     before do
-      schedule << { every: :month }
-      schedule << { every: :day }
+      schedule << {every: :month}
+      schedule << {every: :day}
     end
 
     it "returns default options as array" do
       array = schedule.to_a
 
       array.size.must_equal 2
-      array.must_equal [{ every: :month }, { every: :day }]
+      array.must_equal [{every: :month}, {every: :day}]
     end
   end
 
   describe "#as_json" do
     before do
-      schedule << { every: :month }
-      schedule << { every: :day }
+      schedule << {every: :month}
+      schedule << {every: :day}
     end
 
     it "returns default options as array" do
       array = schedule.as_json
 
       array.size.must_equal 2
-      array.must_equal [{ "every" => "month" }, { "every" => "day" }]
+      array.must_equal [{"every" => "month"}, {"every" => "day"}]
     end
   end
 
   describe "#to_yaml" do
     before do
-      schedule << { every: :month }
-      schedule << { every: :day }
+      schedule << {every: :month}
+      schedule << {every: :day}
     end
 
     it "returns default options as array" do
@@ -333,7 +333,7 @@ describe Montrose::Schedule do
 
       array = YAML.safe_load(yaml)
       array.size.must_equal 2
-      array.must_equal [{ "every" => "month" }, { "every" => "day" }]
+      array.must_equal [{"every" => "month"}, {"every" => "day"}]
     end
   end
 end

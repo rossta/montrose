@@ -30,17 +30,17 @@ module Montrose
     #
     def self.from_options(opts)
       frequency = opts.fetch(:every) { fail ConfigurationError, "Please specify the :every option" }
-      class_name = FREQUENCY_TERMS.fetch(frequency.to_s) do
+      class_name = FREQUENCY_TERMS.fetch(frequency.to_s) {
         fail "Don't know how to enumerate every: #{frequency}"
-      end
+      }
 
       Montrose::Frequency.const_get(class_name).new(opts)
     end
 
     # @private
     def self.assert(frequency)
-      FREQUENCY_TERMS.key?(frequency.to_s) or fail ConfigurationError,
-        "Don't know how to enumerate every: #{frequency}"
+      FREQUENCY_TERMS.key?(frequency.to_s) || fail(ConfigurationError,
+        "Don't know how to enumerate every: #{frequency}")
 
       frequency.to_sym
     end

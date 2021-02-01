@@ -29,7 +29,7 @@ module Montrose
 
     # Recurrence at fractions of a second are not recognized
     def normalize_time(time)
-      time && time.change(usec: 0)
+      time&.change(usec: 0)
     end
 
     def as_date(time)
@@ -56,8 +56,8 @@ module Montrose
 
     def month_number!(name)
       month_numbers = MONTHS.map.with_index { |_n, i| i.to_s }.slice(1, 12)
-      month_number(name) or fail ConfigurationError,
-        "Did not recognize month #{name}, must be one of #{(MONTHS + month_numbers).inspect}"
+      month_number(name) || raise(ConfigurationError,
+        "Did not recognize month #{name}, must be one of #{(MONTHS + month_numbers).inspect}")
     end
 
     def day_number(name)
@@ -74,8 +74,8 @@ module Montrose
 
     def day_number!(name)
       day_numbers = DAYS.map.with_index { |_n, i| i.to_s }
-      day_number(name) or fail ConfigurationError,
-        "Did not recognize day #{name}, must be one of #{(DAYS + day_numbers).inspect}"
+      day_number(name) || raise(ConfigurationError,
+        "Did not recognize day #{name}, must be one of #{(DAYS + day_numbers).inspect}")
     end
 
     def days_in_month(month, year = current_time.year)
@@ -93,7 +93,7 @@ module Montrose
     # Returns string.to_i only if string fully matches an integer
     # otherwise ensures that return value won't match a valid index
     def to_index(string)
-      string =~ %r{^\d+} ? string.to_i : -1
+      /^\d+/.match?(string) ? string.to_i : -1
     end
   end
 end

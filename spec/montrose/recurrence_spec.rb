@@ -58,7 +58,7 @@ describe Montrose::Recurrence do
 
   describe "#to_hash" do
     it "returns default options as hash" do
-      options = { every: :day, total: 3, starts: now, interval: 1 }
+      options = {every: :day, total: 3, starts: now, interval: 1}
       recurrence = new_recurrence(options)
       hash = recurrence.to_hash
 
@@ -72,7 +72,7 @@ describe Montrose::Recurrence do
 
   describe "#as_json" do
     it "returns default options as json" do
-      options = { every: :day, total: 3, starts: now, interval: 1 }
+      options = {every: :day, total: 3, starts: now, interval: 1}
       recurrence = new_recurrence(options)
       hash = recurrence.as_json
 
@@ -86,7 +86,7 @@ describe Montrose::Recurrence do
 
   describe "#to_yaml" do
     it "returns default options as yaml" do
-      options = { every: :day, starts: now, interval: 1, total: 3 }
+      options = {every: :day, starts: now, interval: 1, total: 3}
       recurrence = new_recurrence(options)
 
       yaml = recurrence.to_yaml
@@ -102,7 +102,7 @@ describe Montrose::Recurrence do
 
   describe ".dump" do
     it "returns options as JSON string" do
-      options = { every: :day, total: 3, starts: now, interval: 1 }
+      options = {every: :day, total: 3, starts: now, interval: 1}
       recurrence = new_recurrence(options)
 
       dump = Montrose::Recurrence.dump(recurrence)
@@ -114,7 +114,7 @@ describe Montrose::Recurrence do
     end
 
     it "accepts json hash" do
-      hash = { every: :day, total: 3, starts: now, interval: 1 }
+      hash = {every: :day, total: 3, starts: now, interval: 1}
 
       dump = Montrose::Recurrence.dump(hash)
       parsed = JSON.parse(dump).symbolize_keys
@@ -125,7 +125,7 @@ describe Montrose::Recurrence do
     end
 
     it "accepts json string" do
-      str = { every: :day, total: 3, starts: now, interval: 1 }.to_json
+      str = {every: :day, total: 3, starts: now, interval: 1}.to_json
 
       dump = Montrose::Recurrence.dump(str)
       parsed = JSON.parse(dump).symbolize_keys
@@ -149,7 +149,7 @@ describe Montrose::Recurrence do
 
   describe ".load" do
     it "returns Recurrence instance" do
-      options = { every: :day, total: 3, starts: now, interval: 1 }
+      options = {every: :day, total: 3, starts: now, interval: 1}
       recurrence = new_recurrence(options)
       dump = Montrose::Recurrence.dump(recurrence)
 
@@ -188,7 +188,7 @@ describe Montrose::Recurrence do
 
   describe "#to_json" do
     it "returns json string of its options" do
-      options = { every: :day, at: "3:45pm" }
+      options = {every: :day, at: "3:45pm"}
       recurrence = new_recurrence(options)
 
       recurrence.to_json.must_equal "{\"every\":\"day\",\"at\":[[15,45,0]]}"
@@ -247,9 +247,9 @@ describe Montrose::Recurrence do
       far_future_timestamp = 100_000.days.from_now.beginning_of_day
       far_future_timestamp = far_future_timestamp.advance(hours: 15, minutes: 30)
 
-      elapsed = Benchmark.realtime do
+      elapsed = Benchmark.realtime {
         assert recurrence.include?(far_future_timestamp)
-      end
+      }
 
       assert_operator 1.0, :>, elapsed.to_f,
         "Elased time was too long: %.1f seconds" % elapsed

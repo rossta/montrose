@@ -3,7 +3,7 @@
 require "bundler/setup"
 require "bundler/gem_tasks"
 require "rake/testtask"
-require "rubocop/rake_task"
+require "standard/rake"
 require "yard"
 
 Rake::TestTask.new(:spec) do |t|
@@ -15,9 +15,7 @@ end
 
 task test: :spec
 
-RuboCop::RakeTask.new
-
-task default: %i[spec rubocop]
+task default: %i[spec standard]
 
 namespace :doc do
   desc "Generate docs and publish to gh-pages"

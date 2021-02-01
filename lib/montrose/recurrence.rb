@@ -238,7 +238,7 @@ module Montrose
                else
                  fail SerializationError,
                    "Object was supposed to be a #{self}, but was a #{obj.class}. -- #{obj.inspect}"
-               end
+        end
 
         JSON.dump(hash)
       end
@@ -308,7 +308,7 @@ module Montrose
     def to_hash
       default_options.to_hash
     end
-    alias to_h to_hash
+    alias_method :to_h, :to_hash
 
     # Returns json string of options used to create the recurrence
     #
@@ -351,7 +351,7 @@ module Montrose
       recurrence.events.lazy.each do |event|
         return true if event == timestamp
         return false if event > timestamp
-      end or false
+      end || false
     end
 
     # Return true/false if recurrence will terminate
@@ -399,7 +399,7 @@ module Montrose
         loop do
           stack.advance(clock.tick) do |time|
             yielder << time
-          end or break
+          end || break
         end
       end
     end

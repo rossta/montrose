@@ -8,7 +8,7 @@ module Montrose
       def self.apply_options(opts)
         return false unless opts[:until]
 
-        { until: opts[:until], exclude_end: opts.fetch(:exclude_end, false) }
+        {until: opts[:until], exclude_end: opts.fetch(:exclude_end, false)}
       end
 
       def initialize(opts)

@@ -139,7 +139,7 @@ module Montrose
     def starts(starts_at)
       merge(starts: starts_at)
     end
-    alias starting starts
+    alias_method :starting, :starts
 
     # Create a recurrence ending at given timestamp.
     #
@@ -153,7 +153,7 @@ module Montrose
     def until(ends_at)
       merge(until: ends_at)
     end
-    alias ending until
+    alias_method :ending, :until
 
     # Create a recurrence occurring during date range.
     #
@@ -241,7 +241,7 @@ module Montrose
     def day_of_month(days, *extras)
       merge(mday: days.array_concat(extras))
     end
-    alias mday day_of_month
+    alias_method :mday, :day_of_month
 
     # Create a recurrence for given days of week
     #
@@ -257,7 +257,7 @@ module Montrose
     def day_of_week(weekdays, *extras)
       merge(day: weekdays.array_concat(extras))
     end
-    alias day day_of_week
+    alias_method :day, :day_of_week
 
     # Create a recurrence for given days of year
     #
@@ -273,7 +273,7 @@ module Montrose
     def day_of_year(days, *extras)
       merge(yday: days.array_concat(extras))
     end
-    alias yday day_of_year
+    alias_method :yday, :day_of_year
 
     # Create a recurrence for given hours of day
     #
@@ -289,7 +289,7 @@ module Montrose
     def hour_of_day(hours, *extras)
       merge(hour: hours.array_concat(extras))
     end
-    alias hour hour_of_day
+    alias_method :hour, :hour_of_day
 
     # Create a recurrence for given months of year
     #
@@ -305,7 +305,7 @@ module Montrose
     def month_of_year(months, *extras)
       merge(month: months.array_concat(extras))
     end
-    alias month month_of_year
+    alias_method :month, :month_of_year
 
     # Create a recurrence for given weeks of year
     #
@@ -335,7 +335,7 @@ module Montrose
     def total(total)
       merge(total: total)
     end
-    alias repeat total
+    alias_method :repeat, :total
 
     # Create a new recurrence combining options of self
     # and other. The value of entries with duplicate
