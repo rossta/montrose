@@ -1,0 +1,65 @@
+version: 2.1
+orbs:
+  ruby: circleci/ruby@1.1.2
+commands:
+  run-tests:
+    description: Run tests
+    steps:
+      - run: bundle exec rake test
+  restore:
+    description: Restore cache
+    steps:
+      - restore_cache:
+          keys:
+            - v1_bundler_deps-
+  save:
+    description: Save cache
+    steps:
+      - save_cache:
+          paths:
+            - ./vendor/bundle
+          key: v1-bundler-deps-{{ .Environment.CIRCLE_JOB }}
+  bundle:
+    description: Install dependencies
+    steps:
+      - run:
+          echo "export BUNDLE_JOBS=4" >> $BASH_ENV
+          echo "export BUNDLE_RETRY=3" >> $BASH_ENV
+          echo "export BUNDLE_PATH=$(pwd)/vendor/bundle" >> $BASH_ENV
+          echo "export BUNDLE_GEMFILE=$(pwd)/${GEMFILE_NAME}" >> $BASH_ENV
+      - run: bundle install
+
+jobs:
+  test:
+    parameters:
+      ruby_version:
+        type: string
+      gemfile:
+        type: string
+    docker:
+      - image: 'circleci/ruby:<< parameters.ruby_version >>'
+    environment:
+      GEMFILE_NAME: <<parameters.gemfile>>
+    steps:
+      - checkout
+      - restore
+      - bundle
+      - save
+      - run-tests
+
+workflows:
+  all-tests:
+    jobs:
+      - test:
+          matrix:
+            parameters:
+              ruby_version: ['2.5', '2.6', '2.7']
+              gemfile:
+                [
+                  'gemfiles/activesupport_5.2.gemfile',
+                  'gemfiles/activesupport_6.0.gemfile',
+                  'gemfiles/activesupport_6.1.gemfile',
+                ]
+            # exclude:
+            #   - ruby_version: '3.0'
+            #   - gemfile: rails_5_2.gemfile
