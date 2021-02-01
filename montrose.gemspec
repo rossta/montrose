@@ -27,7 +27,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "appraisal"
   spec.add_development_dependency "m"
   spec.add_development_dependency "minitest"
-  spec.add_development_dependency "rake"
+  spec.add_development_dependency "rake", ">= 12.3.3"
   spec.add_development_dependency "standard"
   spec.add_development_dependency "timecop"
 end
