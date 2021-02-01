@@ -2,10 +2,13 @@
 
 require "active_support"
 require "active_support/core_ext/object"
-require "active_support/core_ext/numeric"
+
 require "active_support/core_ext/date"
-require "active_support/core_ext/time"
 require "active_support/core_ext/date_time"
+require "active_support/core_ext/integer"
+require "active_support/core_ext/numeric"
+require "active_support/core_ext/string"
+require "active_support/core_ext/time"
 
 require "montrose/utils"
 require "montrose/rule"
