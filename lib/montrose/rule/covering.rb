@@ -2,27 +2,27 @@
 
 module Montrose
   module Rule
-    class Between
+    class Covering
       include Montrose::Rule
 
       def self.apply_options(opts)
-        opts[:between].is_a?(Range) && opts[:between]
+        opts[:covering].is_a?(Range) && opts[:covering]
       end
 
       # Initializes rule
       #
-      # @param [Range] between - timestamp range
+      # @param [Range] covering - timestamp range
       #
-      def initialize(between)
-        @between = between
+      def initialize(covering)
+        @covering = covering
       end
 
       def include?(time)
-        @between.cover?(time)
+        @covering.cover?(time)
       end
 
       def continue?(time)
-        time < @between.max
+        time < @covering.max
       end
     end
   end

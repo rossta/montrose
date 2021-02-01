@@ -313,12 +313,6 @@ describe Montrose::Options do
       options.until.must_equal 1.month.from_now.beginning_of_day
     end
 
-    it "returns given date range" do
-      options[:between] = Date.today..1.month.from_now.to_date
-
-      options.between.must_equal(Date.today..1.month.from_now.to_date)
-    end
-
     it "defers to separate starts time outside of range" do
       options[:between] = Date.today..1.month.from_now.to_date
       options[:starts] = 1.day.ago
@@ -331,6 +325,18 @@ describe Montrose::Options do
       options[:starts] = 1.day.from_now
 
       options.starts.must_equal 1.day.from_now.to_time
+    end
+  end
+
+  describe "#covering" do
+    before do
+      Timecop.freeze(time_now)
+    end
+
+    it "returns given date range" do
+      options[:covering] = Date.today..1.month.from_now.to_date
+
+      options.covering.must_equal(Date.today..1.month.from_now.to_date)
     end
   end
 

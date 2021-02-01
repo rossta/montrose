@@ -47,8 +47,8 @@ describe Montrose::Recurrence do
                                   between: Date.today..7.days.from_now)
 
       recurrence.events.to_a.must_pair_with [
-        Time.local(2015, 9, 3, 12),
-        Time.local(2015, 9, 6, 12)
+        Time.local(2015, 8, 31, 12),
+        Time.local(2015, 9, 3,  12)
       ]
     end
 
@@ -57,6 +57,31 @@ describe Montrose::Recurrence do
                                   interval: 3,
                                   starts: 1.day.from_now,
                                   between: Date.today..7.days.from_now)
+
+      recurrence.events.to_a.must_pair_with [
+        Time.local(2015, 9, 2, 12),
+        Time.local(2015, 9, 5, 12),
+        Time.local(2015, 9, 8, 12)
+      ]
+    end
+
+    it "anchors to starts time outside of covering range" do
+      recurrence = new_recurrence(every: :day,
+                                  interval: 3,
+                                  starts: 1.day.ago,
+                                  covering: Date.today..7.days.from_now)
+
+      recurrence.events.to_a.must_pair_with [
+        Time.local(2015, 9, 3, 12),
+        Time.local(2015, 9, 6, 12)
+      ]
+    end
+
+    it "anchors to starts time inside of covering range" do
+      recurrence = new_recurrence(every: :day,
+                                  interval: 3,
+                                  starts: 1.day.from_now,
+                                  covering: Date.today..7.days.from_now)
 
       recurrence.events.to_a.must_pair_with [
         Time.local(2015, 9, 2, 12),

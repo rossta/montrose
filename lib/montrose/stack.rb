@@ -13,7 +13,7 @@ module Montrose
         Frequency,
         Rule::After,
         Rule::Until,
-        Rule::Between,
+        Rule::Covering,
         Rule::During,
         Rule::Except,
         Rule::Total,
