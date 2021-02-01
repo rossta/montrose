@@ -36,7 +36,7 @@ module Montrose
 end
 
 require "montrose/rule/after"
-require "montrose/rule/between"
+require "montrose/rule/covering"
 require "montrose/rule/day_of_month"
 require "montrose/rule/day_of_week"
 require "montrose/rule/day_of_year"

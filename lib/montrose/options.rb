@@ -86,6 +86,7 @@ module Montrose
     def_option :starts
     def_option :until
     def_option :between
+    def_option :covering
     def_option :during
     def_option :hour
     def_option :day
@@ -210,7 +211,6 @@ module Montrose
     end
 
     def between=(range)
-      @between = range
       self[:starts] = range.first unless self[:starts]
       self[:until] = range.last unless self[:until]
     end
