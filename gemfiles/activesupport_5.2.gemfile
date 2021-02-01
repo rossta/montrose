@@ -7,6 +7,10 @@ gem "activesupport", "~> 5.2.0"
 group :development do
   gem "coveralls"
   gem "yard"
+  gem "guard"
+  gem "guard-minitest"
+  gem "guard-rubocop"
+  gem "pry-byebug"
 end
 
 gemspec path: "../"
