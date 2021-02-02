@@ -14,15 +14,26 @@ module Montrose
       # @param [Range] covering - timestamp range
       #
       def initialize(covering)
-        @covering = covering
+        @covering = case covering.first
+        when Date
+          DateRange.new(covering)
+        else
+          covering
+        end
       end
 
       def include?(time)
-        @covering.cover?(time)
+        @covering.include?(time)
       end
 
       def continue?(time)
-        time < @covering.max
+        time < @covering.last
+      end
+
+      class DateRange < SimpleDelegator
+        def include?(time)
+          __getobj__.include?(time.to_date)
+        end
       end
     end
   end
