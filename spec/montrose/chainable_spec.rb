@@ -117,6 +117,40 @@ describe Montrose::Chainable do
     end
   end
 
+  describe "#between" do
+    let(:starts) { now }
+    let(:ends) { 3.days.from_now }
+
+    it "returns recurrence" do
+      recurrence = Montrose.hourly.between(starts...ends)
+      recurrence.must_be_kind_of Montrose::Recurrence
+    end
+
+    it "specifies start and end" do
+      recurrence = Montrose.hourly.between(starts...ends)
+      events = recurrence.events.to_a
+      events.first.must_equal starts
+      events.last.must_equal ends
+    end
+  end
+
+  describe "#covering" do
+    let(:from) { 1.day.from_now.to_date }
+    let(:to) { 3.days.from_now.to_date }
+
+    it "returns recurrence" do
+      recurrence = Montrose.hourly.covering(from...to)
+      recurrence.must_be_kind_of Montrose::Recurrence
+    end
+
+    it "specifies start and end of mask" do
+      recurrence = Montrose.hourly.covering(from...to)
+      events = recurrence.events.to_a
+      events.first.must_equal(Time.local(2015, 9, 2, 0, 0, 0))
+      events.last.must_equal(Time.local(2015, 9, 3, 23, 0, 0))
+    end
+  end
+
   describe "#during" do
     let(:now) { Time.local(2015, 9, 1, 6, 0, 0) }
 

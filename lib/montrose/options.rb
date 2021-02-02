@@ -211,6 +211,9 @@ module Montrose
     end
 
     def between=(range)
+      if Montrose.enable_deprecated_between_masking?
+        @covering = range
+      end
       self[:starts] = range.first unless self[:starts]
       self[:until] = range.last unless self[:until]
     end

@@ -65,7 +65,7 @@ describe Montrose::Recurrence do
       ]
     end
 
-    it "anchors to starts time outside of covering range" do
+    it "masks recurrence when starts time outside of covering range" do
       recurrence = new_recurrence(every: :day,
                                   interval: 3,
                                   starts: 1.day.ago,
@@ -77,7 +77,7 @@ describe Montrose::Recurrence do
       ]
     end
 
-    it "anchors to starts time inside of covering range" do
+    it "masks recurrent when starts time inside of covering range" do
       recurrence = new_recurrence(every: :day,
                                   interval: 3,
                                   starts: 1.day.from_now,
@@ -88,6 +88,35 @@ describe Montrose::Recurrence do
         Time.local(2015, 9, 5, 12),
         Time.local(2015, 9, 8, 12)
       ]
+    end
+
+    it "masks recurrence when starts time outside of between range with legacy masking" do
+      Montrose.stub :enable_deprecated_between_masking?, true do
+        recurrence = new_recurrence(every: :day,
+                                    interval: 3,
+                                    starts: 1.day.ago,
+                                    between: Date.today..7.days.from_now)
+
+        recurrence.events.to_a.must_pair_with [
+          Time.local(2015, 9, 3, 12),
+          Time.local(2015, 9, 6, 12)
+        ]
+      end
+    end
+
+    it "masks recurrence when starts time inside of between range with legacy masking" do
+      Montrose.stub :enable_deprecated_between_masking?, true do
+        recurrence = new_recurrence(every: :day,
+                                    interval: 3,
+                                    starts: 1.day.from_now,
+                                    between: Date.today..7.days.from_now)
+
+        recurrence.events.to_a.must_pair_with [
+          Time.local(2015, 9, 2, 12),
+          Time.local(2015, 9, 5, 12),
+          Time.local(2015, 9, 8, 12)
+        ]
+      end
     end
 
     it "returns daily events with :at specified prior to :starts" do
