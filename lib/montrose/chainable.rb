@@ -155,7 +155,10 @@ module Montrose
     end
     alias_method :ending, :until
 
-    # Create a recurrence occurring during date range.
+    # Create a recurrence occurring between the start and end
+    # of a given date range; :between is shorthand for separate
+    # :starts and :until options. When used with explicit :start
+    # and/or :until options, those will take precedence.
     #
     # @param [Range<Date>] date_range
     #
@@ -166,6 +169,20 @@ module Montrose
     #
     def between(date_range)
       merge(between: date_range)
+    end
+
+    # Create a recurrence which will only emit values within the
+    # date range, also called "masking."
+    #
+    # @param [Range<Date>] date_range
+    #
+    # @example
+    #   Montrose.weekly.covering(Date.tomorrow..Date.new(2016, 3, 15))
+    #
+    # @return [Montrose::Recurrence]
+    #
+    def covering(date_range)
+      merge(covering: date_range)
     end
 
     # Create a recurrence occurring within a time-of-day range or ranges.

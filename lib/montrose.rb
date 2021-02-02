@@ -39,5 +39,22 @@ module Montrose
       branch(options)
     end
     alias_method :r, :recurrence
+
+    # Create a new recurrence from given options
+    # An alias to {Montrose::Recurrence.new}
+    attr_reader :enable_deprecated_between_masking
+
+    def enable_deprecated_between_masking=(value)
+      warn '[DEPRECATION] Montrose.enable_deprecated_between_masking is deprecated and will be removed in a future version.'
+      @enable_deprecated_between_masking = value
+    end
+
+    def enable_deprecated_between_masking?
+      result = !!enable_deprecated_between_masking
+      if result
+        warn '[DEPRECATION] Legacy Montrose.between masking behavior is deprecated. Please use Montrose.covering instead to retain this behavior.'
+      end
+      result
+    end
   end
 end
