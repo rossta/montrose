@@ -181,13 +181,24 @@ module Montrose
       @hour = map_arg(hours) { |h| assert_hour(h) }
     end
 
+    # [[first, last], [last, first]]
     def during=(during)
-      @during = case during
-                when Range
-                  [decompose_during_arg(during)]
-                else
-                  map_arg(during) { |d| decompose_during_arg(d) }
-      end
+      during_args = case during
+                  when Range
+                    [decompose_during_arg(during)]
+                  else
+                    map_arg(during) { |d| decompose_during_arg(d) }
+                  end
+      return unless during_args
+
+      @during = during_args.each_with_object([]) { |during, all|
+        if time_of_day(during.last) < time_of_day(during.first)
+          all << [during.first, [23, 59, 59]]
+          all << [[0, 0, 0], during.last]
+        else
+          all << during
+        end
+      }
     end
 
     def day=(days)
@@ -372,11 +383,23 @@ module Montrose
     def decompose_during_arg(during)
       case during
       when Range
-        [decompose_during_arg(during.first), decompose_during_arg(during.last)]
+        [as_time_parts(during.first), as_time_parts(during.last)]
       when String
         during.split(/[-—–]/).map { |d| as_time_parts(d) }
       else
         as_time_parts(during)
+      end
+    end
+
+    def time_of_day(time_parts)
+      TimeOfDay.new(time_parts)
+    end
+
+    class TimeOfDay < SimpleDelegator
+      include Comparable
+
+      def <=>(other)
+        __getobj__ <=> other
       end
     end
   end

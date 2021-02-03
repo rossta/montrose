@@ -696,6 +696,13 @@ describe Montrose::Options do
       options[:during].must_equal [[[9, 0, 0], [17, 0, 0]], [[19, 30, 0], [23, 30, 0]]]
     end
 
+    it "splits args parts before and after midnight when spanning overnight" do
+      options[:during] = "5pm - 9am"
+
+      options.during.must_equal [[[17, 0, 0], [23, 59, 59]], [[0, 0, 0], [9, 0, 0]]]
+      options[:during].must_equal [[[17, 0, 0], [23, 59, 59]], [[0, 0, 0], [9, 0, 0]]]
+    end
+
     it "can be set to nil" do
       options[:during] = nil
 
