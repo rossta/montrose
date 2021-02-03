@@ -346,12 +346,25 @@ module Montrose
     def include?(timestamp)
       return false if earlier?(timestamp) || later?(timestamp)
 
-      recurrence = finite? ? self : starts(timestamp)
+      recurrence = finite? ? self : fast_forward(timestamp)
 
       recurrence.events.lazy.each do |event|
         return true if event == timestamp
         return false if event > timestamp
       end || false
+    end
+
+    def fast_forward(timestamp)
+      return starts(timestamp) unless starts_at.present?
+
+      interval = default_options[:interval]
+      frequency = default_options[:every]
+      duration = interval.send(frequency)
+
+      # Calculate nearest earlier time ahead matching frequency * interval
+      jump = ((timestamp - starts_at) / duration).floor * duration
+
+      starts(starts_at + jump)
     end
 
     # Return true/false if recurrence will terminate

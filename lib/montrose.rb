@@ -45,14 +45,14 @@ module Montrose
     attr_reader :enable_deprecated_between_masking
 
     def enable_deprecated_between_masking=(value)
-      warn '[DEPRECATION] Montrose.enable_deprecated_between_masking is deprecated and will be removed in a future version.'
+      warn "[DEPRECATION] Montrose.enable_deprecated_between_masking is deprecated and will be removed in a future version."
       @enable_deprecated_between_masking = value
     end
 
     def enable_deprecated_between_masking?
       result = !!enable_deprecated_between_masking
       if result
-        warn '[DEPRECATION] Legacy Montrose.between masking behavior is deprecated. Please use Montrose.covering instead to retain this behavior.'
+        warn "[DEPRECATION] Legacy Montrose.between masking behavior is deprecated. Please use Montrose.covering instead to retain this behavior."
       end
       result
     end
