@@ -1,3 +1,27 @@
+### 0.12.0 - (2021-02-02)
+
+* enhancements
+  * Adds `Montrose.covering` to disambiguate `Montrose.between` behavior
+  `#covering` provides recurrence masking behavior, i.e., only recurrences
+  within the given range will be emitted
+  * Added support for ActiveSupport 6 and Ruby 2.7
+  * Adds `Montrose#infinite?` and ensures `Montrose.finite?` returns a boolean
+
+* bug fixes
+  * Fixes `Recurrence#include?` behavior for infinite recurrences with
+  intervals > 1
+
+* breaking changes
+  * `Montrose.between` no longer provides masking behavior, which is now
+  provided by `Montrose.covering`. A global option can be used
+  `Montrose.enable_deprecated_between_masking = true` to retain the legacy
+  behavior for `Montrose.between`. This option will be removed in v1.0.
+  * Dropped official support for EOL'd rubies and ActiveSupport < 5.2
+
+* miscellaneous
+  * switched from Travis to CircleCi for builds
+  * switched default branch to `main`
+#
 ### 0.11.0 - (2019-08-16)
 
 * enhancements
