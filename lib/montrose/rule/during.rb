@@ -47,7 +47,10 @@ module Montrose
         private
 
         def range
-          @range ||= Range.new(@first.seconds_since_midnight, @last.seconds_since_midnight, @exclude_end)
+          @range ||= Range.new(
+            @first.seconds_since_midnight,
+            @last.seconds_since_midnight,
+            @exclude_end)
         end
       end
     end
