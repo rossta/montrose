@@ -56,7 +56,7 @@ describe Montrose::Recurrence do
 
       recurrence.events.to_a.must_pair_with [
         Time.local(2015, 8, 31, 12),
-        Time.local(2015, 9, 3,  12)
+        Time.local(2015, 9, 3, 12)
       ]
     end
 
