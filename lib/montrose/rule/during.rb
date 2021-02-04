@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "montrose/time_of_day"
+
 module Montrose
   module Rule
     class During
@@ -21,22 +23,10 @@ module Montrose
         @during.any? { |range| range.include?(time) }
       end
 
-      class TimeOfDay
-        def initialize(hour, min, sec)
-          @hour = hour
-          @min = min
-          @sec = sec
-        end
-
-        def seconds_since_midnight
-          @seconds_since_midnight ||= (@hour * 60 * 60) + (@min * 60) + @sec
-        end
-      end
-
       class TimeOfDayRange
         def initialize(first, last, exclude_end: false)
-          @first = TimeOfDay.new(*first)
-          @last = TimeOfDay.new(*last)
+          @first = ::Montrose::TimeOfDay.new(first)
+          @last = ::Montrose::TimeOfDay.new(last)
           @exclude_end = exclude_end
         end
 
