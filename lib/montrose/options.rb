@@ -184,21 +184,27 @@ module Montrose
     end
 
     # [[first, last], [last, first]]
-    def during=(during)
-      during_args = case during
-                  when Range
-                    [decompose_during_arg(during)]
-                  else
-                    map_arg(during) { |d| decompose_during_arg(d) }
-                  end
-      return unless during_args
 
-      @during = during_args.each_with_object([]) { |during, all|
-        if time_of_day(during.last) < time_of_day(during.first)
-          all << [during.first, [23, 59, 59]]
-          all << [[0, 0, 0], during.last]
+    def decompose_during_arg(during_arg)
+      case during_arg
+      when Range
+        [decompose_during_part(during_arg)]
+      else
+        map_arg(during_arg) { |d| decompose_during_part(d) }
+      end
+    end
+
+    def during=(during_arg)
+      normalized_args = decompose_during_arg(during_arg) or return
+
+      @during = normalized_args.each_with_object([]) { |during_parts, all|
+        if time_of_day(during_parts.last) < time_of_day(during_parts.first)
+          all.push(
+            [during_parts.first, end_of_day.parts],
+            [beginning_of_day.parts, during_parts.last]
+          )
         else
-          all << during
+          all.push(during_parts)
         end
       }
     end
@@ -382,17 +388,6 @@ module Montrose
       duration.parts.first
     end
 
-    def decompose_during_arg(during)
-      case during
-      when Range
-        [as_time_parts(during.first), as_time_parts(during.last)]
-      when String
-        during.split(/[-—–]/).map { |d| as_time_parts(d) }
-      else
-        as_time_parts(during)
-      end
-    end
-
     def decompose_during_part(during_part)
       case during_part
       when Range
@@ -406,6 +401,18 @@ module Montrose
 
     def time_of_day(time_parts)
       ::Montrose::TimeOfDay.new(time_parts)
+    end
+
+    def time_of_day_from_time(time)
+      ::Montrose::TimeOfDay.from_time(time)
+    end
+
+    def end_of_day
+      @end_of_day ||= time_of_day_from_time(Time.now.end_of_day)
+    end
+
+    def beginning_of_day
+      @beginning_of_day ||= time_of_day_from_time(Time.now.beginning_of_day)
     end
   end
 end

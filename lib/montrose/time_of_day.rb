@@ -2,6 +2,12 @@ module Montrose
   class TimeOfDay
     include Comparable
 
+    attr_reader :parts, :hour, :min, :sec
+
+    def self.from_time(time)
+      new([time.hour, time.min, time.sec])
+    end
+
     def initialize(parts)
       @parts = parts
       @hour, @min, @sec = *parts
