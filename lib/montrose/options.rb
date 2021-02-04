@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "montrose/time_of_day"
+
 module Montrose
   class Options
     include Montrose::Utils
@@ -391,16 +393,19 @@ module Montrose
       end
     end
 
-    def time_of_day(time_parts)
-      TimeOfDay.new(time_parts)
+    def decompose_during_part(during_part)
+      case during_part
+      when Range
+        [as_time_parts(during_part.first), as_time_parts(during_part.last)]
+      when String
+        during_part.split(/[-—–]/).map { |d| as_time_parts(d) }
+      else
+        as_time_parts(during_part)
+      end
     end
 
-    class TimeOfDay < SimpleDelegator
-      include Comparable
-
-      def <=>(other)
-        __getobj__ <=> other
-      end
+    def time_of_day(time_parts)
+      ::Montrose::TimeOfDay.new(time_parts)
     end
   end
 end
