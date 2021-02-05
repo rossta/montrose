@@ -45,40 +45,6 @@ describe Montrose::Utils do
     end
   end
 
-  describe "#day_number!" do
-    it { day_number!(:sunday).must_equal 0 }
-    it { day_number!(:monday).must_equal 1 }
-    it { day_number!(:tuesday).must_equal 2 }
-    it { day_number!(:wednesday).must_equal 3 }
-    it { day_number!(:thursday).must_equal 4 }
-    it { day_number!(:friday).must_equal 5 }
-    it { day_number!(:saturday).must_equal 6 }
-    it { day_number!("sunday").must_equal 0 }
-    it { day_number!("monday").must_equal 1 }
-    it { day_number!("tuesday").must_equal 2 }
-    it { day_number!("wednesday").must_equal 3 }
-    it { day_number!("thursday").must_equal 4 }
-    it { day_number!("friday").must_equal 5 }
-    it { day_number!("saturday").must_equal 6 }
-    it { day_number!(0).must_equal 0 }
-    it { day_number!(1).must_equal 1 }
-    it { day_number!(2).must_equal 2 }
-    it { day_number!(3).must_equal 3 }
-    it { day_number!(4).must_equal 4 }
-    it { day_number!(5).must_equal 5 }
-    it { day_number!(6).must_equal 6 }
-    it { day_number!("0").must_equal 0 }
-    it { day_number!("1").must_equal 1 }
-    it { day_number!("2").must_equal 2 }
-    it { day_number!("3").must_equal 3 }
-    it { day_number!("4").must_equal 4 }
-    it { day_number!("5").must_equal 5 }
-    it { day_number!("6").must_equal 6 }
-    it { -> { day_number!(-3) }.must_raise Montrose::ConfigurationError }
-    it { -> { day_number!(:foo) }.must_raise Montrose::ConfigurationError }
-    it { -> { day_number!("foo") }.must_raise Montrose::ConfigurationError }
-  end
-
   describe "#days_in_month" do
     non_leap_year = 2015
     leap_year = 2016

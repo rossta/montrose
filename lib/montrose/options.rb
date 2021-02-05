@@ -198,7 +198,7 @@ module Montrose
     end
 
     def day=(days)
-      @day = nested_map_arg(days) { |d| day_number!(d) }
+      @day = nested_map_arg(days) { |d| Montrose::Day.number!(d) }
     end
 
     def mday=(mdays)
@@ -285,7 +285,7 @@ module Montrose
     end
 
     def map_days(arg)
-      map_arg(arg) { |d| day_number!(d) }
+      map_arg(arg) { |d| Montrose::Day.number!(d) }
     end
 
     def map_mdays(arg)
@@ -330,7 +330,7 @@ module Montrose
       month = Montrose::Month.number(key)
       return [:month, month] if month
 
-      day = day_number(key)
+      day = Montrose::Day.number(key)
       return [:day, day] if day
 
       raise ConfigurationError, "Did not recognize #{key} as a month or day"
