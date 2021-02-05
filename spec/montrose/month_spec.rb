@@ -61,5 +61,4 @@ describe Montrose::Month do
     it { _(-> { number!(0) }).must_raise Montrose::ConfigurationError }
     it { _(-> { number!(13) }).must_raise Montrose::ConfigurationError }
   end
-
 end

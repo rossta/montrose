@@ -38,5 +38,4 @@ describe Montrose::Day do
     it { _(-> { number!(:foo) }).must_raise Montrose::ConfigurationError }
     it { _(-> { number!("foo") }).must_raise Montrose::ConfigurationError }
   end
-
 end
