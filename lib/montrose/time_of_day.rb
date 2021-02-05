@@ -38,7 +38,7 @@ module Montrose
     private
 
     def format_time(part)
-      format('%02d', part)
+      format("%02d", part)
     end
   end
 end
