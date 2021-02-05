@@ -183,33 +183,18 @@ module Montrose
       @hour = map_arg(hours) { |h| assert_hour(h) }
     end
 
-    # [[first, last], [last, first]]
-
-    def decompose_during_arg(during_arg)
-      case during_arg
-      when Range
-        [decompose_during_part(during_arg)]
-      else
-        map_arg(during_arg) { |d| decompose_during_part(d) }
-      end
-    end
-
     def during=(during_arg)
-      normalized_args = decompose_during_arg(during_arg) or return
-      normalized_args = normalized_args.map { |first, last|
-        [time_of_day(first), time_of_day(last)]
-      }
-
-      @during = normalized_args.each_with_object([]) { |(start_tod, end_tod), all|
-        if end_tod < start_tod
+      @during = decompose_during_arg(during_arg)
+        .each_with_object([]) { |(time_of_day_first, time_of_day_last), all|
+        if time_of_day_last < time_of_day_first
           all.push(
-            [start_tod.parts, end_of_day.parts],
-            [beginning_of_day.parts, end_tod.parts]
+            [time_of_day_first.parts, end_of_day.parts],
+            [beginning_of_day.parts, time_of_day_last.parts]
           )
         else
-          all.push([start_tod.parts, end_tod.parts])
+          all.push([time_of_day_first.parts, time_of_day_last.parts])
         end
-      }
+      }.presence
     end
 
     def day=(days)
@@ -391,31 +376,36 @@ module Montrose
       duration.parts.first
     end
 
-    def decompose_during_part(during_part)
-      case during_part
+    def decompose_during_arg(during_arg)
+      case during_arg
       when Range
-        [as_time_parts(during_part.first), as_time_parts(during_part.last)]
-      when String
-        during_part.split(/[-—–]/).map { |d| as_time_parts(d) }
+        [decompose_during_part(during_arg)]
       else
-        as_time_parts(during_part)
+        map_arg(during_arg) { |d| decompose_during_part(d) } || []
       end
     end
 
-    def time_of_day(time_parts)
-      ::Montrose::TimeOfDay.new(time_parts)
+    def decompose_during_part(during_parts)
+      case during_parts
+      when Range
+        decompose_during_part([during_parts.first, during_parts.last])
+      when String
+        decompose_during_part(during_parts.split(/[-—–]/))
+      else
+        during_parts.map { |parts| time_of_day_parse(parts) }
+      end
     end
 
-    def time_of_day_from_time(time)
-      ::Montrose::TimeOfDay.from_time(time)
+    def time_of_day_parse(time_parts)
+      ::Montrose::TimeOfDay.parse(time_parts)
     end
 
     def end_of_day
-      @end_of_day ||= time_of_day_from_time(Time.now.end_of_day)
+      @end_of_day ||= time_of_day_parse(Time.now.end_of_day)
     end
 
     def beginning_of_day
-      @beginning_of_day ||= time_of_day_from_time(Time.now.beginning_of_day)
+      @beginning_of_day ||= time_of_day_parse(Time.now.beginning_of_day)
     end
   end
 end

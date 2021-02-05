@@ -40,7 +40,8 @@ module Montrose
           @range ||= Range.new(
             @first.seconds_since_midnight,
             @last.seconds_since_midnight,
-            @exclude_end)
+            @exclude_end
+          )
         end
       end
     end
