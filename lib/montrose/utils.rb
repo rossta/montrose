@@ -44,22 +44,6 @@ module Montrose
       ::Time.current
     end
 
-    def month_number(name)
-      case name
-      when Symbol, String
-        string = name.to_s
-        MONTHS.index(string.titleize) || month_number(to_index(string))
-      when 1..12
-        name
-      end
-    end
-
-    def month_number!(name)
-      month_numbers = MONTHS.map.with_index { |_n, i| i.to_s }.slice(1, 12)
-      month_number(name) || raise(ConfigurationError,
-        "Did not recognize month #{name}, must be one of #{(MONTHS + month_numbers).inspect}")
-    end
-
     def day_number(name)
       case name
       when 0..6

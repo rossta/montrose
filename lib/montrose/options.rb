@@ -214,7 +214,7 @@ module Montrose
     end
 
     def month=(months)
-      @month = map_arg(months) { |d| month_number!(d) }
+      @month = map_arg(months) { |d| Montrose::Month.number!(d) }
     end
 
     def between=(range)
@@ -327,7 +327,7 @@ module Montrose
     end
 
     def month_or_day(key)
-      month = month_number(key)
+      month = Montrose::Month.number(key)
       return [:month, month] if month
 
       day = day_number(key)
