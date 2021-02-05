@@ -21,6 +21,7 @@ require "montrose/stack"
 require "montrose/version"
 
 module Montrose
+  autoload :Day, "montrose/day"
   autoload :Month, "montrose/month"
 
   extend Chainable

@@ -4,10 +4,6 @@ module Montrose
   module Utils
     module_function
 
-    MONTHS = ::Date::MONTHNAMES
-
-    DAYS = ::Date::DAYNAMES
-
     MAX_HOURS_IN_DAY = 24
     MAX_DAYS_IN_YEAR = 366
     MAX_WEEKS_IN_YEAR = 53
@@ -42,24 +38,6 @@ module Montrose
 
     def current_time
       ::Time.current
-    end
-
-    def day_number(name)
-      case name
-      when 0..6
-        name
-      when Symbol, String
-        string = name.to_s
-        DAYS.index(string.titleize) || day_number(to_index(string))
-      when Array
-        day_number name.first
-      end
-    end
-
-    def day_number!(name)
-      day_numbers = DAYS.map.with_index { |_n, i| i.to_s }
-      day_number(name) || raise(ConfigurationError,
-        "Did not recognize day #{name}, must be one of #{(DAYS + day_numbers).inspect}")
     end
 
     def days_in_month(month, year = current_time.year)
