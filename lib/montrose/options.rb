@@ -226,7 +226,7 @@ module Montrose
     end
 
     def at=(time)
-      @at = map_arg(time) { |t| as_time_parts(t) }
+      @at = map_arg(time) { |t| time_of_day_parse(t).parts }
     end
 
     def on=(arg)
@@ -343,13 +343,6 @@ module Montrose
       item
     end
 
-    def as_time_parts(arg)
-      return arg if arg.is_a?(Array)
-
-      time = as_time(arg)
-      [time.hour, time.min, time.sec]
-    end
-
     def parse_frequency(input)
       if input.respond_to?(:parts)
         frequency, interval = duration_to_frequency_parts(input)
@@ -379,18 +372,18 @@ module Montrose
     def decompose_during_arg(during_arg)
       case during_arg
       when Range
-        [decompose_during_part(during_arg)]
+        [decompose_during_parts(during_arg)]
       else
-        map_arg(during_arg) { |d| decompose_during_part(d) } || []
+        map_arg(during_arg) { |d| decompose_during_parts(d) } || []
       end
     end
 
-    def decompose_during_part(during_parts)
+    def decompose_during_parts(during_parts)
       case during_parts
       when Range
-        decompose_during_part([during_parts.first, during_parts.last])
+        decompose_during_parts([during_parts.first, during_parts.last])
       when String
-        decompose_during_part(during_parts.split(/[-—–]/))
+        decompose_during_parts(during_parts.split(/[-—–]/))
       else
         during_parts.map { |parts| time_of_day_parse(parts) }
       end

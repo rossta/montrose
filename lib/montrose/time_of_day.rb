@@ -11,7 +11,11 @@ module Montrose
     end
 
     def self.from_time(time)
-      new([time.hour, time.min, time.sec])
+      new(to_parts(time))
+    end
+
+    def self.to_parts(time)
+      [time.hour, time.min, time.sec]
     end
 
     def initialize(parts)

@@ -24,7 +24,7 @@ module Montrose
       private
 
       def parts(time)
-        [time.hour, time.min, time.sec]
+        ::Montrose::TimeOfDay.to_parts(time)
       end
     end
   end
