@@ -196,15 +196,18 @@ module Montrose
 
     def during=(during_arg)
       normalized_args = decompose_during_arg(during_arg) or return
+      normalized_args = normalized_args.map { |first, last|
+        [time_of_day(first), time_of_day(last)]
+      }
 
-      @during = normalized_args.each_with_object([]) { |during_parts, all|
-        if time_of_day(during_parts.last) < time_of_day(during_parts.first)
+      @during = normalized_args.each_with_object([]) { |(start_tod, end_tod), all|
+        if end_tod < start_tod
           all.push(
-            [during_parts.first, end_of_day.parts],
-            [beginning_of_day.parts, during_parts.last]
+            [start_tod.parts, end_of_day.parts],
+            [beginning_of_day.parts, end_tod.parts]
           )
         else
-          all.push(during_parts)
+          all.push([start_tod.parts, end_tod.parts])
         end
       }
     end
