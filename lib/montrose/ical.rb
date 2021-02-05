@@ -15,30 +15,21 @@ module Montrose
     end
 
     def parse
-      Hash[*@ical.each_line.flat_map { |line| parse_line(line) }]
+      dtstart, rrule = @ical.split("RRULE:")
+      Hash[*parse_dtstart(dtstart) + parse_rrule(rrule)]
     end
 
     private
 
-    def parse_line(line)
-      line = line.strip
-      case line
-      when %r{^DTSTART}
-        parse_dtstart(line)
-      when %r{^RRULE}
-        parse_rrule(line)
-      end
+    def parse_dtstart(dtstart)
+      _label, time_string = dtstart.split(";")
+      @starts_at = Montrose::Utils.parse_time(time_string)
+
+      [:starts, @starts_at]
     end
 
-    def parse_dtstart(line)
-      _label, time_string = line.split(";")
-
-      [:starts, Montrose::Utils.parse_time(time_string)]
-    end
-
-    def parse_rrule(line)
-      _label, rule_string = line.split(":")
-      rule_string.split(";").flat_map do |rule|
+    def parse_rrule(rrule)
+      rrule.gsub(/\s+/, "").split(";").flat_map do |rule|
         prop, value = rule.split("=")
         case prop
         when "FREQ"
@@ -47,6 +38,14 @@ module Montrose
           [:interval, value.to_i]
         when "COUNT"
           [:total, value.to_i]
+        when "UNTIL"
+          [:until, Montrose::Utils.parse_time(value)]
+        when "BYMONTH"
+          [:month, value.split(",").compact.map { |m|
+            Montrose::Month.number!(m)
+          }]
+        when "BYDAY"
+          [:day, value.split(",").map { |d| Montrose::Day.number!(d) }]
         end
       end
     end

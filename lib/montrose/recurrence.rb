@@ -252,7 +252,7 @@ module Montrose
         fail SerializationError, "Could not parse JSON: #{e}"
       end
 
-      alias from_json load
+      alias_method :from_json, :load
 
       def from_yaml(yaml)
         new(YAML.safe_load(yaml))

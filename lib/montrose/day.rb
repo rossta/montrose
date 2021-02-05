@@ -3,6 +3,7 @@ module Montrose
     extend Montrose::Utils
 
     NAMES = ::Date::DAYNAMES
+    ABBREVIATIONS = %w[SU MO TU WE TH FR SA].freeze
 
     def self.names
       NAMES
@@ -14,7 +15,9 @@ module Montrose
         name
       when Symbol, String
         string = name.to_s
-        NAMES.index(string.titleize) || number(to_index(string))
+        NAMES.index(string.titleize) ||
+          ABBREVIATIONS.index(string.upcase) ||
+          number(to_index(string))
       when Array
         number name.first
       end
