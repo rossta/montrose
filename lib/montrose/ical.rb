@@ -41,9 +41,7 @@ module Montrose
         when "UNTIL"
           [:until, Montrose::Utils.parse_time(value)]
         when "BYMONTH"
-          [:month, value.split(",").compact.map { |m|
-            Montrose::Month.number!(m)
-          }]
+          [:month, Montrose::Month.parse(value)]
         when "BYDAY"
           [:day, Montrose::Day.parse(value)]
         when "WKST"
