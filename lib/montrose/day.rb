@@ -15,18 +15,18 @@ module Montrose
         when Hash
           parse_entries(arg.entries)
         when String
-          parse(arg.split(','))
+          parse(arg.split(","))
         else
           parse_entries(map_arg(arg) { |value| parse_value(value) })
         end
       end
 
       def parse_entries(entries)
-        hash = Hash.new {|h,k| h[k] = []}
-        result = entries.each_with_object(hash) do |(k, v), hash|
+        hash = Hash.new { |h, k| h[k] = [] }
+        result = entries.each_with_object(hash) { |(k, v), hash|
           index = number!(k)
           hash[index] = hash[index] + [*v]
-        end
+        }
         result.values.all?(&:empty?) ? result.keys : result
       end
 
