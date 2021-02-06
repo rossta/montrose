@@ -1,11 +1,7 @@
 require "spec_helper"
 
 describe "Parsing ICAL RRULE examples from RFC 5545" do
-  let(:now) { Time.parse("Tue Sep  2 09:00:00 EDT 1997") } # Tuesday
-
-  before do
-    Timecop.freeze(now)
-  end
+  let(:starts_on) { Time.parse("Sep 2 09:00:00 EDT 1997") }
 
   it "daily for 10 occurrences" do
     ical = <<~ICAL
@@ -37,14 +33,12 @@ describe "Parsing ICAL RRULE examples from RFC 5545" do
 
     recurrence = Montrose::Recurrence.from_ical(ical)
 
-    starts_on = now.to_date
-    ends_on = Time.parse("19971224T000000Z").to_date
-    days = starts_on.upto(ends_on).count - 1
-    expected_events = consecutive_days(days, starts: now).take(days)
+    ends_on = Time.parse("Dec 24 00:00:00 EDT 1997")
+    days = starts_on.to_date.upto(ends_on.to_date).count - 1
+    expected_events = consecutive_days(days, starts: starts_on).take(days)
 
-    events = recurrence.events.to_a
-    _(events).must_equal expected_events
-    _(events.size).must_equal days
+    _(recurrence).must_pair_with expected_events
+    _(recurrence.events.to_a.size).must_equal days
   end
 
   it "every other day forever" do
@@ -55,10 +49,21 @@ describe "Parsing ICAL RRULE examples from RFC 5545" do
 
     recurrence = Montrose::Recurrence.from_ical(ical)
 
-    expected_events = consecutive_days(5, interval: 2)
-    events = recurrence.events.take(5)
+    expected_events = consecutive_days(5, starts: starts_on, interval: 2)
 
-    _(events).must_pair_with expected_events
+    _(recurrence.take(5)).must_pair_with expected_events
+  end
+
+  it "every 10 days, 5 occurrences" do
+    ical = <<~ical
+      DTSTART;TZID=America/New_York:19970902T090000
+      RRULE:FREQ=DAILY;INTERVAL=10;COUNT=5
+    ical
+
+    recurrence = Montrose::Recurrence.from_ical(ical)
+    expected_events = consecutive_days(5, starts: starts_on, interval: 10)
+
+    _(recurrence).must_pair_with expected_events
   end
 
   it "every day in January, for 3 years, by frequency" do
@@ -77,7 +82,7 @@ describe "Parsing ICAL RRULE examples from RFC 5545" do
       }
     }
 
-    _(recurrence.events).must_pair_with expected_events
+    _(recurrence).must_pair_with expected_events
   end
 
   it "every day in January, for 3 years, by day" do
@@ -95,6 +100,6 @@ describe "Parsing ICAL RRULE examples from RFC 5545" do
       }
     }
 
-    _(recurrence.events).must_pair_with expected_events
+    _(recurrence).must_pair_with expected_events
   end
 end
