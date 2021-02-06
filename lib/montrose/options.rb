@@ -200,7 +200,7 @@ module Montrose
     end
 
     def day=(days)
-      @day = nested_map_arg(days) { |d| Montrose::Day.number!(d) }
+      @day = Montrose::Day.parse(days)
     end
 
     def mday=(mdays)
@@ -286,10 +286,6 @@ module Montrose
       Array(arg).map(&block)
     end
 
-    def map_days(arg)
-      map_arg(arg) { |d| Montrose::Day.number!(d) }
-    end
-
     def map_mdays(arg)
       map_arg(arg) { |d| assert_mday(d) }
     end
@@ -324,7 +320,7 @@ module Montrose
           result[:mday] += map_mdays(v)
         end
       else
-        {day: map_days(arg)}
+        {day: Montrose::Day.parse(arg)}
       end
     end
 
