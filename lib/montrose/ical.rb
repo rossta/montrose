@@ -46,6 +46,8 @@ module Montrose
           }]
         when "BYDAY"
           [:day, value.split(",").map { |d| Montrose::Day.number!(d) }]
+        when "WKST"
+          [:week_start, value]
         end
       end
     end

@@ -95,6 +95,7 @@ module Montrose
     def_option :mday
     def_option :yday
     def_option :week
+    def_option :week_start
     def_option :month
     def_option :interval
     def_option :total
@@ -115,6 +116,7 @@ module Montrose
         week: nil,
         month: nil,
         total: nil,
+        week_start: nil,
         exclude_end: nil
       }
 
