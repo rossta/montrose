@@ -44,8 +44,12 @@ module Montrose
           [:month, Montrose::Month.parse(value)]
         when "BYDAY"
           [:day, Montrose::Day.parse(value)]
+        when "BYMONTHDAY"
+          [:mday, Montrose::MonthDay.parse(value)]
         when "WKST"
           [:week_start, value]
+        else
+          raise "Unrecognized rrule '#{rule}'"
         end
       end
     end
