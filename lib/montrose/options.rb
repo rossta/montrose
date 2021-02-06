@@ -208,7 +208,7 @@ module Montrose
     end
 
     def yday=(ydays)
-      @yday = map_ydays(ydays)
+      @yday = YearDay.parse(ydays)
     end
 
     def week=(weeks)
@@ -286,20 +286,8 @@ module Montrose
       Array(arg).map(&block)
     end
 
-    def map_ydays(arg)
-      map_arg(arg) { |d| assert_yday(d) }
-    end
-
     def assert_hour(hour)
       assert_range_includes(1..::Montrose::Utils::MAX_HOURS_IN_DAY, hour)
-    end
-
-    def assert_mday(mday)
-      assert_range_includes(1..::Montrose::Utils::MAX_DAYS_IN_MONTH, mday, :absolute)
-    end
-
-    def assert_yday(yday)
-      assert_range_includes(1..::Montrose::Utils::MAX_DAYS_IN_YEAR, yday, :absolute)
     end
 
     def assert_week(week)
