@@ -10,7 +10,7 @@ module Montrose
         when String
           parse(mdays.split(","))
         else
-          Array(mdays).map { |d| Montrose::MonthDay.assert(d.to_i) }
+          Array(mdays).map { |d| assert(d.to_i) }
         end
       end
 

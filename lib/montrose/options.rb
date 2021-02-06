@@ -200,11 +200,11 @@ module Montrose
     end
 
     def day=(days)
-      @day = Montrose::Day.parse(days)
+      @day = Day.parse(days)
     end
 
     def mday=(mdays)
-      @mday = Montrose::MonthDay.parse(mdays)
+      @mday = MonthDay.parse(mdays)
     end
 
     def yday=(ydays)
@@ -216,7 +216,7 @@ module Montrose
     end
 
     def month=(months)
-      @month = Montrose::Month.parse(months)
+      @month = Month.parse(months)
     end
 
     def between=(range)
