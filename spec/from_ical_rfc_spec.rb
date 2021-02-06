@@ -246,4 +246,68 @@ describe "Parsing ICAL RRULE examples from RFC 5545 Section 3.8.5" do
 
     _(recurrence).must_pair_with expected_events
   end
+
+  it "monthly on the first Friday for 10 occurrences" do
+    ical = <<~ICAL
+      DTSTART;TZID=America/New_York:19970905T090000
+      RRULE:FREQ=MONTHLY;COUNT=10;BYDAY=1FR
+    ICAL
+    # ==> (1997 9:00 AM EDT) September 5;October 3
+    #     (1997 9:00 AM EST) November 7;December 5
+    #     (1998 9:00 AM EST) January 2;February 6;March 6;April 3
+    #     (1998 9:00 AM EDT) May 1;June 5
+    expected_events = parse_expected_events(
+      "1997 9:00 AM EDT" => {"Sep" => [5],
+                             "Oct" => [3]},
+      "1997 9:00 AM EST" => {"Nov" => [7],
+                             "Dec" => [5]},
+      "1998 9:00 AM EST" => {"Jan" => [2],
+                             "Feb" => [6],
+                             "Mar" => [6],
+                             "Apr" => [3]},
+      "1998 9:00 AM EDT" => {"May" => [1],
+                             "Jun" => [5]}
+    )
+
+    recurrence = Montrose::Recurrence.from_ical(ical)
+    _(recurrence).must_pair_with expected_events
+  end
+
+  it "monthly on the first Friday until December 24, 1997" do
+    ical = <<~ICAL
+      DTSTART;TZID=America/New_York:19970905T090000
+      RRULE:FREQ=MONTHLY;UNTIL=19971224T000000Z;BYDAY=1FR
+    ICAL
+    #   ==> (1997 9:00 AM EDT) September 5; October 3
+    #       (1997 9:00 AM EST) November 7; December 5
+    expected_events = parse_expected_events(
+      "1997 9:00 AM EDT" => {"Sep" => [5],
+                             "Oct" => [3]},
+      "1997 9:00 AM EST" => {"Nov" => [7],
+                             "Dec" => [5]}
+    )
+
+    recurrence = Montrose::Recurrence.from_ical(ical)
+    _(recurrence).must_pair_with expected_events
+  end
+
+  #  Every other month on the first and last Sunday of the month for 10
+  #  occurrences:
+
+  #   DTSTART;TZID=America/New_York:19970907T090000
+  #   RRULE:FREQ=MONTHLY;INTERVAL=2;COUNT=10;BYDAY=1SU,-1SU
+
+  #   ==> (1997 9:00 AM EDT) September 7,28
+  #       (1997 9:00 AM EST) November 2,30
+  #       (1998 9:00 AM EST) January 4,25;March 1,29
+  #       (1998 9:00 AM EDT) May 3,31
+
+  #  Monthly on the second-to-last Monday of the month for 6 months:
+
+  #   DTSTART;TZID=America/New_York:19970922T090000
+  #   RRULE:FREQ=MONTHLY;COUNT=6;BYDAY=-2MO
+
+  #   ==> (1997 9:00 AM EDT) September 22;October 20
+  #       (1997 9:00 AM EST) November 17;December 22
+  #       (1998 9:00 AM EST) January 19;February 16
 end
