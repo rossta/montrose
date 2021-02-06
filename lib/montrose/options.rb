@@ -204,7 +204,7 @@ module Montrose
     end
 
     def mday=(mdays)
-      @mday = map_mdays(mdays)
+      @mday = Montrose::MonthDay.parse(mdays)
     end
 
     def yday=(ydays)
@@ -286,10 +286,6 @@ module Montrose
       Array(arg).map(&block)
     end
 
-    def map_mdays(arg)
-      map_arg(arg) { |d| assert_mday(d) }
-    end
-
     def map_ydays(arg)
       map_arg(arg) { |d| assert_yday(d) }
     end
@@ -317,7 +313,7 @@ module Montrose
           key, val = month_or_day(k)
           result[key] = val
           result[:mday] ||= []
-          result[:mday] += map_mdays(v)
+          result[:mday] += Montrose::MonthDay.parse(v)
         end
       else
         {day: Montrose::Day.parse(arg)}

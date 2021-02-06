@@ -23,6 +23,7 @@ require "montrose/version"
 module Montrose
   autoload :Day, "montrose/day"
   autoload :Month, "montrose/month"
+  autoload :MonthDay, "montrose/month_day"
 
   extend Chainable
 
