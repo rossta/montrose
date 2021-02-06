@@ -8,6 +8,7 @@ describe "Parsing ICAL RRULE examples from RFC 5545" do
       DTSTART;TZID=America/New_York:19970902T090000
       RRULE:FREQ=DAILY;COUNT=10"
     ICAL
+    # ==> (1997 9:00 AM EDT) September 2-11
 
     recurrence = Montrose::Recurrence.from_ical(ical)
 
@@ -30,14 +31,14 @@ describe "Parsing ICAL RRULE examples from RFC 5545" do
       DTSTART;TZID=America/New_York:19970902T090000
       RRULE:FREQ=DAILY;UNTIL=19971224T000000Z
     ICAL
+    # ==> (1997 9:00 AM EDT) September 2-30;October 1-25
+    # (1997 9:00 AM EST) October 26-31;November 1-30;December 1-23
 
     recurrence = Montrose::Recurrence.from_ical(ical)
 
     ends_on = Time.parse("Dec 24 00:00:00 EDT 1997")
     days = starts_on.to_date.upto(ends_on.to_date).count - 1
     expected_events = consecutive_days(days, starts: starts_on).take(days)
-    # ==> (1997 9:00 AM EDT) September 2-30;October 1-25
-    # (1997 9:00 AM EST) October 26-31;November 1-30;December 1-23
 
     _(recurrence).must_pair_with expected_events
     _(recurrence.events.to_a.size).must_equal days
@@ -48,6 +49,7 @@ describe "Parsing ICAL RRULE examples from RFC 5545" do
       DTSTART;TZID=America/New_York:19970902T090000
       RRULE:FREQ=DAILY;INTERVAL=2
     ICAL
+    # ==> (1997 9:00 AM EDT) September 2,4,6,8..
 
     recurrence = Montrose::Recurrence.from_ical(ical)
 
@@ -58,7 +60,6 @@ describe "Parsing ICAL RRULE examples from RFC 5545" do
       "1997-09-08 09:00:00 -0400",
       "1997-09-10 09:00:00 -0400"
     ].map { |t| Time.parse(t) }
-    # ==> (1997 9:00 AM EDT) September 2,4,6,8..
 
     _(recurrence.take(5)).must_pair_with expected_events
   end
@@ -68,6 +69,8 @@ describe "Parsing ICAL RRULE examples from RFC 5545" do
       DTSTART;TZID=America/New_York:19970902T090000
       RRULE:FREQ=DAILY;INTERVAL=10;COUNT=5
     ICAL
+    # ==> (1997 9:00 AM EDT) September 2,12,22;
+    # October 2,12
 
     recurrence = Montrose::Recurrence.from_ical(ical)
 
@@ -78,8 +81,6 @@ describe "Parsing ICAL RRULE examples from RFC 5545" do
       "1997-10-02 09:00:00 -0400",
       "1997-10-12 09:00:00 -0400"
     ].map { |t| Time.parse(t) }
-    # ==> (1997 9:00 AM EDT) September 2,12,22;
-    # October 2,12
 
     _(recurrence).must_pair_with expected_events
   end
@@ -108,6 +109,9 @@ describe "Parsing ICAL RRULE examples from RFC 5545" do
       DTSTART;TZID=America/New_York:19980101T090000
       RRULE:FREQ=DAILY;UNTIL=20000131T140000Z;BYMONTH=1
     ICAL
+    # ==> (1998 9:00 AM EST)January 1-31
+    # (1999 9:00 AM EST)January 1-31
+    # (2000 9:00 AM EST)January 1-31
 
     recurrence = Montrose::Recurrence.from_ical(ical)
 
@@ -117,9 +121,6 @@ describe "Parsing ICAL RRULE examples from RFC 5545" do
         Time.parse("Jan #{dd} 09:00:00 EST #{yyyy}")
       }
     }
-    # ==> (1998 9:00 AM EST)January 1-31
-    # (1999 9:00 AM EST)January 1-31
-    # (2000 9:00 AM EST)January 1-31
 
     _(recurrence).must_pair_with expected_events
   end
@@ -129,12 +130,29 @@ describe "Parsing ICAL RRULE examples from RFC 5545" do
       DTSTART;TZID=America/New_York:19970902T090000
       RRULE:FREQ=WEEKLY;COUNT=10
     ICAL
+    # ==> (1997 9:00 AM EDT) September 2,9,16,23,30;October 7,14,21
+    # (1997 9:00 AM EST) October 28;November 4
 
     recurrence = Montrose::Recurrence.from_ical(ical)
     expected_events = consecutive_days(10, starts: starts_on, interval: 7)
 
-    # ==> (1997 9:00 AM EDT) September 2,9,16,23,30;October 7,14,21
-    # (1997 9:00 AM EST) October 28;November 4
+    _(recurrence).must_pair_with expected_events
+  end
+
+  it "weekly until December 24, 1997" do
+    ical = <<~ical
+      DTSTART;TZID=America/New_York:19970902T090000
+      RRULE:FREQ=WEEKLY;UNTIL=19971224T000000Z
+    ical
+    # ==> (1997 9:00 AM EDT) September 2,9,16,23,30;
+    #                        October 7,14,21
+    #     (1997 9:00 AM EST) October 28;
+    #                        November 4,11,18,25;
+    #                        December 2,9,16,23"
+
+    recurrence = Montrose::Recurrence.from_ical(ical)
+    expected_events = consecutive_days(17, starts: starts_on, interval: 7)
+
     _(recurrence).must_pair_with expected_events
   end
 end
