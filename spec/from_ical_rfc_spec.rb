@@ -435,30 +435,59 @@ describe "Parsing ICAL RRULE examples from RFC 5545 Section 3.8.5" do
     _(recurrence).must_pair_with expected_events
   end
 
-  #  Yearly in June and July for 10 occurrences:
+  it "yearly in June and July for 10 occurrences" do
+    ical = <<~ical
+      DTSTART;TZID=America/New_York:19970610T090000
+      RRULE:FREQ=YEARLY;COUNT=10;BYMONTH=6,7
+    ical
+    #   ==> (1997 9:00 AM EDT) June 10;July 10
+    #       (1998 9:00 AM EDT) June 10;July 10
+    #       (1999 9:00 AM EDT) June 10;July 10
+    #       (2000 9:00 AM EDT) June 10;July 10
+    #       (2001 9:00 AM EDT) June 10;July 10
+    expected_events = parse_expected_events(
+      "1997 9:00 AM EDT" => {"Jun" => [10],
+                             "Jul" => [10]},
+      "1998 9:00 AM EDT" => {"Jun" => [10],
+                             "Jul" => [10]},
+      "1999 9:00 AM EDT" => {"Jun" => [10],
+                             "Jul" => [10]},
+      "2000 9:00 AM EDT" => {"Jun" => [10],
+                             "Jul" => [10]},
+      "2001 9:00 AM EDT" => {"Jun" => [10],
+                             "Jul" => [10]},
+    )
 
-  #   DTSTART;TZID=America/New_York:19970610T090000
-  #   RRULE:FREQ=YEARLY;COUNT=10;BYMONTH=6,7
+    recurrence = Montrose::Recurrence.from_ical(ical)
+    _(recurrence).must_pair_with expected_events
+  end
 
-  #   ==> (1997 9:00 AM EDT) June 10;July 10
-  #       (1998 9:00 AM EDT) June 10;July 10
-  #       (1999 9:00 AM EDT) June 10;July 10
-  #       (2000 9:00 AM EDT) June 10;July 10
-  #       (2001 9:00 AM EDT) June 10;July 10
+  it "Every other year on January, February, and March for 10
+  occurrences" do
+    ical = <<~ical
+      DTSTART;TZID=America/New_York:19970310T090000
+      RRULE:FREQ=YEARLY;INTERVAL=2;COUNT=10;BYMONTH=1,2,3
+    ical
+    #   ==> (1997 9:00 AM EST) March 10
+    #       (1999 9:00 AM EST) January 10;February 10;March 10
+    #       (2001 9:00 AM EST) January 10;February 10;March 10
+    #       (2003 9:00 AM EST) January 10;February 10;March 10
+    expected_events = parse_expected_events(
+      "1997 9:00 AM EST" => {"Mar" => [10]},
+      "1999 9:00 AM EST" => {"Jan" => [10],
+                             "Feb" => [10],
+                             "Mar" => [10]},
+      "2001 9:00 AM EST" => {"Jan" => [10],
+                             "Feb" => [10],
+                             "Mar" => [10]},
+      "2003 9:00 AM EST" => {"Jan" => [10],
+                             "Feb" => [10],
+                             "Mar" => [10]},
+    )
 
-  #     Note: Since none of the BYDAY, BYMONTHDAY, or BYYEARDAY
-  #     components are specified, the day is gotten from "DTSTART".
-
-  #  Every other year on January, February, and March for 10
-  #  occurrences:
-
-  #   DTSTART;TZID=America/New_York:19970310T090000
-  #   RRULE:FREQ=YEARLY;INTERVAL=2;COUNT=10;BYMONTH=1,2,3
-
-  #   ==> (1997 9:00 AM EST) March 10
-  #       (1999 9:00 AM EST) January 10;February 10;March 10
-  #       (2001 9:00 AM EST) January 10;February 10;March 10
-  #       (2003 9:00 AM EST) January 10;February 10;March 10
+    recurrence = Montrose::Recurrence.from_ical(ical)
+    _(recurrence).must_pair_with expected_events
+  end
 
   #  Every third year on the 1st, 100th, and 200th day for 10
   #  occurrences:
