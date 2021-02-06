@@ -46,6 +46,8 @@ module Montrose
           [:day, Montrose::Day.parse(value)]
         when "BYMONTHDAY"
           [:mday, Montrose::MonthDay.parse(value)]
+        when "BYYEARDAY"
+          [:yday, Montrose::YearDay.parse(value)]
         when "WKST"
           [:week_start, value]
         else

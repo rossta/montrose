@@ -489,19 +489,35 @@ describe "Parsing ICAL RRULE examples from RFC 5545 Section 3.8.5" do
     _(recurrence).must_pair_with expected_events
   end
 
-  #  Every third year on the 1st, 100th, and 200th day for 10
-  #  occurrences:
+  it "every third year on the 1st, 100th, and 200th day for 10
+  occurrences" do
+    ical = <<~ical
+      DTSTART;TZID=America/New_York:19970101T090000
+      RRULE:FREQ=YEARLY;INTERVAL=3;COUNT=10;BYYEARDAY=1,100,200
+    ical
+    #   ==> (1997 9:00 AM EST) January 1
+    #       (1997 9:00 AM EDT) April 10;July 19
+    #       (2000 9:00 AM EST) January 1
+    #       (2000 9:00 AM EDT) April 9;July 18
+    #       (2003 9:00 AM EST) January 1
+    #       (2003 9:00 AM EDT) April 10;July 19
+    #       (2006 9:00 AM EST) January 1
+    expected_events = parse_expected_events(
+      "1997 9:00 AM EST" => {"Jan" => [1]},
+      "1997 9:00 AM EDT" => {"Apr" => [10],
+                             "Jul" => [19]},
+      "2000 9:00 AM EST" => {"Jan" => [1]},
+      "2000 9:00 AM EDT" => {"Apr" => [9],
+                             "Jul" => [18]},
+      "2003 9:00 AM EST" => {"Jan" => [1]},
+      "2003 9:00 AM EDT" => {"Apr" => [10],
+                             "Jul" => [19]},
+      "2006 9:00 AM EST" => {"Jan" => [1]},
+    )
 
-  #   DTSTART;TZID=America/New_York:19970101T090000
-  #   RRULE:FREQ=YEARLY;INTERVAL=3;COUNT=10;BYYEARDAY=1,100,200
-
-  #   ==> (1997 9:00 AM EST) January 1
-  #       (1997 9:00 AM EDT) April 10;July 19
-  #       (2000 9:00 AM EST) January 1
-  #       (2000 9:00 AM EDT) April 9;July 18
-  #       (2003 9:00 AM EST) January 1
-  #       (2003 9:00 AM EDT) April 10;July 19
-  #       (2006 9:00 AM EST) January 1
+    recurrence = Montrose::Recurrence.from_ical(ical)
+    _(recurrence).must_pair_with expected_events
+  end
 
   #  Every 20th Monday of the year, forever:
 
