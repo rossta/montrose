@@ -291,16 +291,27 @@ describe "Parsing ICAL RRULE examples from RFC 5545 Section 3.8.5" do
     _(recurrence).must_pair_with expected_events
   end
 
-  #  Every other month on the first and last Sunday of the month for 10
-  #  occurrences:
+  it "every other month on the first and last Sunday of the month for 10
+   occurrences" do
+    ical = <<~ICAL
+      DTSTART;TZID=America/New_York:19970907T090000
+      RRULE:FREQ=MONTHLY;INTERVAL=2;COUNT=10;BYDAY=1SU,-1SU
+    ICAL
+    #   ==> (1997 9:00 AM EDT) September 7,28
+    #       (1997 9:00 AM EST) November 2,30
+    #       (1998 9:00 AM EST) January 4,25;March 1,29
+    #       (1998 9:00 AM EDT) May 3,31
+    expected_events = parse_expected_events(
+      "1997 9:00 AM EDT" => {"Sep" => [7, 28]},
+      "1997 9:00 AM EST" => {"Nov" => [2, 30]},
+      "1998 9:00 AM EST" => {"Jan" => [4, 25],
+                             "Mar" => [1, 29]},
+      "1998 9:00 AM EDT" => {"May" => [3, 31]}
+    )
 
-  #   DTSTART;TZID=America/New_York:19970907T090000
-  #   RRULE:FREQ=MONTHLY;INTERVAL=2;COUNT=10;BYDAY=1SU,-1SU
-
-  #   ==> (1997 9:00 AM EDT) September 7,28
-  #       (1997 9:00 AM EST) November 2,30
-  #       (1998 9:00 AM EST) January 4,25;March 1,29
-  #       (1998 9:00 AM EDT) May 3,31
+    recurrence = Montrose::Recurrence.from_ical(ical)
+    _(recurrence).must_pair_with expected_events
+  end
 
   #  Monthly on the second-to-last Monday of the month for 6 months:
 

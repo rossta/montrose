@@ -13,14 +13,14 @@ describe Montrose::Day do
     it { _(parse(:friday)).must_equal([5]) }
     it { _(parse(:friday)).must_equal([5]) }
     it { _(parse([:friday])).must_equal([5]) }
-    it { _(parse('friday')).must_equal([5]) }
+    it { _(parse("friday")).must_equal([5]) }
     it { _(parse(%w[thursday friday])).must_equal([4, 5]) }
     it { _(parse(%w[Thursday Friday])).must_equal([4, 5]) }
 
     it { _(parse(:fri)).must_equal([5]) }
     it { _(parse(:fri)).must_equal([5]) }
     it { _(parse([:fri])).must_equal([5]) }
-    it { _(parse('fri')).must_equal([5]) }
+    it { _(parse("fri")).must_equal([5]) }
     it { _(parse(%w[thu fri])).must_equal([4, 5]) }
     it { _(parse(%w[Thu Fri])).must_equal([4, 5]) }
 
