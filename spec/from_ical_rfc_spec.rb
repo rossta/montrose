@@ -155,4 +155,25 @@ describe "Parsing ICAL RRULE examples from RFC 5545" do
 
     _(recurrence).must_pair_with expected_events
   end
+
+  it "every other week - forever" do
+    ical = <<~ical
+      DTSTART;TZID=America/New_York:19970902T090000
+      RRULE:FREQ=WEEKLY;INTERVAL=2;WKST=SU
+    ical
+    # ==> (1997 9:00 AM EDT) September 2,16,30;
+    #                        October 14
+    #     (1997 9:00 AM EST) October 28...
+
+    recurrence = Montrose::Recurrence.from_ical(ical)
+    expected_events = [
+      '1997-09-02 09:00:00 -0400',
+      '1997-09-16 09:00:00 -0400',
+      '1997-09-30 09:00:00 -0400',
+      '1997-10-14 09:00:00 -0400',
+      '1997-10-28 09:00:00 -0500'
+    ].map { |t| Time.parse(t) }
+
+    _(recurrence.take(5)).must_pair_with expected_events
+  end
 end
