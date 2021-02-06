@@ -216,7 +216,7 @@ module Montrose
     end
 
     def month=(months)
-      @month = map_arg(months) { |d| Montrose::Month.number!(d) }
+      @month = Montrose::Month.parse(months)
     end
 
     def between=(range)
