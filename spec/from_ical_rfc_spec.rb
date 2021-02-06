@@ -1,6 +1,7 @@
 require "spec_helper"
 
-describe "Parsing ICAL RRULE examples from RFC 5545" do
+# https://tools.ietf.org/html/rfc5545#section-3.8.5
+describe "Parsing ICAL RRULE examples from RFC 5545 Section 3.8.5" do
   let(:starts_on) { Time.parse("Sep 2 09:00:00 EDT 1997") }
 
   it "daily for 10 occurrences" do
@@ -11,19 +12,11 @@ describe "Parsing ICAL RRULE examples from RFC 5545" do
     # ==> (1997 9:00 AM EDT) September 2-11
 
     recurrence = Montrose::Recurrence.from_ical(ical)
+    expected_events = parse_expected_events(
+      "1997 9:00 AM EDT" => {"Sep" => 2.upto(11)}
+    )
 
-    _(recurrence.events.to_a).must_equal([
-      "Sep  2 09:00:00 EDT 1997",
-      "Sep  3 09:00:00 EDT 1997",
-      "Sep  4 09:00:00 EDT 1997",
-      "Sep  5 09:00:00 EDT 1997",
-      "Sep  6 09:00:00 EDT 1997",
-      "Sep  7 09:00:00 EDT 1997",
-      "Sep  8 09:00:00 EDT 1997",
-      "Sep  9 09:00:00 EDT 1997",
-      "Sep 10 09:00:00 EDT 1997",
-      "Sep 11 09:00:00 EDT 1997"
-    ].map { |t| Time.parse(t) })
+    _(recurrence).must_pair_with expected_events
   end
 
   it "daily until December 24, 1997" do
@@ -49,17 +42,12 @@ describe "Parsing ICAL RRULE examples from RFC 5545" do
       DTSTART;TZID=America/New_York:19970902T090000
       RRULE:FREQ=DAILY;INTERVAL=2
     ICAL
-    # ==> (1997 9:00 AM EDT) September 2,4,6,8..
+    # ==> (1997 9:00 AM EDT) September 2,4,6,8,10..
 
     recurrence = Montrose::Recurrence.from_ical(ical)
-
-    expected_events = [
-      "1997-09-02 09:00:00 -0400",
-      "1997-09-04 09:00:00 -0400",
-      "1997-09-06 09:00:00 -0400",
-      "1997-09-08 09:00:00 -0400",
-      "1997-09-10 09:00:00 -0400"
-    ].map { |t| Time.parse(t) }
+    expected_events = parse_expected_events(
+      "1997 9:00 AM EDT" => {"Sep" => [2, 4, 6, 8, 10]}
+    )
 
     _(recurrence.take(5)).must_pair_with expected_events
   end
@@ -73,14 +61,10 @@ describe "Parsing ICAL RRULE examples from RFC 5545" do
     # October 2,12
 
     recurrence = Montrose::Recurrence.from_ical(ical)
-
-    expected_events = [
-      "1997-09-02 09:00:00 -0400",
-      "1997-09-12 09:00:00 -0400",
-      "1997-09-22 09:00:00 -0400",
-      "1997-10-02 09:00:00 -0400",
-      "1997-10-12 09:00:00 -0400"
-    ].map { |t| Time.parse(t) }
+    expected_events = parse_expected_events(
+      "1997 9:00 AM EDT" => {"Sep" => [2, 12, 22],
+                             "Oct" => [2, 12]}
+    )
 
     _(recurrence).must_pair_with expected_events
   end
@@ -151,7 +135,13 @@ describe "Parsing ICAL RRULE examples from RFC 5545" do
     #                        December 2,9,16,23"
 
     recurrence = Montrose::Recurrence.from_ical(ical)
-    expected_events = consecutive_days(17, starts: starts_on, interval: 7)
+    expected_events = parse_expected_events(
+      "1997 9:00 AM EDT" => {"Sep" => [2, 9, 16, 23, 30],
+                             "Oct" => [7, 14, 21]},
+      "1997 9:00 AM EST" => {"Oct" => [28],
+                             "Nov" => [4, 11, 18, 25],
+                             "Dec" => [2, 9, 16, 23]}
+    )
 
     _(recurrence).must_pair_with expected_events
   end
@@ -166,13 +156,11 @@ describe "Parsing ICAL RRULE examples from RFC 5545" do
     #     (1997 9:00 AM EST) October 28...
 
     recurrence = Montrose::Recurrence.from_ical(ical)
-    expected_events = [
-      "1997-09-02 09:00:00 -0400",
-      "1997-09-16 09:00:00 -0400",
-      "1997-09-30 09:00:00 -0400",
-      "1997-10-14 09:00:00 -0400",
-      "1997-10-28 09:00:00 -0500"
-    ].map { |t| Time.parse(t) }
+    expected_events = parse_expected_events(
+      "1997 9:00 AM EDT" => {"Sep" => [2, 16, 30],
+                             "Oct" => [14]},
+      "1997 9:00 AM EST" => {"Oct" => [28]}
+    )
 
     _(recurrence.take(5)).must_pair_with expected_events
   end
@@ -186,18 +174,10 @@ describe "Parsing ICAL RRULE examples from RFC 5545" do
     #                       October 2
 
     recurrence = Montrose::Recurrence.from_ical(ical)
-    expected_events = [
-      "1997-09-02 09:00:00 -0400",
-      "1997-09-04 09:00:00 -0400",
-      "1997-09-09 09:00:00 -0400",
-      "1997-09-11 09:00:00 -0400",
-      "1997-09-16 09:00:00 -0400",
-      "1997-09-18 09:00:00 -0400",
-      "1997-09-23 09:00:00 -0400",
-      "1997-09-25 09:00:00 -0400",
-      "1997-09-30 09:00:00 -0400",
-      "1997-10-02 09:00:00 -0400"
-    ].map { |t| Time.parse(t) }
+    expected_events = parse_expected_events(
+      "1997 9:00 AM EDT" => {"Sep" => [2, 4, 9, 11, 16, 18, 23, 25, 30],
+                             "Oct" => [2]}
+    )
 
     _(recurrence).must_pair_with expected_events
   end
@@ -209,5 +189,44 @@ describe "Parsing ICAL RRULE examples from RFC 5545" do
     ICAL
     # ==> (1997 9:00 AM EDT) September 2,4,9,11,16,18,23,25,30;
     #                       October 2
+
+    recurrence = Montrose::Recurrence.from_ical(ical)
+    expected_events = parse_expected_events(
+      "1997 9:00 AM EDT" => {"Sep" => [2, 4, 9, 11, 16, 18, 23, 25, 30],
+                             "Oct" => [2]}
+    )
+
+    _(recurrence).must_pair_with expected_events
+  end
+
+  it 'Every other week on Monday, Wednesday, and Friday until December
+  24, 1997, starting on Monday, September 1, 1997' do
+    ical = <<~ICAL
+      DTSTART;TZID=America/New_York:19970901T090000
+      RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=19971224T000000Z;WKST=SU;
+      BYDAY=MO,WE,FR
+    ICAL
+    # ==> (1997 9:00 AM EDT) September 1,3,5,15,17,19,29;
+    #                       October 1,3,13,15,17
+    #     (1997 9:00 AM EST) October 27,29,31;
+    #                       November 10,12,14,24,26,28;
+
+    recurrence = Montrose::Recurrence.from_ical(ical)
+    expected_events = parse_expected_events(
+      "1997 9:00 AM EDT" => {"Sep" => [1, 3, 5, 15, 17, 19, 29],
+                             "Oct" => [1, 3, 13, 15, 17]},
+      "1997 9:00 AM EST" => {"Oct" => [27, 29, 31],
+                             "Nov" => [10, 12, 14, 24, 26, 28]}
+    )
+
+    _(recurrence).must_pair_with expected_events
+  end
+
+  def parse_expected_events(event_map)
+    event_map.flat_map { |yyyyz, ms|
+      ms.flat_map { |mm, ds|
+        ds.map { |dd| Time.parse "#{mm}, #{dd} #{yyyyz}" }
+      }
+    }
   end
 end
