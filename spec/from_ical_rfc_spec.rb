@@ -2,6 +2,14 @@ require "spec_helper"
 
 # https://tools.ietf.org/html/rfc5545#section-3.8.5
 describe "Parsing ICAL RRULE examples from RFC 5545 Section 3.8.5" do
+  def parse_expected_events(event_map)
+    event_map.flat_map { |yyyyz, ms|
+      ms.flat_map { |mm, ds|
+        ds.map { |dd| Time.parse "#{mm}, #{dd} #{yyyyz}" }
+      }
+    }
+  end
+
   let(:starts_on) { Time.parse("Sep 2 09:00:00 EDT 1997") }
 
   it "daily for 10 occurrences" do
@@ -222,11 +230,20 @@ describe "Parsing ICAL RRULE examples from RFC 5545 Section 3.8.5" do
     _(recurrence).must_pair_with expected_events
   end
 
-  def parse_expected_events(event_map)
-    event_map.flat_map { |yyyyz, ms|
-      ms.flat_map { |mm, ds|
-        ds.map { |dd| Time.parse "#{mm}, #{dd} #{yyyyz}" }
-      }
-    }
+  it "every other week on Tuesday and Thursday, for 8 occurrences" do
+    ical = <<~ICAL
+      DTSTART;TZID=America/New_York:19970902T090000
+      RRULE:FREQ=WEEKLY;INTERVAL=2;COUNT=8;WKST=SU;BYDAY=TU,TH
+    ICAL
+    # ==> (1997 9:00 AM EDT) September 2,4,16,18,30;
+    #                        October 2,14,16
+
+    recurrence = Montrose::Recurrence.from_ical(ical)
+    expected_events = parse_expected_events(
+      "1997 9:00 AM EDT" => {"Sep" => [2, 4, 16, 18, 30],
+                             "Oct" => [2, 14, 16]}
+    )
+
+    _(recurrence).must_pair_with expected_events
   end
 end
