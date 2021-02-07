@@ -13,7 +13,7 @@ describe Montrose::Recurrence do
   describe "#events" do
     it "returns Enumerator" do
       recurrence = new_recurrence(every: :hour)
-      recurrence.events.must_be_instance_of Enumerator
+      _(recurrence.events).must_be_instance_of Enumerator
     end
   end
 
@@ -26,33 +26,33 @@ describe Montrose::Recurrence do
         times << time
       end
 
-      times.must_pair_with([now, 1.hour.from_now, 2.hours.from_now])
-      times.size.must_equal 3
+      _(times).must_pair_with([now, 1.hour.from_now, 2.hours.from_now])
+      _(times.size).must_equal 3
     end
 
     it "is mappable" do
       recurrence = new_recurrence(every: :day, total: 3)
 
-      recurrence.map(&:to_date).must_equal [Date.today, Date.tomorrow, 2.days.from_now.to_date]
+      _(recurrence.map(&:to_date)).must_equal [Date.today, Date.tomorrow, 2.days.from_now.to_date]
     end
 
     it "enumerates anew each time" do
       recurrence = new_recurrence(every: :day, total: 3)
 
-      recurrence.map(&:to_date).must_equal [Date.today, Date.tomorrow, 2.days.from_now.to_date]
-      recurrence.map(&:to_date).must_equal [Date.today, Date.tomorrow, 2.days.from_now.to_date]
+      _(recurrence.map(&:to_date)).must_equal [Date.today, Date.tomorrow, 2.days.from_now.to_date]
+      _(recurrence.map(&:to_date)).must_equal [Date.today, Date.tomorrow, 2.days.from_now.to_date]
     end
 
     it "returns first" do
       recurrence = new_recurrence(every: :day)
 
-      recurrence.first.must_equal now
+      _(recurrence.first).must_equal now
     end
 
     it "returns enumerator" do
       recurrence = new_recurrence(every: :day)
 
-      recurrence.each.must_be_kind_of Enumerator
+      _(recurrence.each).must_be_kind_of Enumerator
     end
   end
 
@@ -62,11 +62,11 @@ describe Montrose::Recurrence do
       recurrence = new_recurrence(options)
       hash = recurrence.to_hash
 
-      hash.size.must_equal 4
-      hash[:every].must_equal :day
-      hash[:interval].must_equal 1
-      hash[:total].must_equal 3
-      hash[:starts].must_equal now
+      _(hash.size).must_equal 4
+      _(hash[:every]).must_equal :day
+      _(hash[:interval]).must_equal 1
+      _(hash[:total]).must_equal 3
+      _(hash[:starts]).must_equal now
     end
   end
 
@@ -76,11 +76,11 @@ describe Montrose::Recurrence do
       recurrence = new_recurrence(options)
       hash = recurrence.as_json
 
-      hash.size.must_equal 4
-      hash["every"].must_equal "day"
-      hash["interval"].must_equal 1
-      hash["total"].must_equal 3
-      hash["starts"].must_equal now.as_json
+      _(hash.size).must_equal 4
+      _(hash["every"]).must_equal "day"
+      _(hash["interval"]).must_equal 1
+      _(hash["total"]).must_equal 3
+      _(hash["starts"]).must_equal now.as_json
     end
   end
 
@@ -93,10 +93,10 @@ describe Montrose::Recurrence do
       recurrence_from_yaml = new_recurrence(YAML.safe_load(yaml))
 
       hash = recurrence_from_yaml.to_hash
-      hash[:every].must_equal :day
-      hash[:interval].must_equal 1
-      hash[:total].must_equal 3
-      hash[:starts].must_equal now
+      _(hash[:every]).must_equal :day
+      _(hash[:interval]).must_equal 1
+      _(hash[:total]).must_equal 3
+      _(hash[:starts]).must_equal now
     end
   end
 
@@ -107,10 +107,10 @@ describe Montrose::Recurrence do
 
       dump = Montrose::Recurrence.dump(recurrence)
       parsed = JSON.parse(dump).symbolize_keys
-      parsed[:every].must_equal "day"
-      parsed[:total].must_equal 3
-      parsed[:interval].must_equal 1
-      parsed[:starts].must_equal now.to_s
+      _(parsed[:every]).must_equal "day"
+      _(parsed[:total]).must_equal 3
+      _(parsed[:interval]).must_equal 1
+      _(parsed[:starts]).must_equal now.to_s
     end
 
     it "accepts json hash" do
@@ -118,10 +118,10 @@ describe Montrose::Recurrence do
 
       dump = Montrose::Recurrence.dump(hash)
       parsed = JSON.parse(dump).symbolize_keys
-      parsed[:every].must_equal "day"
-      parsed[:total].must_equal 3
-      parsed[:interval].must_equal 1
-      parsed[:starts].must_equal now.to_s
+      _(parsed[:every]).must_equal "day"
+      _(parsed[:total]).must_equal 3
+      _(parsed[:interval]).must_equal 1
+      _(parsed[:starts]).must_equal now.to_s
     end
 
     it "accepts json string" do
@@ -130,20 +130,20 @@ describe Montrose::Recurrence do
       dump = Montrose::Recurrence.dump(str)
       parsed = JSON.parse(dump).symbolize_keys
 
-      parsed[:every].must_equal "day"
-      parsed[:total].must_equal 3
-      parsed[:interval].must_equal 1
-      parsed[:starts].must_equal now.to_s
+      _(parsed[:every]).must_equal "day"
+      _(parsed[:total]).must_equal 3
+      _(parsed[:interval]).must_equal 1
+      _(parsed[:starts]).must_equal now.to_s
     end
 
-    it { Montrose::Recurrence.dump(nil).must_be_nil }
+    it { _(Montrose::Recurrence.dump(nil)).must_be_nil }
 
     it "raises error if str not parseable as JSON" do
-      -> { Montrose::Recurrence.dump("foo") }.must_raise Montrose::SerializationError
+      _(-> { Montrose::Recurrence.dump("foo") }).must_raise Montrose::SerializationError
     end
 
     it "raises error otherwise" do
-      -> { Montrose::Recurrence.dump(Object.new) }.must_raise Montrose::SerializationError
+      _(-> { Montrose::Recurrence.dump(Object.new) }).must_raise Montrose::SerializationError
     end
   end
 
@@ -156,22 +156,22 @@ describe Montrose::Recurrence do
       loaded = Montrose::Recurrence.load(dump)
 
       default_options = loaded.default_options
-      default_options[:every].must_equal :day
-      default_options[:total].must_equal 3
-      default_options[:starts].to_i.must_equal now.to_i
-      default_options[:interval].must_equal 1
+      _(default_options[:every]).must_equal :day
+      _(default_options[:total]).must_equal 3
+      _(default_options[:starts].to_i).must_equal now.to_i
+      _(default_options[:interval]).must_equal 1
     end
 
     it "returns nil for nil dump" do
       loaded = Montrose::Recurrence.load(nil)
 
-      loaded.must_be_nil
+      _(loaded).must_be_nil
     end
 
     it "returns nil for empty dump" do
       loaded = Montrose::Recurrence.load("")
 
-      loaded.must_be_nil
+      _(loaded).must_be_nil
     end
   end
 
@@ -180,7 +180,7 @@ describe Montrose::Recurrence do
       yaml = "---\nevery: day\n"
       recurrence = Montrose::Recurrence.from_yaml(yaml)
 
-      recurrence.default_options[:every].must_equal :day
+      _(recurrence.default_options[:every]).must_equal :day
     end
   end
 
@@ -192,10 +192,10 @@ describe Montrose::Recurrence do
       ICAL
       recurrence = Montrose::Recurrence.from_ical(ical)
 
-      recurrence.default_options[:every].must_equal :day
-      recurrence.default_options[:total].must_equal 10
-      recurrence.default_options[:interval].must_equal 2
-      recurrence.default_options[:starts].must_equal Time.parse("1997-09-02 09:00:00 -0400")
+      _(recurrence.default_options[:every]).must_equal :day
+      _(recurrence.default_options[:total]).must_equal 10
+      _(recurrence.default_options[:interval]).must_equal 2
+      _(recurrence.default_options[:starts]).must_equal Time.parse("1997-09-02 09:00:00 -0400")
     end
   end
 
@@ -206,7 +206,7 @@ describe Montrose::Recurrence do
     it "is readable" do
       inspected = "#<Montrose::Recurrence:#{recurrence.object_id.to_s(16)} " \
                   "{:every=>:month, :starts=>#{now.inspect}, :interval=>1}>"
-      recurrence.inspect.must_equal inspected
+      _(recurrence.inspect).must_equal inspected
     end
   end
 
@@ -215,7 +215,7 @@ describe Montrose::Recurrence do
       options = {every: :day, at: "3:45pm"}
       recurrence = new_recurrence(options)
 
-      recurrence.to_json.must_equal "{\"every\":\"day\",\"at\":[[15,45,0]]}"
+      _(recurrence.to_json).must_equal "{\"every\":\"day\",\"at\":[[15,45,0]]}"
     end
   end
 
@@ -314,7 +314,7 @@ describe Montrose::Recurrence do
         recurrence = new_recurrence(every: interval)
         begin
           Timeout.timeout(2) do
-            recurrence.take(5).length.must_equal 5
+            _(recurrence.take(5).length).must_equal 5
           end
         rescue Timeout::Error
           assert false, "Expected recurrence for every #{interval.inspect} to return 5 results but timed out."

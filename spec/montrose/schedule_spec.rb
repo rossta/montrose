@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
 require "spec_helper"
+require "benchmark"
 
 describe Montrose::Schedule do
   let(:schedule) { new_schedule }
 
   describe ".build" do
     it "returns a new instance" do
-      Montrose::Schedule.build.must_be_kind_of Montrose::Schedule
+      _(Montrose::Schedule.build).must_be_kind_of Montrose::Schedule
     end
 
     it "yields a new instance" do
@@ -16,7 +17,7 @@ describe Montrose::Schedule do
         s << {every: :year}
       }
 
-      schedule.rules.size.must_equal 2
+      _(schedule.rules.size).must_equal 2
     end
   end
 
@@ -29,12 +30,12 @@ describe Montrose::Schedule do
 
       dump = Montrose::Schedule.dump(schedule)
       parsed = JSON.parse(dump).map(&:symbolize_keys)
-      parsed[0][:every].must_equal "week"
-      parsed[0][:on].must_equal "thursday"
-      parsed[0][:at].must_equal [[19, 0, 0]]
-      parsed[1][:every].must_equal "week"
-      parsed[1][:on].must_equal "tuesday"
-      parsed[1][:at].must_equal [[18, 0, 0]]
+      _(parsed[0][:every]).must_equal "week"
+      _(parsed[0][:on]).must_equal "thursday"
+      _(parsed[0][:at]).must_equal [[19, 0, 0]]
+      _(parsed[1][:every]).must_equal "week"
+      _(parsed[1][:on]).must_equal "tuesday"
+      _(parsed[1][:at]).must_equal [[18, 0, 0]]
     end
 
     it "accepts json array" do
@@ -45,12 +46,12 @@ describe Montrose::Schedule do
 
       dump = Montrose::Schedule.dump(array)
       parsed = JSON.parse(dump).map(&:symbolize_keys)
-      parsed[0][:every].must_equal "week"
-      parsed[0][:on].must_equal "thursday"
-      parsed[0][:at].must_equal [[19, 0, 0]]
-      parsed[1][:every].must_equal "week"
-      parsed[1][:on].must_equal "tuesday"
-      parsed[1][:at].must_equal [[18, 0, 0]]
+      _(parsed[0][:every]).must_equal "week"
+      _(parsed[0][:on]).must_equal "thursday"
+      _(parsed[0][:at]).must_equal [[19, 0, 0]]
+      _(parsed[1][:every]).must_equal "week"
+      _(parsed[1][:on]).must_equal "tuesday"
+      _(parsed[1][:at]).must_equal [[18, 0, 0]]
     end
 
     it "accepts json string" do
@@ -61,22 +62,22 @@ describe Montrose::Schedule do
 
       dump = Montrose::Schedule.dump(str)
       parsed = JSON.parse(dump).map(&:symbolize_keys)
-      parsed[0][:every].must_equal "week"
-      parsed[0][:on].must_equal "thursday"
-      parsed[0][:at].must_equal [[19, 0, 0]]
-      parsed[1][:every].must_equal "week"
-      parsed[1][:on].must_equal "tuesday"
-      parsed[1][:at].must_equal [[18, 0, 0]]
+      _(parsed[0][:every]).must_equal "week"
+      _(parsed[0][:on]).must_equal "thursday"
+      _(parsed[0][:at]).must_equal [[19, 0, 0]]
+      _(parsed[1][:every]).must_equal "week"
+      _(parsed[1][:on]).must_equal "tuesday"
+      _(parsed[1][:at]).must_equal [[18, 0, 0]]
     end
 
-    it { Montrose::Schedule.dump(nil).must_be_nil }
+    it { _(Montrose::Schedule.dump(nil)).must_be_nil }
 
     it "raises error if str not parseable as JSON" do
-      -> { Montrose::Schedule.dump("foo") }.must_raise Montrose::SerializationError
+      _(-> { Montrose::Schedule.dump("foo") }).must_raise Montrose::SerializationError
     end
 
     it "raises error otherwise" do
-      -> { Montrose::Schedule.dump(Object.new) }.must_raise Montrose::SerializationError
+      _(-> { Montrose::Schedule.dump(Object.new) }).must_raise Montrose::SerializationError
     end
   end
 
@@ -90,24 +91,24 @@ describe Montrose::Schedule do
       dump = Montrose::Schedule.dump(schedule)
       loaded = Montrose::Schedule.load(dump).to_a
 
-      loaded[0][:every].must_equal :week
-      loaded[0][:on].must_equal "thursday"
-      loaded[0][:at].must_equal [[19, 0, 0]]
-      loaded[1][:every].must_equal :week
-      loaded[1][:on].must_equal "tuesday"
-      loaded[1][:at].must_equal [[18, 0, 0]]
+      _(loaded[0][:every]).must_equal :week
+      _(loaded[0][:on]).must_equal "thursday"
+      _(loaded[0][:at]).must_equal [[19, 0, 0]]
+      _(loaded[1][:every]).must_equal :week
+      _(loaded[1][:on]).must_equal "tuesday"
+      _(loaded[1][:at]).must_equal [[18, 0, 0]]
     end
 
     it "returns nil for nil dump" do
       loaded = Montrose::Schedule.load(nil)
 
-      loaded.must_be_nil
+      _(loaded).must_be_nil
     end
 
     it "returns nil for empty dump" do
       loaded = Montrose::Schedule.load("")
 
-      loaded.must_be_nil
+      _(loaded).must_be_nil
     end
   end
 
@@ -116,32 +117,32 @@ describe Montrose::Schedule do
       options = {every: :year, total: 3}
       schedule.add(options)
 
-      schedule.rules.size.must_equal 1
+      _(schedule.rules.size).must_equal 1
 
       rule = schedule.rules.first
-      rule.default_options[:every].must_equal :year
-      rule.default_options[:total].must_equal 3
+      _(rule.default_options[:every]).must_equal :year
+      _(rule.default_options[:total]).must_equal 3
     end
 
     it "accepts a recurrence rule" do
       schedule.add(Montrose.yearly.total(3))
 
-      schedule.rules.size.must_equal 1
+      _(schedule.rules.size).must_equal 1
 
       rule = schedule.rules.first
-      rule.default_options[:every].must_equal :year
-      rule.default_options[:total].must_equal 3
+      _(rule.default_options[:every]).must_equal :year
+      _(rule.default_options[:total]).must_equal 3
     end
 
     it "is aliased to #<<" do
       options = {every: :year, total: 3}
       schedule << options
 
-      schedule.rules.size.must_equal 1
+      _(schedule.rules.size).must_equal 1
 
       rule = schedule.rules.first
-      rule.default_options[:every].must_equal :year
-      rule.default_options[:total].must_equal 3
+      _(rule.default_options[:every]).must_equal :year
+      _(rule.default_options[:total]).must_equal 3
     end
   end
 
@@ -153,23 +154,23 @@ describe Montrose::Schedule do
       schedule.add(every: 2.days, total: 2, starts: today + 1.day)
 
       events = schedule.events.to_a
-      events.must_pair_with [
+      _(events).must_pair_with [
         today,
         today + 1.day,
         today + 2.days,
         today + 3.days
       ]
-      events.size.must_equal 4
+      _(events.size).must_equal 4
     end
 
     it "is an enumerator" do
-      schedule.events.must_be_instance_of(Enumerator)
+      _(schedule.events).must_be_instance_of(Enumerator)
     end
   end
 
   describe "#each" do
     it "is defined" do
-      schedule.must_respond_to :each
+      _(schedule).must_respond_to :each
     end
 
     it "responsds to enumerable methods" do
@@ -179,13 +180,13 @@ describe Montrose::Schedule do
       schedule.add(every: 2.days, total: 2, starts: today + 1.day)
 
       events = schedule.take(4).to_a
-      events.must_pair_with [
+      _(events).must_pair_with [
         today,
         today + 1.day,
         today + 2.days,
         today + 3.days
       ]
-      events.size.must_equal 4
+      _(events.size).must_equal 4
     end
   end
 
@@ -196,7 +197,7 @@ describe Montrose::Schedule do
     it "is readable" do
       inspected = "#<Montrose::Recurrence:#{recurrence.object_id.to_s(16)} " \
                   "{:every=>:month, :starts=>#{now.inspect}, :interval=>1}>"
-      recurrence.inspect.must_equal inspected
+      _(recurrence.inspect).must_equal inspected
     end
   end
 
@@ -205,7 +206,7 @@ describe Montrose::Schedule do
       options = {every: :day, at: "3:45pm"}
       recurrence = new_recurrence(options)
 
-      recurrence.to_json.must_equal "{\"every\":\"day\",\"at\":[[15,45,0]]}"
+      _(recurrence.to_json).must_equal "{\"every\":\"day\",\"at\":[[15,45,0]]}"
     end
   end
 
@@ -279,7 +280,7 @@ describe Montrose::Schedule do
     it "is readable" do
       inspected = "#<Montrose::Schedule:#{schedule.object_id.to_s(16)} " \
                   "[{:every=>:month}, {:every=>:day}]>"
-      schedule.inspect.must_equal inspected
+      _(schedule.inspect).must_equal inspected
     end
   end
 
@@ -290,7 +291,7 @@ describe Montrose::Schedule do
     end
 
     it "returns json string of its options" do
-      schedule.to_json.must_equal "[{\"every\":\"month\"},{\"every\":\"day\"}]"
+      _(schedule.to_json).must_equal "[{\"every\":\"month\"},{\"every\":\"day\"}]"
     end
   end
 
@@ -303,8 +304,8 @@ describe Montrose::Schedule do
     it "returns default options as array" do
       array = schedule.to_a
 
-      array.size.must_equal 2
-      array.must_equal [{every: :month}, {every: :day}]
+      _(array.size).must_equal 2
+      _(array).must_equal [{every: :month}, {every: :day}]
     end
   end
 
@@ -317,8 +318,8 @@ describe Montrose::Schedule do
     it "returns default options as array" do
       array = schedule.as_json
 
-      array.size.must_equal 2
-      array.must_equal [{"every" => "month"}, {"every" => "day"}]
+      _(array.size).must_equal 2
+      _(array).must_equal [{"every" => "month"}, {"every" => "day"}]
     end
   end
 
@@ -332,8 +333,8 @@ describe Montrose::Schedule do
       yaml = schedule.to_yaml
 
       array = YAML.safe_load(yaml)
-      array.size.must_equal 2
-      array.must_equal [{"every" => "month"}, {"every" => "day"}]
+      _(array.size).must_equal 2
+      _(array).must_equal [{"every" => "month"}, {"every" => "day"}]
     end
   end
 end
