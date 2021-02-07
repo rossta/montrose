@@ -12,92 +12,92 @@ describe Montrose::Chainable do
   describe "#every" do
     it "returns recurrence" do
       recurrence = Montrose.every(:minute)
-      recurrence.must_be_kind_of Montrose::Recurrence
+      _(recurrence).must_be_kind_of Montrose::Recurrence
     end
 
     it "emits given frequency default" do
       recurrence = Montrose.every(:minute)
-      recurrence.events.must_have_interval 1.minute
+      _(recurrence.events).must_have_interval 1.minute
 
       recurrence = Montrose.every(2.hours)
-      recurrence.events.must_have_interval 2.hours
+      _(recurrence.events).must_have_interval 2.hours
     end
 
     it "accepts options" do
       recurrence = Montrose.every(:minute, total: 2)
-      recurrence.events.to_a.size.must_equal 2
+      _(recurrence.events.to_a.size).must_equal 2
     end
   end
 
   describe "#minutely" do
     it "returns recurrence" do
       recurrence = Montrose.minutely
-      recurrence.must_be_kind_of Montrose::Recurrence
+      _(recurrence).must_be_kind_of Montrose::Recurrence
     end
 
     it "emits per hour by default" do
       recurrence = Montrose.minutely
-      recurrence.events.must_have_interval 1.minute
+      _(recurrence.events).must_have_interval 1.minute
     end
   end
 
   describe "#hourly" do
     it "returns recurrence" do
       recurrence = Montrose.hourly
-      recurrence.must_be_kind_of Montrose::Recurrence
+      _(recurrence).must_be_kind_of Montrose::Recurrence
     end
 
     it "emits per hour by default" do
       recurrence = Montrose.hourly
-      recurrence.events.must_have_interval 1.hour
+      _(recurrence.events).must_have_interval 1.hour
     end
   end
 
   describe "#daily" do
     it "returns recurrence" do
       recurrence = Montrose.daily
-      recurrence.must_be_kind_of Montrose::Recurrence
+      _(recurrence).must_be_kind_of Montrose::Recurrence
     end
 
     it "emits per day by default" do
       recurrence = Montrose.daily
-      recurrence.events.must_have_interval 1.day
+      _(recurrence.events).must_have_interval 1.day
     end
   end
 
   describe "#weekly" do
     it "returns recurrence" do
       recurrence = Montrose.weekly
-      recurrence.must_be_kind_of Montrose::Recurrence
+      _(recurrence).must_be_kind_of Montrose::Recurrence
     end
 
     it "emits per week by default" do
       recurrence = Montrose.weekly
-      recurrence.events.must_have_interval 1.week
+      _(recurrence.events).must_have_interval 1.week
     end
   end
 
   describe "#monthly" do
     it "returns recurrence" do
       recurrence = Montrose.daily
-      recurrence.must_be_kind_of Montrose::Recurrence
+      _(recurrence).must_be_kind_of Montrose::Recurrence
     end
 
     it "emits per week by default" do
       recurrence = Montrose.monthly
-      recurrence.events.must_have_interval 1.month
+      _(recurrence.events).must_have_interval 1.month
     end
   end
 
   describe "#yearly" do
     it "returns recurrence" do
       recurrence = Montrose.yearly
-      recurrence.must_be_kind_of Montrose::Recurrence
+      _(recurrence).must_be_kind_of Montrose::Recurrence
     end
 
     it "emits per year by default" do
       recurrence = Montrose.yearly
-      recurrence.events.must_have_interval((now + 1.year) - now)
+      _(recurrence.events).must_have_interval((now + 1.year) - now)
     end
   end
 
@@ -105,7 +105,7 @@ describe Montrose::Chainable do
     it "returns new recurrence starting at given time" do
       recurrence = Montrose.daily.starting(3.days.from_now)
 
-      recurrence.events.first.must_equal 3.days.from_now
+      _(recurrence.events.first).must_equal 3.days.from_now
     end
   end
 
@@ -113,7 +113,7 @@ describe Montrose::Chainable do
     it "returns new recurrence ending before given time" do
       recurrence = Montrose.daily.ending(3.days.from_now + 1.minute)
 
-      recurrence.events.to_a.last.must_equal 3.days.from_now
+      _(recurrence.events.to_a.last).must_equal 3.days.from_now
     end
   end
 
@@ -123,14 +123,14 @@ describe Montrose::Chainable do
 
     it "returns recurrence" do
       recurrence = Montrose.hourly.between(starts...ends)
-      recurrence.must_be_kind_of Montrose::Recurrence
+      _(recurrence).must_be_kind_of Montrose::Recurrence
     end
 
     it "specifies start and end" do
       recurrence = Montrose.hourly.between(starts...ends)
       events = recurrence.events.to_a
-      events.first.must_equal starts
-      events.last.must_equal ends
+      _(events.first).must_equal starts
+      _(events.last).must_equal ends
     end
   end
 
@@ -140,14 +140,14 @@ describe Montrose::Chainable do
 
     it "returns recurrence" do
       recurrence = Montrose.hourly.covering(from...to)
-      recurrence.must_be_kind_of Montrose::Recurrence
+      _(recurrence).must_be_kind_of Montrose::Recurrence
     end
 
     it "specifies start and end of mask" do
       recurrence = Montrose.hourly.covering(from...to)
       events = recurrence.events.to_a
-      events.first.must_equal(Time.local(2015, 9, 2, 0, 0, 0))
-      events.last.must_equal(Time.local(2015, 9, 3, 23, 0, 0))
+      _(events.first).must_equal(Time.local(2015, 9, 2, 0, 0, 0))
+      _(events.last).must_equal(Time.local(2015, 9, 3, 23, 0, 0))
     end
   end
 
@@ -156,12 +156,12 @@ describe Montrose::Chainable do
 
     it "returns recurrence" do
       recurrence = Montrose.every(20.minutes).during("9am-10am")
-      recurrence.must_be_kind_of Montrose::Recurrence
+      _(recurrence).must_be_kind_of Montrose::Recurrence
     end
 
     it "emits within given time-of-day range" do
       recurrence = Montrose.every(20.minutes).during("9am-10am")
-      recurrence.events.must_pair_with [
+      _(recurrence.events).must_pair_with [
         Time.local(2015, 9, 1, 9, 0, 0),
         Time.local(2015, 9, 1, 9, 20, 0),
         Time.local(2015, 9, 1, 9, 40, 0),
@@ -171,7 +171,7 @@ describe Montrose::Chainable do
 
     it "emits within given time-of-day range" do
       recurrence = Montrose.every(20.minutes).during("9am-10am")
-      recurrence.events.must_pair_with [
+      _(recurrence.events).must_pair_with [
         Time.local(2015, 9, 1, 9, 0, 0),
         Time.local(2015, 9, 1, 9, 20, 0),
         Time.local(2015, 9, 1, 9, 40, 0),
@@ -185,7 +185,7 @@ describe Montrose::Chainable do
       recurrence = Montrose.monthly.starting(Time.local(2016, 1, 2))
       recurrence = recurrence.day_of_month(1, -1)
 
-      recurrence.events.must_pair_with [
+      _(recurrence.events).must_pair_with [
         Time.local(2016, 1, 31),
         Time.local(2016, 2, 1),
         Time.local(2016, 2, 29),
@@ -199,20 +199,20 @@ describe Montrose::Chainable do
       recurrence = Montrose.weekly
       recurrence = recurrence.day_of_week(:sunday, :saturday)
 
-      recurrence.events.must_pair_with [
+      _(recurrence.events).must_pair_with [
         Time.local(2015, 9, 5, 12),
         Time.local(2015, 9, 6, 12)
       ]
 
-      Time.local(2015, 9, 5, 12).wday.must_equal 6
-      Time.local(2015, 9, 6, 12).wday.must_equal 0
+      _(Time.local(2015, 9, 5, 12).wday).must_equal 6
+      _(Time.local(2015, 9, 6, 12).wday).must_equal 0
     end
 
     it "returns new recurrence by given range of days" do
       recurrence = Montrose.weekly
       recurrence = recurrence.day_of_week(1..3)
 
-      recurrence.events.must_pair_with [
+      _(recurrence.events).must_pair_with [
         Time.local(2015, 9, 1, 12), # Tuesday
         Time.local(2015, 9, 2, 12),
         Time.local(2015, 9, 7, 12)
@@ -223,7 +223,7 @@ describe Montrose::Chainable do
       recurrence = Montrose.monthly
       recurrence = recurrence.day_of_week(tuesday: [2]) # 2nd Tuesday of month
 
-      recurrence.events.must_pair_with [
+      _(recurrence.events).must_pair_with [
         Time.local(2015, 9, 8, 12), # Tuesday
         Time.local(2015, 10, 13, 12),
         Time.local(2015, 11, 10, 12)
@@ -236,7 +236,7 @@ describe Montrose::Chainable do
       recurrence = Montrose.yearly
       recurrence = recurrence.day_of_year(1, 10, 100)
 
-      recurrence.events.must_pair_with [
+      _(recurrence.events).must_pair_with [
         Time.local(2016, 1, 1, 12),
         Time.local(2016, 1, 10, 12),
         Time.local(2016, 4, 9, 12), # 100th day
@@ -248,7 +248,7 @@ describe Montrose::Chainable do
       recurrence = Montrose.yearly
       recurrence = recurrence.day_of_year([1, 10, 100])
 
-      recurrence.events.must_pair_with [
+      _(recurrence.events).must_pair_with [
         Time.local(2016, 1, 1, 12),
         Time.local(2016, 1, 10, 12),
         Time.local(2016, 4, 9, 12), # 100th day
@@ -260,7 +260,7 @@ describe Montrose::Chainable do
       recurrence = Montrose.yearly
       recurrence = recurrence.day_of_year(98..100)
 
-      recurrence.events.must_pair_with [
+      _(recurrence.events).must_pair_with [
         Time.local(2016, 4, 7, 12),
         Time.local(2016, 4, 8, 12),
         Time.local(2016, 4, 9, 12), # 100th day
@@ -274,7 +274,7 @@ describe Montrose::Chainable do
       recurrence = Montrose.daily
       recurrence = recurrence.hour_of_day(6, 7, 8)
 
-      recurrence.events.must_pair_with [
+      _(recurrence.events).must_pair_with [
         Time.local(2015, 9, 2, 6),
         Time.local(2015, 9, 2, 7),
         Time.local(2015, 9, 2, 8),
@@ -286,7 +286,7 @@ describe Montrose::Chainable do
       recurrence = Montrose.daily
       recurrence = recurrence.hour_of_day([6, 7, 8])
 
-      recurrence.events.must_pair_with [
+      _(recurrence.events).must_pair_with [
         Time.local(2015, 9, 2, 6),
         Time.local(2015, 9, 2, 7),
         Time.local(2015, 9, 2, 8),
@@ -298,7 +298,7 @@ describe Montrose::Chainable do
       recurrence = Montrose.daily
       recurrence = recurrence.hour_of_day(6..8)
 
-      recurrence.events.must_pair_with [
+      _(recurrence.events).must_pair_with [
         Time.local(2015, 9, 2, 6),
         Time.local(2015, 9, 2, 7),
         Time.local(2015, 9, 2, 8),
@@ -312,7 +312,7 @@ describe Montrose::Chainable do
       recurrence = Montrose.yearly
       recurrence = recurrence.month_of_year(:january, :april)
 
-      recurrence.events.must_pair_with [
+      _(recurrence.events).must_pair_with [
         Time.local(2016, 1, 1, 12),
         Time.local(2016, 4, 1, 12),
         Time.local(2017, 1, 1, 12)
@@ -323,7 +323,7 @@ describe Montrose::Chainable do
       recurrence = Montrose.yearly
       recurrence = recurrence.month_of_year([:january, :april])
 
-      recurrence.events.must_pair_with [
+      _(recurrence.events).must_pair_with [
         Time.local(2016, 1, 1, 12),
         Time.local(2016, 4, 1, 12),
         Time.local(2017, 1, 1, 12)
@@ -334,7 +334,7 @@ describe Montrose::Chainable do
       recurrence = Montrose.yearly
       recurrence = recurrence.month_of_year(1..3)
 
-      recurrence.events.must_pair_with [
+      _(recurrence.events).must_pair_with [
         Time.local(2016, 1, 1, 12),
         Time.local(2016, 2, 1, 12),
         Time.local(2016, 3, 1, 12),
@@ -349,13 +349,13 @@ describe Montrose::Chainable do
       recurrence = recurrence.total(3)
 
       events = recurrence.events.to_a
-      events.must_pair_with [
+      _(events).must_pair_with [
         Time.local(2015, 9, 1, 12),
         Time.local(2016, 9, 1, 12),
         Time.local(2017, 9, 1, 12)
       ]
 
-      events.size.must_equal 3
+      _(events.size).must_equal 3
     end
   end
 
@@ -364,7 +364,7 @@ describe Montrose::Chainable do
       recurrence = Montrose.yearly
       recurrence = recurrence.day_of_week(:monday).week_of_year(1, 52)
 
-      recurrence.events.must_pair_with [
+      _(recurrence.events).must_pair_with [
         Time.local(2015, 12, 21, 12), # Monday, 52nd week
         Time.local(2016, 1, 4, 12) # Monday, 1st week
       ]
@@ -374,7 +374,7 @@ describe Montrose::Chainable do
       recurrence = Montrose.yearly
       recurrence = recurrence.day_of_week(:monday).week_of_year(50..52)
 
-      recurrence.events.must_pair_with [
+      _(recurrence.events).must_pair_with [
         Time.local(2015, 12, 7, 12),
         Time.local(2015, 12, 14, 12),
         Time.local(2015, 12, 21, 12) # Monday, 52nd week
@@ -387,7 +387,7 @@ describe Montrose::Chainable do
       recurrence = Montrose.weekly
       recurrence = recurrence.on(:monday)
 
-      recurrence.events.must_pair_with [
+      _(recurrence.events).must_pair_with [
         Time.local(2015, 9, 7, 12),
         Time.local(2015, 9, 14, 12),
         Time.local(2015, 9, 21, 12)
@@ -400,7 +400,7 @@ describe Montrose::Chainable do
       recurrence = Montrose.daily
       recurrence = recurrence.at("4:05pm")
 
-      recurrence.events.must_pair_with [
+      _(recurrence.events).must_pair_with [
         Time.local(2015, 9, 1, 16, 5),
         Time.local(2015, 9, 2, 16, 5),
         Time.local(2015, 9, 3, 16, 5)

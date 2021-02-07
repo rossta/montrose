@@ -18,8 +18,8 @@ describe "RFC Recurrence Rules" do
 
     dates = recurrence.events.to_a
 
-    dates.must_pair_with consecutive_days(10, starts: now)
-    dates.size.must_equal 10
+    _(dates).must_pair_with consecutive_days(10, starts: now)
+    _(dates.size).must_equal 10
   end
 
   it "daily until December 23, 2015" do
@@ -32,8 +32,8 @@ describe "RFC Recurrence Rules" do
     expected_dates = consecutive_days(days, starts: starts_on)
     dates = recurrence.events.to_a
 
-    dates.must_pair_with expected_dates
-    dates.size.must_equal days
+    _(dates).must_pair_with expected_dates
+    _(dates.size).must_equal days
   end
 
   it "every other day forever" do
@@ -42,7 +42,7 @@ describe "RFC Recurrence Rules" do
     expected_dates = consecutive_days(5, interval: 2)
     dates = recurrence.events.take(5)
 
-    dates.must_pair_with expected_dates
+    _(dates).must_pair_with expected_dates
   end
 
   it "every 10 days 5 occurrences" do
@@ -51,8 +51,8 @@ describe "RFC Recurrence Rules" do
     expected_dates = consecutive_days(5, interval: 10)
     dates = recurrence.events.to_a
 
-    dates.must_pair_with expected_dates
-    dates.size.must_equal 5
+    _(dates).must_pair_with expected_dates
+    _(dates.size).must_equal 5
   end
 
   describe "everyday in January for 3 years" do
@@ -74,8 +74,8 @@ describe "RFC Recurrence Rules" do
 
       dates = recurrence.events.to_a
 
-      dates.must_pair_with expected_dates
-      dates.size.must_equal 31 * 3
+      _(dates).must_pair_with expected_dates
+      _(dates.size).must_equal 31 * 3
     end
 
     it "yearly" do
@@ -88,8 +88,8 @@ describe "RFC Recurrence Rules" do
 
       dates = recurrence.events.to_a
 
-      dates.must_pair_with expected_dates
-      dates.size.must_equal 31 * 3
+      _(dates).must_pair_with expected_dates
+      _(dates.size).must_equal 31 * 3
     end
   end
 
@@ -99,7 +99,7 @@ describe "RFC Recurrence Rules" do
     expected_dates = consecutive(:weeks, 10)
     dates = recurrence.events.take(10)
 
-    dates.must_pair_with expected_dates
+    _(dates).must_pair_with expected_dates
   end
 
   it "weekly until December 23, 2015" do
@@ -111,8 +111,8 @@ describe "RFC Recurrence Rules" do
     expected_dates = consecutive(:weeks, 15, starts: starts_on)
     dates = recurrence.events.to_a
 
-    dates.must_pair_with expected_dates
-    dates.size.must_equal 15
+    _(dates).must_pair_with expected_dates
+    _(dates.size).must_equal 15
   end
 
   it "every other week forever" do
@@ -121,7 +121,7 @@ describe "RFC Recurrence Rules" do
     expected_dates = consecutive(:weeks, 5, interval: 2)
     dates = recurrence.events.take(5)
 
-    dates.must_pair_with expected_dates
+    _(dates).must_pair_with expected_dates
   end
 
   describe "weekly on Tuesday and Thursday for five weeks" do
@@ -136,8 +136,8 @@ describe "RFC Recurrence Rules" do
       expected_dates = cherry_pick 2015 => {9 => [1, 3, 8, 10, 15, 17, 22, 24, 29], 10 => [1]}
       dates = recurrence.events.to_a
 
-      dates.must_pair_with expected_dates
-      dates.size.must_equal 10
+      _(dates).must_pair_with expected_dates
+      _(dates.size).must_equal 10
     end
 
     it "by count" do
@@ -151,8 +151,8 @@ describe "RFC Recurrence Rules" do
       expected_dates = cherry_pick 2015 => {11 => [24, 26], 12 => [1, 3, 8, 10, 15, 17, 22, 24]}
       dates = recurrence.events.to_a
 
-      dates.must_pair_with expected_dates
-      dates.size.must_equal 10
+      _(dates).must_pair_with expected_dates
+      _(dates.size).must_equal 10
     end
   end
 
@@ -177,8 +177,8 @@ describe "RFC Recurrence Rules" do
     }
     dates = recurrence.events.to_a
 
-    dates.must_pair_with expected_dates
-    dates.size.must_equal expected_dates.size
+    _(dates).must_pair_with expected_dates
+    _(dates.size).must_equal expected_dates.size
   end
 
   it "every other week on Tuesday and Thursday, for 8 occurrences" do
@@ -195,8 +195,8 @@ describe "RFC Recurrence Rules" do
 
     dates = recurrence.events.to_a
 
-    dates.must_pair_with expected_dates
-    dates.size.must_equal expected_dates.size
+    _(dates).must_pair_with expected_dates
+    _(dates.size).must_equal expected_dates.size
   end
 
   it "monthly on the first Friday for ten occurrences" do
@@ -213,8 +213,8 @@ describe "RFC Recurrence Rules" do
 
     dates = recurrence.events.to_a
 
-    dates.must_pair_with expected_dates
-    dates.size.must_equal expected_dates.size
+    _(dates).must_pair_with expected_dates
+    _(dates.size).must_equal expected_dates.size
   end
 
   it "monthly on the first Friday until December 23, 2015" do
@@ -230,8 +230,8 @@ describe "RFC Recurrence Rules" do
 
     dates = recurrence.events.to_a
 
-    dates.must_pair_with expected_dates
-    dates.size.must_equal expected_dates.size
+    _(dates).must_pair_with expected_dates
+    _(dates.size).must_equal expected_dates.size
   end
 
   it "every other month on the first and last Sunday of the month for 10 occurrences" do
@@ -253,8 +253,8 @@ describe "RFC Recurrence Rules" do
 
     dates = recurrence.events.to_a
 
-    dates.must_pair_with expected_dates
-    dates.size.must_equal expected_dates.size
+    _(dates).must_pair_with expected_dates
+    _(dates.size).must_equal expected_dates.size
   end
 
   it "monthly on the second-to-last Monday of the month for 6 months" do
@@ -271,8 +271,8 @@ describe "RFC Recurrence Rules" do
 
     dates = recurrence.events.to_a
 
-    dates.must_pair_with expected_dates
-    dates.size.must_equal expected_dates.size
+    _(dates).must_pair_with expected_dates
+    _(dates.size).must_equal expected_dates.size
   end
 
   it "monthly on the third-to-the-last day of the month, forever" do
@@ -285,8 +285,8 @@ describe "RFC Recurrence Rules" do
 
     dates = recurrence.events.take(6)
 
-    dates.must_pair_with expected_dates
-    dates.size.must_equal expected_dates.size
+    _(dates).must_pair_with expected_dates
+    _(dates.size).must_equal expected_dates.size
   end
 
   it "monthly on the 2nd and 15th of the month for 10 occurrences" do
@@ -299,8 +299,8 @@ describe "RFC Recurrence Rules" do
 
     dates = recurrence.events.to_a
 
-    dates.must_pair_with expected_dates
-    dates.size.must_equal expected_dates.size
+    _(dates).must_pair_with expected_dates
+    _(dates.size).must_equal expected_dates.size
   end
 
   it "monthly on the first and last day of the month for 10 occurrences" do
@@ -314,8 +314,8 @@ describe "RFC Recurrence Rules" do
 
     dates = recurrence.events.to_a
 
-    dates.must_pair_with expected_dates
-    dates.size.must_equal expected_dates.size
+    _(dates).must_pair_with expected_dates
+    _(dates.size).must_equal expected_dates.size
   end
 
   it "every 18 months on the 10th thru 15th of the month for 10 occurrences" do
@@ -329,8 +329,8 @@ describe "RFC Recurrence Rules" do
 
     dates = recurrence.events.to_a
 
-    dates.must_pair_with expected_dates
-    dates.size.must_equal expected_dates.size
+    _(dates).must_pair_with expected_dates
+    _(dates.size).must_equal expected_dates.size
   end
 
   it "every Tuesday, every other month" do
@@ -344,7 +344,7 @@ describe "RFC Recurrence Rules" do
 
     dates = recurrence.events.take(expected_dates.size)
 
-    dates.must_pair_with expected_dates
+    _(dates).must_pair_with expected_dates
   end
 
   it "yearly in June and July for 10 occurrences" do
@@ -360,8 +360,8 @@ describe "RFC Recurrence Rules" do
 
     dates = recurrence.events.to_a
 
-    dates.must_pair_with expected_dates
-    dates.size.must_equal 10
+    _(dates).must_pair_with expected_dates
+    _(dates.size).must_equal 10
   end
 
   it "every other year on January, February, and March for 10 occurrences" do
@@ -383,8 +383,8 @@ describe "RFC Recurrence Rules" do
 
     dates = recurrence.events.to_a
 
-    dates.must_pair_with expected_dates
-    dates.size.must_equal 10
+    _(dates).must_pair_with expected_dates
+    _(dates.size).must_equal 10
   end
 
   it "every third year on the 1st, 100th and 200th day for 10 occurrences" do
@@ -403,8 +403,8 @@ describe "RFC Recurrence Rules" do
 
     dates = recurrence.events.to_a
 
-    dates.must_pair_with expected_dates
-    dates.size.must_equal 10
+    _(dates).must_pair_with expected_dates
+    _(dates.size).must_equal 10
   end
 
   it "every 20th Monday of the year, forever" do
@@ -417,7 +417,7 @@ describe "RFC Recurrence Rules" do
     ).map { |i| i + 12.hours }
 
     dates = recurrence.events.take(3)
-    dates.must_pair_with expected_dates
+    _(dates).must_pair_with expected_dates
   end
 
   it "Monday of week number 20 forever" do
@@ -431,7 +431,7 @@ describe "RFC Recurrence Rules" do
 
     dates = recurrence.events.take(3)
 
-    dates.must_pair_with expected_dates
+    _(dates).must_pair_with expected_dates
   end
 
   it "every Thursday in March, forever" do
@@ -445,7 +445,7 @@ describe "RFC Recurrence Rules" do
     ).map { |i| i + 12.hours }
 
     dates = recurrence.events.take(expected_dates.size)
-    dates.must_pair_with expected_dates
+    _(dates).must_pair_with expected_dates
   end
 
   it "every Thursday, but only during June, July, and August, forever" do
@@ -459,7 +459,7 @@ describe "RFC Recurrence Rules" do
 
     dates = recurrence.events.take(expected_dates.size)
 
-    dates.must_pair_with expected_dates
+    _(dates).must_pair_with expected_dates
   end
 
   it "every Friday 13th, forever" do
@@ -474,7 +474,7 @@ describe "RFC Recurrence Rules" do
 
     dates = recurrence.events.take(expected_dates.size)
 
-    dates.must_pair_with expected_dates
+    _(dates).must_pair_with expected_dates
   end
 
   it "first Saturday that follows the first Sunday of the month, forever" do
@@ -487,7 +487,7 @@ describe "RFC Recurrence Rules" do
 
     dates = recurrence.events.take(expected_dates.size)
 
-    dates.must_pair_with expected_dates
+    _(dates).must_pair_with expected_dates
   end
 
   it "every four years, the first Tuesday after a Monday in November, forever (U.S. Presidential Election day)" do
@@ -502,7 +502,7 @@ describe "RFC Recurrence Rules" do
 
     dates = recurrence.events.take(expected_dates.size)
 
-    dates.must_pair_with expected_dates
+    _(dates).must_pair_with expected_dates
   end
 
   # TODO: Support set position
@@ -539,8 +539,8 @@ describe "RFC Recurrence Rules" do
 
     dates = recurrence.events.to_a
 
-    dates.must_pair_with expected_dates
-    dates.size.must_equal expected_dates.size
+    _(dates).must_pair_with expected_dates
+    _(dates.size).must_equal expected_dates.size
   end
 
   it "every 15 minutes for 6 occurrences" do
@@ -550,7 +550,7 @@ describe "RFC Recurrence Rules" do
 
     dates = recurrence.events.to_a
 
-    dates.must_pair_with expected_dates
+    _(dates).must_pair_with expected_dates
   end
 
   it "every hour and a half for four occurrences" do
@@ -560,7 +560,7 @@ describe "RFC Recurrence Rules" do
 
     dates = recurrence.events.to_a
 
-    dates.must_pair_with expected_dates
+    _(dates).must_pair_with expected_dates
   end
 
   it "every 20 minutes from 9:00 AM to 4:40 PM every day" do
@@ -573,7 +573,7 @@ describe "RFC Recurrence Rules" do
 
     dates = recurrence.events.take(72)
 
-    dates.must_pair_with expected_dates
+    _(dates).must_pair_with expected_dates
   end
 
   it "every 20 minutes from 9:00 AM to 4:40 PM every day (alt)" do
@@ -586,7 +586,7 @@ describe "RFC Recurrence Rules" do
 
     dates = recurrence.events.take(72)
 
-    dates.must_pair_with expected_dates
+    _(dates).must_pair_with expected_dates
   end
 
   # TODO: Support week start on Monday
