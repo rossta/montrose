@@ -25,11 +25,11 @@ describe "Parsing ICAL RRULE examples from RFC 5545 Section 3.8.5" do
     ICAL
     # ==> (1997 9:00 AM EDT) September 2-11
 
-    recurrence = Montrose::Recurrence.from_ical(ical)
     expected_events = parse_expected_events(
       "1997 9:00 AM EDT" => {"Sep" => 2.upto(11)}
     )
 
+    recurrence = Montrose::Recurrence.from_ical(ical)
     _(recurrence).must_pair_with expected_events
   end
 
@@ -58,10 +58,15 @@ describe "Parsing ICAL RRULE examples from RFC 5545 Section 3.8.5" do
 
     recurrence = Montrose::Recurrence.from_ical(ical)
 
-    ends_on = Time.parse("Dec 24 00:00:00 EDT 1997")
-    days = starts_on.to_date.upto(ends_on.to_date).count - 1
-    expected_events = consecutive_days(days, starts: starts_on).take(days)
+    expected_events = parse_expected_events(
+      "1997 9:00 AM EDT" => {"Sep" => 2.upto(30),
+                             "Oct" => 1.upto(25)},
+      "1997 9:00 AM EST" => {"Oct" => 26.upto(31),
+                             "Nov" => 1.upto(30),
+                             "Dec" => 1.upto(23)}
+    )
 
+    days = ((expected_events.last - expected_events.first) / 1.day).to_i + 1
     _(recurrence).must_pair_with expected_events
     _(recurrence.events.to_a.size).must_equal days
   end
@@ -146,9 +151,14 @@ describe "Parsing ICAL RRULE examples from RFC 5545 Section 3.8.5" do
     # ==> (1997 9:00 AM EDT) September 2,9,16,23,30;October 7,14,21
     # (1997 9:00 AM EST) October 28;November 4
 
-    recurrence = Montrose::Recurrence.from_ical(ical)
-    expected_events = consecutive_days(10, starts: starts_on, interval: 7)
+    expected_events = parse_expected_events(
+      "1997 9:00 AM EDT" => {"Sep" => [2, 9, 16, 23, 30],
+                             "Oct" => [7, 14, 21]},
+      "1997 9:00 AM EST" => {"Oct" => [28],
+                             "Nov" => [4]}
+    )
 
+    recurrence = Montrose::Recurrence.from_ical(ical)
     _(recurrence).must_pair_with expected_events
   end
 
