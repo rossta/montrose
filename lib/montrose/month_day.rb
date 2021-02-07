@@ -1,7 +1,7 @@
 module Montrose
   class MonthDay
     class << self
-      MDAYS = (-31.upto(-1) + 1.upto(31)).to_a
+      MDAYS = (-31.upto(-1).to_a + 1.upto(31).to_a)
 
       def parse(mdays)
         return nil unless mdays.present?
