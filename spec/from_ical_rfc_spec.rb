@@ -33,6 +33,21 @@ describe "Parsing ICAL RRULE examples from RFC 5545 Section 3.8.5" do
     _(recurrence).must_pair_with expected_events
   end
 
+  it "daily for 10 occurrences in America/Los_Angeles" do
+    ical = <<~ICAL
+      DTSTART;TZID=America/Los_Angeles:19970902T090000
+      RRULE:FREQ=DAILY;COUNT=10"
+    ICAL
+    # ==> (1997 9:00 AM EDT) September 2-11
+
+    recurrence = Montrose::Recurrence.from_ical(ical)
+    expected_events = parse_expected_events(
+      "1997 9:00 AM PDT" => {"Sep" => 2.upto(11)}
+    )
+
+    _(recurrence).must_pair_with expected_events
+  end
+
   it "daily until December 24, 1997" do
     ical = <<~ICAL
       DTSTART;TZID=America/New_York:19970902T090000

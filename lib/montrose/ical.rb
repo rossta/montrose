@@ -17,18 +17,39 @@ module Montrose
     def parse
       dtstart, rrule = @ical.split("RRULE:")
       dtstart, exdate = dtstart.split("\n")
-      Hash[*parse_dtstart(dtstart) + parse_exdate(exdate) + parse_rrule(rrule)]
+      _label, time_string = (dtstart || "").split(";")
+      time_zone = parse_timezone(time_string)
+
+      Time.use_zone(time_zone) do
+        Hash[
+          *parse_dtstart(dtstart) +
+            parse_exdate(exdate) +
+            parse_rrule(rrule)
+          ]
+      end
     end
 
     private
+
+    def parse_timezone(time_string)
+      time_zone_rule, _ = (time_string || "").split(":")
+      _label, time_zone = (time_zone_rule || "").split("=")
+      time_zone
+    end
 
     def parse_dtstart(dtstart)
       return [] unless dtstart.present?
 
       _label, time_string = dtstart.split(";")
-      @starts_at = Montrose::Utils.parse_time(time_string)
+      @starts_at = parse_ical_time(time_string)
 
       [:starts, @starts_at]
+    end
+
+    def parse_ical_time(time_string)
+      time_zone = parse_timezone(time_string)
+
+      Montrose::Utils.parse_time(time_string).in_time_zone(time_zone)
     end
 
     def parse_exdate(exdate)
@@ -51,7 +72,7 @@ module Montrose
         when "COUNT"
           [:total, value.to_i]
         when "UNTIL"
-          [:until, Montrose::Utils.parse_time(value)]
+          [:until, parse_ical_time(value)]
         when "BYMINUTE"
           [:minute, Montrose::Minute.parse(value)]
         when "BYHOUR"
