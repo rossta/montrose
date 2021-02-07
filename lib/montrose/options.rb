@@ -269,17 +269,6 @@ module Montrose
       self.class.default_until
     end
 
-    def nested_map_arg(arg, &block)
-      case arg
-      when Hash
-        arg.each_with_object({}) do |(k, v), hash|
-          hash[yield k] = [*v]
-        end
-      else
-        map_arg(arg, &block)
-      end
-    end
-
     def map_arg(arg, &block)
       return nil unless arg
 
