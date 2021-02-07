@@ -10,6 +10,13 @@ describe "Parsing ICAL RRULE examples from RFC 5545 Section 3.8.5" do
     }
   end
 
+  def parse_expect_by_time_of_day(event_map)
+    event_map.flat_map { |date, times|
+      times.map { |time| Time.parse "#{date} #{time} EDT" }
+    }
+  end
+
+
   let(:starts_on) { Time.parse("Sep 2 09:00:00 EDT 1997") }
 
   it "daily for 10 occurrences" do
@@ -622,20 +629,20 @@ describe "Parsing ICAL RRULE examples from RFC 5545 Section 3.8.5" do
                              "Mar" => [13],
                              "Nov" => [13]},
       "1999 9:00 AM EDT" => {"Aug" => [13]},
-      "2000 9:00 AM EDT" => {"Oct" => [13]}
+      "2000 9:00 AM EDT" => {"Oct" => [13]},
     )
 
     recurrence = Montrose::Recurrence.from_ical(ical)
     _(recurrence).must_pair_with expected_events
-    _(recurrence.default_options[:except]).must_equal([Date.parse("19970902")])
+    _(recurrence.default_options[:except]).must_equal([Date.parse('19970902')])
   end
 
   it "The first Saturday that follows the first Sunday of the month,
   forever" do
-    ical = <<~ICAL
+    ical = <<~ical
       DTSTART;TZID=America/New_York:19970913T090000
       RRULE:FREQ=MONTHLY;BYDAY=SA;BYMONTHDAY=7,8,9,10,11,12,13
-    ICAL
+    ical
     #   ==> (1997 9:00 AM EDT) September 13;October 11
     #       (1997 9:00 AM EST) November 8;December 13
     #       (1998 9:00 AM EST) January 10;February 7;March 7
@@ -652,7 +659,7 @@ describe "Parsing ICAL RRULE examples from RFC 5545 Section 3.8.5" do
                              "Mar" => [7]},
       "1998 9:00 AM EDT" => {"Apr" => [11],
                              "May" => [9],
-                             "Jun" => [13]}
+                             "Jun" => [13]},
     )
 
     recurrence = Montrose::Recurrence.from_ical(ical)
@@ -661,11 +668,11 @@ describe "Parsing ICAL RRULE examples from RFC 5545 Section 3.8.5" do
 
   it "every 4 years, the first Tuesday after a Monday in November,
     forever (U.S. Presidential Election day)" do
-    ical = <<~ICAL
+    ical = <<~ical
       DTSTART;TZID=America/New_York:19961105T090000
       RRULE:FREQ=YEARLY;INTERVAL=4;BYMONTH=11;BYDAY=TU;
        BYMONTHDAY=2,3,4,5,6,7,8
-    ICAL
+    ical
     #    ==> (1996 9:00 AM EST) November 5
     #        (2000 9:00 AM EST) November 7
     #        (2004 9:00 AM EST) November 2
@@ -673,7 +680,7 @@ describe "Parsing ICAL RRULE examples from RFC 5545 Section 3.8.5" do
     expected_events = parse_expected_events(
       "1996 9:00 AM EST" => {"Nov" => [5]},
       "2000 9:00 AM EST" => {"Nov" => [7]},
-      "2004 9:00 AM EST" => {"Nov" => [2]}
+      "2004 9:00 AM EST" => {"Nov" => [2]},
     )
 
     recurrence = Montrose::Recurrence.from_ical(ical)
@@ -710,27 +717,38 @@ describe "Parsing ICAL RRULE examples from RFC 5545 Section 3.8.5" do
   #       ...
 
   it "every 3 hours from 9:00 AM to 5:00 PM on a specific day" do
-    ical = <<~ICAL
+    ical = <<~ical
       DTSTART;TZID=America/New_York:19970902T090000
       RRULE:FREQ=HOURLY;INTERVAL=3;UNTIL=19970902T170000
-    ICAL
+    ical
     #   ==> (September 2, 1997 EDT) 09:00,12:00,15:00
     expected_events = parse_expected_events(
       "1997 09:00 AM EDT" => {"Sept" => [2]},
       "1997 12:00 PM EDT" => {"Sept" => [2]},
-      "1997 15:00 PM EDT" => {"Sept" => [2]}
+      "1997 15:00 PM EDT" => {"Sept" => [2]},
+    )
+    expected_events = parse_expect_by_time_of_day(
+      "Sept 2 1997" => %w[09:00 12:00 15:00]
     )
 
     recurrence = Montrose::Recurrence.from_ical(ical)
     _(recurrence).must_pair_with expected_events
   end
 
-  #  Every 15 minutes for 6 occurrences:
+  it "every 15 minutes for 6 occurrences" do
+    ical = <<~ical
+      DTSTART;TZID=America/New_York:19970902T090000
+      RRULE:FREQ=MINUTELY;INTERVAL=15;COUNT=6
+    ical
 
-  #   DTSTART;TZID=America/New_York:19970902T090000
-  #   RRULE:FREQ=MINUTELY;INTERVAL=15;COUNT=6
+    #   ==> (September 2, 1997 EDT) 09:00,09:15,09:30,09:45,10:00,10:15
+    expected_events = parse_expect_by_time_of_day(
+      "Sept 2 1997" => %w[09:00 09:15 09:30 09:45 10:00 10:15]
+    )
 
-  #   ==> (September 2, 1997 EDT) 09:00,09:15,09:30,09:45,10:00,10:15
+    recurrence = Montrose::Recurrence.from_ical(ical)
+    _(recurrence).must_pair_with expected_events
+  end
 
   #  Every hour and a half for 4 occurrences:
 
