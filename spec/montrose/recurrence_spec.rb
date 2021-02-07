@@ -186,7 +186,10 @@ describe Montrose::Recurrence do
 
   describe ".from_ical" do
     it "returns Recurrence instance" do
-      ical = "DTSTART;TZID=US-Eastern:19970902T090000\nRRULE:FREQ=DAILY;COUNT=10;INTERVAL=2"
+      ical = <<~ICAL
+        DTSTART;TZID=America/New_York:19970902T090000
+        RRULE:FREQ=DAILY;COUNT=10;INTERVAL=2"
+      ICAL
       recurrence = Montrose::Recurrence.from_ical(ical)
 
       recurrence.default_options[:every].must_equal :day
