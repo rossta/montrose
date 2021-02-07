@@ -436,10 +436,10 @@ describe "Parsing ICAL RRULE examples from RFC 5545 Section 3.8.5" do
   end
 
   it "yearly in June and July for 10 occurrences" do
-    ical = <<~ical
+    ical = <<~ICAL
       DTSTART;TZID=America/New_York:19970610T090000
       RRULE:FREQ=YEARLY;COUNT=10;BYMONTH=6,7
-    ical
+    ICAL
     #   ==> (1997 9:00 AM EDT) June 10;July 10
     #       (1998 9:00 AM EDT) June 10;July 10
     #       (1999 9:00 AM EDT) June 10;July 10
@@ -455,7 +455,7 @@ describe "Parsing ICAL RRULE examples from RFC 5545 Section 3.8.5" do
       "2000 9:00 AM EDT" => {"Jun" => [10],
                              "Jul" => [10]},
       "2001 9:00 AM EDT" => {"Jun" => [10],
-                             "Jul" => [10]},
+                             "Jul" => [10]}
     )
 
     recurrence = Montrose::Recurrence.from_ical(ical)
@@ -464,10 +464,10 @@ describe "Parsing ICAL RRULE examples from RFC 5545 Section 3.8.5" do
 
   it "Every other year on January, February, and March for 10
   occurrences" do
-    ical = <<~ical
+    ical = <<~ICAL
       DTSTART;TZID=America/New_York:19970310T090000
       RRULE:FREQ=YEARLY;INTERVAL=2;COUNT=10;BYMONTH=1,2,3
-    ical
+    ICAL
     #   ==> (1997 9:00 AM EST) March 10
     #       (1999 9:00 AM EST) January 10;February 10;March 10
     #       (2001 9:00 AM EST) January 10;February 10;March 10
@@ -482,7 +482,7 @@ describe "Parsing ICAL RRULE examples from RFC 5545 Section 3.8.5" do
                              "Mar" => [10]},
       "2003 9:00 AM EST" => {"Jan" => [10],
                              "Feb" => [10],
-                             "Mar" => [10]},
+                             "Mar" => [10]}
     )
 
     recurrence = Montrose::Recurrence.from_ical(ical)
@@ -491,10 +491,10 @@ describe "Parsing ICAL RRULE examples from RFC 5545 Section 3.8.5" do
 
   it "every third year on the 1st, 100th, and 200th day for 10
   occurrences" do
-    ical = <<~ical
+    ical = <<~ICAL
       DTSTART;TZID=America/New_York:19970101T090000
       RRULE:FREQ=YEARLY;INTERVAL=3;COUNT=10;BYYEARDAY=1,100,200
-    ical
+    ICAL
     #   ==> (1997 9:00 AM EST) January 1
     #       (1997 9:00 AM EDT) April 10;July 19
     #       (2000 9:00 AM EST) January 1
@@ -512,7 +512,7 @@ describe "Parsing ICAL RRULE examples from RFC 5545 Section 3.8.5" do
       "2003 9:00 AM EST" => {"Jan" => [1]},
       "2003 9:00 AM EDT" => {"Apr" => [10],
                              "Jul" => [19]},
-      "2006 9:00 AM EST" => {"Jan" => [1]},
+      "2006 9:00 AM EST" => {"Jan" => [1]}
     )
 
     recurrence = Montrose::Recurrence.from_ical(ical)
@@ -520,10 +520,10 @@ describe "Parsing ICAL RRULE examples from RFC 5545 Section 3.8.5" do
   end
 
   it "every 20th Monday of the year, forever" do
-    ical = <<~ical
+    ical = <<~ICAL
       DTSTART;TZID=America/New_York:19970519T090000
       RRULE:FREQ=YEARLY;BYDAY=20MO
-    ical
+    ICAL
     #   ==> (1997 9:00 AM EDT) May 19
     #       (1998 9:00 AM EDT) May 18
     #       (1999 9:00 AM EDT) May 17
@@ -531,7 +531,7 @@ describe "Parsing ICAL RRULE examples from RFC 5545 Section 3.8.5" do
     expected_events = parse_expected_events(
       "1997 9:00 AM EDT" => {"May" => [19]},
       "1998 9:00 AM EDT" => {"May" => [18]},
-      "1999 9:00 AM EDT" => {"May" => [17]},
+      "1999 9:00 AM EDT" => {"May" => [17]}
     )
 
     recurrence = Montrose::Recurrence.from_ical(ical)
@@ -540,10 +540,10 @@ describe "Parsing ICAL RRULE examples from RFC 5545 Section 3.8.5" do
 
   it "Monday of week number 20 (where the default start of the week is
   Monday), forever" do
-    ical = <<~ical
+    ical = <<~ICAL
       DTSTART;TZID=America/New_York:19970512T090000
       RRULE:FREQ=YEARLY;BYWEEKNO=20;BYDAY=MO
-    ical
+    ICAL
     #   ==> (1997 9:00 AM EDT) May 12
     #       (1998 9:00 AM EDT) May 11
     #       (1999 9:00 AM EDT) May 17
@@ -552,46 +552,83 @@ describe "Parsing ICAL RRULE examples from RFC 5545 Section 3.8.5" do
     expected_events = parse_expected_events(
       "1997 9:00 AM EDT" => {"May" => [12]},
       "1998 9:00 AM EDT" => {"May" => [11]},
-      "1999 9:00 AM EDT" => {"May" => [17]},
+      "1999 9:00 AM EDT" => {"May" => [17]}
     )
 
     recurrence = Montrose::Recurrence.from_ical(ical)
     _(recurrence).must_pair_with expected_events
   end
 
-  #  Every Thursday in March, forever:
+  it "every Thursday in March, forever" do
+    ical = <<~ICAL
+      DTSTART;TZID=America/New_York:19970313T090000
+      RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=TH
+    ICAL
+    #   ==> (1997 9:00 AM EST) March 13,20,27
+    #       (1998 9:00 AM EST) March 5,12,19,26
+    #       (1999 9:00 AM EST) March 4,11,18,25
+    #       ...
+    expected_events = parse_expected_events(
+      "1997 9:00 AM EST" => {"Mar" => [13, 20, 27]},
+      "1998 9:00 AM EST" => {"Mar" => [5, 12, 19, 26]},
+      "1999 9:00 AM EST" => {"Mar" => [4, 11, 18, 25]}
+    )
 
-  #   DTSTART;TZID=America/New_York:19970313T090000
-  #   RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=TH
+    recurrence = Montrose::Recurrence.from_ical(ical)
+    _(recurrence).must_pair_with expected_events
+  end
 
-  #   ==> (1997 9:00 AM EST) March 13,20,27
-  #       (1998 9:00 AM EST) March 5,12,19,26
-  #       (1999 9:00 AM EST) March 4,11,18,25
-  #       ...
+  it "every Thursday, but only during June, July, and August, forever" do
+    ical = <<~ICAL
+      DTSTART;TZID=America/New_York:19970605T090000
+      RRULE:FREQ=YEARLY;BYDAY=TH;BYMONTH=6,7,8
+    ICAL
+    #   ==> (1997 9:00 AM EDT) June 5,12,19,26;July 3,10,17,24,31;
+    #                          August 7,14,21,28
+    #       (1998 9:00 AM EDT) June 4,11,18,25;July 2,9,16,23,30;
+    #                          August 6,13,20,27
+    #       (1999 9:00 AM EDT) June 3,10,17,24;July 1,8,15,22,29;
+    #                          August 5,12,19,26
+    #       ...
+    expected_events = parse_expected_events(
+      "1997 9:00 AM EDT" => {"Jun" => [5, 12, 19, 26],
+                             "Jul" => [3, 10, 17, 24, 31],
+                             "Aug" => [7, 14, 21, 28]},
+      "1998 9:00 AM EDT" => {"Jun" => [4, 11, 18, 25],
+                             "Jul" => [2, 9, 16, 23, 30],
+                             "Aug" => [6, 13, 20, 27]},
+      "1999 9:00 AM EDT" => {"Jun" => [3, 10, 17, 24],
+                             "Jul" => [1, 8, 15, 22, 29],
+                             "Aug" => [5, 12, 19, 26]}
+    )
 
-  #  Every Thursday, but only during June, July, and August, forever:
+    recurrence = Montrose::Recurrence.from_ical(ical)
+    _(recurrence).must_pair_with expected_events
+  end
 
-  #   DTSTART;TZID=America/New_York:19970605T090000
-  #   RRULE:FREQ=YEARLY;BYDAY=TH;BYMONTH=6,7,8
+  it "every Friday the 13th, forever" do
+    ical = <<~ICAL
+      DTSTART;TZID=America/New_York:19970902T090000
+      EXDATE;TZID=America/New_York:19970902T090000
+      RRULE:FREQ=MONTHLY;BYDAY=FR;BYMONTHDAY=13
+    ICAL
+    #   ==> (1998 9:00 AM EST) February 13;March 13;November 13
+    #       (1999 9:00 AM EDT) August 13
+    #       (2000 9:00 AM EDT) October 13
+    #       ...
 
-  #   ==> (1997 9:00 AM EDT) June 5,12,19,26;July 3,10,17,24,31;
-  #                          August 7,14,21,28
-  #       (1998 9:00 AM EDT) June 4,11,18,25;July 2,9,16,23,30;
-  #                          August 6,13,20,27
-  #       (1999 9:00 AM EDT) June 3,10,17,24;July 1,8,15,22,29;
-  #                          August 5,12,19,26
-  #       ...
+    expected_events = parse_expected_events(
+      "1998 9:00 AM EST" => {"Feb" => [13],
+                             "Mar" => [13],
+                             "Nov" => [13]},
+      "1999 9:00 AM EDT" => {"Aug" => [13]},
+      "2000 9:00 AM EDT" => {"Oct" => [13]},
+    )
 
-  #  Every Friday the 13th, forever:
-
-  #   DTSTART;TZID=America/New_York:19970902T090000
-  #   EXDATE;TZID=America/New_York:19970902T090000
-  #   RRULE:FREQ=MONTHLY;BYDAY=FR;BYMONTHDAY=13
-
-  #   ==> (1998 9:00 AM EST) February 13;March 13;November 13
-  #       (1999 9:00 AM EDT) August 13
-  #       (2000 9:00 AM EDT) October 13
-  #       ...
+    recurrence = Montrose::Recurrence.from_ical(ical)
+    _(recurrence).must_pair_with expected_events
+    _(recurrence.default_options[:except]).must_equal([Date.parse('19970902')])
+  end
 
   #  The first Saturday that follows the first Sunday of the month,
   #  forever:

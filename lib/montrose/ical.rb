@@ -16,16 +16,28 @@ module Montrose
 
     def parse
       dtstart, rrule = @ical.split("RRULE:")
-      Hash[*parse_dtstart(dtstart) + parse_rrule(rrule)]
+      dtstart, exdate = dtstart.split(/\s+/)
+      Hash[*parse_dtstart(dtstart) + parse_exdate(exdate) + parse_rrule(rrule)]
     end
 
     private
 
     def parse_dtstart(dtstart)
+      return [] unless dtstart.present?
+
       _label, time_string = dtstart.split(";")
       @starts_at = Montrose::Utils.parse_time(time_string)
 
       [:starts, @starts_at]
+    end
+
+    def parse_exdate(exdate)
+      return [] unless exdate.present?
+
+      _label, date_string = exdate.split(";")
+      @except = Montrose::Utils.as_date(date_string) # only currently supports dates
+
+      [:except, @except]
     end
 
     def parse_rrule(rrule)

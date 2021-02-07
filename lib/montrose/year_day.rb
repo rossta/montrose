@@ -1,7 +1,7 @@
 module Montrose
   class YearDay
     class << self
-      YDAYS = (1.upto(366)).to_a
+      YDAYS = 1.upto(366).to_a
 
       def parse(ydays)
         return nil unless ydays.present?
