@@ -25,6 +25,7 @@ module Montrose
   autoload :Month, "montrose/month"
   autoload :MonthDay, "montrose/month_day"
   autoload :YearDay, "montrose/year_day"
+  autoload :Week, "montrose/week"
 
   extend Chainable
 

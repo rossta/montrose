@@ -212,7 +212,7 @@ module Montrose
     end
 
     def week=(weeks)
-      @week = map_arg(weeks) { |w| assert_week(w) }
+      @week = Week.parse(weeks)
     end
 
     def month=(months)
@@ -277,10 +277,6 @@ module Montrose
 
     def assert_hour(hour)
       assert_range_includes(1..::Montrose::Utils::MAX_HOURS_IN_DAY, hour)
-    end
-
-    def assert_week(week)
-      assert_range_includes(1..::Montrose::Utils::MAX_WEEKS_IN_YEAR, week, :absolute)
     end
 
     def decompose_on_arg(arg)
