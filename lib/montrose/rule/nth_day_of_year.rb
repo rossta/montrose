@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "montrose/rule/nth_day_matcher"
-
 module Montrose
   module Rule
     class NthDayOfYear

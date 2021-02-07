@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "montrose/frequency"
-
 module Montrose
   class ICal
     # DTSTART;TZID=US-Eastern:19970902T090000

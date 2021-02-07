@@ -2,11 +2,6 @@
 
 require "json"
 require "yaml"
-require "montrose/chainable"
-require "montrose/errors"
-require "montrose/stack"
-require "montrose/clock"
-require "montrose/ical"
 
 module Montrose
   # Represents the rules for a set of recurring events. Can be instantiated

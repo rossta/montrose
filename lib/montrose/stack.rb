@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "montrose/rule"
-
 module Montrose
   # Maintains stack of recurrences rules that apply to
   # an associated recurrence; manages advancing state

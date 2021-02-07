@@ -1,14 +1,19 @@
 # frozen_string_literal: true
 
-require "montrose/errors"
-require "montrose/options"
-
 module Montrose
   # Abstract class for special recurrence rule required
   # in all instances of Recurrence. Frequency describes
   # the base recurrence interval.
   #
   class Frequency
+    autoload :Daily, "montrose/frequency/daily"
+    autoload :Hourly, "montrose/frequency/hourly"
+    autoload :Minutely, "montrose/frequency/minutely"
+    autoload :Monthly, "montrose/frequency/monthly"
+    autoload :Secondly, "montrose/frequency/secondly"
+    autoload :Weekly, "montrose/frequency/weekly"
+    autoload :Yearly, "montrose/frequency/yearly"
+
     include Montrose::Rule
 
     FREQUENCY_TERMS = {
@@ -103,11 +108,3 @@ module Montrose
     end
   end
 end
-
-require "montrose/frequency/daily"
-require "montrose/frequency/hourly"
-require "montrose/frequency/minutely"
-require "montrose/frequency/monthly"
-require "montrose/frequency/secondly"
-require "montrose/frequency/weekly"
-require "montrose/frequency/yearly"

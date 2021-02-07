@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require "montrose/options"
 require "montrose/refinements/array_concat"
 
 module Montrose
