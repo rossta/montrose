@@ -519,26 +519,45 @@ describe "Parsing ICAL RRULE examples from RFC 5545 Section 3.8.5" do
     _(recurrence).must_pair_with expected_events
   end
 
-  #  Every 20th Monday of the year, forever:
+  it "every 20th Monday of the year, forever" do
+    ical = <<~ical
+      DTSTART;TZID=America/New_York:19970519T090000
+      RRULE:FREQ=YEARLY;BYDAY=20MO
+    ical
+    #   ==> (1997 9:00 AM EDT) May 19
+    #       (1998 9:00 AM EDT) May 18
+    #       (1999 9:00 AM EDT) May 17
+    #       ...
+    expected_events = parse_expected_events(
+      "1997 9:00 AM EDT" => {"May" => [19]},
+      "1998 9:00 AM EDT" => {"May" => [18]},
+      "1999 9:00 AM EDT" => {"May" => [17]},
+    )
 
-  #   DTSTART;TZID=America/New_York:19970519T090000
-  #   RRULE:FREQ=YEARLY;BYDAY=20MO
+    recurrence = Montrose::Recurrence.from_ical(ical)
+    _(recurrence).must_pair_with expected_events
+  end
 
-  #   ==> (1997 9:00 AM EDT) May 19
-  #       (1998 9:00 AM EDT) May 18
-  #       (1999 9:00 AM EDT) May 17
-  #       ...
+  it "Monday of week number 20 (where the default start of the week is
+  Monday), forever" do
+    ical = <<~ical
+      DTSTART;TZID=America/New_York:19970512T090000
+      RRULE:FREQ=YEARLY;BYWEEKNO=20;BYDAY=MO
+    ical
+    #   ==> (1997 9:00 AM EDT) May 12
+    #       (1998 9:00 AM EDT) May 11
+    #       (1999 9:00 AM EDT) May 17
+    #       ...
 
-  #  Monday of week number 20 (where the default start of the week is
-  #  Monday), forever:
+    expected_events = parse_expected_events(
+      "1997 9:00 AM EDT" => {"May" => [12]},
+      "1998 9:00 AM EDT" => {"May" => [11]},
+      "1999 9:00 AM EDT" => {"May" => [17]},
+    )
 
-  #   DTSTART;TZID=America/New_York:19970512T090000
-  #   RRULE:FREQ=YEARLY;BYWEEKNO=20;BYDAY=MO
-
-  #   ==> (1997 9:00 AM EDT) May 12
-  #       (1998 9:00 AM EDT) May 11
-  #       (1999 9:00 AM EDT) May 17
-  #       ...
+    recurrence = Montrose::Recurrence.from_ical(ical)
+    _(recurrence).must_pair_with expected_events
+  end
 
   #  Every Thursday in March, forever:
 
