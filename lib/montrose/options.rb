@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "montrose/time_of_day"
-
 module Montrose
   class Options
     include Montrose::Utils

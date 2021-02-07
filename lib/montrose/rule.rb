@@ -3,6 +3,24 @@
 module Montrose
   # Defines the Rule duck type for recurrence rules
   module Rule
+    autoload :After, "montrose/rule/after"
+    autoload :Covering, "montrose/rule/covering"
+    autoload :DayOfMonth, "montrose/rule/day_of_month"
+    autoload :DayOfWeek, "montrose/rule/day_of_week"
+    autoload :DayOfYear, "montrose/rule/day_of_year"
+    autoload :During, "montrose/rule/during"
+    autoload :Except, "montrose/rule/except"
+    autoload :HourOfDay, "montrose/rule/hour_of_day"
+    autoload :MinuteOfHour, "montrose/rule/minute_of_hour"
+    autoload :MonthOfYear, "montrose/rule/month_of_year"
+    autoload :NthDayMatcher, "montrose/rule/nth_day_matcher"
+    autoload :NthDayOfMonth, "montrose/rule/nth_day_of_month"
+    autoload :NthDayOfYear, "montrose/rule/nth_day_of_year"
+    autoload :TimeOfDay, "montrose/rule/time_of_day"
+    autoload :Total, "montrose/rule/total"
+    autoload :Until, "montrose/rule/until"
+    autoload :WeekOfYear, "montrose/rule/week_of_year"
+
     def self.included(base)
       base.extend ClassMethods
     end
@@ -34,20 +52,3 @@ module Montrose
     end
   end
 end
-
-require "montrose/rule/after"
-require "montrose/rule/covering"
-require "montrose/rule/day_of_month"
-require "montrose/rule/day_of_week"
-require "montrose/rule/day_of_year"
-require "montrose/rule/during"
-require "montrose/rule/except"
-require "montrose/rule/minute_of_hour"
-require "montrose/rule/hour_of_day"
-require "montrose/rule/month_of_year"
-require "montrose/rule/nth_day_of_month"
-require "montrose/rule/nth_day_of_year"
-require "montrose/rule/time_of_day"
-require "montrose/rule/total"
-require "montrose/rule/until"
-require "montrose/rule/week_of_year"
