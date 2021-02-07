@@ -812,12 +812,21 @@ describe "Parsing ICAL RRULE examples from RFC 5545 Section 3.8.5" do
 
   #   ==> (1997 EDT) August 5,17,19,31
 
-  #  An example where an invalid date (i.e., February 30) is ignored.
+  it "an example where an invalid date (i.e., February 30) is ignored" do
+    ical = <<~ICAL
+      DTSTART;TZID=America/New_York:20070115T090000
+      RRULE:FREQ=MONTHLY;BYMONTHDAY=15,30;COUNT=5
+    ICAL
+    #   ==> (2007 EST) January 15,30
+    #       (2007 EST) February 15
+    #       (2007 EDT) March 15,30
+    expected_events = parse_expected_events(
+      "2007 9:00 AM EST" => {"Jan" => [15, 30],
+                             "Feb" => [15]},
+      "2007 9:00 AM EDT" => {"Mar" => [15, 30]}
+    )
 
-  #   DTSTART;TZID=America/New_York:20070115T090000
-  #   RRULE:FREQ=MONTHLY;BYMONTHDAY=15,30;COUNT=5
-
-  #   ==> (2007 EST) January 15,30
-  #       (2007 EST) February 15
-  #       (2007 EDT) March 15,30
+    recurrence = Montrose::Recurrence.from_ical(ical)
+    _(recurrence).must_pair_with expected_events
+  end
 end
