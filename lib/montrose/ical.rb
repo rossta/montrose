@@ -16,7 +16,7 @@ module Montrose
 
     def parse
       dtstart, rrule = @ical.split("RRULE:")
-      dtstart, exdate = dtstart.split(/\s+/)
+      dtstart, exdate = dtstart.split("\n")
       Hash[*parse_dtstart(dtstart) + parse_exdate(exdate) + parse_rrule(rrule)]
     end
 
@@ -64,6 +64,8 @@ module Montrose
           [:week, Montrose::Week.parse(value)]
         when "WKST"
           [:week_start, value]
+        when "BYSETPOS"
+          warn "BYSETPOS not currently supported!"
         else
           raise "Unrecognized rrule '#{rule}'"
         end
