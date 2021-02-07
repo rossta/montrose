@@ -90,6 +90,7 @@ module Montrose
     def_option :between
     def_option :covering
     def_option :during
+    def_option :minute
     def_option :hour
     def_option :day
     def_option :mday
@@ -179,6 +180,10 @@ module Montrose
 
     def until=(time)
       @until = normalize_time(as_time(time)) || default_until
+    end
+
+    def minute=(minutes)
+      @minute = Minute.parse(minutes)
     end
 
     def hour=(hours)
