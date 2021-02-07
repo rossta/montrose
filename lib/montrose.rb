@@ -21,6 +21,8 @@ require "montrose/stack"
 require "montrose/version"
 
 module Montrose
+  autoload :Minute, "montrose/minute"
+  autoload :Hour, "montrose/hour"
   autoload :Day, "montrose/day"
   autoload :Month, "montrose/month"
   autoload :MonthDay, "montrose/month_day"

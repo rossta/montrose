@@ -18,6 +18,7 @@ module Montrose
         Rule::Except,
         Rule::Total,
         Rule::TimeOfDay,
+        Rule::MinuteOfHour,
         Rule::HourOfDay,
         Rule::NthDayOfMonth,
         Rule::NthDayOfYear,

@@ -52,6 +52,10 @@ module Montrose
           [:total, value.to_i]
         when "UNTIL"
           [:until, Montrose::Utils.parse_time(value)]
+        when "BYMINUTE"
+          [:minute, Montrose::Minute.parse(value)]
+        when "BYHOUR"
+          [:hour, Montrose::Hour.parse(value)]
         when "BYMONTH"
           [:month, Montrose::Month.parse(value)]
         when "BYDAY"
