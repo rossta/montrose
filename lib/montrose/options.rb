@@ -152,7 +152,7 @@ module Montrose
       found = send(key)
       return found if found
       return args.first if args.length == 1
-      raise "Key #{key.inspect} not found" unless block
+      raise "Key #{key.inspect} not found" unless block_given?
 
       yield
     end
