@@ -433,6 +433,23 @@ describe "Parsing ICAL RRULE examples from RFC 5545 Section 3.8.5" do
   occurrences" do
     ical = <<~ICAL
       DTSTART;TZID=America/New_York:19970910T090000
+      RRULE:FREQ=MONTHLY;INTERVAL=18;COUNT=10;BYMONTHDAY=10,11,12,13,14,15
+    ICAL
+    #   ==> (1997 9:00 AM EDT) September 10,11,12,13,14,15
+    #       (1999 9:00 AM EST) March 10,11,12,13
+    expected_events = parse_expected_events(
+      "1997 9:00 AM EDT" => {"Sep" => [10, 11, 12, 13, 14, 15]},
+      "1999 9:00 AM EST" => {"Mar" => [10, 11, 12, 13]}
+    )
+
+    recurrence = Montrose::Recurrence.from_ical(ical)
+    _(recurrence).must_pair_with expected_events
+  end
+
+  it "every 18 months on the 10th thru 15th of the month for 10
+  occurrences" do
+    ical = <<~ICAL
+      DTSTART;TZID=America/New_York:19970910T090000
       RRULE:FREQ=MONTHLY;INTERVAL=18;COUNT=10;BYMONTHDAY=10,11,12,
       13,14,15
     ICAL
@@ -659,6 +676,29 @@ describe "Parsing ICAL RRULE examples from RFC 5545 Section 3.8.5" do
     recurrence = Montrose::Recurrence.from_ical(ical)
     _(recurrence).must_pair_with expected_events
     _(recurrence.default_options[:except]).must_equal([Date.parse("19970902")])
+  end
+
+  it "every Friday the 13th, forever, with exception date" do
+    ical = <<~ICAL
+      DTSTART;TZID=America/New_York:19970902T090000
+      EXDATE;TZID=America/New_York:19981113T090000
+      RRULE:FREQ=MONTHLY;BYDAY=FR;BYMONTHDAY=13
+    ICAL
+    #   ==> (1998 9:00 AM EST) February 13;March 13;November 13
+    #       (1999 9:00 AM EDT) August 13
+    #       (2000 9:00 AM EDT) October 13
+    #       ...
+
+    expected_events = parse_expected_events(
+      "1998 9:00 AM EST" => {"Feb" => [13],
+                             "Mar" => [13]},
+      "1999 9:00 AM EDT" => {"Aug" => [13]},
+      "2000 9:00 AM EDT" => {"Oct" => [13]}
+    )
+
+    recurrence = Montrose::Recurrence.from_ical(ical)
+    _(recurrence).must_pair_with expected_events
+    _(recurrence.default_options[:except]).must_equal([Date.parse("19981113")])
   end
 
   it "The first Saturday that follows the first Sunday of the month,

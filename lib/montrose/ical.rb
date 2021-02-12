@@ -13,48 +13,78 @@ module Montrose
     end
 
     def parse
-      dtstart, rrule = @ical.split("RRULE:")
-      dtstart, exdate = dtstart.split("\n")
-      _label, time_string = (dtstart || "").split(";")
-      time_zone = parse_timezone(time_string)
+      time_zone = extract_time_zone(@ical)
 
       Time.use_zone(time_zone) do
-        Hash[
-          *parse_dtstart(dtstart) +
-            parse_exdate(exdate) +
-            parse_rrule(rrule)
-          ]
+        Hash[*parse_properties(@ical)]
       end
     end
 
     private
 
-    def parse_timezone(time_string)
-      time_zone_rule, _ = (time_string || "").split(":")
+    def extract_time_zone(ical_string)
+      _label, time_string = ical_string.split("\n").grep(/^DTSTART/).join.split(";")
+      time_zone_rule, _ = time_string.split(":")
       _label, time_zone = (time_zone_rule || "").split("=")
       time_zone
     end
 
-    def parse_dtstart(dtstart)
-      return [] unless dtstart.present?
+    # First pass parsing to normalize arbitrary line breaks
+    def property_lines(ical_string)
+      ical_string.split("\n").each_with_object([]) do |line, lines|
+        case line
+        when /^(DTSTART|DTEND|EXDATE|RDATE|RRULE)/
+          lines << line
+        else
+          (lines.last || lines << "")
+          lines.last << line
+        end
+      end
+    end
 
-      _label, time_string = dtstart.split(";")
-      @starts_at = parse_ical_time(time_string)
+    def parse_properties(ical_string)
+      property_lines(ical_string).flat_map do |line|
+        (property, value) = line.split(":")
+        (property, tzid) = property.split(";")
+
+        case property
+        when "DTSTART"
+          parse_dtstart(tzid, value)
+        when "DTEND"
+          warn "DTEND not currently supported!"
+        when "EXDATE"
+          parse_exdate(value)
+        when "RDATE"
+          warn "RDATE not currently supported!"
+        when "RRULE"
+          parse_rrule(value)
+        end
+      end
+    end
+
+    def parse_dtstart(tzid, time)
+      return [] unless time.present?
+
+      @starts_at = parse_time([tzid, time].compact.join(":"))
 
       [:starts, @starts_at]
     end
 
-    def parse_ical_time(time_string)
-      time_zone = parse_timezone(time_string)
+    def parse_timezone(time_string)
+       time_zone_rule, _ = time_string.split(":")
+       _label, time_zone = (time_zone_rule || "").split("=")
+       time_zone
+    end
 
+    def parse_time(time_string)
+      time_zone = parse_timezone(time_string)
       Montrose::Utils.parse_time(time_string).in_time_zone(time_zone)
     end
 
     def parse_exdate(exdate)
       return [] unless exdate.present?
 
-      _label, date_string = exdate.split(";")
-      @except = Montrose::Utils.as_date(date_string) # only currently supports dates
+      @except = Montrose::Utils.as_date(exdate) # only currently supports dates
 
       [:except, @except]
     end
@@ -70,7 +100,7 @@ module Montrose
         when "COUNT"
           [:total, value.to_i]
         when "UNTIL"
-          [:until, parse_ical_time(value)]
+          [:until, parse_time(value)]
         when "BYMINUTE"
           [:minute, Montrose::Minute.parse(value)]
         when "BYHOUR"
