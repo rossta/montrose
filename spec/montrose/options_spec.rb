@@ -839,11 +839,11 @@ describe Montrose::Options do
     end
 
     it "raises for no block given and value not found" do
-      _(-> { options.fetch(:every) }).must_raise
+      _(-> { options.fetch(:every) }).must_raise(KeyError)
     end
 
     it "raises for more than two args" do
-      _(-> { options.fetch(:every, nil, nil) }).must_raise
+      _(-> { options.fetch(:every, nil, nil) }).must_raise(ArgumentError)
     end
   end
 
