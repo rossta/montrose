@@ -100,6 +100,19 @@ describe Montrose::Recurrence do
     end
   end
 
+  describe "#==" do
+    it "compares the recurrence with another recurrence" do
+      options = {every: :day, total: 3, starts: now, interval: 1}
+      recurrence = new_recurrence(options)
+
+      identical_recurrence = new_recurrence(options)
+      different_recurrence = new_recurrence(options.merge(interval: 2))
+
+      _(recurrence).must_equal identical_recurrence
+      _(recurrence).wont_equal different_recurrence
+    end
+  end
+
   describe ".dump" do
     it "returns options as JSON string" do
       options = {every: :day, total: 3, starts: now, interval: 1}
