@@ -6,8 +6,8 @@
 
 Montrose is an easy-to-use library for defining recurring events in Ruby. It uses a simple chaining system for building enumerable recurrences, inspired heavily by the design principles of [HTTP.rb](https://github.com/httprb/http) and rule definitions available in [Recurrence](https://github.com/fnando/recurrence).
 
-* [Introductory blog post](http://bit.ly/1PA68Zb)
-* [NYC.rb
+- [Introductory blog post](http://bit.ly/1PA68Zb)
+- [NYC.rb
   presentation](https://speakerdeck.com/rossta/recurring-events-with-montrose)
 
 ## Installation
@@ -32,17 +32,17 @@ Dealing with recurring events is hard. `Montrose` provides a simple interface fo
 
 More specifically, this project intends to:
 
-* model recurring events in Ruby
-* embrace Ruby idioms
-* support recent Rubies
-* be reasonably performant
-* serialize to yaml, hash, and [ical](http://www.kanzaki.com/docs/ical/rrule.html#basic) formats
-* be suitable for integration with persistence libraries
+- model recurring events in Ruby
+- embrace Ruby idioms
+- support recent Rubies
+- be reasonably performant
+- serialize to yaml, hash, and [ical](http://www.kanzaki.com/docs/ical/rrule.html#basic) formats
+- be suitable for integration with persistence libraries
 
 What `Montrose` doesn't do:
 
-* support all calendaring use cases under the sun
-* schedule recurring jobs for your Rails app. Use one of these instead: [cron](https://en.wikipedia.org/wiki/Cron), [rufus-scheduler](https://github.com/jmettraux/rufus-scheduler), [sidekiq-cron](https://github.com/ondrejbartas/sidekiq-cron), [sidetiq](https://github.com/tobiassvn/sidetiq), [whenever](https://github.com/javan/whenever)
+- support all calendaring use cases under the sun
+- schedule recurring jobs for your Rails app. Use one of these instead: [cron](https://en.wikipedia.org/wiki/Cron), [rufus-scheduler](https://github.com/jmettraux/rufus-scheduler), [sidekiq-cron](https://github.com/ondrejbartas/sidekiq-cron), [sidetiq](https://github.com/tobiassvn/sidetiq), [whenever](https://github.com/javan/whenever)
 
 ## Concepts
 
@@ -392,13 +392,16 @@ end
 # add after building
 s << Montrose.yearly
 ```
+
 The `Schedule#<<` method also accepts valid recurrence options as hashes:
+
 ```ruby
 schedule = Montrose::Schedule.build do |s|
   s << { day: { friday: [1] } }
   s << { on: :tuesday }
 end
 ```
+
 A schedule acts like a collection of recurrence rules that also behaves as a single
 stream of events:
 
@@ -419,7 +422,9 @@ class RecurringEvent < ApplicationRecord
 
 end
 ```
+
 `Montrose::Schedule` can also be serialized:
+
 ```ruby
 class RecurringEvent < ApplicationRecord
   serialize :recurrence, Montrose::Schedule
@@ -435,10 +440,10 @@ Montrose is named after the beautifully diverse and artistic [neighborhood in Ho
 
 Check out following related projects, all of which have provided inspiration for `Montrose`.
 
-* [ice_cube](https://github.com/seejohnrun/ice_cube)
-* [recurrence](https://github.com/fnando/recurrence)
-* [runt](https://github.com/mlipper/runt)
-* [http.rb](https://github.com/httprb/http) - not a recurrence project, but inspirational to design, implementation, and interface of `Montrose`
+- [ice_cube](https://github.com/seejohnrun/ice_cube)
+- [recurrence](https://github.com/fnando/recurrence)
+- [runt](https://github.com/mlipper/runt)
+- [http.rb](https://github.com/httprb/http) - not a recurrence project, but inspirational to design, implementation, and interface of `Montrose`
 
 ## Development
 
