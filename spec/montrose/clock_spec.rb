@@ -115,4 +115,26 @@ describe Montrose::Clock do
       _(clock).must_have_tick 1.day
     end
   end
+
+  describe "#peek" do
+    it "does not cause clock to tick" do
+      Timecop.freeze(Time.local(2018, 5, 31, 11)) do
+        clock = new_clock(every: :day, at: [[10, 0, 59], [15, 30, 34]])
+
+        _(clock.peek).must_equal Time.local(2018, 5, 31, 15, 30, 34)
+        _(clock.peek).must_equal Time.local(2018, 5, 31, 15, 30, 34)
+        _(clock.tick).must_equal Time.local(2018, 5, 31, 15, 30, 34)
+        _(clock.peek).must_equal Time.local(2018, 6, 1, 10, 0, 59)
+        _(clock.peek).must_equal Time.local(2018, 6, 1, 10, 0, 59)
+        _(clock.tick).must_equal Time.local(2018, 6, 1, 10, 0, 59)
+        _(clock.peek).must_equal Time.local(2018, 6, 1, 15, 30, 34)
+        _(clock.peek).must_equal Time.local(2018, 6, 1, 15, 30, 34)
+        _(clock.tick).must_equal Time.local(2018, 6, 1, 15, 30, 34)
+        _(clock.peek).must_equal Time.local(2018, 6, 2, 10, 0, 59)
+        _(clock.tick).must_equal Time.local(2018, 6, 2, 10, 0, 59)
+        _(clock.peek).must_equal Time.local(2018, 6, 2, 15, 30, 34)
+        _(clock.tick).must_equal Time.local(2018, 6, 2, 15, 30, 34)
+      end
+    end
+  end
 end
