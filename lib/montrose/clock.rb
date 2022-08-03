@@ -58,9 +58,9 @@ module Montrose
     #
     # Returns next time using :at option. Tries to calculate
     # a time for the current date by incrementing the index
-    # to use of the :at option. Once all items have been
-    # exhausted the minimum time is generated for the current
-    # date and we advance to the next date
+    # of the :at option. Once all items have been exhausted
+    # the minimum time is generated for the current date and
+    # we advance to the next date based on interval
     #
     def next_time_at(time, tick)
       if current_at_index && (next_time = time_at(time, current_at_index + 1))
