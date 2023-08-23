@@ -5,8 +5,6 @@ source "https://rubygems.org"
 gemspec
 
 group :development do
-  gem "coveralls"
-
   gem "guard"
   gem "guard-minitest"
   gem "guard-rubocop"
