@@ -6,7 +6,6 @@ gemspec
 
 group :development do
   gem "coveralls"
-  gem "yard"
 
   gem "guard"
   gem "guard-minitest"
