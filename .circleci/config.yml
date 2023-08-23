@@ -1,33 +1,18 @@
 version: 2.1
 orbs:
-  ruby: circleci/ruby@1.3.0
+  ruby: circleci/ruby@2.1.0
+
+
 commands:
   run-tests:
     description: Run tests
     steps:
       - run: bundle exec rake test
-  restore:
-    description: Restore cache
+
+  run-lint:
+    description: Run standardrb lint check
     steps:
-      - restore_cache:
-          keys:
-            - v1_bundler_deps-
-  save:
-    description: Save cache
-    steps:
-      - save_cache:
-          paths:
-            - ./vendor/bundle
-          key: v1-bundler-deps-{{ .Environment.CIRCLE_JOB }}
-  bundle:
-    description: Install dependencies
-    steps:
-      - run:
-          echo "export BUNDLE_JOBS=4" >> $BASH_ENV
-          echo "export BUNDLE_RETRY=3" >> $BASH_ENV
-          echo "export BUNDLE_PATH=$(pwd)/vendor/bundle" >> $BASH_ENV
-          echo "export BUNDLE_GEMFILE=$(pwd)/${GEMFILE_NAME}" >> $BASH_ENV
-      - run: bundle install
+      - run: bundle exec rake standard
 
 jobs:
   test:
@@ -38,18 +23,24 @@ jobs:
         type: string
     docker:
       - image: 'cimg/ruby:<< parameters.ruby_version >>'
-    environment:
-      GEMFILE_NAME: <<parameters.gemfile>>
     steps:
       - checkout
-      - restore
-      - bundle
-      - save
+      - ruby/install-deps:
+          gemfile: <<parameters.gemfile>>
       - run-tests
+
+  lint:
+    docker:
+      - image: cimg/ruby:2.7
+    steps:
+      - checkout
+      - ruby/install-deps
+      - run-lint
 
 workflows:
   all-tests:
     jobs:
+      - lint
       - test:
           matrix:
             parameters:

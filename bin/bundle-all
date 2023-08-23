@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+Dir["gemfiles/*.gemfile"].each do |gemfile|
+  system({"BUNDLE_GEMFILE" => gemfile}, "bundle")
+end

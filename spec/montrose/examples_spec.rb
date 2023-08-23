@@ -50,9 +50,9 @@ describe Montrose::Recurrence do
 
     it "anchors to starts time outside of between range" do
       recurrence = new_recurrence(every: :day,
-                                  interval: 3,
-                                  starts: 1.day.ago,
-                                  between: Date.today..7.days.from_now)
+        interval: 3,
+        starts: 1.day.ago,
+        between: Date.today..7.days.from_now)
 
       _(recurrence.events.to_a).must_pair_with [
         Time.local(2015, 8, 31, 12),
@@ -62,9 +62,9 @@ describe Montrose::Recurrence do
 
     it "anchors to starts time inside of between range" do
       recurrence = new_recurrence(every: :day,
-                                  interval: 3,
-                                  starts: 1.day.from_now,
-                                  between: Date.today..7.days.from_now)
+        interval: 3,
+        starts: 1.day.from_now,
+        between: Date.today..7.days.from_now)
 
       _(recurrence.events.to_a).must_pair_with [
         Time.local(2015, 9, 2, 12),
@@ -75,9 +75,9 @@ describe Montrose::Recurrence do
 
     it "masks recurrence when starts time outside of covering range" do
       recurrence = new_recurrence(every: :day,
-                                  interval: 3,
-                                  starts: 1.day.ago,
-                                  covering: Date.today..7.days.from_now)
+        interval: 3,
+        starts: 1.day.ago,
+        covering: Date.today..7.days.from_now)
 
       _(recurrence.events.to_a).must_pair_with [
         Time.local(2015, 9, 3, 12),
@@ -87,9 +87,9 @@ describe Montrose::Recurrence do
 
     it "masks recurrent when starts time inside of covering range" do
       recurrence = new_recurrence(every: :day,
-                                  interval: 3,
-                                  starts: 1.day.from_now,
-                                  covering: Date.today..7.days.from_now)
+        interval: 3,
+        starts: 1.day.from_now,
+        covering: Date.today..7.days.from_now)
 
       _(recurrence.events.to_a).must_pair_with [
         Time.local(2015, 9, 2, 12),
@@ -101,9 +101,9 @@ describe Montrose::Recurrence do
     it "masks recurrence when starts time outside of between range with legacy masking" do
       Montrose.stub :enable_deprecated_between_masking?, true do
         recurrence = new_recurrence(every: :day,
-                                    interval: 3,
-                                    starts: 1.day.ago,
-                                    between: Date.today..7.days.from_now)
+          interval: 3,
+          starts: 1.day.ago,
+          between: Date.today..7.days.from_now)
 
         _(recurrence.events.to_a).must_pair_with [
           Time.local(2015, 9, 3, 12),
@@ -115,9 +115,9 @@ describe Montrose::Recurrence do
     it "masks recurrence when starts time inside of between range with legacy masking" do
       Montrose.stub :enable_deprecated_between_masking?, true do
         recurrence = new_recurrence(every: :day,
-                                    interval: 3,
-                                    starts: 1.day.from_now,
-                                    between: Date.today..7.days.from_now)
+          interval: 3,
+          starts: 1.day.from_now,
+          between: Date.today..7.days.from_now)
 
         _(recurrence.events.to_a).must_pair_with [
           Time.local(2015, 9, 2, 12),
@@ -150,8 +150,8 @@ describe Montrose::Recurrence do
     describe "yearly in month, nth day of month" do
       it "when nth day N falls in given month" do
         recurrence = new_recurrence(every: :year,
-                                    month: 1,
-                                    day: {friday: [2]})
+          month: 1,
+          day: {friday: [2]})
 
         _(recurrence.events.take(3).to_a).must_pair_with [
           Time.local(2016, 1, 8, 12),
@@ -162,8 +162,8 @@ describe Montrose::Recurrence do
 
       it "when nth day N falls outside of given month" do
         recurrence = new_recurrence(every: :year,
-                                    month: 2,
-                                    day: {friday: [2]})
+          month: 2,
+          day: {friday: [2]})
 
         _(recurrence.events.take(3).to_a).must_pair_with [
           Time.local(2016, 2, 12, 12),

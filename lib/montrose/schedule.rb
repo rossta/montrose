@@ -35,13 +35,13 @@ module Montrose
         return dump(load(obj)) if obj.is_a?(String)
 
         array = case obj
-                when Array
-                  new(obj).to_a
-                when self
-                  obj.to_a
-                else
-                  fail SerializationError,
-                    "Object was supposed to be a #{self}, but was a #{obj.class}. -- #{obj.inspect}"
+        when Array
+          new(obj).to_a
+        when self
+          obj.to_a
+        else
+          fail SerializationError,
+            "Object was supposed to be a #{self}, but was a #{obj.class}. -- #{obj.inspect}"
         end
 
         JSON.dump(array)

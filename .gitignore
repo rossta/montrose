@@ -1,6 +1,5 @@
 /.bundle/
 /.yardoc
-/Gemfile.lock
 /_yardoc/
 /coverage/
 /doc/
@@ -9,6 +8,4 @@
 /tmp/
 /profile.log
 /trace.txt
-gemfiles/*.lock
 /.ruby-gemset
-/.ruby-version

@@ -6,12 +6,9 @@ gemspec
 
 group :development do
   gem "coveralls"
-  gem "yard"
 
-  unless ENV["CI"]
-    gem "guard"
-    gem "guard-minitest"
-    gem "guard-rubocop"
-    gem "pry-byebug"
-  end
+  gem "guard"
+  gem "guard-minitest"
+  gem "guard-rubocop"
+  gem "pry-byebug"
 end

@@ -71,9 +71,9 @@ module Montrose
     end
 
     def parse_timezone(time_string)
-       time_zone_rule, _ = time_string.split(":")
-       _label, time_zone = (time_zone_rule || "").split("=")
-       time_zone
+      time_zone_rule, _ = time_string.split(":")
+      _label, time_zone = (time_zone_rule || "").split("=")
+      time_zone
     end
 
     def parse_time(time_string)
