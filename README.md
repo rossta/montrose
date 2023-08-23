@@ -451,13 +451,6 @@ After checking out the repo, run `bin/setup` to install dependencies. Then, run 
 
 You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
-To run tests against multiple versions of activesupport, use the Appraisals:
-
-```sh
-bin/appraisal install
-bin/appraisal rake test
-```
-
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/rossta/montrose. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
