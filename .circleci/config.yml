@@ -23,11 +23,10 @@ jobs:
         type: string
     docker:
       - image: 'cimg/ruby:<< parameters.ruby_version >>'
-    environment:
-      GEMFILE_NAME: <<parameters.gemfile>>
     steps:
       - checkout
-      - ruby/install-deps
+      - ruby/install-deps:
+          gemfile: <<parameters.gemfile>>
       - run-tests
       - run-lint
 
