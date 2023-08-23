@@ -104,7 +104,7 @@ module Montrose
     protected
 
     def interval_str
-      @interval != 1 ? "*/#{@interval}" : "*"
+      (@interval != 1) ? "*/#{@interval}" : "*"
     end
   end
 end

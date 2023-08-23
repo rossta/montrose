@@ -227,13 +227,13 @@ module Montrose
         return dump(load(obj)) if obj.is_a?(String)
 
         hash = case obj
-               when Hash
-                 obj
-               when self
-                 obj.to_hash
-               else
-                 fail SerializationError,
-                   "Object was supposed to be a #{self}, but was a #{obj.class}. -- #{obj.inspect}"
+        when Hash
+          obj
+        when self
+          obj.to_hash
+        else
+          fail SerializationError,
+            "Object was supposed to be a #{self}, but was a #{obj.class}. -- #{obj.inspect}"
         end
 
         JSON.dump(hash)
