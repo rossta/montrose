@@ -24,7 +24,6 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "activesupport", ">= 5.2", "< 7.1"
 
-  spec.add_development_dependency "appraisal"
   spec.add_development_dependency "m"
   spec.add_development_dependency "minitest"
   spec.add_development_dependency "rake", ">= 12.3.3"
