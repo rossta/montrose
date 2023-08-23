@@ -9,6 +9,11 @@ commands:
     steps:
       - run: bundle exec rake test
 
+  run-lint:
+    description: Run standardrb lint check
+    steps:
+      - run: bundle exec rake standard
+
 jobs:
   test:
     parameters:
@@ -24,6 +29,7 @@ jobs:
       - checkout
       - ruby/install-deps
       - run-tests
+      - run-lint
 
 workflows:
   all-tests:
