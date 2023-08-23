@@ -8,28 +8,6 @@ commands:
     description: Run tests
     steps:
       - run: bundle exec rake test
-  restore:
-    description: Restore cache
-    steps:
-      - restore_cache:
-          keys:
-            - v1_bundler_deps-
-  save:
-    description: Save cache
-    steps:
-      - save_cache:
-          paths:
-            - ./vendor/bundle
-          key: v1-bundler-deps-{{ .Environment.CIRCLE_JOB }}
-  bundle:
-    description: Install dependencies
-    steps:
-      - run:
-          echo "export BUNDLE_JOBS=4" >> $BASH_ENV
-          echo "export BUNDLE_RETRY=3" >> $BASH_ENV
-          echo "export BUNDLE_PATH=$(pwd)/vendor/bundle" >> $BASH_ENV
-          echo "export BUNDLE_GEMFILE=$(pwd)/${GEMFILE_NAME}" >> $BASH_ENV
-      - run: bundle install
 
 jobs:
   test:
@@ -44,9 +22,7 @@ jobs:
       GEMFILE_NAME: <<parameters.gemfile>>
     steps:
       - checkout
-      - restore
-      - bundle
-      - save
+      - ruby/install-deps
       - run-tests
 
 workflows:
