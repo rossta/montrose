@@ -28,11 +28,19 @@ jobs:
       - ruby/install-deps:
           gemfile: <<parameters.gemfile>>
       - run-tests
+
+  lint:
+    docker:
+      - image: cimg/ruby:2.7
+    steps:
+      - checkout
+      - ruby/install-deps
       - run-lint
 
 workflows:
   all-tests:
     jobs:
+      - lint
       - test:
           matrix:
             parameters:
