@@ -18,11 +18,15 @@ task test: :spec
 task default: %i[spec standard]
 
 namespace :doc do
-  desc "Generate docs and publish to gh-pages"
+  desc "Build docs"
+  task :build do
+    sh "bundle exec yard doc"
+  end
+
+  desc "Publish to gh-pages"
   task :publish do
-    puts "Generating docs"
+    puts "Publishing docs"
     require "fileutils"
-    sh "yard doc"
     sh "git checkout gh-pages"
     sh "cp -R doc/* ."
     sh "git commit -vam 'Update documentation'"
