@@ -6,15 +6,15 @@
 <title>
   Module: Montrose::Chainable
   
-    &mdash; Documentation by YARD 0.9.18
+    &mdash; Documentation by YARD 0.9.34
   
 </title>
 
-  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+  <link rel="stylesheet" href="../css/style.css" type="text/css" />
 
-  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+  <link rel="stylesheet" href="../css/common.css" type="text/css" />
 
-<script type="text/javascript" charset="utf-8">
+<script type="text/javascript">
   pathId = "Montrose::Chainable";
   relpath = '../';
 </script>
@@ -145,7 +145,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Create a recurrence occurring during date range.</p>
+<p>Create a recurrence occurring between the start and end of a given date range; :between is shorthand for separate :starts and :until options.</p>
 </div></span>
   
 </li>
@@ -169,6 +169,30 @@
 
   
     <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#covering-instance_method" title="#covering (instance method)">#<strong>covering</strong>(date_range)  &#x21d2; Montrose::Recurrence </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Create a recurrence which will only emit values within the date range, also called “masking.”.</p>
+</div></span>
   
 </li>
 
@@ -293,6 +317,30 @@
 
   
     <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#during-instance_method" title="#during (instance method)">#<strong>during</strong>(time_of_day, *extras)  &#x21d2; Montrose::Recurrence </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Create a recurrence occurring within a time-of-day range or ranges.</p>
+</div></span>
   
 </li>
 
@@ -744,12 +792,12 @@
       <pre class="lines">
 
 
-195
-196
-197</pre>
+228
+229
+230</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 195</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 228</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_at'>at</span><span class='lparen'>(</span><span class='id identifier rubyid_time'>time</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>at:</span> <span class='id identifier rubyid_time'>time</span><span class='rparen'>)</span>
@@ -771,7 +819,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Create a recurrence occurring during date range.</p>
+<p>Create a recurrence occurring between the start and end of a given date range; :between is shorthand for separate :starts and :until options. When used with explicit :start and/or :until options, those will take precedence.</p>
 
 
   </div>
@@ -821,12 +869,12 @@
       <pre class="lines">
 
 
-167
-168
-169</pre>
+169
+170
+171</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 167</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 169</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_between'>between</span><span class='lparen'>(</span><span class='id identifier rubyid_date_range'>date_range</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>between:</span> <span class='id identifier rubyid_date_range'>date_range</span><span class='rparen'>)</span>
@@ -851,15 +899,92 @@
       <pre class="lines">
 
 
-339
-340
-341</pre>
+372
+373
+374</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 339</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 372</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_branch'>branch</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="../Montrose.html" title="Montrose (module)">Montrose</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Recurrence.html" title="Montrose::Recurrence (class)">Recurrence</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Recurrence.html#new-class_method" title="Montrose::Recurrence.new (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="covering-instance_method">
+  
+    #<strong>covering</strong>(date_range)  &#x21d2; <tt><span class='object_link'><a href="Recurrence.html" title="Montrose::Recurrence (class)">Montrose::Recurrence</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Create a recurrence which will only emit values within the date range, also called “masking.”</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code><span class='const'><span class='object_link'><a href="../Montrose.html" title="Montrose (module)">Montrose</a></span></span><span class='period'>.</span><span class='id identifier rubyid_weekly'><span class='object_link'><a href="#weekly-instance_method" title="Montrose::Chainable#weekly (method)">weekly</a></span></span><span class='period'>.</span><span class='id identifier rubyid_covering'>covering</span><span class='lparen'>(</span><span class='const'>Date</span><span class='period'>.</span><span class='id identifier rubyid_tomorrow'>tomorrow</span><span class='op'>..</span><span class='const'>Date</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='int'>2016</span><span class='comma'>,</span> <span class='int'>3</span><span class='comma'>,</span> <span class='int'>15</span><span class='rparen'>)</span><span class='rparen'>)</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>date_range</span>
+      
+      
+        <span class='type'>(<tt>Range&lt;Date&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Recurrence.html" title="Montrose::Recurrence (class)">Montrose::Recurrence</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+183
+184
+185</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 183</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_covering'>covering</span><span class='lparen'>(</span><span class='id identifier rubyid_date_range'>date_range</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>covering:</span> <span class='id identifier rubyid_date_range'>date_range</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -940,12 +1065,12 @@
       <pre class="lines">
 
 
+76
 77
-78
-79</pre>
+78</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 77</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 76</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_daily'>daily</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_branch'>branch</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>every:</span> <span class='symbol'>:day</span><span class='rparen'>)</span>
@@ -1028,12 +1153,12 @@
       <pre class="lines">
 
 
-224
-225
-226</pre>
+257
+258
+259</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 224</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 257</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_day_of_month'>day_of_month</span><span class='lparen'>(</span><span class='id identifier rubyid_days'>days</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_extras'>extras</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>mday:</span> <span class='id identifier rubyid_days'>days</span><span class='period'>.</span><span class='id identifier rubyid_array_concat'>array_concat</span><span class='lparen'>(</span><span class='id identifier rubyid_extras'>extras</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -1116,12 +1241,12 @@
       <pre class="lines">
 
 
-240
-241
-242</pre>
+273
+274
+275</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 240</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 273</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_day_of_week'>day_of_week</span><span class='lparen'>(</span><span class='id identifier rubyid_weekdays'>weekdays</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_extras'>extras</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>day:</span> <span class='id identifier rubyid_weekdays'>weekdays</span><span class='period'>.</span><span class='id identifier rubyid_array_concat'>array_concat</span><span class='lparen'>(</span><span class='id identifier rubyid_extras'>extras</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -1204,12 +1329,12 @@
       <pre class="lines">
 
 
-256
-257
-258</pre>
+289
+290
+291</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 256</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 289</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_day_of_year'>day_of_year</span><span class='lparen'>(</span><span class='id identifier rubyid_days'>days</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_extras'>extras</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>yday:</span> <span class='id identifier rubyid_days'>days</span><span class='period'>.</span><span class='id identifier rubyid_array_concat'>array_concat</span><span class='lparen'>(</span><span class='id identifier rubyid_extras'>extras</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -1234,15 +1359,100 @@
       <pre class="lines">
 
 
-344
-345
-346</pre>
+377
+378
+379</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 344</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 377</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_default_options'>default_options</span>
   <span class='ivar'>@default_options</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="../Montrose.html" title="Montrose (module)">Montrose</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Options.html" title="Montrose::Options (class)">Options</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Options.html#new-class_method" title="Montrose::Options.new (method)">new</a></span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="during-instance_method">
+  
+    #<strong>during</strong>(time_of_day, *extras)  &#x21d2; <tt><span class='object_link'><a href="Recurrence.html" title="Montrose::Recurrence (class)">Montrose::Recurrence</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Create a recurrence occurring within a time-of-day range or ranges. Given time ranges will parse as times-of-day and ignore given dates.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code><span class='const'><span class='object_link'><a href="../Montrose.html" title="Montrose (module)">Montrose</a></span></span><span class='period'>.</span><span class='id identifier rubyid_every'><span class='object_link'><a href="#every-instance_method" title="Montrose::Chainable#every (method)">every</a></span></span><span class='lparen'>(</span><span class='int'>20</span><span class='period'>.</span><span class='id identifier rubyid_minutes'>minutes</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_during'>during</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>9am-5pm</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='const'><span class='object_link'><a href="../Montrose.html" title="Montrose (module)">Montrose</a></span></span><span class='period'>.</span><span class='id identifier rubyid_every'><span class='object_link'><a href="#every-instance_method" title="Montrose::Chainable#every (method)">every</a></span></span><span class='lparen'>(</span><span class='int'>20</span><span class='period'>.</span><span class='id identifier rubyid_minutes'>minutes</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_during'>during</span><span class='lparen'>(</span><span class='id identifier rubyid_time'>time</span><span class='period'>.</span><span class='id identifier rubyid_change'>change</span><span class='lparen'>(</span><span class='label'>hour:</span> <span class='int'>9</span><span class='rparen'>)</span><span class='op'>..</span><span class='id identifier rubyid_time'>time</span><span class='period'>.</span><span class='id identifier rubyid_change'>change</span><span class='lparen'>(</span><span class='label'>hour:</span> <span class='int'>5</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='const'><span class='object_link'><a href="../Montrose.html" title="Montrose (module)">Montrose</a></span></span><span class='period'>.</span><span class='id identifier rubyid_every'><span class='object_link'><a href="#every-instance_method" title="Montrose::Chainable#every (method)">every</a></span></span><span class='lparen'>(</span><span class='int'>20</span><span class='period'>.</span><span class='id identifier rubyid_minutes'>minutes</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_during'>during</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='int'>9</span><span class='comma'>,</span> <span class='int'>0</span><span class='comma'>,</span> <span class='int'>0</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='int'>17</span><span class='comma'>,</span> <span class='int'>0</span><span class='comma'>,</span> <span class='int'>0</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+<span class='const'><span class='object_link'><a href="../Montrose.html" title="Montrose (module)">Montrose</a></span></span><span class='period'>.</span><span class='id identifier rubyid_every'><span class='object_link'><a href="#every-instance_method" title="Montrose::Chainable#every (method)">every</a></span></span><span class='lparen'>(</span><span class='int'>20</span><span class='period'>.</span><span class='id identifier rubyid_minutes'>minutes</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_during'>during</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>9am-12pm</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>1pm-5pm</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>time-of-day</span>
+      
+      
+        <span class='type'>(<tt>Range&lt;Time&gt;</tt>, <tt>String</tt>, <tt>Array&lt;Array&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>range(s)</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Recurrence.html" title="Montrose::Recurrence (class)">Montrose::Recurrence</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+200
+201
+202</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 200</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_during'>during</span><span class='lparen'>(</span><span class='id identifier rubyid_time_of_day'>time_of_day</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_extras'>extras</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>during:</span> <span class='id identifier rubyid_time_of_day'>time_of_day</span><span class='period'>.</span><span class='id identifier rubyid_array_concat'>array_concat</span><span class='lparen'>(</span><span class='id identifier rubyid_extras'>extras</span><span class='rparen'>)</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1337,12 +1547,12 @@
       <pre class="lines">
 
 
+22
 23
-24
-25</pre>
+24</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 23</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 22</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_every'>every</span><span class='lparen'>(</span><span class='id identifier rubyid_frequency'>frequency</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_branch'>branch</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>every:</span> <span class='id identifier rubyid_frequency'>frequency</span><span class='rparen'>)</span>
@@ -1420,12 +1630,12 @@
       <pre class="lines">
 
 
-209
-210
-211</pre>
+242
+243
+244</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 209</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 242</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_except'>except</span><span class='lparen'>(</span><span class='id identifier rubyid_date'>date</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>except:</span> <span class='id identifier rubyid_date'>date</span><span class='rparen'>)</span>
@@ -1508,12 +1718,12 @@
       <pre class="lines">
 
 
-272
-273
-274</pre>
+305
+306
+307</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 272</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 305</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_hour_of_day'>hour_of_day</span><span class='lparen'>(</span><span class='id identifier rubyid_hours'>hours</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_extras'>extras</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>hour:</span> <span class='id identifier rubyid_hours'>hours</span><span class='period'>.</span><span class='id identifier rubyid_array_concat'>array_concat</span><span class='lparen'>(</span><span class='id identifier rubyid_extras'>extras</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -1597,12 +1807,12 @@
       <pre class="lines">
 
 
+58
 59
-60
-61</pre>
+60</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 59</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 58</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_hourly'>hourly</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_branch'>branch</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>every:</span> <span class='symbol'>:hour</span><span class='rparen'>)</span>
@@ -1624,8 +1834,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Create a new recurrence combining options of self and other. The value of
-entries with duplicate keys will be those of other</p>
+<p>Create a new recurrence combining options of self and other. The value of entries with duplicate keys will be those of other</p>
 
 
   </div>
@@ -1682,12 +1891,12 @@ entries with duplicate keys will be those of other</p>
       <pre class="lines">
 
 
-334
-335
-336</pre>
+367
+368
+369</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 334</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 367</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_branch'>branch</span> <span class='id identifier rubyid_default_options'>default_options</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
@@ -1771,12 +1980,12 @@ entries with duplicate keys will be those of other</p>
       <pre class="lines">
 
 
+40
 41
-42
-43</pre>
+42</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 41</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 40</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_minutely'>minutely</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_branch'>branch</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>every:</span> <span class='symbol'>:minute</span><span class='rparen'>)</span>
@@ -1859,12 +2068,12 @@ entries with duplicate keys will be those of other</p>
       <pre class="lines">
 
 
-288
-289
-290</pre>
+321
+322
+323</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 288</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 321</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_month_of_year'>month_of_year</span><span class='lparen'>(</span><span class='id identifier rubyid_months'>months</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_extras'>extras</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>month:</span> <span class='id identifier rubyid_months'>months</span><span class='period'>.</span><span class='id identifier rubyid_array_concat'>array_concat</span><span class='lparen'>(</span><span class='id identifier rubyid_extras'>extras</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -1945,12 +2154,12 @@ entries with duplicate keys will be those of other</p>
       <pre class="lines">
 
 
+108
 109
-110
-111</pre>
+110</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 109</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 108</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_monthly'>monthly</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_branch'>branch</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>every:</span> <span class='symbol'>:month</span><span class='rparen'>)</span>
@@ -2028,12 +2237,12 @@ entries with duplicate keys will be those of other</p>
       <pre class="lines">
 
 
-181
-182
-183</pre>
+214
+215
+216</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 181</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 214</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_on'>on</span><span class='lparen'>(</span><span class='id identifier rubyid_day'>day</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>on:</span> <span class='id identifier rubyid_day'>day</span><span class='rparen'>)</span>
@@ -2114,12 +2323,12 @@ entries with duplicate keys will be those of other</p>
       <pre class="lines">
 
 
+138
 139
-140
-141</pre>
+140</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 139</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 138</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_starts'>starts</span><span class='lparen'>(</span><span class='id identifier rubyid_starts_at'>starts_at</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>starts:</span> <span class='id identifier rubyid_starts_at'>starts_at</span><span class='rparen'>)</span>
@@ -2200,12 +2409,12 @@ entries with duplicate keys will be those of other</p>
       <pre class="lines">
 
 
-318
-319
-320</pre>
+351
+352
+353</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 318</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 351</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_total'>total</span><span class='lparen'>(</span><span class='id identifier rubyid_total'>total</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>total:</span> <span class='id identifier rubyid_total'>total</span><span class='rparen'>)</span>
@@ -2286,12 +2495,12 @@ entries with duplicate keys will be those of other</p>
       <pre class="lines">
 
 
+152
 153
-154
-155</pre>
+154</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 153</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 152</span>
 
 <span class='kw'>def</span> <span class='kw'>until</span><span class='lparen'>(</span><span class='id identifier rubyid_ends_at'>ends_at</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>until:</span> <span class='id identifier rubyid_ends_at'>ends_at</span><span class='rparen'>)</span>
@@ -2370,12 +2579,12 @@ entries with duplicate keys will be those of other</p>
       <pre class="lines">
 
 
-304
-305
-306</pre>
+337
+338
+339</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 304</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 337</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_week_of_year'>week_of_year</span><span class='lparen'>(</span><span class='id identifier rubyid_weeks'>weeks</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_extras'>extras</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>week:</span> <span class='id identifier rubyid_weeks'>weeks</span><span class='period'>.</span><span class='id identifier rubyid_array_concat'>array_concat</span><span class='lparen'>(</span><span class='id identifier rubyid_extras'>extras</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -2458,12 +2667,12 @@ entries with duplicate keys will be those of other</p>
       <pre class="lines">
 
 
+93
 94
-95
-96</pre>
+95</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 94</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 93</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_weekly'>weekly</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_branch'>branch</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>every:</span> <span class='symbol'>:week</span><span class='rparen'>)</span>
@@ -2546,12 +2755,12 @@ entries with duplicate keys will be those of other</p>
       <pre class="lines">
 
 
+125
 126
-127
-128</pre>
+127</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 126</span>
+      <pre class="code"><span class="info file"># File 'lib/montrose/chainable.rb', line 125</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_yearly'>yearly</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_branch'>branch</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>every:</span> <span class='symbol'>:year</span><span class='rparen'>)</span>
@@ -2566,9 +2775,9 @@ entries with duplicate keys will be those of other</p>
 </div>
 
       <div id="footer">
-  Generated on Wed Jul 17 20:47:43 2019 by
-  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.18 (ruby-2.5.3).
+  Generated on Sun Aug 27 13:15:35 2023 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.34 (ruby-2.7.8).
 </div>
 
     </div>
