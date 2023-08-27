@@ -28,7 +28,6 @@ namespace :doc do
     puts "Publishing docs"
     require "fileutils"
     sh "git checkout gh-pages"
-    sh "cp -R doc/* ."
     sh "git commit -vam 'Update documentation'"
     sh "git push origin gh-pages"
     sh "git checkout -"
