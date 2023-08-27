@@ -104,7 +104,6 @@ workflows:
             - lint
             - build-docs
             - test
-          # Disable filter for testing on branch
-          # filters:
-          #   branches:
-          #     only: main
+          filters:
+            branches:
+              only: main
