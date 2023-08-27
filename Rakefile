@@ -23,11 +23,13 @@ namespace :doc do
     sh "bundle exec yard doc"
   end
 
-  desc "Publish to gh-pages"
+  desc "Generate docs and publish to gh-pages"
   task :publish do
-    puts "Publishing docs"
+    puts "Generating docs"
     require "fileutils"
+    sh "yard doc"
     sh "git checkout gh-pages"
+    sh "cp -R doc/* ."
     sh "git commit -vam 'Update documentation'"
     sh "git push origin gh-pages"
     sh "git checkout -"

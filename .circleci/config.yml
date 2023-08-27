@@ -26,7 +26,12 @@ commands:
   run-docs-publish:
     description: Update gh-pages
     steps:
-      - run: bundle exec rake doc:publish
+      - run: |
+          git checkout gh-pages
+          cp -R doc/* .
+          git commit -vam 'Update documentation'
+          git push origin gh-pages
+
 jobs:
   test:
     executor: app-ruby
@@ -64,7 +69,7 @@ jobs:
       - checkout
       - ruby/install-deps
       - attach_workspace:
-          at: ./doc
+          at: .
       - add_ssh_keys:
           fingerprints: # ssh key generated solely for montrose docs
             - "97:43:0c:36:36:1d:83:30:f0:76:d4:9f:d3:71:a8:a5"
