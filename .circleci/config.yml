@@ -46,6 +46,13 @@ jobs:
           gemfile: <<parameters.gemfile>>
       - run-tests
 
+  # Convenience job for setting github branch protection rules
+  test-matrix:
+    executor: app-ruby
+    steps:
+      - checkout
+      - run: echo "Done"
+
   lint:
     executor: app-ruby
     steps:
@@ -85,6 +92,9 @@ workflows:
     jobs:
       - lint
       - build-docs
+      - test-matrix:
+          requires:
+            - test
       - test:
           matrix:
             parameters:
@@ -103,7 +113,7 @@ workflows:
           requires:
             - lint
             - build-docs
-            - test
+            - test-matrix
           filters:
             branches:
               only: main
