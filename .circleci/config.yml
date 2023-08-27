@@ -14,6 +14,10 @@ commands:
     steps:
       - run: bundle exec rake standard
 
+  run-docs:
+    description: Generate docs and update gh-pages
+    steps:
+      - run: bundle exec rake doc
 jobs:
   test:
     parameters:
@@ -37,6 +41,14 @@ jobs:
       - ruby/install-deps
       - run-lint
 
+  docs:
+    docker:
+      - image: cimg/ruby:2.7
+    steps:
+      - checkout
+      - ruby/install-deps
+      - run-docs
+
 workflows:
   all-tests:
     jobs:
@@ -55,3 +67,11 @@ workflows:
             exclude:
               - ruby_version: '2.6'
                 gemfile: gemfiles/activesupport_7.0.gemfile
+      - docs:
+          requires:
+            - lint
+            - test
+          # Disable filter for testing on branch
+          # filters:
+          #   branches:
+          #     only: main
