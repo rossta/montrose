@@ -18,6 +18,11 @@ task test: :spec
 task default: %i[spec standard]
 
 namespace :doc do
+  desc "Build docs"
+  task :build do
+    sh "bundle exec yard doc"
+  end
+
   desc "Generate docs and publish to gh-pages"
   task :publish do
     puts "Generating docs"

@@ -2,6 +2,10 @@ version: 2.1
 orbs:
   ruby: circleci/ruby@2.1.0
 
+executors:
+  app-ruby:
+    docker:
+      - image: cimg/ruby:2.7
 
 commands:
   run-tests:
@@ -14,33 +18,83 @@ commands:
     steps:
       - run: bundle exec rake standard
 
+  run-docs-build:
+    description: Generate docs
+    steps:
+      - run: bundle exec rake doc:build
+
+  run-docs-publish:
+    description: Update gh-pages
+    steps:
+      - run: |
+          git checkout gh-pages
+          cp -R doc/* .
+          git commit -vam 'Update documentation'
+          git push origin gh-pages
+
 jobs:
   test:
+    executor: app-ruby
     parameters:
       ruby_version:
         type: string
       gemfile:
         type: string
-    docker:
-      - image: 'cimg/ruby:<< parameters.ruby_version >>'
     steps:
       - checkout
       - ruby/install-deps:
           gemfile: <<parameters.gemfile>>
       - run-tests
 
+  # Convenience job for setting github branch protection rules
+  test-matrix:
+    executor: app-ruby
+    steps:
+      - checkout
+      - run: echo "Done"
+
   lint:
-    docker:
-      - image: cimg/ruby:2.7
+    executor: app-ruby
     steps:
       - checkout
       - ruby/install-deps
       - run-lint
 
+  build-docs:
+    executor: app-ruby
+    steps:
+      - checkout
+      - ruby/install-deps
+      - run-docs-build
+      - persist_to_workspace:
+          root: .
+          paths: doc
+
+  publish-docs:
+    executor: app-ruby
+    steps:
+      - checkout
+      - ruby/install-deps
+      - attach_workspace:
+          at: .
+      - add_ssh_keys:
+          fingerprints: # ssh key generated solely for montrose docs
+            - "97:43:0c:36:36:1d:83:30:f0:76:d4:9f:d3:71:a8:a5"
+      - run:
+          name: Configure git
+          command: |
+            git config user.email "ci-build@rossta.net"
+            git config user.name "ci-build"
+      - run-docs-publish
+
 workflows:
   all-tests:
     jobs:
       - lint
+      - build-docs
+      - test-matrix:
+          requires:
+            - test
       - test:
           matrix:
             parameters:
@@ -55,3 +109,11 @@ workflows:
             exclude:
               - ruby_version: '2.6'
                 gemfile: gemfiles/activesupport_7.0.gemfile
+      - publish-docs:
+          requires:
+            - lint
+            - build-docs
+            - test-matrix
+          filters:
+            branches:
+              only: main
