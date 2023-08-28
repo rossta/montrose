@@ -1,3 +1,8 @@
+### 0.15.0 - (2023-08-27)
+
+- breaking changes
+  - Drop support for Ruby 2.6
+
 ### 0.14.0 - (2023-08-23)
 
 - enhancements

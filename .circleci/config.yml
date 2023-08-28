@@ -4,8 +4,12 @@ orbs:
 
 executors:
   app-ruby:
+    parameters:
+      ruby-version:
+        type: string
+        default: '2.7'
     docker:
-      - image: cimg/ruby:2.7
+      - image: cimg/ruby:<<parameters.ruby-version>>
 
 commands:
   run-tests:
@@ -34,12 +38,14 @@ commands:
 
 jobs:
   test:
-    executor: app-ruby
     parameters:
-      ruby_version:
+      ruby-version:
         type: string
       gemfile:
         type: string
+    executor:
+      name: app-ruby
+      ruby-version: <<parameters.ruby-version>>
     steps:
       - checkout
       - ruby/install-deps:
@@ -87,8 +93,17 @@ jobs:
             git config user.name "ci-build"
       - run-docs-publish
 
+  release:
+    executor: app-ruby
+    steps:
+      - checkout
+      - ruby/install-deps
+      - run:
+          name: Publish gem to Rubygems
+          command: bundle exec rake release
+
 workflows:
-  all-tests:
+  build:
     jobs:
       - lint
       - build-docs
@@ -98,17 +113,15 @@ workflows:
       - test:
           matrix:
             parameters:
-              ruby_version: ['2.6', '2.7', '3.0', '3.1']
+              ruby-version:
+                - '2.7'
+                - '3.0'
+                - '3.1'
               gemfile:
-                [
-                  'gemfiles/activesupport_5.2.gemfile',
-                  'gemfiles/activesupport_6.0.gemfile',
-                  'gemfiles/activesupport_6.1.gemfile',
-                  'gemfiles/activesupport_7.0.gemfile',
-                ]
-            exclude:
-              - ruby_version: '2.6'
-                gemfile: gemfiles/activesupport_7.0.gemfile
+                - 'gemfiles/activesupport_5.2.gemfile'
+                - 'gemfiles/activesupport_6.0.gemfile'
+                - 'gemfiles/activesupport_6.1.gemfile'
+                - 'gemfiles/activesupport_7.0.gemfile'
       - publish-docs:
           requires:
             - lint
@@ -117,3 +130,12 @@ workflows:
           filters:
             branches:
               only: main
+      - release:
+          requires:
+            - test
+            - lint
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
