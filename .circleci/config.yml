@@ -86,9 +86,17 @@ jobs:
             git config user.email "ci-build@rossta.net"
             git config user.name "ci-build"
       - run-docs-publish
+  release:
+    executor: app-ruby
+    steps:
+      - checkout
+      - ruby/install-deps
+      - run:
+          name: Publish gem to Rubygems
+          command: bundle exec rake release
 
 workflows:
-  all-tests:
+  build:
     jobs:
       - lint
       - build-docs
@@ -98,14 +106,16 @@ workflows:
       - test:
           matrix:
             parameters:
-              ruby_version: ['2.6', '2.7', '3.0', '3.1']
+              ruby_version:
+                - '2.6'
+                - '2.7'
+                - '3.0'
+                - '3.1'
               gemfile:
-                [
-                  'gemfiles/activesupport_5.2.gemfile',
-                  'gemfiles/activesupport_6.0.gemfile',
-                  'gemfiles/activesupport_6.1.gemfile',
-                  'gemfiles/activesupport_7.0.gemfile',
-                ]
+                - 'gemfiles/activesupport_5.2.gemfile'
+                - 'gemfiles/activesupport_6.0.gemfile'
+                - 'gemfiles/activesupport_6.1.gemfile'
+                - 'gemfiles/activesupport_7.0.gemfile'
             exclude:
               - ruby_version: '2.6'
                 gemfile: gemfiles/activesupport_7.0.gemfile
@@ -117,3 +127,12 @@ workflows:
           filters:
             branches:
               only: main
+      - release:
+          requires:
+            - test
+            - lint
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
