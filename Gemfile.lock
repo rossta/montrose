@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     montrose (0.15.0)
-      activesupport (>= 5.2, < 7.1)
+      activesupport (>= 5.2, <= 7.1)
 
 GEM
   remote: https://rubygems.org/
@@ -145,4 +145,4 @@ DEPENDENCIES
   yard
 
 BUNDLED WITH
-   2.4.10
+   2.4.20
