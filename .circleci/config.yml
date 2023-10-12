@@ -33,7 +33,7 @@ commands:
       - run: |
           git checkout gh-pages
           cp -R doc/* .
-          git commit -vam 'Update documentation'
+          git commit -vam '[skip ci] Update documentation'
           git push origin gh-pages
 
 jobs:
