@@ -501,7 +501,24 @@ r.events.lazy.select { |time| time &gt; 1.month.from_now }.take(3).each { |date|
 
 <h2 id="label-Development">Development</h2>
 
-<p>After checking out the repo, run <code>bin/setup</code> to install dependencies. Then, run <code>bin/rake</code> to run the tests.</p>
+<p>After checking out the repo, run <code>bin/setup</code> to install dependencies. <code>bin/setup</code> will install gems for each gemfile in <code>gemfiles/</code> against the current Ruby version.</p>
+
+<p>To run tests against all gemfiles for current Ruby:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_bin'>bin</span><span class='op'>/</span><span class='id identifier rubyid_spec'>spec</span>
+</code></pre>
+
+<p>To update installed gems for gemfiles:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_bin'>bin</span><span class='op'>/</span><span class='id identifier rubyid_update'>update</span>
+</code></pre>
+
+<p>To fix lint errors:</p>
+
+<pre class="code ruby"><code class="ruby">bin/standardrb --fix
+</code></pre>
+
+<p>When adding a new gemfile to <code>gemfiles/</code>, run <code>bin/setup</code> and commit the generated lock file.</p>
 
 <p>You can also run <code>bin/console</code> for an interactive prompt that will allow you to experiment.</p>
 
@@ -515,7 +532,7 @@ r.events.lazy.select { |time| time &gt; 1.month.from_now }.take(3).each { |date|
 </div></div>
 
       <div id="footer">
-  Generated on Thu Oct 12 02:13:05 2023 by
+  Generated on Thu Oct 12 03:32:58 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>
