@@ -432,6 +432,24 @@ r.events.take(10).each { |date| puts date.to_s }
 r.events.lazy.select { |time| time &gt; 1.month.from_now }.take(3).each { |date| puts date.to_s }
 </code></pre>
 
+<p>Montrose relies on <code>ActiveSupport</code> for <code>DateTime</code>, <code>Date</code>, and <code>Time</code> calculations. As such, configuring ActiveSupport settings should work for Montrose recurrences.</p>
+
+<p>For example, your application can configure the <code>Date</code> “beginning of the week” (<a href="https://www.rubydoc.info/docs/rails/Date.beginning_of_week">docs</a>):</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'>Date</span><span class='period'>.</span><span class='id identifier rubyid_beginning_of_the_week'>beginning_of_the_week</span> <span class='op'>=</span> <span class='symbol'>:sunday</span>
+<span class='comment'># OR
+</span><span class='const'>Date</span><span class='period'>.</span><span class='id identifier rubyid_beginning_of_the_week'>beginning_of_the_week</span> <span class='op'>=</span> <span class='symbol'>:monday</span>
+</code></pre>
+
+<p>Similarly in Rails (<a href="https://guides.rubyonrails.org/configuring.html#config-beginning-of-week">docs</a>):</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_beginning_of_week'>beginning_of_week</span> <span class='op'>=</span> <span class='symbol'>:sunday</span>
+<span class='comment'># OR
+</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_beginning_of_week'>beginning_of_week</span> <span class='op'>=</span> <span class='symbol'>:monday</span>
+</code></pre>
+
+<p>Changing these settings may affect the behavior of Montrose weekly recurrences.</p>
+
 <h3 id="label-Combining+recurrences">Combining recurrences</h3>
 
 <p>It may be necessary to combine several recurrence rules into a single enumeration of events. For this purpose, there is <code>Montrose::Schedule</code>. To create a schedule of multiple recurrences:</p>
@@ -532,7 +550,7 @@ r.events.lazy.select { |time| time &gt; 1.month.from_now }.take(3).each { |date|
 </div></div>
 
       <div id="footer">
-  Generated on Thu Oct 12 03:36:19 2023 by
+  Generated on Thu Oct 12 14:24:50 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>
