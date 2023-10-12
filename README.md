@@ -447,7 +447,27 @@ Check out following related projects, all of which have provided inspiration for
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `bin/rake` to run the tests.
+After checking out the repo, run `bin/setup` to install dependencies. `bin/setup` will install gems for each gemfile in `gemfiles/` against the current Ruby version.
+
+To run tests against all gemfiles for current Ruby:
+
+```
+bin/spec
+```
+
+To update installed gems for gemfiles:
+
+```
+bin/update
+```
+
+To fix lint errors:
+
+```
+bin/standardrb --fix
+```
+
+When adding a new gemfile to `gemfiles/`, run `bin/setup` and commit the generated lock file.
 
 You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
