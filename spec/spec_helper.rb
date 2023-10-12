@@ -16,7 +16,7 @@ require "minitest/pride" # awesome colorful output
 require "timecop"
 
 begin
-  require "pry"
+  require "pry-byebug"
 rescue LoadError
 end
 
