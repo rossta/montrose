@@ -2,9 +2,9 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-bundle install
+bundle update
 
 # Do any other automated setup that you need to do here
 for filename in gemfiles/*.gemfile; do
-  BUNDLE_GEMFILE=$filename bundle install
+  BUNDLE_GEMFILE=$filename bundle update
 done
