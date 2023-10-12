@@ -172,5 +172,44 @@ describe Montrose::Recurrence do
         ]
       end
     end
+
+    # https://github.com/rossta/montrose/issues/144
+    describe "weekly with interval" do
+      it "emits expected times when beginning_of_week is set to Sunday" do
+        Date.stub :beginning_of_week, :sunday do
+          recurrence = new_recurrence(
+            every: :week,
+            interval: 2,
+            on: ["sunday", "monday"],
+            between: ("2021-05-02".to_time)..("2021-05-22".to_time)
+          )
+
+          _(recurrence.events.take(4).to_a).must_pair_with [
+            Time.local(2021, 5, 2, 0),
+            Time.local(2021, 5, 3, 0),
+            Time.local(2021, 5, 16, 0),
+            Time.local(2021, 5, 17, 0)
+          ]
+        end
+      end
+
+      it "emits expected times when beginning_of_week is set to Monday" do
+        Date.stub :beginning_of_week, :monday do
+          recurrence = new_recurrence(
+            every: :week,
+            interval: 2,
+            on: ["sunday", "monday"],
+            between: ("2021-05-02".to_time)..("2021-05-26".to_time)
+          )
+
+          _(recurrence.events.take(4).to_a).must_pair_with [
+            Time.local(2021, 5, 2, 0),
+            Time.local(2021, 5, 10, 0),
+            Time.local(2021, 5, 16, 0),
+            Time.local(2021, 5, 24, 0)
+          ]
+        end
+      end
+    end
   end
 end

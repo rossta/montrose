@@ -375,6 +375,26 @@ r.events.take(10).each { |date| puts date.to_s }
 r.events.lazy.select { |time| time > 1.month.from_now }.take(3).each { |date| puts date.to_s }
 ```
 
+Montrose relies on `ActiveSupport` for `DateTime`, `Date`, and `Time` calculations. As such, configuring ActiveSupport settings should work for Montrose recurrences.
+
+For example, your application can configure the `Date` "beginning of the week" ([docs](https://www.rubydoc.info/docs/rails/Date.beginning_of_week)):
+
+```ruby
+Date.beginning_of_the_week = :sunday
+# OR
+Date.beginning_of_the_week = :monday
+```
+
+Similarly in Rails ([docs](https://guides.rubyonrails.org/configuring.html#config-beginning-of-week)):
+
+```ruby
+config.beginning_of_week = :sunday
+# OR
+config.beginning_of_week = :monday
+```
+
+Changing these settings may affect the behavior of Montrose weekly recurrences.
+
 ### Combining recurrences
 
 It may be necessary to combine several recurrence rules into a single
