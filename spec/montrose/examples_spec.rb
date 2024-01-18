@@ -211,5 +211,19 @@ describe Montrose::Recurrence do
         end
       end
     end
+
+    # https://github.com/rossta/montrose/issues/165
+    describe "daily with :at option" do
+      it "handles DST" do
+        recurrence = new_recurrence(every: :day, at: "2:00:00", starts: DateTime.new(2024, 3, 8))
+
+        _(recurrence.events.take(4).to_a).must_pair_with [
+          Time.local(2024, 3, 8, 2),
+          Time.local(2024, 3, 9, 2),
+          Time.local(2024, 3, 10, 2),
+          Time.local(2024, 3, 11, 2)
+        ]
+      end
+    end
   end
 end
