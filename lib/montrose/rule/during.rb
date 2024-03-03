@@ -6,15 +6,22 @@ module Montrose
       include Montrose::Rule
 
       def self.apply_options(opts)
-        opts[:during]
+        return false unless opts[:during]
+
+        {during: opts[:during], exclude_end: opts.fetch(:exclude_end, false)}
       end
 
-      # Initializes rule
-      #
-      # @param during [Array<Array<Fixnum>>] array of time parts arrays, e.g. [[9, 0, 0], [17, 0, 0]], i.e., "9 to 5"
-      #
-      def initialize(during)
-        @during = during.map { |first, last| TimeOfDayRange.new(first, last) }
+      def initialize(opts)
+        case opts
+        when Hash
+          during = opts.fetch(:during)
+          @exclude_end = opts.fetch(:exclude_end, false)
+        else
+          during = opts
+          @exclude_end = false
+        end
+
+        @during = during.map { |first, last| TimeOfDayRange.new(first, last, exclude_end: @exclude_end) }
       end
 
       def include?(time)
