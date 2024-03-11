@@ -337,4 +337,27 @@ describe Montrose::Schedule do
       _(array).must_equal [{"every" => "month"}, {"every" => "day"}]
     end
   end
+
+  describe "#==" do
+    before do
+      schedule << {every: :month}
+      schedule << {every: :day}
+    end
+
+    it "compares two schedules against each other" do
+      identical_other = new_schedule.tap do |schedule|
+        schedule << {every: :month}
+        schedule << {every: :day}
+      end
+
+      different_other = new_schedule.tap do |schedule|
+        schedule << {every: :month}
+        schedule << {every: :day}
+        schedule << {every: :year}
+      end
+
+      _(schedule).must_equal identical_other
+      _(schedule).wont_equal different_other
+    end
+  end
 end

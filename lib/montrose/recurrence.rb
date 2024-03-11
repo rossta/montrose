@@ -407,6 +407,19 @@ module Montrose
       ends_at && timestamp > ends_at
     end
 
+    # Return true/false if hash configuration is equal to
+    # the other given recurrence's hash configuration
+    #
+    # @return [Boolean] whether or not the other's hash matches
+    #
+    def ==(other)
+      if other.is_a?(self.class) || other.is_a?(Hash)
+        to_hash == other.to_hash
+      else
+        super
+      end
+    end
+
     private
 
     def event_enum
