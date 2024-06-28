@@ -423,29 +423,57 @@ describe Montrose::Options do
     it "can be set" do
       options[:mday] = [1, 20, 31]
 
-      _(options.mday).must_equal [1, 20, 31]
-      _(options[:mday]).must_equal [1, 20, 31]
+      _(options.mday).must_equal({default: [1, 20, 31], overrides: {}, fallback: nil})
+      _(options[:mday]).must_equal({default: [1, 20, 31], overrides: {}, fallback: nil})
+    end
+
+    it "can be set to a hash" do
+      options[:mday] = {default: [1, 20, 31]}
+
+      _(options.mday).must_equal({default: [1, 20, 31], overrides: {}, fallback: nil})
+      _(options[:mday]).must_equal({default: [1, 20, 31], overrides: {}, fallback: nil})
     end
 
     it "casts to element to array" do
       options[:mday] = 1
 
-      _(options.mday).must_equal [1]
-      _(options[:mday]).must_equal [1]
+      _(options.mday).must_equal({default: [1], overrides: {}, fallback: nil})
+      _(options[:mday]).must_equal({default: [1], overrides: {}, fallback: nil})
+    end
+
+    it "casts default element to array" do
+      options[:mday] = {default: 1}
+
+      _(options.mday).must_equal({default: [1], overrides: {}, fallback: nil})
+      _(options[:mday]).must_equal({default: [1], overrides: {}, fallback: nil})
     end
 
     it "allows negative numbers" do
-      options[:yday] = [-1]
+      options[:mday] = [-1]
 
-      _(options.yday).must_equal [-1]
-      _(options[:yday]).must_equal [-1]
+      _(options.mday).must_equal({default: [-1], overrides: {}, fallback: nil})
+      _(options[:mday]).must_equal({default: [-1], overrides: {}, fallback: nil})
+    end
+
+    it "allows default negative numbers" do
+      options[:mday] = {default: [-1]}
+
+      _(options.mday).must_equal({default: [-1], overrides: {}, fallback: nil})
+      _(options[:mday]).must_equal({default: [-1], overrides: {}, fallback: nil})
     end
 
     it "casts range to array" do
       options[:mday] = 6..8
 
-      _(options.mday).must_equal [6, 7, 8]
-      _(options[:mday]).must_equal [6, 7, 8]
+      _(options.mday).must_equal({default: [6, 7, 8], overrides: {}, fallback: nil})
+      _(options[:mday]).must_equal({default: [6, 7, 8], overrides: {}, fallback: nil})
+    end
+
+    it "casts default range to array" do
+      options[:mday] = {default: 6..8}
+
+      _(options.mday).must_equal({default: [6, 7, 8], overrides: {}, fallback: nil})
+      _(options[:mday]).must_equal({default: [6, 7, 8], overrides: {}, fallback: nil})
     end
 
     it "casts nil to empty array" do
@@ -455,8 +483,63 @@ describe Montrose::Options do
       _(options[:day]).must_be_nil
     end
 
+    it "casts default nil to empty array" do
+      options[:mday] = {default: nil}
+
+      _(options.mday).must_be_nil
+      _(options[:mday]).must_be_nil
+    end
+
     it "raises for out of range" do
       _(-> { options[:mday] = [1, 100] }).must_raise
+    end
+
+    it "raises for default out of range" do
+      _(-> { options[:mday] = {default: [1, 100]} }).must_raise
+    end
+
+    it "raises for array override" do
+      _(-> { options[:mday] = {default: 31, february: [28, 29]} }).must_raise
+    end
+
+    it "raises for array fallback" do
+      _(-> { options[:mday] = {default: 31, fallback: [28, 29]} }).must_raise
+    end
+
+    it "allows negative overrides" do
+      options[:mday] = {default: 31, february: -1}
+
+      _(options.mday).must_equal({default: [31], overrides: {february: -1}, fallback: nil})
+      _(options[:mday]).must_equal({default: [31], overrides: {february: -1}, fallback: nil})
+    end
+
+    it "allows negative fallback" do
+      options[:mday] = {default: 31, fallback: -1}
+
+      _(options.mday).must_equal({default: [31], overrides: {}, fallback: -1})
+      _(options[:mday]).must_equal({default: [31], overrides: {}, fallback: -1})
+    end
+
+    it "raises for override out of range" do
+      _(-> { options[:mday] = {default: 31, february: 100} }).must_raise
+    end
+
+    it "raises for fallback out of range" do
+      _(-> { options[:mday] = {default: 31, fallback: 100} }).must_raise
+    end
+
+    it "collects overrides" do
+      options[:mday] = {default: 31, september: 30, february: 28}
+
+      _(options.mday).must_equal({default: [31], overrides: {september: 30, february: 28}, fallback: nil})
+      _(options[:mday]).must_equal({default: [31], overrides: {september: 30, february: 28}, fallback: nil})
+    end
+
+    it "flattens overrides" do
+      options[:mday] = {:default => 31, [:september, :april, :june, :november] => 30, :february => 28}
+
+      _(options.mday).must_equal({default: [31], overrides: {september: 30, april: 30, june: 30, november: 30, february: 28}, fallback: nil})
+      _(options[:mday]).must_equal({default: [31], overrides: {september: 30, april: 30, june: 30, november: 30, february: 28}, fallback: nil})
     end
   end
 
@@ -767,7 +850,7 @@ describe Montrose::Options do
       options[:on] = {friday: 13}
 
       _(options[:day]).must_equal [5]
-      _(options[:mday]).must_equal [13]
+      _(options[:mday]).must_equal({default: [13], overrides: {}, fallback: nil})
       _(options[:on]).must_equal(friday: 13)
     end
 
@@ -776,7 +859,7 @@ describe Montrose::Options do
       options[:on] = {tuesday: 2..8}
 
       _(options[:day]).must_equal [2]
-      _(options[:mday]).must_equal((2..8).to_a)
+      _(options[:mday]).must_equal({default: (2..8).to_a, overrides: {}, fallback: nil})
       _(options[:month]).must_equal [11]
     end
 
@@ -784,7 +867,7 @@ describe Montrose::Options do
       options[:on] = {january: 31}
 
       _(options[:month]).must_equal [1]
-      _(options[:mday]).must_equal [31]
+      _(options[:mday]).must_equal({default: [31], overrides: {}, fallback: nil})
     end
 
     it { _(-> { options[:on] = -3 }).must_raise Montrose::ConfigurationError }

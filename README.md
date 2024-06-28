@@ -231,6 +231,12 @@ Montrose.every(:month, mday: [2, 15], total: 10)
 # monthly on the first and last day of the month for 10 occurrences
 Montrose.monthly(mday: [1, -1], total: 10)
 
+# monthly on the 30th unless fewer days
+Montrose.monthly(mday: { default: 30, fallback: -1 })
+
+# monthly on the 25th except in december
+Montrose.monthly(mday: { default: 25, december: 20 })
+
 # every 18 months on the 10th thru 15th of the month for 10 occurrences
 Montrose.every(18.months, total: 10, mday: 10..15)
 
