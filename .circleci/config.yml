@@ -124,6 +124,19 @@ workflows:
                 - 'gemfiles/activesupport_6.1.gemfile'
                 - 'gemfiles/activesupport_7.0.gemfile'
                 - 'gemfiles/activesupport_7.1.gemfile'
+                - 'gemfiles/activesupport_7.2.gemfile'
+                - 'gemfiles/activesupport_8.0.gemfile'
+            exclude:
+              - gemfile: 'gemfiles/activesupport_7.2.gemfile'
+                ruby-version: '2.7'
+              - gemfile: 'gemfiles/activesupport_7.2.gemfile'
+                ruby-version: '3.0'
+              - gemfile: 'gemfiles/activesupport_8.0.gemfile'
+                ruby-version: '2.7'
+              - gemfile: 'gemfiles/activesupport_8.0.gemfile'
+                ruby-version: '3.0'
+              - gemfile: 'gemfiles/activesupport_8.0.gemfile'
+                ruby-version: '3.1'
       - publish-docs:
           requires:
             - lint
