@@ -1,3 +1,13 @@
+### 0.17.0 - (2024-11-12)
+
+- enhancements
+
+  - Add support for Rails 8.0 (by @TasnimSyncX)
+
+- chores
+  - Add tests for switching Date.beginning_of_week
+  - Update Rubocop settings
+
 ### 0.16.0 - (2023-10-11)
 
 - enhancements
