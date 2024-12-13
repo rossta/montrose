@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     montrose (0.17.0)
-      activesupport (>= 5.2, <= 8)
+      activesupport (>= 5.2, < 9)
 
 GEM
   remote: https://rubygems.org/
@@ -138,9 +138,8 @@ GEM
     yard (0.9.36)
 
 PLATFORMS
-  arm64-darwin-22
-  arm64-darwin-23
-  x86_64-darwin-24
+  arm64-darwin
+  x86_64-darwin
   x86_64-linux
 
 DEPENDENCIES
