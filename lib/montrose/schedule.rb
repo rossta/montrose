@@ -169,6 +169,14 @@ module Montrose
       "#<#{self.class}:#{object_id.to_s(16)} #{to_a.inspect}>"
     end
 
+    def ==(other)
+      if other.is_a?(self.class) || other.is_a?(Array)
+        to_a == other.to_a
+      else
+        super
+      end
+    end
+
     private
 
     def active_enums(enums)
