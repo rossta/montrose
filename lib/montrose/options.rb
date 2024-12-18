@@ -206,8 +206,8 @@ module Montrose
       @day = Day.parse(days)
     end
 
-    def mday=(mdays)
-      @mday = MonthDay.parse(mdays)
+    def mday=(mday_arg)
+      @mday = decompose_mday_arg(mday_arg)
     end
 
     def yday=(ydays)
@@ -369,6 +369,39 @@ module Montrose
 
     def beginning_of_day
       @beginning_of_day ||= time_of_day_parse(Time.now.beginning_of_day)
+    end
+
+    def decompose_mday_arg(mday_arg)
+      case mday_arg
+      when Hash
+        return nil unless mday_arg[:default].present?
+        {
+          default: MonthDay.parse(mday_arg[:default]),
+          overrides: flatten_mday_arg(mday_arg),
+          fallback: single_day(mday_arg[:fallback])
+        }
+      else
+        {default: MonthDay.parse(mday_arg), overrides: {}, fallback: nil}
+      end
+    end
+
+    def flatten_mday_arg(mday_arg)
+      mday_arg.except(:default, :overrides, :fallback).each_with_object({}) do |(months, day), result|
+        case months
+        when Array
+          months.each { |month| result[month] = single_day(day) }
+        else
+          result[months] = single_day(day)
+        end
+      end
+    end
+
+    def single_day(day_number)
+      return nil unless day_number
+      raise ConfigurationError, "mday override #{day_number} must be an integer" unless day_number.is_a?(Integer)
+      MonthDay.assert(day_number)
+
+      day_number
     end
   end
 end
