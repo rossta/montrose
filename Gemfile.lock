@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    montrose (0.17.0)
+    montrose (0.18.0)
       activesupport (>= 5.2, < 9)
 
 GEM
